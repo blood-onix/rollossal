@@ -1,0 +1,11 @@
+# Tool versions for Ricokick. Install them all with `rokit install` from the repo root.
+# Prerequisite: Rokit 1.2.0 (the installer itself), https://github.com/rojo-rbx/rokit
+# Pins and reasons: specs/001-shot-engine-career/plan.md "Tooling justification".
+
+[tools]
+rojo = "rojo-rbx/rojo@7.7.1"
+wally = "UpliftGames/wally@0.3.2"
+stylua = "JohnnyMorganz/StyLua@2.5.2"
+selene = "Kampfkarren/selene@0.32.0"
+luau-lsp = "JohnnyMorganz/luau-lsp@1.70.1"
+lune = "lune-org/lune@0.10.5"

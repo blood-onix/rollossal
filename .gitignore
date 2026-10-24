@@ -1,0 +1,35 @@
+# Wally packages (restored with `wally install`; wally.lock stays committed)
+/Packages/
+/ServerPackages/
+/DevPackages/
+
+# Rojo / Roblox build output
+sourcemap.json
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+*.rbxl.lock
+*.rbxlx.lock
+
+# Blender backups and render output (keep art/source/*.blend and art/export/*.fbx)
+*.blend1
+*.blend2
+/art/render/
+
+# Local tool state
+.claude/settings.local.json
+.claude/worktrees/
+.opencode/node_modules/
+node_modules/
+.env
+.env.*
+
+# Editors and OS
+.vscode/*
+!.vscode/mcp.json
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.log

@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "Roblox_Studio": {
+      "type": "stdio",
+      "command": "/Applications/RobloxStudio.app/Contents/MacOS/StudioMCP",
+      "args": []
+    }
+  }
+}
