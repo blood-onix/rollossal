@@ -4,7 +4,7 @@
   "human": [
     {
       "item": "T027-T029 Studio: Jest runner, quickstart 1/6-12, results and hub captures at 640x360, 844x390, 1280x720",
-      "reason": "The open Studio place (Rollossal, 112788738500883) still holds none of the 002 code: a search of the Edit datamodel finds no RunManager or Worlds, only the 001 WorldSpawner. The Rojo plugin must be connected to `rojo serve` by clicking Connect in Studio, which an agent cannot do. Until then these Studio tasks cannot run."
+      "reason": "Re-checked in round 5: the open Studio place (Rollossal, 112788738500883) still holds none of the 002 code (no RunManager, Worlds or RunClock in the Edit datamodel, only the 001 WorldSpawner). The Rojo plugin must be connected to `rojo serve` by clicking Connect in Studio, which an agent cannot do."
     },
     {
       "item": "T037-T040 Studio: US2 Jest cases, sound and glyph checks, quickstart 2-5, HUD captures",
