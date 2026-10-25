@@ -27,15 +27,14 @@
 | 5. `tasks.md` ticks | Ticks are recorded in `specs/001-grey-box-prototype/tasks.md`; unticked tasks are listed below. | Partial |
 
 Constitution check: Principles II, III, IV, VI, VII, X and XII pass as written in plan.md. Principle I is
-open: the 6-player playtest and owner sign-off (T059) have not happened, so no art, monetization or
+open: the owner skipped the 6-player playtest (T059), so it has no sign-off, so no art, monetization or
 live-ops work may start. Principles V, VIII, IX and XI are N/A.
 
 ## Open items
 
-- T058 (multi-client Local Server test) and T040 (JitterProbe on the reference phone): deferred by the
-  owner until there is more game to test; revisit before the playtest.
-- T059: 6+ player playtest and owner sign-off.
-- T068: quickstart walkthrough closes when T058 and T059 are done.
+- Manual tests skipped by the owner (ticked in tasks.md as skipped): T040 (JitterProbe on the reference
+  phone), T058 (multi-client Local Server test), T059 (6+ player playtest). The Constitution I gate stays
+  unmet until a playtest is signed off, so no art, monetization or live-ops work yet.
 - Studio place: the template `SpawnLocation` and `Baseplate` were deleted in Edit mode (they blocked the
   probe lane); save the place to keep that.
 

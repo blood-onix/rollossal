@@ -198,7 +198,7 @@ disjoint groups: Rules + unit tests; Config + Content; tooling files; server fil
 - Open tuning, all needing a Studio run or a playtest: `rollTorqueGain` and `rollForceGain` (T037/T079,
   ball must roll without slipping at `baseSpeed`); `stuckVisualMode` (T079, laptop JitterProbe; T040 on the
   reference phone is human-only); `respawnDelay`, `bumpSpeedThreshold` and `absorbDistanceTolerance`
-  (T046, the playtest T059; multi-client T058 deferred by the owner).
+  (T046, the playtest T059; multi-client T058 skipped by the owner).
 - Cube layout and tier counts are unchanged from data-model §2 (research R1 and finding F-1 still apply:
   Tier 4 depends on the 15 s respawn).
 
