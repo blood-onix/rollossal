@@ -1,0 +1,63 @@
+{
+  "verdict": "incomplete",
+  "remaining": [
+    "T002 Confirm ProfileStore 1.0.3 is available to the server",
+    "T003 Create `tests/unit/Profile.test.luau` with every case in `contracts/rules-api.md` §`Profile.luau` \"Test values",
+    "T004 Create `tests/unit/Book.test.luau` with every case in `contracts/rules-api.md` §`Book.luau` \"Test values\"",
+    "T005 Create `tests/unit/Settings.test.luau` with every row in `contracts/rules-api.md` §`Settings.luau` \"Test value",
+    "T006 Edit `tests/unit/RunClock.test.luau`",
+    "T007 Create `src/shared/Rules/Profile.luau` exporting the types and functions in `contracts/rules-api.md` §`Profile",
+    "T008 Create `src/shared/Rules/Book.luau` exporting the types and `newIds`, `pages`, `completedRewardIds` from `cont",
+    "T009 Create `src/shared/Rules/Settings.luau` exporting the types and `validate(current, candidate, bounds)` from `c",
+    "T010 Edit `src/shared/Rules/RunClock.luau`",
+    "T011 Edit `src/shared/Config.luau` and `tests/unit/Config.test.luau`",
+    "T012 Edit `src/shared/Content/GreyBoxRoom.luau` and `tests/unit/GreyBoxRoom.test.luau`",
+    "T013 Edit `src/shared/Content/Icons.luau`",
+    "T014 Edit `src/shared/Localization/Strings.luau` and `tests/unit/Strings.test.luau`",
+    "T015 Edit `src/shared/Localization/Localizer.luau`",
+    "T016 Edit `src/server/Remotes.luau`",
+    "T017 Edit `src/client/UiKit.luau`",
+    "T018 Edit `src/client/RunClient.luau`",
+    "T019 Create `src/client/ProfileClient.luau`",
+    "T020 Create `src/client/TopBar.luau`",
+    "T021 Edit `src/client/Main.client.luau`",
+    "T022 Create `tests/studio/DataService.spec.luau` (Jest-Lua, `DataService.setStore(ProfileStore.New(\"test\").Mock)`-s",
+    "T023 Edit `tests/studio/RunManager.spec.luau`",
+    "T024 Create `src/server/DataService.luau`",
+    "T025 Edit `src/server/Main.server.luau`",
+    "T026 Edit `src/server/RunManager.luau` at the three seams of research R6",
+    "T027 Studio",
+    "T028 Create `src/client/BookUi.luau` per `contracts/ui.md` §BookUi",
+    "T029 Edit `src/client/ResultsUi.luau`",
+    "T030 Edit `src/client/Main.client.luau`",
+    "T031 Studio",
+    "T032 Edit `tests/studio/DataService.spec.luau`",
+    "T033 Edit `src/server/DataService.luau`",
+    "T034 Edit `src/client/Feedback.luau`",
+    "T035 Studio",
+    "T036 Create `src/client/SettingsUi.luau` per `contracts/ui.md` §SettingsUi",
+    "T037 Edit `src/client/Hud.luau`",
+    "T038 Edit `src/client/ProfileClient.luau`",
+    "T039 Edit `src/client/Main.client.luau`",
+    "T040 Studio",
+    "T041 Edit `tests/studio/DataService.spec.luau`",
+    "T042 Edit `src/client/HubUi.luau`",
+    "T043 Edit `src/client/ResultsUi.luau` (after T029)",
+    "T044 Studio",
+    "T045 Studio",
+    "T046 Authority and privacy audit (Constitution II, V, VIII)",
+    "T047 Create `specs/003-saving-and-economy/pr-description.md` stating which Quality Gates applied and how each was m",
+    "T049 Final validation"
+  ],
+  "human": [
+    {
+      "item": "T001 Merge 002 into the branch",
+      "reason": "002-run-loop is not merged to main and the branch has no 002 code (RunManager, UiKit, Hud etc.); the task says to stop and report rather than copy 002 code by hand, so the 002 PR must be merged first."
+    },
+    {
+      "item": "T048 Human checks on a private test place",
+      "reason": "Needs real multi-server persistence and device checks outside Studio, which an agent cannot do."
+    }
+  ],
+  "summary": "Implementation has not started: all 49 tasks are unchecked and no 003 code exists (no DataService, Profile/Book/Settings rules, ProfileClient, TopBar, BookUi), and it is blocked on 002 being merged; tasks.md already covers everything, so nothing was appended."
+}
