@@ -14,43 +14,43 @@
     "T019 Create `src/client/ProfileClient.luau`",
     "T020 Create `src/client/TopBar.luau`",
     "T021 Edit `src/client/Main.client.luau`",
-    "T022 Create `tests/studio/DataService.spec.luau` (Jest-Lua, `DataService.setStore(ProfileStore.New(\"test\").Mock)`-s",
+    "T022 Create `tests/studio/DataService.spec.luau`",
     "T023 Edit `tests/studio/RunManager.spec.luau`",
     "T024 Create `src/server/DataService.luau`",
     "T025 Edit `src/server/Main.server.luau`",
     "T026 Edit `src/server/RunManager.luau` at the three seams of research R6",
-    "T027 Studio MCP",
+    "T027 Studio MCP playtest of DataService and RunManager",
     "T028 Create `src/client/BookUi.luau`",
     "T029 Edit `src/client/ResultsUi.luau`",
-    "T030 Edit `src/client/Main.client.luau`",
-    "T031 Studio MCP",
-    "T032 Edit `tests/studio/DataService.spec.luau`",
-    "T033 Edit `src/server/DataService.luau`",
+    "T030 Edit `src/client/Main.client.luau` (BookUi)",
+    "T031 Studio MCP playtest of Book (quickstart §4)",
+    "T032 Edit `tests/studio/DataService.spec.luau` (settings cases)",
+    "T033 Edit `src/server/DataService.luau` (updateSettings)",
     "T034 Edit `src/client/Feedback.luau`",
-    "T035 Studio MCP",
+    "T035 Studio MCP camera sensitivity spike",
     "T036 Create `src/client/SettingsUi.luau`",
     "T037 Edit `src/client/Hud.luau`",
-    "T038 Edit `src/client/ProfileClient.luau`",
-    "T039 Edit `src/client/Main.client.luau`",
-    "T040 Studio MCP",
-    "T041 Edit `tests/studio/DataService.spec.luau`",
+    "T038 Edit `src/client/ProfileClient.luau` (apply settings)",
+    "T039 Edit `src/client/Main.client.luau` (SettingsUi)",
+    "T040 Studio MCP playtest of Settings (quickstart §5)",
+    "T041 Edit `tests/studio/DataService.spec.luau` (US4 acceptance case)",
     "T042 Edit `src/client/HubUi.luau`",
-    "T043 Edit `src/client/ResultsUi.luau` (after T029)",
-    "T044 Studio MCP",
-    "T045 Studio MCP",
+    "T043 Edit `src/client/ResultsUi.luau` (coins total line)",
+    "T044 Studio MCP playtest of economy HUD and TopBar",
+    "T045 Studio MCP captures at three resolutions",
     "T046 Authority and privacy audit (Constitution II, V, VIII)",
-    "T047 Create `specs/003-saving-and-economy/pr-description.md` stating which Quality Gates applied and how each was m",
+    "T047 Create `specs/003-saving-and-economy/pr-description.md`",
     "T049 Final validation"
   ],
   "human": [
     {
       "item": "T001 Merge 002 into 003-saving-and-economy",
-      "reason": "002-run-loop is still not merged to main (git fetch checked this round: RunManager and RunClock are absent from origin/main). The task says to stop and report instead of copying 002 code by hand, so someone must merge the 002 PR first. Until then most remaining tasks cannot be built."
+      "reason": "002-run-loop is still not merged to main (git fetch checked this round: RunManager and RunClock are absent from origin/main, and src/server and src/client lack the 002 files). The task says to stop and report instead of copying 002 code by hand, so someone must merge the 002 PR first. Until then most remaining tasks cannot be built."
     },
     {
       "item": "T048 Human checks on a private test place",
       "reason": "Needs real multi-server persistence, a two-server session lock test, a real phone, and adult and child playtesters outside Studio."
     }
   ],
-  "summary": "Round 3: T002-T005 and T007-T009 are done and scripts/check.sh passes (143 tests), but 002 is still unmerged (T001), so the other tasks stay open and tasks.md already covers all remaining work, so nothing was appended."
+  "summary": "Round 4: no new work found and no tasks appended; T002-T005 and T007-T009 are done and scripts/check.sh passes, but 002 is still unmerged (T001), so the remaining tasks already in tasks.md stay blocked."
 }
