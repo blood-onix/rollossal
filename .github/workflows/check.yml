@@ -19,7 +19,7 @@ jobs:
 
       - name: Install tools from rokit.toml
         run: |
-          "$HOME/.rokit-bin/rokit" install
+          "$HOME/.rokit-bin/rokit" install --no-trust-check
 
       - name: Install Wally packages
         run: wally install
