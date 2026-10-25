@@ -20,7 +20,7 @@
 
 | Gate | How it is met | Status |
 | --- | --- | --- |
-| 1. `scripts/check.sh` | Runs StyLua, Selene, luau-lsp strict, Lune suites, Rules guard. `scripts/test-guard.sh` too. | Exit 0 locally; CI `check` on this PR (T065) |
+| 1. `scripts/check.sh` | Runs StyLua, Selene, luau-lsp strict, Lune suites, Rules guard. `scripts/test-guard.sh` too. | Exit 0 locally; CI `check` green |
 | 2. Studio playtest, console read, phone viewport | Studio spike over Rojo and the Studio MCP server: solo scenarios S1 to S8, JitterProbe on the laptop, Jest suite, console read, phone-resolution jump button check. | Pass. Console clean apart from Studio's own `ContentId` line. Jest 19 of 19. JitterProbe `Weld`: resting ΔY 0.0034, rolling speed error 0.029. Solo run reached Tier 4 at 101 s with at most 30 visuals. Phone: Galaxy A16 in the Studio device simulator (viewport 685 × 338), jump button 96 × 96 px, 24 px from the right and bottom edges; dragging the touch stick rolls the ball and the jump button hops 1.27 studs |
 | 3. Assets | N/A: plain parts only, no imported assets. | N/A |
 | 4. Localisation | N/A: the jump button is a symbol, no player-facing strings. | N/A |
@@ -51,6 +51,6 @@ Do not merge without owner approval.
 - [x] JitterProbe on the laptop; `stuckVisualMode` decision recorded in plan.md Risk Results
 - [x] Phone-resolution check of the jump button (at least 96 × 96 px, bottom right)
 - [x] Touch stick moves the ball in the device simulator (T091)
-- [ ] CI `check` workflow green
+- [x] CI `check` workflow green
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
