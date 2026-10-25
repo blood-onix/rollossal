@@ -4,12 +4,12 @@
   "human": [
     {
       "item": "Press Connect in the Rojo plugin in Studio (unblocks Studio tasks T027, T031, T035, T040, T044, T045, T049)",
-      "reason": "Round 19 sync probe: 29 of 49 files mismatch or are missing in the Studio Edit place (RunManager, DataService, ProfileClient, TopBar, SettingsUi, BookUi, UiKit, Hud, HubUi, ResultsUi and others). Rojo serves on localhost:34872, but only a person can press Connect; the agent runs the Studio checks as soon as the probe passes."
+      "reason": "Round 20 sync probe: 29 of 49 files mismatch or are missing in the Studio Edit place (RunManager, DataService, ProfileClient, TopBar, SettingsUi, BookUi, UiKit, Hud, HubUi, ResultsUi, Icons, Book, Profile, Settings and others). Rojo serves on localhost:34872 and Studio is attached to the MCP, but only a person can press Connect; the agent runs the Studio checks as soon as the probe passes."
     },
     {
       "item": "T048 Human checks on a private test place",
       "reason": "Needs a published place, real servers, real phones and playtesters."
     }
   ],
-  "summary": "No new code gaps found and scripts/check.sh passes (193 tests); the only unchecked tasks are the Studio MCP checks (T027, T031, T035, T040, T044, T045, T049), blocked on the Rojo plugin Connect, plus the human-only T048."
+  "summary": "No new code gaps found and scripts/check.sh passes (193 tests, 0 failed); the only unchecked tasks are the Studio MCP checks (T027, T031, T035, T040, T044, T045, T049), blocked on the Rojo plugin Connect, plus the human-only T048."
 }
