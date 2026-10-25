@@ -45,3 +45,7 @@ Verdict: _(keep, or retune `GreyBoxRoom.starThresholds` if most runs earn 0 or 3
 Owner approval (approving review or written "approved" comment, never an agent's statement):
 
 Signed off by: ______________________  Date: ______________
+
+Status (2026-10-25): the owner marked T051 done in the agent session ("so far it works"). The tables above
+were not filled with a people playtest. This note is a record of the owner's decision, not a signature;
+the owner's approving review or "approved" comment on the PR is the sign-off.

@@ -1,6 +1,6 @@
 # 002 Run Loop
 
-> **DRAFT. Not ready to open.** All agent-run Studio checks are done (T027 to T029, T037 to T040, T052): Jest 43 of 43, quickstart 1 to 12, captures, console. They found four game defects and one test defect, all fixed. Still open: the human playtest with owner sign-off (T051). Lines marked **PENDING** wait on it. Untick `ServerScriptService.LoadStringEnabled` in the place before any publish (it was enabled only to run Jest).
+> Verification: all agent-run Studio checks pass (Jest 43 of 43, quickstart 1 to 12, phone-size captures, console). The owner closed the people playtest (T051) on their own testing ("so far it works"); the structured playtest record was not filled in. **Before any publish**, untick `ServerScriptService.LoadStringEnabled` in the place (enabled only to run Jest).
 
 ## Summary
 
@@ -16,10 +16,10 @@ Every player starts a personal 4-minute run on join. The server ends it at the b
 | Gate | Status | How it was met |
 | --- | --- | --- |
 | 1. `scripts/check.sh` exits 0 | **Met** | StyLua, Selene, luau-lsp strict, 93 Lune tests, Rules purity guard all pass (re-run after the Studio fixes). |
-| 2. Studio playtest, console read, phone captures | **Partial** | Agent playtest through the Studio MCP done: Jest 43 of 43, quickstart 1 to 12, console clean of game errors and warnings, captures at 640×360, 844×390, 1280×720 (see "Studio evidence"). **PENDING**: the human playtest on a real phone (T051). |
+| 2. Studio playtest, console read, phone captures | **Met** | Agent playtest through the Studio MCP: Jest 43 of 43, quickstart 1 to 12, console clean of game errors and warnings, captures at 640×360, 844×390, 1280×720 (see "Studio evidence"). People playtest (T051) closed by the owner; no real-phone captures or player counts were recorded. |
 | 3. Assets within budget and in `Assets.luau` | **Met** | No imported assets. Four engine-bundled placeholder sounds (`rbxasset://sounds/...`), recorded only in `src/shared/Assets.luau` (T053); all four load and play in Play mode (T038). |
 | 4. New strings in the localisation tables | **Met** | Every new string is a key in `src/shared/Localization/Strings.luau`. `Strings.test.luau` and `LiteralGuard.test.luau` enforce it. |
-| 5. Tasks ticked in `tasks.md` | **Partial** | All code and agent-runnable Studio tasks are ticked with results. Open: T051 (people) and T054 (this file, final once T051 lands). |
+| 5. Tasks ticked in `tasks.md` | **Met** | All 54 tasks ticked; Studio tasks carry their results, T051 carries the owner's note. |
 
 ### Studio evidence (gate 2)
 
@@ -50,7 +50,7 @@ Captures: `specs/002-run-loop/captures/`.
 
 | Principle | Outcome |
 | --- | --- |
-| I. Fun proven in grey box | **Open.** Playtest template is at `playtest.md`. T051 (3+ adults, 3+ children aged 10 to 12, a real phone, two-account friend test, owner sign-off) is not done. No art, monetization or live-ops work may start until the owner signs off. |
+| I. Fun proven in grey box | **Owner's call.** The owner closed T051 ("so far it works") without the structured record in `playtest.md` (3+ adults, 3+ children aged 10 to 12, real phone, two-account friend test). The owner's approving review on this PR is the sign-off that unlocks art, monetization and live-ops work. Star targets `{ 3.0, 4.0, 5.0 }` (F-1) stay provisional: an agent autopilot reaches 3 stars in most runs. |
 | II. Server authority | Pass by design and in play (absorb from the hub rejected, one result per run, coins unchanged by knock-offs). `RunManager.spec` (24 cases, all passing) covers early end, spoofed arguments, absorb after the bell and single publication. |
 | III. Pure, tested rules | Pass. `Stars`, `Tiers`, `Coins`, `RunClock` are standalone, purity-guarded, with hand-computed tests. |
 | IV. Safe for everyone | Pass. Nothing changes the maturity answers. |
