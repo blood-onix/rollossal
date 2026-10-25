@@ -248,6 +248,6 @@ version = "1.0.3"
 dependencies = []
 
 [[package]]
-name = "ricokick/ricokick"
+name = "rollossal/rollossal"
 version = "0.1.0"
 dependencies = [["ProfileStore", "lm-loleris/profilestore@1.0.3"], ["Jest", "jsdotlua/jest@3.10.0"], ["JestGlobals", "jsdotlua/jest-globals@3.10.0"]]
