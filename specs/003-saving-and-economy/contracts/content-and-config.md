@@ -56,8 +56,8 @@ and every object's `tier` has a `sizeTiers` entry (so no page is orphaned).
 | `unknown` | `❓` | silhouette card |
 | `prev` | `◀` | Book previous page |
 | `next` | `▶` | Book next page |
-| `close` | `✕` | panel close |
-| `check` | `✔` | reward earned, toggle on |
+| `close` | `❌` | panel close (`✕` is blank in FredokaOne, a box in GothamMedium) |
+| `check` | `✅` | reward earned, toggle on (`✔` renders dark grey on the dark panels) |
 
 Every glyph is checked in `FredokaOne` and `GothamMedium` in the capture task (002 found `↻` missing and
 used an emoji). A glyph that does not render is replaced by an emoji in this file only.
@@ -97,9 +97,9 @@ Entry type becomes `{ en: string, es: string? }`. Placeholder names must match b
 | `ui.book.prev` | `Back` | `Atrás` | |
 | `ui.book.next` | `Next` | `Siguiente` | |
 | `ui.settings.title` | `Settings` | `Ajustes` | |
-| `ui.settings.music_volume` | `Music volume` | `Volumen de la música` | |
+| `ui.settings.music_volume` | `Music volume` | `Volumen de música` | |
 | `ui.settings.effects_volume` | `Effects volume` | `Volumen de efectos` | |
-| `ui.settings.camera_sensitivity` | `Camera sensitivity` | `Sensibilidad de la cámara` | |
+| `ui.settings.camera_sensitivity` | `Camera sensitivity` | `Sensibilidad cámara` | |
 | `ui.settings.reduce_motion` | `Reduce motion` | `Reducir movimiento` | |
 | `ui.settings.on` | `On` | `Sí` | |
 | `ui.settings.off` | `Off` | `No` | |
@@ -111,7 +111,7 @@ Entry type becomes `{ en: string, es: string? }`. Placeholder names must match b
 | `ui.hub.coins` | `Coins: {coins}` | `Monedas: {coins}` | `coins` |
 | `ui.hub.best_size` | `Best size: {size}` | `Mejor tamaño: {size}` | `size` |
 | `ui.results.coins_total` | `Coins: {coins} (total {total})` | `Monedas: {coins} (total {total})` | `coins`, `total` |
-| `ui.results.first_run_tip` | `Coins and book entries are saved. Fill book pages for rewards!` | `Las monedas y el libro se guardan. ¡Completa páginas para ganar premios!` | |
+| `ui.results.first_run_tip` | `Coins and book entries are saved. Fill book pages for rewards!` | `Monedas y libro guardados. ¡Completa páginas por premios!` | |
 | `reward.greybox.tier1.name` | `Tiny Cube Trail` | `Estela de cubo diminuto` | |
 | `reward.greybox.tier2.name` | `Small Cube Trail` | `Estela de cubo pequeño` | |
 | `reward.greybox.tier3.name` | `Medium Cube Skin` | `Aspecto de cubo mediano` | |

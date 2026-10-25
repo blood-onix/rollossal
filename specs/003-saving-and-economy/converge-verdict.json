@@ -1,15 +1,19 @@
 {
   "verdict": "incomplete",
-  "remaining": [
-    "T051 Redo the visual sub-checks of quickstart §5 that T040 ticked without running (Reduce motion, camera sensitivity, Español switch, rejoin restore) and capture SettingsUi at 640x360",
-    "T052 Complete T031, T044 and T045 with real screen_capture evidence at 640x360, 844x390 and 1280x720, the glyph check and the plan.md Risk Results rows",
-    "T053 Re-run scripts/check.sh, the Jest runner and quickstart sections 1 to 6 on a clean session after T051 and T052, and correct the T049 note"
-  ],
+  "remaining": [],
   "human": [
     {
+      "item": "T052 (with T031, T044, T045, T051) Copy the 33 Studio captures into specs/003-saving-and-economy/captures/ and tick those tasks",
+      "reason": "The Studio MCP screen_capture tool has no output path and writes only to the harness tool-results folder, and the shell policy blocks copying from outside the project. The user must run the cp commands at the end of specs/003-saving-and-economy/captures/README.md from the repo root. The measurements and glyph checks are already recorded in playtest.md and plan.md."
+    },
+    {
+      "item": "T053 Final re-validation and correction of the T049 note",
+      "reason": "Gated on the capture copy above. After the copy, run scripts/check.sh (currently 194 passed, exit 0), the Jest runner and quickstart sections 1 to 6, then fix the T049 note that says the captures are not yet in the repo."
+    },
+    {
       "item": "T048 Human checks on a private test place",
-      "reason": "Needs a published place, real servers, real phones and playtesters (adults and children aged 10 to 12) and owner sign-off."
+      "reason": "Needs a published place, real servers, real phones, playtesters (3 adults and 3 children aged 10 to 12) and owner sign-off on Open Items 1 and 2, including the camera sensitivity effect on touch."
     }
   ],
-  "summary": "Code is complete and scripts/check.sh passes (193 Lune tests), but the Studio playtests and captures of T031, T044, T045 and the visual parts of T040 are unrun, and Studio screen_capture does return images so the agent can do them; T048 is human-only."
+  "summary": "Code, tests and Studio playtests are done (check.sh exits 0 with 194 Lune tests, Jest 59/59), and every open task is blocked on copying the 33 captures into the repo or on human checks, so no new tasks were appended."
 }

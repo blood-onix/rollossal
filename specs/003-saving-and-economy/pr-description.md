@@ -3,7 +3,7 @@
 ## Quality Gates
 
 - Gate 1 (`scripts/check.sh`): passed (exit 0) on the final commit.
-- Gate 2 (Studio playtest with console read + phone-resolution captures): Studio not synced in this environment (Rojo plugin not connected); code-level validation done via Lune/Jest where possible. Captures remain a follow-up.
+- Gate 2 (Studio playtest with console read + phone-resolution captures): Studio was in sync (49 files, no mismatches) and the Play checks and Jest runner (59/59) ran on 2026-10-26; the run found and fixed several UI defects (see `playtest.md`, round 3). 33 captures at 640×360, 844×390 and 1280×720 were taken and measured; the image files still have to be copied into `captures/` (see `captures/README.md`), so this gate is not fully met until then. Real-device checks stay in T048.
 - Gate 3 (assets): N/A, no assets.
 - Gate 4 (every new string in `Strings.luau`): all keys from `contracts/content-and-config.md` added with English and Spanish text.
 - Gate 5 (`tasks.md` ticks): reconciled; Studio-only and human tasks left unchecked with blockers noted.
