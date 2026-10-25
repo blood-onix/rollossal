@@ -52,5 +52,5 @@
       "reason": "Needs real multi-server persistence, a two-server session lock test, a real phone, and adult and child playtesters outside Studio."
     }
   ],
-  "summary": "Round 5: no new gaps found and no tasks appended; T002-T005 and T007-T009 are done and scripts/check.sh passes, but 002 is still not merged to origin/main (T001), so the remaining tasks already in tasks.md stay blocked."
+  "summary": "Round 6: no new gaps found and no tasks appended; T002-T005 and T007-T009 are done and 143 Lune tests pass, but 002-run-loop is still not merged to origin/main (T001), so the other open tasks already in tasks.md stay blocked."
 }
