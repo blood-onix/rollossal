@@ -1,7 +1,6 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T050 Code is done (unused afterEach import and unused `run` local are gone, scripts/check.sh exits 0 with 193 unit tests passing); only the checkbox in tasks.md still needs ticking",
     "T027 Studio MCP: run DataService.spec and RunManager.spec and the US1 playtest, record in playtest.md (needs Rojo Connect)",
     "T031 Studio MCP playtest of Book (quickstart section 4) (needs Rojo sync)",
     "T035 Studio MCP camera sensitivity spike (needs Rojo sync)",
@@ -12,13 +11,13 @@
   ],
   "human": [
     {
-      "item": "Rojo plugin Connect in Studio (prerequisite for T027, T031, T035, T040, T044, T045)",
-      "reason": "The Studio sync probe still reports 29 of 49 files missing or stale (DataService, RunManager, Profile, Book, Settings, BookUi, TopBar, UiKit, ProfileClient and others). Only a person can press Connect in the Rojo plugin; the MCP cannot click outside the game viewport. Per AGENTS.md the agent keeps polling the probe and then runs these tasks itself."
+      "item": "Rojo plugin Connect in Studio (prerequisite for T027, T031, T035, T040, T044, T045, T049)",
+      "reason": "The Studio sync probe still reports DataService, RunManager, Profile, Book, Settings, BookUi, TopBar, UiKit, ProfileClient, SettingsUi and DataService.spec as missing in the open place. Only a person can press Connect in the Rojo plugin; the MCP cannot click outside the game viewport. Per AGENTS.md the agent runs these tasks itself once the probe passes."
     },
     {
-      "item": "T048 Human checks on a private test place (persistence across real servers, session lock, etc.)",
-      "reason": "Needs a published place, real servers, real devices and playtesters; not possible in Studio or this environment."
+      "item": "T048 Human checks on a private test place (persistence across real servers, session lock, owner Open Items 1 and 2, grey-box check with adults and children)",
+      "reason": "Needs a published place, real servers, real phones and playtesters; not possible in Studio or this environment."
     }
   ],
-  "summary": "The code satisfies the spec and scripts/check.sh exits 0, but the six Studio-MCP tasks and T049 still wait on the user pressing Rojo Connect (probe: 29 of 49 files stale), and T048 needs people."
+  "summary": "The code satisfies the spec and scripts/check.sh exits 0 (193 tests pass, T050 ticked), but the Studio-MCP tasks and T049 still wait on the user pressing Rojo Connect, and T048 needs people."
 }

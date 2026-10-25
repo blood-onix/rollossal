@@ -281,4 +281,4 @@ With several agents (each in its own worktree, Constitution X):
 
 ## Phase 8: Convergence
 
-- [ ] T050 Make `scripts/check.sh` exit 0 again: Selene fails on two unused-variable warnings, `afterEach` imported but unused at `tests/studio/DataService.spec.luau:14` and `local run = RunManager.startRun(...)` unused at `tests/studio/RunManager.spec.luau:448`. Remove the unused import and call `RunManager.startRun(uid, nil, now)` without assigning its result, then re-run `scripts/check.sh` to a clean exit per tasks.md Conventions "Each task ends with `scripts/check.sh` exiting 0" and Quality Gate 1 (partial)
+- [X] T050 Make `scripts/check.sh` exit 0 again: Selene fails on two unused-variable warnings, `afterEach` imported but unused at `tests/studio/DataService.spec.luau:14` and `local run = RunManager.startRun(...)` unused at `tests/studio/RunManager.spec.luau:448`. Remove the unused import and call `RunManager.startRun(uid, nil, now)` without assigning its result, then re-run `scripts/check.sh` to a clean exit per tasks.md Conventions "Each task ends with `scripts/check.sh` exiting 0" and Quality Gate 1 (partial)
