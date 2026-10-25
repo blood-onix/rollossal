@@ -18,6 +18,8 @@ selene generate-roblox-std
 selene src tests
 
 step "Rojo sourcemap"
+# wally install removes a realm folder that has no dependencies (Packages today), but the project maps all three.
+mkdir -p Packages ServerPackages DevPackages
 rojo sourcemap default.project.json --output sourcemap.json
 
 step "luau-lsp strict analysis"
