@@ -1,0 +1,28 @@
+name: check
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rokit (pinned v1.2.0)
+        run: |
+          curl -fsSL -o rokit.zip \
+            "https://github.com/rojo-rbx/rokit/releases/download/v1.2.0/rokit-1.2.0-linux-x86_64.zip"
+          unzip -o rokit.zip -d "$HOME/.rokit-bin"
+          echo "$HOME/.rokit-bin" >> "$GITHUB_PATH"
+          echo "$HOME/.rokit/bin" >> "$GITHUB_PATH"
+
+      - name: Install tools from rokit.toml
+        run: |
+          "$HOME/.rokit-bin/rokit" install --no-trust-check
+
+      - name: Install Wally packages
+        run: wally install
+
+      - name: Run checks
+        run: scripts/check.sh
