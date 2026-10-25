@@ -3,7 +3,9 @@
   "mcp": {
     "Roblox_Studio": {
       "type": "local",
-      "command": ["/Applications/RobloxStudio.app/Contents/MacOS/StudioMCP"],
+      "command": [
+        "/Applications/RobloxStudio.app/Contents/MacOS/StudioMCP"
+      ],
       "enabled": true
     }
   }
