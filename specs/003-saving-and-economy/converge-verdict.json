@@ -1,56 +1,27 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T011 Edit src/shared/Config.luau and tests/unit/Config.test.luau (Saving keys, Settings bounds, flags); unblocked, Config.luau exists on branch",
-    "T006 Edit tests/unit/RunClock.test.luau (uiLocked table) (blocked until T001 brings 002 code onto the branch)",
-    "T010 Edit src/shared/Rules/RunClock.luau (add uiLocked) (blocked until T001 brings 002 code onto the branch)",
-    "T012 Edit GreyBoxRoom.luau and its test (RewardDef, tier rewards) (blocked until T001 brings 002 code onto the branch)",
-    "T013 Edit src/shared/Content/Icons.luau (new glyphs) (blocked until T001 brings 002 code onto the branch)",
-    "T014 Edit Strings.luau and its test (en/es entries) (blocked until T001 brings 002 code onto the branch)",
-    "T015 Edit Localizer.luau (locale override) (blocked until T001 brings 002 code onto the branch)",
-    "T016 Edit src/server/Remotes.luau (UpdateSettings, RequestProfile, ProfileSync) (blocked until T001 brings 002 code onto the branch)",
-    "T017 Edit src/client/UiKit.luau (minSize, displayOrder) (blocked until T001 brings 002 code onto the branch)",
-    "T018 Edit src/client/RunClient.luau (coinsTotal, isFirstRun) (blocked until T001 brings 002 code onto the branch)",
-    "T019 Create src/client/ProfileClient.luau (blocked until T001 brings 002 code onto the branch)",
-    "T020 Create src/client/TopBar.luau (blocked until T001 brings 002 code onto the branch)",
-    "T021 Edit src/client/Main.client.luau (ProfileClient, TopBar) (blocked until T001 brings 002 code onto the branch)",
-    "T022 Create tests/studio/DataService.spec.luau (blocked until T001 brings 002 code onto the branch)",
-    "T023 Edit tests/studio/RunManager.spec.luau (blocked until T001 brings 002 code onto the branch)",
-    "T024 Create src/server/DataService.luau (blocked until T001 brings 002 code onto the branch)",
-    "T025 Edit src/server/Main.server.luau (DataService.start) (blocked until T001 brings 002 code onto the branch)",
-    "T026 Edit src/server/RunManager.luau at the three R6 seams (blocked until T001 brings 002 code onto the branch)",
-    "T027 Studio MCP run of DataService.spec and RunManager.spec (blocked until T001 brings 002 code onto the branch)",
-    "T028 Create src/client/BookUi.luau (blocked until T001 brings 002 code onto the branch)",
-    "T029 Edit src/client/ResultsUi.luau (new entries, first run) (blocked until T001 brings 002 code onto the branch)",
-    "T030 Edit Main.client.luau (BookUi) (blocked until T001 brings 002 code onto the branch)",
-    "T031 Studio MCP playtest of Book (quickstart section 4) (blocked until T001 brings 002 code onto the branch)",
-    "T032 Edit DataService.spec.luau (settings cases) (blocked until T001 brings 002 code onto the branch)",
-    "T033 Edit DataService.luau (updateSettings) (blocked until T001 brings 002 code onto the branch)",
-    "T034 Edit src/client/Feedback.luau (SoundGroups, setVolumes) (blocked until T001 brings 002 code onto the branch)",
-    "T035 Studio MCP camera sensitivity spike (blocked until T001 brings 002 code onto the branch)",
-    "T036 Create src/client/SettingsUi.luau (blocked until T001 brings 002 code onto the branch)",
-    "T037 Edit src/client/Hud.luau (refreshText on Localizer.changed) (blocked until T001 brings 002 code onto the branch)",
-    "T038 Edit ProfileClient.luau (apply settings) (blocked until T001 brings 002 code onto the branch)",
-    "T039 Edit Main.client.luau (SettingsUi) (blocked until T001 brings 002 code onto the branch)",
-    "T040 Studio MCP playtest of Settings (quickstart section 5) (blocked until T001 brings 002 code onto the branch)",
-    "T041 Edit DataService.spec.luau (best-size acceptance case) (blocked until T001 brings 002 code onto the branch)",
-    "T042 Edit src/client/HubUi.luau (coins and best-size rows) (blocked until T001 brings 002 code onto the branch)",
-    "T043 Edit ResultsUi.luau (coins line, best-size) (blocked until T001 brings 002 code onto the branch)",
-    "T044 Studio MCP playtest of economy HUD (quickstart section 3 steps 2-6) (blocked until T001 brings 002 code onto the branch)",
-    "T045 Studio MCP screenshot capture checklist at three viewports (blocked until T001 brings 002 code onto the branch)",
-    "T046 Authority and privacy audit (Constitution II, V, VIII) (blocked until T001 brings 002 code onto the branch)",
-    "T047 Create specs/003-saving-and-economy/pr-description.md (blocked until T001 brings 002 code onto the branch)",
-    "T049 Final validation: scripts/check.sh, Jest runner, quickstart (blocked until T001 brings 002 code onto the branch)"
+    "T022 Create tests/studio/DataService.spec.luau (Jest-Lua, mock store); file does not exist yet",
+    "T023 Edit tests/studio/RunManager.spec.luau (coinsTotal, isFirstRun, persistent book and best size); not yet edited",
+    "T032 Edit tests/studio/DataService.spec.luau (updateSettings cases), after T022",
+    "T041 Edit tests/studio/DataService.spec.luau (best-size acceptance case), after T022",
+    "T027 Studio MCP: run DataService.spec and RunManager.spec and the US1 playtest, record in playtest.md (needs Rojo plugin Connect, then T022/T023)",
+    "T031 Studio MCP playtest of Book (quickstart section 4) (needs Rojo sync)",
+    "T035 Studio MCP camera sensitivity spike (needs Rojo sync)",
+    "T040 Studio MCP playtest of Settings (quickstart section 5) (needs Rojo sync, T035)",
+    "T044 Studio MCP playtest of economy HUD (quickstart section 3 steps 2-6) (needs Rojo sync)",
+    "T045 Studio MCP screenshot capture checklist at three viewports into specs/003-saving-and-economy/captures/ (needs Rojo sync)",
+    "T049 Final validation: scripts/check.sh, Jest runner via Studio MCP, quickstart walk-through (after the tasks above)"
   ],
   "human": [
     {
-      "item": "T001 Merge 002-run-loop into main, then merge main into 003-saving-and-economy",
-      "reason": "PR #2 (002-run-loop) is still OPEN, so RunManager, RunClock, Localizer, Strings, UiKit, Hud and other 002 files are absent from this branch. Merging it is an outward-facing action for the user, and the task says not to copy 002 code by hand."
+      "item": "Rojo plugin Connect in Studio (prerequisite for T027, T031, T035, T040, T044, T045)",
+      "reason": "The Studio sync probe reports DataService, RunManager, Profile, BookUi, TopBar and UiKit missing and Config and Main stale. Only a person can press Connect in the Rojo plugin; the MCP cannot click outside the game viewport. Per AGENTS.md the agent keeps polling the probe and then runs these tasks itself."
     },
     {
-      "item": "T048 Human checks on a private test place (persistence across real servers, etc.)",
+      "item": "T048 Human checks on a private test place (persistence across real servers, session lock, etc.)",
       "reason": "Needs a published place, real servers and real devices; not possible in Studio or this environment."
     }
   ],
-  "summary": "Only Phase 2 pure rules (T003-T005, T007-T009) and T002 are done; 002 is not merged into main (PR #2 open), so T001 blocks nearly all remaining work and only T011 can proceed now."
+  "summary": "Code for T001-T021, T024-T026, T028-T030, T033-T034, T036-T039, T042-T043, T046-T047 is in place and scripts/check.sh passes (193 unit tests); the four Jest-Lua Studio spec tasks and six Studio-MCP tasks remain, the latter blocked on the user pressing Rojo Connect, and T048 needs a human."
 }
