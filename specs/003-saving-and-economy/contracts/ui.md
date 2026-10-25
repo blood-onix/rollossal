@@ -78,6 +78,10 @@ value moves the control. The slider handles are the one place a utility control 
 wide); the track row is 56 px high and the whole row is the drag area, which the capture task checks
 against Roblox's 44 px guidance.
 
+Camera sensitivity is applied through `UserInputService.MouseDeltaSensitivity` (mouse only). The touch
+pan cannot be scaled by script, so on touch devices the setting is saved and restored but has no effect;
+no custom camera is built in this feature (plan finding F-7).
+
 ## Hub screen additions (`HubUi`, state `Hub`)
 
 Card grows from 300×180 to 300×236: above the Play button two 24 px rows, `[coin glyph] ui.hub.coins` and

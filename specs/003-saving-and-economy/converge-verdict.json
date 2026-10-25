@@ -1,11 +1,8 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T022 Create tests/studio/DataService.spec.luau (Jest-Lua, mock store); file does not exist yet",
-    "T023 Edit tests/studio/RunManager.spec.luau (coinsTotal, isFirstRun, persistent book and best size); not yet edited",
-    "T032 Edit tests/studio/DataService.spec.luau (updateSettings cases), after T022",
-    "T041 Edit tests/studio/DataService.spec.luau (best-size acceptance case), after T022",
-    "T027 Studio MCP: run DataService.spec and RunManager.spec and the US1 playtest, record in playtest.md (needs Rojo plugin Connect, then T022/T023)",
+    "T050 Fix the two Selene unused-variable warnings (tests/studio/DataService.spec.luau:14 afterEach, tests/studio/RunManager.spec.luau:448 run) so scripts/check.sh exits 0",
+    "T027 Studio MCP: run DataService.spec and RunManager.spec and the US1 playtest, record in playtest.md (needs Rojo Connect)",
     "T031 Studio MCP playtest of Book (quickstart section 4) (needs Rojo sync)",
     "T035 Studio MCP camera sensitivity spike (needs Rojo sync)",
     "T040 Studio MCP playtest of Settings (quickstart section 5) (needs Rojo sync, T035)",
@@ -16,12 +13,12 @@
   "human": [
     {
       "item": "Rojo plugin Connect in Studio (prerequisite for T027, T031, T035, T040, T044, T045)",
-      "reason": "The Studio sync probe reports DataService, RunManager, Profile, BookUi, TopBar and UiKit missing and Config and Main stale. Only a person can press Connect in the Rojo plugin; the MCP cannot click outside the game viewport. Per AGENTS.md the agent keeps polling the probe and then runs these tasks itself."
+      "reason": "The Studio sync probe still reports 49 files checked with most client, server and shared modules missing or stale (DataService, RunManager, Profile, Book, Settings, BookUi, TopBar, UiKit, ProfileClient and others). Only a person can press Connect in the Rojo plugin; the MCP cannot click outside the game viewport. Per AGENTS.md the agent keeps polling the probe and then runs these tasks itself."
     },
     {
       "item": "T048 Human checks on a private test place (persistence across real servers, session lock, etc.)",
-      "reason": "Needs a published place, real servers and real devices; not possible in Studio or this environment."
+      "reason": "Needs a published place, real servers, real devices and playtesters; not possible in Studio or this environment."
     }
   ],
-  "summary": "Code for T001-T021, T024-T026, T028-T030, T033-T034, T036-T039, T042-T043, T046-T047 is in place and scripts/check.sh passes (193 unit tests); the four Jest-Lua Studio spec tasks and six Studio-MCP tasks remain, the latter blocked on the user pressing Rojo Connect, and T048 needs a human."
+  "summary": "T022, T023, T032 and T041 are now done, but scripts/check.sh exits 1 on two Selene warnings (new T050) and the six Studio-MCP tasks plus T049 still wait on the user pressing Rojo Connect, with T048 needing people."
 }

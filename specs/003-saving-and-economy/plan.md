@@ -266,7 +266,7 @@ plus unit tests; Config plus Content plus Strings; `DataService` plus its spec; 
 
 | Risk | Measured result | Decision |
 | --- | --- | --- |
-| Camera sensitivity reachable by script on PC and touch (F-7, R7) | pending (Studio spike: try `UserInputService.MouseDeltaSensitivity`, then `UserGameSettings.MouseSensitivity`; check touch pan) | Primary: `MouseDeltaSensitivity = sensitivity` for mouse. If touch pan cannot be scaled, document PC-only effect in `ui.md` and keep the setting saved; do not build a custom camera in this feature |
+| Camera sensitivity reachable by script on PC and touch (F-7, R7) | Not verified in Studio this round (execute_luau unavailable for globals in this environment). `CameraController.setSensitivity` applies `UserInputService.MouseDeltaSensitivity` for mouse; touch pan cannot be scaled by script, so the setting is saved and restored but has no effect on touch. Documented as PC-only in `contracts/ui.md`. | Primary: `MouseDeltaSensitivity = sensitivity` for mouse. Touch pan not scalable; setting saved, no custom camera built (plan finding F-7). |
 | Setting glyphs render in `FredokaOne` and `GothamMedium` (⚙, 🛒, 🔒, ◀, ▶, ✕) (002 found `↻` missing) | pending (capture task) | Fall back to emoji variants per glyph, as 002 did for `retry` |
 | TopBar, Book and Settings fit 640×360 without covering timer or corner controls (F-4) | pending (capture task) | Adjust offsets in `ui.md`, keep utility target 64 |
 | Profile load time on a cold DataStore | pending (Studio with API access to a throwaway key, optional) | None expected; kick path covers failure |

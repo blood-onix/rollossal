@@ -97,8 +97,8 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 
 ### Tests for User Story 1 (write first, ensure they FAIL before implementation)
 
-- [ ] T022 [P] [US1] Create `tests/studio/DataService.spec.luau` (Jest-Lua, `DataService.setStore(ProfileStore.New("test").Mock)`-style mock store, unique test user ids from 900001 up so no real key is touched, `setKick` and `setSync` seams to capture output): new profile has all v1 defaults (`version = 1`, `coins = 0`, empty `book` and `bestSize`, default `settings`); a partial stored profile is reconciled and saved values survive; a v1 profile loads unchanged (migration identity); apply adds coins, raises `bestSize`, inserts `book` entries as a set and grants a completed page reward into `skinsOwned`, and the captured `ProfileSync` snapshot carries the new values; a repeated `runId` and a late `runId` change nothing; apply after `release` returns `nil` and changes nothing; coins never go negative (`coins = -5`) and `bestSize` never decreases; `appliedRuns` is empty after a second `load` of the same user; a store stub whose `StartSessionAsync` returns `nil` makes `load` return false and the captured kick message equals `Localizer.t("error.profile_load_failed", nil, "en-us")`; a profile with `version = 2` is released unchanged and kicked with `error.profile_version`; `OnSessionEnd` while present kicks with `error.session_ended`; `DataService.shutdown()` releases every profile and later `applyRunResult` returns `nil`; `snapshot` and `getBook` return copies (mutating them does not change saved data). The suite never reads or writes a real DataStore key (spec edge case, FR-005).
-- [ ] T023 [P] [US1] Edit `tests/studio/RunManager.spec.luau`: with a mock profile loaded through `DataService`, the published result carries `coinsTotal` and `isFirstRun`, `newBookIds` is computed against the persistent `book`, and `bestSelfSize` is the persistent best; a user with no profile gets the 002 behaviour (`coinsTotal = nil`, `isFirstRun = false`) so every existing 002 test stays valid.
+- [X] T022 [P] [US1] Create `tests/studio/DataService.spec.luau` (Jest-Lua, `DataService.setStore(ProfileStore.New("test").Mock)`-style mock store, unique test user ids from 900001 up so no real key is touched, `setKick` and `setSync` seams to capture output): new profile has all v1 defaults (`version = 1`, `coins = 0`, empty `book` and `bestSize`, default `settings`); a partial stored profile is reconciled and saved values survive; a v1 profile loads unchanged (migration identity); apply adds coins, raises `bestSize`, inserts `book` entries as a set and grants a completed page reward into `skinsOwned`, and the captured `ProfileSync` snapshot carries the new values; a repeated `runId` and a late `runId` change nothing; apply after `release` returns `nil` and changes nothing; coins never go negative (`coins = -5`) and `bestSize` never decreases; `appliedRuns` is empty after a second `load` of the same user; a store stub whose `StartSessionAsync` returns `nil` makes `load` return false and the captured kick message equals `Localizer.t("error.profile_load_failed", nil, "en-us")`; a profile with `version = 2` is released unchanged and kicked with `error.profile_version`; `OnSessionEnd` while present kicks with `error.session_ended`; `DataService.shutdown()` releases every profile and later `applyRunResult` returns `nil`; `snapshot` and `getBook` return copies (mutating them does not change saved data). The suite never reads or writes a real DataStore key (spec edge case, FR-005).
+- [X] T023 [P] [US1] Edit `tests/studio/RunManager.spec.luau`: with a mock profile loaded through `DataService`, the published result carries `coinsTotal` and `isFirstRun`, `newBookIds` is computed against the persistent `book`, and `bestSelfSize` is the persistent best; a user with no profile gets the 002 behaviour (`coinsTotal = nil`, `isFirstRun = false`) so every existing 002 test stays valid.
 
 ### Implementation for User Story 1
 
@@ -136,7 +136,7 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 
 ### Tests for User Story 3 (write first, ensure they FAIL before implementation)
 
-- [ ] T032 [P] [US3] Edit `tests/studio/DataService.spec.luau`: `updateSettings` saves a valid candidate into `profile.Data.settings` and `ProfileSync` carries the authoritative values; `{ musicVolume = 9, language = "xx", bogus = 1 }` makes `musicVolume` 1 with language and unknown key ignored; `"x"`, zero arguments, two arguments, a number and `nil` change nothing and do not throw; `NaN` and `math.huge` are ignored; more than `Config.settingsRateLimit` updates inside one `Config.rateLimitWindow` are ignored after the limit with no `warn`; `updateSettings` with no active profile returns false and mutates nothing; saved non-default settings are present in the first snapshot after a reload (acceptance US3-4).
+- [X] T032 [P] [US3] Edit `tests/studio/DataService.spec.luau`: `updateSettings` saves a valid candidate into `profile.Data.settings` and `ProfileSync` carries the authoritative values; `{ musicVolume = 9, language = "xx", bogus = 1 }` makes `musicVolume` 1 with language and unknown key ignored; `"x"`, zero arguments, two arguments, a number and `nil` change nothing and do not throw; `NaN` and `math.huge` are ignored; more than `Config.settingsRateLimit` updates inside one `Config.rateLimitWindow` are ignored after the limit with no `warn`; `updateSettings` with no active profile returns false and mutates nothing; saved non-default settings are present in the first snapshot after a reload (acceptance US3-4).
 
 ### Implementation for User Story 3
 
@@ -161,7 +161,7 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 
 ### Tests for User Story 4 (write first, ensure they FAIL before implementation)
 
-- [ ] T041 [P] [US4] Edit `tests/studio/DataService.spec.luau`: add the acceptance case "run 1 `finalDiameter = 18.5`, `coins = 12`, then run 2 `finalDiameter = 14.0`, `coins = 8` in the same world" and assert the snapshot has `coins == 20` and `bestSize[worldId] == 18.5`, and that the second outcome has `isFirstRun == false` and `bestSize == 18.5`.
+- [X] T041 [P] [US4] Edit `tests/studio/DataService.spec.luau`: add the acceptance case "run 1 `finalDiameter = 18.5`, `coins = 12`, then run 2 `finalDiameter = 14.0`, `coins = 8` in the same world" and assert the snapshot has `coins == 20` and `bestSize[worldId] == 18.5`, and that the second outcome has `isFirstRun == false` and `bestSize == 18.5`.
 
 ### Implementation for User Story 4
 
@@ -276,3 +276,9 @@ With several agents (each in its own worktree, Constitution X):
 - Stop at any checkpoint to validate a story independently.
 - Never read or write the live DataStore from tests or Studio (`ProfileStore.Mock` only, user ids from 900001).
 - The words `game`, `task`, `Enum`, `Instance`, `workspace`, `tick` must not appear in `src/shared/Rules` files, comments included.
+
+---
+
+## Phase 8: Convergence
+
+- [ ] T050 Make `scripts/check.sh` exit 0 again: Selene fails on two unused-variable warnings, `afterEach` imported but unused at `tests/studio/DataService.spec.luau:14` and `local run = RunManager.startRun(...)` unused at `tests/studio/RunManager.spec.luau:448`. Remove the unused import and call `RunManager.startRun(uid, nil, now)` without assigning its result, then re-run `scripts/check.sh` to a clean exit per tasks.md Conventions "Each task ends with `scripts/check.sh` exiting 0" and Quality Gate 1 (partial)
