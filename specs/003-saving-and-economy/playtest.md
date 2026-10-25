@@ -17,3 +17,12 @@ Studio MCP reports Rojo plugin not connected (files missing in Edit datamodel). 
 ## Human checks (T048)
 
 Pending private test place and participants.
+## Studio convergence round (2026-10-25)
+
+- Rojo sync probe: mismatches = {} (only JitterProbe byte-count typo in probe; file is 5534 bytes). Studio in sync.
+- `scripts/check.sh`: exit 0 (193 Lune tests pass, purity guard green).
+- Jest runner (Server datamodel): DataService.spec 14/14, RunManager.spec 26/26, AbsorbService.spec 19/19 — 0 failures.
+- Console (Play session): only Studio artifacts (`DataStoreService: StudioAccessToApisNotAllowed`, `[profilestore] Roblox API services unavailable`, `ContentId rbxassetid://203785492`); no game-script errors or warnings.
+- UpdateSettings fuzz (T040): fired "x", {musicVolume=9, language="xx", bogus=1}, no-arg and two-arg from client; server stayed up; musicVolume clamped to 1, language unchanged (auto), unknown key ignored; no console errors. Verified via DataService.snapshot.
+- Profile load: manual DataService.load succeeds on mock store; snapshot returns v1 defaults (coins 0, empty book/bestSize, default settings).
+- Limitation: this model cannot receive screen_capture images, so visual capture verification (T031, T044, T045) is deferred to a human/image-capable pass. Code-level verification for those is covered by the Lune/Jest suites and the contracts.

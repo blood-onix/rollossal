@@ -1,11 +1,9 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T031 Studio playtest of quickstart §4 (Book lock for the first 5 s, ??? entries, page progress, first-run tip), with captures and playtest.md findings",
-    "T040 Studio playtest of quickstart §5 (Settings controls, Reduce motion, Camera sensitivity, language switch, rejoin restore, UpdateSettings fuzz), with captures and playtest.md findings",
-    "T044 Studio playtest of quickstart §3 steps 2 to 6 and the TopBar (summed coins, best size, Shop messages), with captures and playtest.md findings",
-    "T045 Studio capture of the full contracts/ui.md checklist at 640x360, 844x390 and 1280x720, plus the glyph check in FredokaOne and GothamMedium and the plan.md Risk Results rows",
-    "T049 Final validation: scripts/check.sh, Jest runner through the Studio MCP, quickstart sections 1 to 6 on a clean session, tick completed tasks (after T031, T040, T044 and T045)"
+    "T051 Redo the visual sub-checks of quickstart §5 that T040 ticked without running (Reduce motion, camera sensitivity, Español switch, rejoin restore) and capture SettingsUi at 640x360",
+    "T052 Complete T031, T044 and T045 with real screen_capture evidence at 640x360, 844x390 and 1280x720, the glyph check and the plan.md Risk Results rows",
+    "T053 Re-run scripts/check.sh, the Jest runner and quickstart sections 1 to 6 on a clean session after T051 and T052, and correct the T049 note"
   ],
   "human": [
     {
@@ -13,5 +11,5 @@
       "reason": "Needs a published place, real servers, real phones and playtesters (adults and children aged 10 to 12) and owner sign-off."
     }
   ],
-  "summary": "No new code gaps found and scripts/check.sh passes; the Rojo sync probe now passes (49 of 49 files match), so the agent can run the Studio tasks T031, T040, T044, T045 and T049, while T048 stays human-only."
+  "summary": "Code is complete and scripts/check.sh passes (193 Lune tests), but the Studio playtests and captures of T031, T044, T045 and the visual parts of T040 are unrun, and Studio screen_capture does return images so the agent can do them; T048 is human-only."
 }
