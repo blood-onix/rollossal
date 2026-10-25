@@ -1,0 +1,21 @@
+{
+  "verdict": "incomplete",
+  "remaining": [
+    "T027 Studio: run the Jest runner (RunManager.spec and all 001 suites) and confirm the R3 anchor/unanchor behaviour",
+    "T028 Studio: run quickstart scenarios 1, 6, 7, 8, 9, 10, 11, 12 and read the console",
+    "T029 Studio: capture the results and hub screens at 640x360, 844x390, 1280x720 and measure text and button sizes",
+    "T037 Studio: run the Jest runner and confirm the new RunManager.spec US2 cases pass",
+    "T038 Studio: confirm every Assets.sounds path plays and every Icons glyph renders; note any reduced-motion setting",
+    "T039 Studio: run quickstart scenarios 2, 3, 4, 5 and read the console",
+    "T040 Studio: capture the HUD with pickup pop and tier banner at the three phone resolutions",
+    "T052 Studio: SC-006 console cleanliness run over quickstart scenarios 1 to 11",
+    "T054 Draft specs/002-run-loop/pr-description.md with Quality Gate mapping and the Constitution check, then tick completed tasks"
+  ],
+  "human": [
+    {
+      "item": "T051 Run the playtest with real players and collect the owner's sign-off",
+      "reason": "Needs at least 3 adults and 3 children aged 10 to 12, a real phone, a two-account friend test and the owner's own approval; an agent cannot supply any of these (Constitution I)."
+    }
+  ],
+  "summary": "All code tasks (T001-T026, T030-T036, T041-T050, T053) are implemented and scripts/check.sh passes (93 Lune tests); no new code gaps were found, so tasks.md is unchanged and only the unticked Studio verification tasks, T054 and the human playtest T051 remain."
+}
