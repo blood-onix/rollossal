@@ -3,29 +3,29 @@
   "remaining": [],
   "human": [
     {
-      "item": "T079 Studio spike, Jest run, JitterProbe on the laptop, console check and Risk Results in plan.md (covers T037, T038, T046, T056, T058, T067)",
-      "reason": "The connected Studio instance has no project synced. It needs rojo serve running and the Rojo plugin's Connect button clicked in Studio, which an agent cannot do here."
+      "item": "T058 Local Server test with 3+ simulated clients, then 12 balls, plus the leave and rejoin check (quickstart §7, S9); also the multi-client part left open in T079",
+      "reason": "The Studio MCP tools start one Play session with one client and have no multi-client path. This needs a Local Server test set up by hand in Studio."
     },
     {
-      "item": "T080 Phone-resolution viewport capture showing the jump button at least 96 x 96 px (covers T041)",
-      "reason": "Needs the project synced into Studio and a play session first, same Rojo connection blocker as T079."
+      "item": "T080 / T041 Phone-resolution viewport capture showing the jump button at least 96 x 96 px",
+      "reason": "screen_capture takes the Studio viewport and has no resolution control. The button is coded as 96 x 96 (src/client/JumpButton.luau:23-24), but the capture needs the Studio device emulator or a phone."
     },
     {
       "item": "T040 JitterProbe and fps measurement on the reference phone (Galaxy A53/A54 class)",
-      "reason": "Needs a physical mid-range Android device."
+      "reason": "The laptop run is done (Weld passes). The phone run needs a physical mid-range Android device."
     },
     {
-      "item": "T068 Tick the remaining quickstart pass conditions (Jest, console, jitter, playtest rows are Pending in the Expected outcomes summary)",
-      "reason": "The agent-doable part is done (Lune 56 of 56, check.sh, tuning notes in plan.md); the remaining rows depend on the Studio run (T079), the phone (T040) and the playtest (T059)."
+      "item": "T068 Tick the remaining quickstart pass conditions in the Expected outcomes summary",
+      "reason": "The agent-doable part is done (Lune 56 of 56, check.sh, tuning notes in plan.md). The remaining rows depend on T058, T040, T041 and the playtest (T059)."
     },
     {
       "item": "T059 Run the 6+ player playtest (3+ adults, 3+ children aged 10-12) and collect owner sign-off",
-      "reason": "Needs real people and the owner's approval; an agent's statement never counts as owner approval."
+      "reason": "Needs real people and the owner's approval. An agent's statement never counts as owner approval."
     },
     {
       "item": "T065 Push the branch, open the PR and confirm the check workflow is green in GitHub Actions",
-      "reason": "Outward-facing GitHub action that needs the owner's go-ahead; merging also needs owner approval."
+      "reason": "Outward-facing GitHub action that needs the owner's go-ahead. Merging also needs owner approval."
     }
   ],
-  "summary": "Round 5 found no new agent-doable gaps (check.sh passes with 56 of 56 unit tests and test-guard passes); only Studio, phone, playtest and PR steps that need a human remain."
+  "summary": "Round 6 found no new agent-doable gaps (check.sh passes with 56 of 56 unit tests and test-guard passes, and Studio now has the project synced with the single-client checks recorded); only multi-client, phone, playtest and PR steps that need a human remain."
 }
