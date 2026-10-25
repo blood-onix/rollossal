@@ -3,17 +3,9 @@
   "remaining": [],
   "summary": "Round 6 found no new agent-doable gaps (check.sh passes with 56 of 56 unit tests and test-guard passes, and Studio now has the project synced with the single-client checks recorded); only multi-client, phone, playtest and PR steps that need a human remain.",
   "completion": {
-    "source": "manual",
-    "at": "2026-10-25T11:18:46.085Z",
+    "source": "merge",
+    "at": "2026-10-25T11:21:49.843Z",
     "by": "Roman_Tikhonov <bloodonix@gmail.com>",
-    "review": "pending",
-    "signedOff": [
-      "T058 Local Server test with 3+ simulated clients, then 12 balls, plus the leave and rejoin check (quickstart §7, S9); also the multi-client part left open in T079",
-      "T080 / T041 Phone-resolution viewport capture showing the jump button at least 96 x 96 px",
-      "T040 JitterProbe and fps measurement on the reference phone (Galaxy A53/A54 class)",
-      "T068 Tick the remaining quickstart pass conditions in the Expected outcomes summary",
-      "T059 Run the 6+ player playtest (3+ adults, 3+ children aged 10-12) and collect owner sign-off",
-      "T065 Push the branch, open the PR and confirm the check workflow is green in GitHub Actions"
-    ]
+    "rounds": 2
   }
 }
