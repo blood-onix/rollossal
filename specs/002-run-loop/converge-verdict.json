@@ -23,5 +23,5 @@
       "reason": "Needs at least 3 adults and 3 children aged 10 to 12, a real phone, a two-account friend test and the owner's own approval (Constitution I)."
     }
   ],
-  "summary": "No new code gaps: scripts/check.sh passes (93 Lune tests), every .luau file is --!strict, SoundIds sit only in Assets.luau, and tasks.md is unchanged; the only open work is Studio verification (the Studio place still lacks the 002 code because Rojo is not connected), the PR description evidence and the human playtest."
+  "summary": "No new code gaps: scripts/check.sh passes (93 Lune tests) and tasks.md is unchanged; the only open work is Studio verification (the Studio place still lacks the 002 code because Rojo is not connected), the PR description evidence and the human playtest."
 }
