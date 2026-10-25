@@ -1,0 +1,31 @@
+{
+  "verdict": "incomplete",
+  "remaining": [],
+  "human": [
+    {
+      "item": "T079 Studio spike, Jest run, JitterProbe on the laptop, console check and Risk Results in plan.md (covers T037, T038, T046, T056, T058, T067)",
+      "reason": "The connected Studio instance has no project synced. It needs rojo serve running and the Rojo plugin's Connect button clicked in Studio, which an agent cannot do here."
+    },
+    {
+      "item": "T080 Phone-resolution viewport capture showing the jump button at least 96 x 96 px (covers T041)",
+      "reason": "Needs the project synced into Studio and a play session first, same Rojo connection blocker as T079."
+    },
+    {
+      "item": "T040 JitterProbe and fps measurement on the reference phone (Galaxy A53/A54 class)",
+      "reason": "Needs a physical mid-range Android device."
+    },
+    {
+      "item": "T068 Tick the remaining quickstart pass conditions (Jest, console, jitter, playtest rows are Pending in the Expected outcomes summary)",
+      "reason": "The agent-doable part is done (Lune 56 of 56, check.sh, tuning notes in plan.md); the remaining rows depend on the Studio run (T079), the phone (T040) and the playtest (T059)."
+    },
+    {
+      "item": "T059 Run the 6+ player playtest (3+ adults, 3+ children aged 10-12) and collect owner sign-off",
+      "reason": "Needs real people and the owner's approval; an agent's statement never counts as owner approval."
+    },
+    {
+      "item": "T065 Push the branch, open the PR and confirm the check workflow is green in GitHub Actions",
+      "reason": "Outward-facing GitHub action that needs the owner's go-ahead; merging also needs owner approval."
+    }
+  ],
+  "summary": "Round 5 found no new agent-doable gaps (check.sh passes with 56 of 56 unit tests and test-guard passes); only Studio, phone, playtest and PR steps that need a human remain."
+}

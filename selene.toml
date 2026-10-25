@@ -1,0 +1,3 @@
+# Selene needs the Roblox standard library file `roblox.yml` (git-ignored).
+# scripts/check.sh runs `selene generate-roblox-std` first to create it.
+std = "roblox"
