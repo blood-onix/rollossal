@@ -15,6 +15,7 @@ local Config = require(Shared.Config)
 local Absorb = require(Shared.Rules.Absorb)
 local Movement = require(Shared.Rules.Movement)
 local JumpButton = require(script.Parent.JumpButton)
+local TouchStick = require(script.Parent.TouchStick)
 
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 local AbsorbRemote = Remotes:WaitForChild("Absorb") :: RemoteEvent
@@ -98,6 +99,7 @@ function BallController.start()
 	local cubes = room:WaitForChild("Cubes") :: Folder
 	local spin = ball:WaitForChild("AngularVelocity") :: AngularVelocity
 	local readMove = moveReader(player)
+	local readTouch = TouchStick.create()
 
 	local groundParams = RaycastParams.new()
 	groundParams.FilterType = Enum.RaycastFilterType.Include
@@ -194,7 +196,11 @@ function BallController.start()
 			Config.speedExponent,
 			Config.speedCap
 		)
-		local direction = worldDirection(readMove())
+		local move = readMove()
+		if readTouch and move.Magnitude < 1e-3 then
+			move = readTouch()
+		end
+		local direction = worldDirection(move)
 
 		spin.MaxTorque = Config.rollTorqueGain * mass * radius * radius
 		if direction.Magnitude > 0 then

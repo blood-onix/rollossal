@@ -103,5 +103,5 @@ visible stutter in a screen recording. Repeat on a phone. If `"Weld"` fails and 
 | Solo scenarios §3 | S1 to S9 as listed | S1 to S8 pass (S4 on PC; S2 and S8 after T090: Tier 4 at 101 s solo, never more than 30 visuals); S9 Reset pass, rejoin deferred with T058 (owner: too early for multiplayer) |
 | Studio playtest console | 0 errors, 0 warnings | Pass for a solo drive, absorb, bump, Reset run (only Studio's own `ContentId` line) |
 | Jitter protocol | below the thresholds in §6, decision recorded | Laptop pass, `Weld` kept; phone run deferred by the owner (T040) |
-| Phone viewport | jump button at least 96 × 96 px bottom right | Pass: Galaxy A16 in the Studio device simulator, 96 × 96 px, 24 px from the corner (T041); no touch thumbstick without a character (T091) |
+| Phone viewport | jump button at least 96 × 96 px bottom right | Pass: Galaxy A16 in the Studio device simulator, 96 × 96 px, 24 px from the corner (T041); own touch stick moves the ball (T091) |
 | Playtest | gate recorded and signed off by the owner (Principle I) | Pending: human (T059) |
