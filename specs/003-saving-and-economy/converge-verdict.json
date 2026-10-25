@@ -45,12 +45,12 @@
   "human": [
     {
       "item": "T001 Bring the branch up to date with 002 (merge main, confirm 002 files, baseline scripts/check.sh)",
-      "reason": "002-run-loop is not merged to main (origin/main still has no src/server/RunManager.luau; it exists only on origin/002-run-loop). The task forbids copying 002 code by hand, so the owner must merge the 002 PR first. Until then T006, T010 to T021, T023, T026, T029 and the later UI tasks cannot be done."
+      "reason": "002-run-loop is still not merged to main (origin/main has no src/server/RunManager.luau; it exists only on origin/002-run-loop). The task forbids copying 002 code by hand, so the owner must merge the 002 PR first. Until then T006, T010 to T021, T023, T026, T029 and the later UI tasks cannot be done."
     },
     {
       "item": "T048 Human checks on a private test place (cross-server persistence, session lock, Open Items 1 and 2, grey-box check with adults and children)",
       "reason": "Needs real servers and phones, a separate private test experience, the owner's confirmations, and human participants. None are available in this environment."
     }
   ],
-  "summary": "Still only 7 of 49 tasks are done (T002 to T005, T007 to T009); all remaining work is already covered by unchecked tasks so nothing new was appended, and it all waits on T001 because 002-run-loop is not merged to main."
+  "summary": "Unchanged since round 8: 7 of 49 tasks are done (T002 to T005, T007 to T009); all remaining work is already covered by unchecked tasks so nothing new was appended, and it all waits on T001 because 002-run-loop is still not merged to main."
 }
