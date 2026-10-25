@@ -4,7 +4,7 @@
   "human": [
     {
       "item": "T027-T029 Studio: Jest runner, quickstart 1/6-12, results and hub captures at 640x360, 844x390, 1280x720",
-      "reason": "The open Studio place (Rollossal, 112788738500883) holds none of the 002 code (ServerScriptService has no RunManager, ReplicatedStorage.Shared has no Worlds). The Rojo plugin must be connected to `rojo serve` by clicking Connect in Studio, which an agent cannot do. Until then these Studio tasks cannot run."
+      "reason": "The open Studio place (Rollossal, 112788738500883) still holds none of the 002 code: a search of the Edit datamodel finds no RunManager or Worlds, only the 001 WorldSpawner. The Rojo plugin must be connected to `rojo serve` by clicking Connect in Studio, which an agent cannot do. Until then these Studio tasks cannot run."
     },
     {
       "item": "T037-T040 Studio: US2 Jest cases, sound and glyph checks, quickstart 2-5, HUD captures",
@@ -23,5 +23,5 @@
       "reason": "Needs at least 3 adults and 3 children aged 10 to 12, a real phone, a two-account friend test and the owner's own approval (Constitution I)."
     }
   ],
-  "summary": "No new code gaps: scripts/check.sh passes (93 Lune tests) and tasks.md is unchanged; the only open work is Studio verification, which is blocked because the Studio place is not Rojo-synced, plus the PR description and the human playtest."
+  "summary": "No new code gaps: scripts/check.sh passes (93 Lune tests), every .luau file is --!strict, SoundIds sit only in Assets.luau, and tasks.md is unchanged; the only open work is Studio verification (the Studio place still lacks the 002 code because Rojo is not connected), the PR description evidence and the human playtest."
 }
