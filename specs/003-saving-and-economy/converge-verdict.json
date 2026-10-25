@@ -52,5 +52,5 @@
       "reason": "Needs real servers and phones, a separate private test experience, the owner's confirmations, and human participants. None are available in this environment."
     }
   ],
-  "summary": "Unchanged since round 8: 7 of 49 tasks are done (T002 to T005, T007 to T009); all remaining work is already covered by unchecked tasks so nothing new was appended, and it all waits on T001 because 002-run-loop is still not merged to main."
+  "summary": "Unchanged since round 9: 7 of 49 tasks are done (T002 to T005, T007 to T009); all remaining work is already covered by unchecked tasks so nothing new was appended, and most of it waits on T001 because 002-run-loop is still not merged to main."
 }
