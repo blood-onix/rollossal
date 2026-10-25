@@ -245,11 +245,10 @@ knock-off, Reset and leave move a cube only if it is still pending from the same
 Solo autopilot after the change: Tier 2 at 24 s, Tier 3 at 62 s, Tier 4 at 101 s; 248 pickups in 180 s,
 never more than 30 visuals; S5 still pops 3 and lands 3; console clean.
 
-**Open: Jest suite (T056) cannot run yet.** The runner needed a `tests/studio/jest.config.luau` (added).
-Jest-Lua 3.10 then loads each spec with `debug.loadmodule`, which needs the Studio flag
-`FFlagEnableLoadModule` in Studio's `ClientSettings/ClientAppSettings.json` and a Studio restart, or
-falls back to `loadstring`, which `ServerScriptService.LoadStringEnabled` blocks (not settable from a
-script). Owner action.
+**Resolved: Jest suite (T056, 2026-10-25).** `require(game.ServerStorage.Tests.runner)()` through the
+Studio MCP runs `Tests/AbsorbService.spec`: 19 of 19 pass, 0 fail, including the six rejection cases.
+The earlier load failure (`debug.loadmodule` needing `FFlagEnableLoadModule`) did not occur in this run.
+The one `Speed violation` warn in the console comes from the deliberate speed-violation test case.
 
 ## Complexity Tracking
 

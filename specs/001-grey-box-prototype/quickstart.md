@@ -99,7 +99,7 @@ visible stutter in a screen recording. Repeat on a phone. If `"Weld"` fails and 
 | --- | --- | --- |
 | `scripts/check.sh`, CI | exit 0 | `check.sh` passes locally; CI pending (T065, owner go-ahead) |
 | Lune unit tests | all pass, expected values hand-computed | Pass (56 of 56) |
-| Jest-Lua studio tests | all pass, including 6 rejection cases | Blocked: Studio needs `FFlagEnableLoadModule` (T056, plan.md "Studio Run") |
+| Jest-Lua studio tests | all pass, including 6 rejection cases | Pass, 19 of 19 through `runner` in Studio (T056) |
 | Solo scenarios §3 | S1 to S9 as listed | S1 to S8 pass (S4 on PC; S2 and S8 after T090: Tier 4 at 101 s solo, never more than 30 visuals); S9 Reset pass, rejoin pending (T058) |
 | Studio playtest console | 0 errors, 0 warnings | Pass for a solo drive, absorb, bump, Reset run (only Studio's own `ContentId` line) |
 | Jitter protocol | below the thresholds in §6, decision recorded | Laptop pass, `Weld` kept; phone run pending (T040) |
