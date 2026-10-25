@@ -15,6 +15,7 @@ local Config = require(Shared.Config)
 local Absorb = require(Shared.Rules.Absorb)
 local Movement = require(Shared.Rules.Movement)
 local JumpButton = require(script.Parent.JumpButton)
+local RunClient = require(script.Parent.RunClient)
 local TouchStick = require(script.Parent.TouchStick)
 
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
@@ -81,6 +82,17 @@ local function moveReader(player: Player): () -> Vector3
 	end
 end
 
+-- No run state means the 001 behaviour: everything is allowed.
+local function mayRoll(): boolean
+	local state = RunClient.state()
+	return state == nil or state == "Active" or state == "Hub"
+end
+
+local function mayAbsorb(): boolean
+	local state = RunClient.state()
+	return state == nil or state == "Active"
+end
+
 local function budgetAllows(now: number): boolean
 	local kept = {}
 	for _, time in sendTimes do
@@ -112,7 +124,7 @@ function BallController.start()
 	end
 
 	local function jump()
-		if isGrounded() then
+		if mayRoll() and isGrounded() then
 			ball:ApplyImpulse(Vector3.yAxis * ball.AssemblyMass * Config.jumpImpulse)
 		end
 	end
@@ -196,9 +208,12 @@ function BallController.start()
 			Config.speedExponent,
 			Config.speedCap
 		)
-		local move = readMove()
-		if readTouch and move.Magnitude < 1e-3 then
-			move = readTouch()
+		local move = Vector3.zero
+		if mayRoll() then
+			move = readMove()
+			if readTouch and move.Magnitude < 1e-3 then
+				move = readTouch()
+			end
 		end
 		local direction = worldDirection(move)
 
@@ -210,7 +225,9 @@ function BallController.start()
 			spin.AngularVelocity = Vector3.zero
 		end
 
-		contactScan(now, radius, diameter)
+		if mayAbsorb() then
+			contactScan(now, radius, diameter)
+		end
 
 		collideTimer += dt
 		if collideTimer >= COLLIDE_INTERVAL then

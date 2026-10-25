@@ -11,7 +11,9 @@ local Absorb = require(Rules.Absorb)
 local Growth = require(Rules.Growth)
 local RateLimit = require(Rules.RateLimit)
 local StuckStack = require(Rules.StuckStack)
+local Worlds = require(Shared.Worlds)
 local Remotes = require(script.Parent.Remotes)
+local RunManager = require(script.Parent.RunManager)
 local BallService = require(script.Parent.BallService)
 local WorldSpawner = require(script.Parent.WorldSpawner)
 
@@ -47,6 +49,9 @@ local function directionTo(
 end
 
 function AbsorbService.tryAbsorb(session: Session, objectId: unknown, now: number): string
+	if not RunManager.acceptsPickups(session.ownerUserId, now) then
+		return "RunEnded"
+	end
 	if typeof(objectId) ~= "string" then
 		return "BadArgument"
 	end
@@ -88,10 +93,17 @@ function AbsorbService.tryAbsorb(session: Session, objectId: unknown, now: numbe
 		Growth.growDiameter(session.authoritativeDiameter, cube.size, Config.growthK)
 	)
 	BallService.publishStuck(session)
+	local object = Worlds.objectByTier[cube.tier]
+	if object then
+		RunManager.onPickup(session.ownerUserId, object, now)
+	end
 	return "Ok"
 end
 
 function AbsorbService.tryBump(session: Session, objectId: unknown, now: number): string
+	if not RunManager.acceptsPickups(session.ownerUserId, now) then
+		return "RunEnded"
+	end
 	if typeof(objectId) ~= "string" then
 		return "BadArgument"
 	end
@@ -164,15 +176,24 @@ function AbsorbService.tryBump(session: Session, objectId: unknown, now: number)
 
 	session.lastBumpAt = now
 	BallService.publishStuck(session)
+	RunManager.onKnockOff(session.ownerUserId)
 	return "Ok"
 end
 
 function AbsorbService.tryRespawn(session: Session, now: number): string
+	local action = RunManager.resetAction(session.ownerUserId)
+	if action == "Reject" then
+		return "RunEnded"
+	end
 	if now - session.lastRespawnAt < Config.respawnBallCooldown then
 		return "Cooldown"
 	end
 	session.lastRespawnAt = now
-	BallService.respawn(session, now)
+	if action == "Return" then
+		BallService.returnToSpawn(session)
+	else
+		BallService.respawn(session, now)
+	end
 	return "Ok"
 end
 

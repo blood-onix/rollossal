@@ -76,6 +76,19 @@ test("Config: the three feature flags exist and are off", function()
 	expect.equal(Config.Flags.RewardedAds, false)
 end)
 
+test("Config: star thresholds ascend, are positive and number 3", function()
+	local thresholds = Config.starThresholds
+	expect.equal(#thresholds, 3)
+	expect.truthy(thresholds[1] > 0)
+	for i = 2, #thresholds do
+		expect.truthy(thresholds[i] > thresholds[i - 1])
+	end
+end)
+
+test("Config: the run loop flag is a boolean", function()
+	expect.equal(type(Config.Flags.RunLoop), "boolean")
+end)
+
 test("Config: mesh triangle budgets per tier are 300, 300, 800, 2500, 2500", function()
 	local expected = { 300, 300, 800, 2500, 2500 }
 	local actual = Config.Budgets.meshTriangles
