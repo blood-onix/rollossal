@@ -24,8 +24,8 @@ respect to progress (Constitution II). All sizes below are **base pixels at `UIS
 | Top centre, row 1 | Timer | 170×44 | `[clock glyph] Time` label above or beside `mm:ss` (28 px `FredokaOne`) via `RunClock.format`; text label `ui.hud.time_label` |
 | Top centre, row 2 | Star targets | 3 markers, each 100×36 | `[star glyph] ui.hud.star_target` (`1 star: 3.0`, `2 star: 4.0`, `3 star: 5.0`) from `Worlds.starThresholds`. A marker whose threshold the current diameter has reached is filled (`★`) and bold; unreached is outline (`☆`). State is carried by the glyph, not colour |
 | Top left | Size meter | 160×104 | `ui.hud.size_label` + diameter number (`ui.hud.size_value`, 32 px) ; progress bar 160×14 filled by `Tiers.progress`; below it `ui.hud.next_tier` (two lines allowed: `Next: ▲` / `MEDIUM CUBES`) or `ui.hud.max_tier` on the top tier |
-| Centre, y = 40 % | Pickup pop | 260×32 | one line `ui.pickup.pop` with the object icon; fades out over `Config.pickupPopDuration` (1.0 s); a new pickup replaces it |
-| Centre, y = 26 % | Tier banner | 380×48 | `ui.banner.tier_unlock` with the tier's `headlineIcon`; shown `Config.tierBannerDuration` (2.5 s); one per tier per run (server-decided) |
+| Centre, top y = 176 | Pickup pop | 260×32 | one line `ui.pickup.pop` with the object icon; fades out over `Config.pickupPopDuration` (1.0 s); a new pickup replaces it |
+| Centre, top y = 120 | Tier banner | 480×48 | `ui.banner.tier_unlock` with the tier's `headlineIcon`; shown `Config.tierBannerDuration` (2.5 s); one per tier per run (server-decided) |
 | Bottom centre, y = 78 % | Bump flash | 140×32 | `[cube glyph] ui.bump.label` for `Config.knockOffShakeDuration`; the camera shake is skipped when `ReduceMotion` is on, the label is not |
 
 Updates: timer text changes at most once per whole second; the size meter updates on the ball's `Diameter`
@@ -33,6 +33,9 @@ attribute change; the meter number does a 0.15 s scale pop on pickup (instant wh
 
 Top-centre block spans x ≈ 165 to 475 at 640 wide; the size meter spans x 8 to 168 and ends above y 112, so
 the two meet only at the star row's left edge, which starts at x 170 (checked in the capture task).
+The banner and the pickup pop sit below the meter at fixed offsets (banner y 120 to 168, pop y 176 to 208),
+so they never cover the star row or the meter; the banner fits the longest headline at 28 px (395 px wide).
+Changed after the T040 capture, which found the 26 % banner over the star row at 640×360 and 844×390.
 
 ## Results screen (state `Ended`, after `RunResult` arrives)
 

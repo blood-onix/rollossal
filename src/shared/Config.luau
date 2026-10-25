@@ -44,11 +44,27 @@ local Config = {
 	stuckVisualMode = "Weld",
 	stuckEmbed = 0.35,
 
-	-- Flags (exist, unused, off)
+	-- Run loop (specs/002-run-loop/data-model.md §1)
+	runDurationSeconds = 240,
+	rollAgainDelaySeconds = 3,
+	starThresholds = { 20, 45, 80 },
+	friendBonusRate = 0.20,
+	friendBoostRate = 0.25,
+	pickupPopDuration = 1.0,
+	tierBannerDuration = 2.5,
+	knockOffShakeDuration = 0.35,
+	knockOffShakeMagnitude = 0.6,
+	pickupPitchStep = 0.08,
+	minTextSize = 18,
+	minTouchTarget = 96,
+	uiReferenceShortSide = 720,
+
+	-- Flags (AvatarPusher, BigBallMode and RewardedAds exist, unused, off)
 	Flags = {
 		AvatarPusher = false,
 		BigBallMode = false,
 		RewardedAds = false,
+		RunLoop = true,
 	},
 
 	-- Budgets. meshTriangles is indexed by tier.

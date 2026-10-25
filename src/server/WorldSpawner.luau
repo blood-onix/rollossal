@@ -7,6 +7,7 @@ local Workspace = game:GetService("Workspace")
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
 local GreyBoxRoom = require(Shared.Content.GreyBoxRoom)
+local Worlds = require(Shared.Worlds)
 
 export type CubeState = "Available" | "Taken" | "Scattered"
 
@@ -141,6 +142,34 @@ local function buildRoom(): Folder
 	return room
 end
 
+local function buildHub(): Folder
+	local hub = Worlds.active.hub
+	local hubFolder = Instance.new("Folder")
+	hubFolder.Name = "Hub"
+
+	local floor = makePart(
+		"Floor",
+		Vector3.new(hub.halfExtent * 2, 1, hub.halfExtent * 2),
+		CFrame.new(hub.center.x, -0.5, hub.center.z),
+		Color3.fromRGB(110, 110, 110)
+	)
+	floor.Parent = hubFolder
+
+	-- A flat disc, rotated so the cylinder's axis points up. Decoration only: no text, no touch.
+	local pad = makePart(
+		"StartPad",
+		Vector3.new(0.2, hub.padRadius * 2, hub.padRadius * 2),
+		CFrame.new(hub.center.x + hub.spawn.x, 0.1, hub.center.z + hub.spawn.z)
+			* CFrame.Angles(0, 0, math.pi / 2),
+		Color3.fromRGB(150, 150, 150)
+	)
+	pad.Shape = Enum.PartType.Cylinder
+	pad.CanTouch = false
+	pad.Parent = hubFolder
+
+	return hubFolder
+end
+
 local function setTaken(cube: RoomCube, taken: boolean)
 	local part = cube.part
 	part:SetAttribute("Taken", taken)
@@ -159,6 +188,11 @@ function WorldSpawner.start()
 		existing:Destroy()
 	end
 	buildRoom().Parent = Workspace
+	local existingHub = Workspace:FindFirstChild("Hub")
+	if existingHub then
+		existingHub:Destroy()
+	end
+	buildHub().Parent = Workspace
 end
 
 function WorldSpawner.getCube(id: string): RoomCube?
@@ -174,6 +208,16 @@ function WorldSpawner.getSpawnSlot(index: number): Vector3
 		math.cos(angle) * radius,
 		Config.startDiameter / 2 + 0.5,
 		math.sin(angle) * radius
+	)
+end
+
+-- Where a ball rests on the hub plaza: the hub centre plus the data offset, just above the floor.
+function WorldSpawner.getHubSpawn(): Vector3
+	local hub = Worlds.active.hub
+	return Vector3.new(
+		hub.center.x + hub.spawn.x,
+		Config.startDiameter / 2 + 0.5,
+		hub.center.z + hub.spawn.z
 	)
 end
 

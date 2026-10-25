@@ -38,15 +38,10 @@ and wrong-state calls change nothing; fall keeps size, stack and `runId`; Roll a
 
 ## 3. Fast-forward a run in Studio
 
-Waiting 240 s per check is slow. In Play mode, `execute_luau` on the server can step the injected clock
-(the clock is an argument, see research R2):
-
-```text
-local RunManager = require(game.ServerScriptService.RunManager)
-RunManager.step(os.clock() + 240)   -- every Active run ends now
-```
-
-Use it only for checks that do not depend on real time passing; scenarios 4 and 8 use real time.
+`RunManager.step(...)` cannot fast-forward a live run from the MCP: `execute_luau` gets its own copy of the
+module, not the one the game is running (found in T028). Let runs end in real time (240 s; start the wait as a
+background step and do other checks meanwhile), and drive the ball from a client-side autopilot as described
+in `AGENTS.md` ("How to run the Studio checks"). Scenarios 4 and 8 use real time anyway.
 
 ## 4. Scenario checks (manual, solo)
 

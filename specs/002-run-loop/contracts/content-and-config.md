@@ -67,7 +67,7 @@ The apostrophe in `Time's up!` is data, not code. Sizes are formatted by the cal
 | `cube` | `■` | object icons, bump flash |
 | `arrow` | `▲` | next-tier silhouette |
 | `book` | `▤` | new book entries |
-| `retry` | `↻` | Roll again |
+| `retry` | `🔁` | Roll again (`↻` has no glyph in either UI font, T038) |
 | `home` | `⌂` | Back to hub |
 | `play` | `▶` | Play |
 

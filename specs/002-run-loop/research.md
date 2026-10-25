@@ -232,6 +232,8 @@ phones: violates VI); `TextScaled` (unpredictable pixel size).
   player attribute `ReduceMotion` (boolean, client-set, default `false`). When true, shake is skipped and
   the pop scale animation is replaced by an instant change. If Studio shows the engine exposes a user
   reduced-motion setting, `Feedback` initialises the attribute from it (checked in the first client task).
+  **Checked in T038**: `GuiService.ReducedMotionEnabled` exists, is readable by game scripts and has a change
+  signal, so `Feedback` follows it.
 - Tier pull-back: the existing camera distance already tracks `4 × diameter` with smoothing (001 R5), so
   crossing a tier is accompanied by the pull-back the diameter growth causes. No extra camera code.
 - Tier banner once per tier per run: decided by the server (`unlockedTiers`), delivered as `TierUnlocked`.
