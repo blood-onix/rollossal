@@ -4,12 +4,12 @@
   "human": [
     {
       "item": "Press Connect in the Rojo plugin in Studio (unblocks T027, T031, T040, T044, T045, T049)",
-      "reason": "The Studio sync probe run this round (49 files checked) still shows 28 mismatches: DataService, RunManager, Profile, Book, Settings, BookUi, TopBar, UiKit, ProfileClient, SettingsUi, Hud, HubUi, ResultsUi, Feedback, DataService.spec and others are missing, and Main, Config, Strings and RunManager.spec have the wrong size. The Rojo server is up on localhost:34872, but only a person can press Connect; the MCP mouse tool reaches only the game viewport. T027 (DataService/RunManager Jest and US1 playtest), T031 (Book playtest), T040 (Settings playtest and camera-sensitivity risk row), T044 (economy HUD playtest), T045 (screenshot captures at three viewports and glyph check) and T049 (final validation) are agent-run Studio tasks per AGENTS.md; the agent runs them as soon as the probe passes."
+      "reason": "The Studio sync probe run this round still shows Studio without the repo's code: DataService, RunManager, Profile, Book, Settings, BookUi, TopBar, SettingsUi and DataService.spec are missing, and Config, Strings and RunManager.spec have the wrong size. The Rojo server is up on localhost:34872, but only a person can press Connect; the MCP mouse tool reaches only the game viewport. T027 (DataService/RunManager Jest and US1 playtest), T031 (Book playtest), T040 (Settings playtest and camera-sensitivity risk row), T044 (economy HUD playtest), T045 (screenshot captures at three viewports and glyph check) and T049 (final validation) are agent-run Studio tasks per AGENTS.md; the agent runs them as soon as the probe passes."
     },
     {
       "item": "T048 Human checks on a private test place (persistence across real servers, session lock, owner Open Items 1 and 2, grey-box check with adults and children)",
       "reason": "Needs a published place, real servers, real phones and playtesters; not possible in Studio or this environment."
     }
   ],
-  "summary": "The code satisfies the spec and scripts/check.sh exits 0 (193 tests pass), so no tasks were appended, but the Studio playtest tasks (T027, T031, T040, T044, T045, T049) wait on the user pressing Rojo Connect and T048 needs real people."
+  "summary": "The code satisfies the spec and scripts/check.sh exits 0 (193 tests pass), so no tasks were appended, but the Studio playtest tasks (T027, T031, T040, T044, T045, T049) still wait on the user pressing Rojo Connect and T048 needs real people."
 }
