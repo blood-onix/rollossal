@@ -97,10 +97,11 @@ visible stutter in a screen recording. Repeat on a phone. If `"Weld"` fails and 
 
 | Check | Pass condition | Status (Studio run, 2026-10-25) |
 | --- | --- | --- |
-| `scripts/check.sh`, CI | exit 0 | `check.sh` passes locally; CI pending (T065, owner go-ahead) |
+| `scripts/check.sh`, CI | exit 0 | `check.sh` passes locally; CI on the PR (T065) |
 | Lune unit tests | all pass, expected values hand-computed | Pass (56 of 56) |
 | Jest-Lua studio tests | all pass, including 6 rejection cases | Pass, 19 of 19 through `runner` in Studio (T056) |
-| Solo scenarios §3 | S1 to S9 as listed | S1 to S8 pass (S4 on PC; S2 and S8 after T090: Tier 4 at 101 s solo, never more than 30 visuals); S9 Reset pass, rejoin pending (T058) |
+| Solo scenarios §3 | S1 to S9 as listed | S1 to S8 pass (S4 on PC; S2 and S8 after T090: Tier 4 at 101 s solo, never more than 30 visuals); S9 Reset pass, rejoin deferred with T058 (owner: too early for multiplayer) |
 | Studio playtest console | 0 errors, 0 warnings | Pass for a solo drive, absorb, bump, Reset run (only Studio's own `ContentId` line) |
-| Jitter protocol | below the thresholds in §6, decision recorded | Laptop pass, `Weld` kept; phone run pending (T040) |
+| Jitter protocol | below the thresholds in §6, decision recorded | Laptop pass, `Weld` kept; phone run deferred by the owner (T040) |
+| Phone viewport | jump button at least 96 × 96 px bottom right | Pass: Galaxy A16 in the Studio device simulator, 96 × 96 px, 24 px from the corner (T041); no touch thumbstick without a character (T091) |
 | Playtest | gate recorded and signed off by the owner (Principle I) | Pending: human (T059) |

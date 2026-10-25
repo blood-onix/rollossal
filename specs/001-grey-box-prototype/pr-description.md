@@ -1,6 +1,4 @@
-# PR draft: Grey-Box Prototype (001-grey-box-prototype)
-
-Status: DRAFT. Not for submission until Quality Gate 2 (Studio) and the CI run are complete.
+# Grey-Box Prototype (001-grey-box-prototype)
 
 ## Summary
 
@@ -9,32 +7,40 @@ Status: DRAFT. Not for submission until Quality Gate 2 (Studio) and the CI run a
 - Pure rules in `src/shared/Rules` (Absorb, Growth, Movement, StuckStack, RateLimit) with Lune tests
   (56 of 56 passing locally).
 - Server-authoritative pickup, knock-off, respawn and speed check (`src/server`), client sends cube IDs only.
-- Client rolling ball, smoothed camera, jump button (96 px minimum), stuck visuals (`src/client`).
-- Jest-Lua server tests for FR-024 rejections, boundary, stack-of-5 knock-off, registry invariant and
-  speed violation (`tests/studio`), not yet run in Studio.
+- Held cubes respawn after `respawnDelay` while the ball keeps a visual-only record (T090): stack entries
+  are keyed `<cubeId>#<n>`, and knock-off, Reset and leave release only cubes still pending from the same pickup.
+- Client rolling ball (input from `CharacterContext.MoveAction`, no character), smoothed camera, jump
+  button (96 px), stuck visuals in `Weld` mode (`src/client`).
+- Jest-Lua server tests for the FR-024 rejections, boundary, stack-of-5 knock-off, registry invariant and
+  speed violation (`tests/studio`), passing in Studio.
 - `playtest.md` template (FR-025), not yet filled.
 
 ## Quality Gates
 
 | Gate | How it is met | Status |
 | --- | --- | --- |
-| 1. `scripts/check.sh` | Runs StyLua, Selene, luau-lsp strict, Lune suites, Rules guard. Exit 0 locally. `scripts/test-guard.sh` exit 0. | Local pass. CI run pending (T065). |
-| 2. Studio playtest, console read, phone viewport | Studio spike, JitterProbe, Jest suite, console read and phone-resolution capture of the jump button. | Pending. Rojo sync into Studio not yet connected (T079, T080, T056, T058, T067). |
+| 1. `scripts/check.sh` | Runs StyLua, Selene, luau-lsp strict, Lune suites, Rules guard. `scripts/test-guard.sh` too. | Exit 0 locally; CI `check` on this PR (T065) |
+| 2. Studio playtest, console read, phone viewport | Studio spike over Rojo and the Studio MCP server: solo scenarios S1 to S8, JitterProbe on the laptop, Jest suite, console read, phone-resolution jump button check. | Pass. Console clean apart from Studio's own `ContentId` line. Jest 19 of 19. JitterProbe `Weld`: resting ΔY 0.0034, rolling speed error 0.029. Solo run reached Tier 4 at 101 s with at most 30 visuals. Phone: Galaxy A16 in the Studio device simulator (viewport 685 × 338), jump button 96 × 96 px, 24 px from the right and bottom edges |
 | 3. Assets | N/A: plain parts only, no imported assets. | N/A |
 | 4. Localisation | N/A: the jump button is a symbol, no player-facing strings. | N/A |
-| 5. `tasks.md` ticks | Ticks are recorded in `specs/001-grey-box-prototype/tasks.md`; unticked tasks there are the open items listed below. | Partial |
+| 5. `tasks.md` ticks | Ticks are recorded in `specs/001-grey-box-prototype/tasks.md`; unticked tasks are listed below. | Partial |
 
 Constitution check: Principles II, III, IV, VI, VII, X and XII pass as written in plan.md. Principle I is
 open: the 6-player playtest and owner sign-off (T059) have not happened, so no art, monetization or
 live-ops work may start. Principles V, VIII, IX and XI are N/A.
 
-## Open before merge
+## Open items
 
-- T040: JitterProbe and fps on the reference phone (Galaxy A53/A54 class). Needs a physical device.
-- T059: 6+ player playtest and owner sign-off. Needs people and the owner's approval.
-- T065: push, open PR, confirm `check` workflow is green. Needs the owner's go-ahead.
-- T079 and T080 (Studio spike, Jest run, JitterProbe on the laptop, console read, phone viewport capture):
-  blocked in this round, see the summary in the round report.
+- T091: no touch thumbstick on phones. Roblox's `ControlModule` builds `TouchGui` only for a player with
+  a Humanoid, and Rollossal has no character. Found in the phone-resolution run; fix in `src/client`.
+- T058 (multi-client Local Server test) and T040 (JitterProbe on the reference phone): deferred by the
+  owner until there is more game to test; revisit before the playtest.
+- T059: 6+ player playtest and owner sign-off.
+- T068: quickstart walkthrough closes when T058 and T059 are done.
+- Studio place: the template `SpawnLocation` and `Baseplate` were deleted in Edit mode (they blocked the
+  probe lane); save the place to keep that.
+
+Do not merge without owner approval.
 
 ## Test plan
 
@@ -42,10 +48,11 @@ live-ops work may start. Principles V, VIII, IX and XI are N/A.
 - [x] `scripts/test-guard.sh` exits 0 locally
 - [x] `grep -rIi ricokick` and `shot-engine-career` outside `specs/` history and constitution prose: no hits in code or metadata
 - [x] `README.md` links to `docs/rollossal-gdd.md` and `.specify/memory/constitution.md` resolve
-- [ ] Jest-Lua suite passes in Studio (`return require(game.ServerStorage.Tests.runner)()`)
-- [ ] Studio playtest: zero console errors and warnings
-- [ ] JitterProbe on the laptop; `stuckVisualMode` decision recorded in plan.md Risk Results
-- [ ] Phone-resolution viewport capture of the jump button (at least 96 x 96 px, bottom right)
+- [x] Jest-Lua suite passes in Studio (`return require(game.ServerStorage.Tests.runner)()`)
+- [x] Studio playtest: zero console errors and warnings from the game
+- [x] JitterProbe on the laptop; `stuckVisualMode` decision recorded in plan.md Risk Results
+- [x] Phone-resolution check of the jump button (at least 96 × 96 px, bottom right)
+- [ ] Touch thumbstick moves the ball on a phone (T091)
 - [ ] CI `check` workflow green
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)

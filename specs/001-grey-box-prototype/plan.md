@@ -189,7 +189,7 @@ disjoint groups: Rules + unit tests; Config + Content; tooling files; server fil
 | Risk | Measured result | Decision |
 | --- | --- | --- |
 | Jitter when resizing a rolling sphere with welded visuals (GDD §12, R4) | Laptop, Studio solo, `Weld`, 30 visuals, 20 growth steps: resting height change 0.0034 studs, resting speed 0.003 studs/s; rolling at 15 studs/s speed error 0.029 studs/s. Reference phone: pending (T040) | `stuckVisualMode = "Weld"` |
-| No-character input and default-camera behaviour (R3, R5) | No character works. Current Studio removed `GetControls():GetMoveVector()` (PlayerModule moved to `StarterPlayer`, Input Action System); reading `CharacterContext.MoveAction` gives the same vector. WASD rolls the ball without slipping at `baseSpeed` (17.9 studs/s against ω·r 18.0). The default `Custom` camera accepts the ball as `CameraSubject`; distance eases 8.0 → 8.9 with growth, no snap. Touch thumbstick: pending phone/emulator (T080) | Keep no-character input, reading `MoveAction` with the legacy `GetMoveVector` as fallback (input function only); keep the default camera. `rollTorqueGain` 60 and `rollForceGain` 6 unchanged |
+| No-character input and default-camera behaviour (R3, R5) | No character works. Current Studio removed `GetControls():GetMoveVector()` (PlayerModule moved to `StarterPlayer`, Input Action System); reading `CharacterContext.MoveAction` gives the same vector. WASD rolls the ball without slipping at `baseSpeed` (17.9 studs/s against ω·r 18.0). The default `Custom` camera accepts the ball as `CameraSubject`; distance eases 8.0 → 8.9 with growth, no snap. Touch (Galaxy A16 in the Studio device simulator, T041): jump button 96 × 96 px bottom right passes, but no thumbstick appears because `ControlModule` builds `TouchGui` only for a player with a Humanoid; fix tracked as T091 | Keep no-character input, reading `MoveAction` with the legacy `GetMoveVector` as fallback (input function only); keep the default camera. `rollTorqueGain` 60 and `rollForceGain` 6 unchanged |
 
 ## Tuning Notes (round 4, T088)
 
@@ -198,7 +198,7 @@ disjoint groups: Rules + unit tests; Config + Content; tooling files; server fil
 - Open tuning, all needing a Studio run or a playtest: `rollTorqueGain` and `rollForceGain` (T037/T079,
   ball must roll without slipping at `baseSpeed`); `stuckVisualMode` (T079, laptop JitterProbe; T040 on the
   reference phone is human-only); `respawnDelay`, `bumpSpeedThreshold` and `absorbDistanceTolerance`
-  (T046/T058 and the playtest, T059).
+  (T046, the playtest T059; multi-client T058 deferred by the owner).
 - Cube layout and tier counts are unchanged from data-model §2 (research R1 and finding F-1 still apply:
   Tier 4 depends on the 15 s respawn).
 
