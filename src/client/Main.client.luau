@@ -10,6 +10,9 @@ local ResultsUi = require(script.Parent.ResultsUi)
 local HubUi = require(script.Parent.HubUi)
 local Feedback = require(script.Parent.Feedback)
 
+local Shared = game:GetService("ReplicatedStorage"):WaitForChild("Shared")
+local Config = require(Shared.Config)
+
 CameraController.start()
 StuckVisuals.start()
 BallController.start()
@@ -18,3 +21,20 @@ Hud.start()
 ResultsUi.start()
 HubUi.start()
 Feedback.start()
+
+if Config.Flags.Saving then
+	local ProfileClient = require(script.Parent.ProfileClient)
+	local TopBar = require(script.Parent.TopBar)
+	ProfileClient.start()
+	TopBar.start()
+	local BookUi = require(script.Parent.BookUi)
+	BookUi.start()
+	TopBar.bind("book", BookUi.toggle)
+	local SettingsUi = require(script.Parent.SettingsUi)
+	SettingsUi.start()
+	TopBar.bind("settings", SettingsUi.toggle)
+	-- One panel at a time; the Book also closes when a new run starts, Settings stays open.
+	BookUi.onOpen(SettingsUi.close)
+	SettingsUi.onOpen(BookUi.close)
+	TopBar.onRunStart(BookUi.close)
+end

@@ -20,10 +20,28 @@ local HAPTIC_SECONDS = 0.05
 
 local Feedback = {}
 
+local musicGroup = Instance.new("SoundGroup")
+musicGroup.Name = "Music"
+musicGroup.Parent = SoundService
+local effectsGroup = Instance.new("SoundGroup")
+effectsGroup.Name = "Effects"
+effectsGroup.Parent = SoundService
+
+function Feedback.setVolumes(music: number, effects: number)
+	musicGroup.Volume = music
+	effectsGroup.Volume = effects
+end
+
+function Feedback.setReduceMotion(on: boolean)
+	local player = Players.LocalPlayer
+	player:SetAttribute("ReduceMotion", on or GuiService.ReducedMotionEnabled)
+end
+
 local function play(soundId: string, speed: number?)
 	local sound = Instance.new("Sound")
 	sound.SoundId = soundId
 	sound.PlaybackSpeed = speed or 1
+	sound.SoundGroup = effectsGroup
 	sound.Parent = SoundService
 	sound.Ended:Connect(function()
 		sound:Destroy()

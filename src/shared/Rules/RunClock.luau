@@ -17,4 +17,15 @@ function RunClock.format(seconds: number): string
 	return string.format("%02d:%02d", whole // 60, whole % 60)
 end
 
+-- True while fewer than lockSeconds of the run have elapsed (the Book is locked at run start).
+function RunClock.uiLocked(
+	now: number,
+	endsAt: number,
+	duration: number,
+	lockSeconds: number
+): boolean
+	local elapsed = duration - RunClock.remaining(now, endsAt)
+	return elapsed < lockSeconds
+end
+
 return RunClock

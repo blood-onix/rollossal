@@ -32,4 +32,18 @@ test("format: zero and negative show 00:00, long runs keep the minutes", functio
 	expect.equal(RunClock.format(600), "10:00")
 end)
 
+test("uiLocked: true for the first lockSeconds of a 240 s run, then false", function()
+	local duration, endsAt, lockSeconds = 240, 240, 5
+	expect.truthy(RunClock.uiLocked(0, endsAt, duration, lockSeconds))
+	expect.truthy(RunClock.uiLocked(4.99, endsAt, duration, lockSeconds))
+	expect.falsy(RunClock.uiLocked(5, endsAt, duration, lockSeconds))
+	expect.falsy(RunClock.uiLocked(100, endsAt, duration, lockSeconds))
+	expect.falsy(RunClock.uiLocked(240, endsAt, duration, lockSeconds))
+end)
+
+test("uiLocked: past the end is unlocked, before the start is locked", function()
+	expect.falsy(RunClock.uiLocked(300, 240, 240, 5))
+	expect.truthy(RunClock.uiLocked(-1, 240, 240, 5))
+end)
+
 return {}

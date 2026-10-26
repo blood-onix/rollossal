@@ -13,6 +13,16 @@ local Icons: { [string]: string } = {
 	retry = "🔁",
 	home = "⌂",
 	play = "▶",
+	-- Feature 003 (contracts/content-and-config.md §Icons); glyph checks happen in the capture task.
+	gear = "⚙",
+	shop = "🛒",
+	lock = "🔒",
+	unknown = "❓",
+	prev = "◀",
+	next = "▶",
+	-- "✕" is blank in FredokaOne and a box in GothamMedium; "✔" renders dark grey on the dark panels (T045 capture).
+	close = "❌",
+	check = "✅",
 }
 
 return Icons

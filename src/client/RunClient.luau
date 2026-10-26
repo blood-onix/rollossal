@@ -20,6 +20,9 @@ export type RunResult = {
 	newBookIds: { string },
 	bestSelfSize: number,
 	bestFriendSize: number?,
+	-- Saving and economy (additive): absent or false when the server has no profile for the player.
+	coinsTotal: number?,
+	isFirstRun: boolean,
 }
 
 export type Signal<T...> = {
@@ -92,6 +95,20 @@ local function parseResult(payload: unknown): RunResult?
 		end
 		friendBest = data.bestFriendSize
 	end
+	local coinsTotal: number? = nil
+	if data.coinsTotal ~= nil then
+		if typeof(data.coinsTotal) ~= "number" then
+			return nil
+		end
+		coinsTotal = data.coinsTotal
+	end
+	local isFirstRun = false
+	if data.isFirstRun ~= nil then
+		if typeof(data.isFirstRun) ~= "boolean" then
+			return nil
+		end
+		isFirstRun = data.isFirstRun
+	end
 	if
 		typeof(data.runId) ~= "string"
 		or typeof(data.worldId) ~= "string"
@@ -111,6 +128,8 @@ local function parseResult(payload: unknown): RunResult?
 		newBookIds = ids,
 		bestSelfSize = data.bestSelfSize,
 		bestFriendSize = friendBest,
+		coinsTotal = coinsTotal,
+		isFirstRun = isFirstRun,
 	}
 end
 

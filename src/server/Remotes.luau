@@ -1,5 +1,6 @@
 --!strict
--- Creates ReplicatedStorage.Remotes with the nine RemoteEvents from the contracts/remotes.md files of 001 (three) and 002 (six).
+-- Creates ReplicatedStorage.Remotes with the twelve RemoteEvents from the contracts/remotes.md files of 001 (three),
+-- 002 (six) and 003 (three).
 -- Required by Main.server before any player joins; idempotent if the folder already exists.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -39,6 +40,10 @@ local Remotes = {
 	TierUnlocked = getOrCreateEvent(folder, "TierUnlocked"),
 	KnockedOff = getOrCreateEvent(folder, "KnockedOff"),
 	RunResult = getOrCreateEvent(folder, "RunResult"),
+	-- Saving and economy (specs/003-saving-and-economy/contracts/remotes.md): two intents, one fact.
+	UpdateSettings = getOrCreateEvent(folder, "UpdateSettings"),
+	RequestProfile = getOrCreateEvent(folder, "RequestProfile"),
+	ProfileSync = getOrCreateEvent(folder, "ProfileSync"),
 }
 
 return Remotes

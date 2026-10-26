@@ -3,12 +3,21 @@
 
 local RunService = game:GetService("RunService")
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Shared = ReplicatedStorage:WaitForChild("Shared")
+local Config = require(Shared.Config)
+
 require(script.Parent.Remotes)
 local WorldSpawner = require(script.Parent.WorldSpawner)
 local BallService = require(script.Parent.BallService)
 local AbsorbService = require(script.Parent.AbsorbService)
 local FriendCache = require(script.Parent.FriendCache)
 local RunManager = require(script.Parent.RunManager)
+
+if Config.Flags.Saving then
+	local DataService = require(script.Parent.DataService)
+	DataService.start()
+end
 
 WorldSpawner.start()
 FriendCache.start()

@@ -187,6 +187,55 @@ test("Room: every string key and icon the content names exists", function()
 	end
 end)
 
+test("Room: tier rewards have unique ids, a skin or trail type and a known name key", function()
+	-- Hand-copied from contracts/content-and-config.md §Content, not read from the room data.
+	local expected = {
+		{ id = "greybox.reward.tier1", kind = "trail", nameKey = "reward.greybox.tier1.name" },
+		{ id = "greybox.reward.tier2", kind = "trail", nameKey = "reward.greybox.tier2.name" },
+		{ id = "greybox.reward.tier3", kind = "skin", nameKey = "reward.greybox.tier3.name" },
+		{ id = "greybox.reward.tier4", kind = "skin", nameKey = "reward.greybox.tier4.name" },
+	}
+	local seen: { [string]: boolean } = {}
+	local count = 0
+	for _, def in Room.sizeTiers do
+		local reward = def.reward
+		if reward ~= nil then
+			count += 1
+			expect.truthy(#reward.rewardId > 0)
+			expect.falsy(seen[reward.rewardId])
+			seen[reward.rewardId] = true
+			expect.truthy(reward.rewardType == "skin" or reward.rewardType == "trail")
+			expect.truthy(Strings[reward.nameKey] ~= nil)
+		end
+	end
+	expect.equal(count, 4)
+	for tier, want in expected do
+		local reward = Room.sizeTiers[tier].reward
+		expect.truthy(reward ~= nil)
+		if reward then
+			expect.equal(reward.rewardId, want.id)
+			expect.equal(reward.rewardType, want.kind)
+			expect.equal(reward.nameKey, want.nameKey)
+		end
+	end
+	for _, want in expected do
+		expect.truthy(Strings[want.nameKey] ~= nil)
+	end
+end)
+
+test("Room: every object tier has a size tier entry and every book id is unique", function()
+	local tiers: { [number]: boolean } = {}
+	for _, def in Room.sizeTiers do
+		tiers[def.tier] = true
+	end
+	local bookIds: { [string]: boolean } = {}
+	for _, object in Room.objects do
+		expect.truthy(tiers[object.tier])
+		expect.falsy(bookIds[object.bookId])
+		bookIds[object.bookId] = true
+	end
+end)
+
 test("Room: the hub is sized and sits clear of the room", function()
 	local hub = Room.hub
 	expect.truthy(hub.halfExtent > 0)

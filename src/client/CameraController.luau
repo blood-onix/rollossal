@@ -47,6 +47,13 @@ function CameraController.shake(duration: number, magnitude: number)
 	end)
 end
 
+function CameraController.setSensitivity(value: number)
+	local UIS = game:GetService("UserInputService")
+	pcall(function()
+		UIS.MouseDeltaSensitivity = value
+	end)
+end
+
 function CameraController.start()
 	local player = Players.LocalPlayer
 	local ball = Workspace:WaitForChild("Balls"):WaitForChild(`Ball_{player.UserId}`) :: BasePart

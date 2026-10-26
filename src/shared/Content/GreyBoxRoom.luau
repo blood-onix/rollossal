@@ -5,6 +5,7 @@
 
 export type TierDef = { tier: number, size: number, count: number, shade: number }
 export type CubeSpawn = { id: string, tier: number, x: number, z: number }
+export type RewardDef = { rewardId: string, rewardType: "skin" | "trail", nameKey: string }
 export type SizeTierDef = {
 	tier: number,
 	nameKey: string,
@@ -12,6 +13,7 @@ export type SizeTierDef = {
 	maxDiameter: number?,
 	headlineKey: string,
 	headlineIcon: string,
+	reward: RewardDef?,
 }
 export type ObjectDef = {
 	id: string,
@@ -55,6 +57,11 @@ local GreyBoxRoom: Room = {
 			maxDiameter = 2.375,
 			headlineKey = "tier.greybox.1.headline",
 			headlineIcon = "cube",
+			reward = {
+				rewardId = "greybox.reward.tier1",
+				rewardType = "trail",
+				nameKey = "reward.greybox.tier1.name",
+			},
 		},
 		{
 			tier = 2,
@@ -63,6 +70,11 @@ local GreyBoxRoom: Room = {
 			maxDiameter = 3.0,
 			headlineKey = "tier.greybox.2.headline",
 			headlineIcon = "cube",
+			reward = {
+				rewardId = "greybox.reward.tier2",
+				rewardType = "trail",
+				nameKey = "reward.greybox.tier2.name",
+			},
 		},
 		{
 			tier = 3,
@@ -71,6 +83,11 @@ local GreyBoxRoom: Room = {
 			maxDiameter = 3.75,
 			headlineKey = "tier.greybox.3.headline",
 			headlineIcon = "cube",
+			reward = {
+				rewardId = "greybox.reward.tier3",
+				rewardType = "skin",
+				nameKey = "reward.greybox.tier3.name",
+			},
 		},
 		{
 			tier = 4,
@@ -79,6 +96,11 @@ local GreyBoxRoom: Room = {
 			maxDiameter = nil,
 			headlineKey = "tier.greybox.4.headline",
 			headlineIcon = "cube",
+			reward = {
+				rewardId = "greybox.reward.tier4",
+				rewardType = "skin",
+				nameKey = "reward.greybox.tier4.name",
+			},
 		},
 	},
 	objects = {
