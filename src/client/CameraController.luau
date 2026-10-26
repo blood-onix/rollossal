@@ -59,30 +59,21 @@ function CameraController.setSensitivity(value: number)
 end
 
 -- Each frame, adds (sensitivity - 1) times the default camera's turn since the last frame, as extra yaw
--- and pitch around the camera focus. The default script re-derives its own look every frame, so the
--- extra offsets are kept here and re-applied on top of its output.
+-- and pitch around the camera focus. The default script continues from the CFrame it finds, so last
+-- frame's extra is already in it: only this frame's increment is applied, and the direction left behind
+-- is kept so the next frame's difference is the player's drag alone.
 local function bindLook()
 	local prevYaw: number? = nil
 	local prevPitch: number? = nil
-	local extraYaw = 0
-	local extraPitch = 0
 	RunService:BindToRenderStep(LOOK_BIND, Enum.RenderPriority.Camera.Value + 1, function()
 		local camera = Workspace.CurrentCamera :: Camera
 		local cframe = camera.CFrame
 		local look = cframe.LookVector
 		local yaw = math.atan2(-look.X, -look.Z)
 		local pitch = math.asin(math.clamp(look.Y, -1, 1))
-		extraYaw, extraPitch = CameraLook.advance(
-			prevYaw,
-			prevPitch,
-			extraYaw,
-			extraPitch,
-			yaw,
-			pitch,
-			sensitivity,
-			MAX_PITCH
-		)
-		prevYaw, prevPitch = yaw, pitch
+		local extraYaw, extraPitch =
+			CameraLook.advance(prevYaw, prevPitch, yaw, pitch, sensitivity, MAX_PITCH)
+		prevYaw, prevPitch = CameraLook.wrap(yaw + extraYaw), pitch + extraPitch
 		if extraYaw == 0 and extraPitch == 0 then
 			return
 		end
