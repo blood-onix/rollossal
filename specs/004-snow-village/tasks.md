@@ -147,6 +147,12 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 
 ---
 
+## Phase 7: Convergence
+
+- [ ] T033 🔒 Studio: produce the phone-size UI captures of Quality Gate 2 per plan Phase D / quickstart §5 / F-13 (partial): in a Play session, clone the screen's root Hud, Book and Results into exact-size frames at 640×360, 844×390 and 1280×720 (UIScale below 1 only if it does not fit the Studio viewport), verify `TextFits`/`TextSize`, text ≥ 18 px, the Book's 18 cards on page 1 and 5 pages, and the new `Icons` tier-headline glyphs in both `FredokaOne` and `GothamMedium`; store captures in `specs/004-snow-village/captures/` and record results in `playtest.md`.
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies

@@ -1,19 +1,17 @@
 {
   "verdict": "incomplete",
-  "remaining": [],
+  "remaining": [
+    "T033 🔒 Studio: phone-size UI captures (Hud, Book 18 cards, Results) at 640×360/844×390/1280×720 with TextFits + glyph checks, stored in specs/004-snow-village/captures/"
+  ],
   "human": [
     {
-      "item": "T024 \ud83d\udd12 Studio: Blender model tier collections, export art/export, write manifest.json",
-      "reason": "Constitution I gates all art work on the owner's grey-box sign-off recorded in specs/004-snow-village/playtest.md, and the owner section there is still unfilled; the agent must not start art without it."
+      "item": "T031 Final validation — owner-dependent residue: SC-002 Studio import of Assets.meshes, SC-003 balance-tuning decision, SC-004 reference-phone fps, SC-005 sign-off",
+      "reason": "Needs the owner's 3D Importer session, their reference phone and their sign-off; the agent-verifiable parts already re-ran green at build 451e448 (check.sh exit 0, Jest 5/5, rollback smoke test) and are recorded in tasks.md/playtest.md."
     },
     {
-      "item": "T031 Final validation (SC-002/SC-003/SC-004/SC-005 parts)",
-      "reason": "Agent-verifiable parts already re-ran green in round 1 (check.sh 0, Jest 5/5, rollback smoke test); what is left needs the owner's tuning decision (Tier 3/4 placements vs the post-pace-gate growthK), exported art from T024, a reference-phone measurement and sign-off."
-    },
-    {
-      "item": "T032 \ud83d\udc64 Human checks: owner plays on PC and reference phone, picks final audio IDs and growthK, signs off playtest.md",
-      "reason": "Requires physical play by the owner on PC and their phone and owner-only choices (audio approval, growthK); cannot be done by an agent."
+      "item": "T032 👤 Human checks: owner plays the build on PC and reference phone, picks the final audio IDs and the post-pace-gate growthK, signs off playtest.md",
+      "reason": "Requires physical play by the owner on devices and owner-only approvals (audio, growthK) an agent cannot make; outside-people playtest is deferred to 004d by owner decision."
     }
   ],
-  "summary": "Round 1 of 8: all agent-executable work is done and verified (check.sh exit 0, Jest suites green, rollback confirmed); the only unfinished tasks (T024, T031, T032) are blocked on the owner's grey-box sign-off, tuning decision, device playtest and approvals."
+  "summary": "Round 2 of 8: the art pipeline (T024) completed after the owner's grey-box sign-off and all agent-verifiable validation re-ran green at build 451e448, so the only agent-executable gap left is the phone-size UI capture task (T033, appended under Phase 7), while T031's residue and T032 stay with the owner."
 }
