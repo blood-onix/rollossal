@@ -1,37 +1,3 @@
-<!--
-Sync Impact Report (scratch for review; remove before committing)
-- Version change: (unversioned template) → 1.0.0
-- Modified principles: none (first ratification; all template placeholders replaced)
-- Added principles:
-  I. Fun Is Proven in Grey Box First
-  II. Server Authority
-  III. Pure, Tested Rules
-  IV. Safe for Everyone (Target Rating: Minimal)
-  V. Ethical Monetization
-  VI. Mobile First
-  VII. Content Is Data
-  VIII. Player Data and Privacy
-  IX. Localised Strings
-  X. Multi-Agent Discipline
-  XI. Asset Pipeline
-  XII. Keep It Lean
-- Added sections: Quality Gates; Human Approval Required; Governance (filled)
-- Removed sections: none
-- Templates checked (not modified by this command, they read the constitution at runtime):
-  ✅ .specify/templates/plan-template.md (Constitution Check gate is generic)
-  ✅ .specify/templates/spec-template.md
-  ✅ .specify/templates/tasks-template.md ([P] marker already means "different files")
-- Follow-up TODOs:
-  - TODO(GDD_PATH): the design spec is referenced as docs/rollossal-gdd.md, but today it lives
-    in README.md and docs/ does not exist. Move it (or amend the path) before /speckit-plan.
-  - TODO(REFERENCE_PHONE): name the mid-range reference phone for the 30 fps budget (VI).
-  - TODO(CHECK_SCRIPT): scripts/check.sh does not exist yet; the Quality Gates depend on it.
-  - TODO(GITIGNORE): there is no root .gitignore yet; principle X requires one that excludes
-    .rbxl/.rbxlx and secrets.
-  - rokit.toml and wally.toml still name "Ricokick" and cite specs/001-shot-engine-career; fix
-    in the first feature branch.
--->
-
 # Rollossal Constitution
 
 Rollossal is a Roblox co-op rolling game: players roll a ball that sticks to every object
@@ -49,17 +15,26 @@ statement never counts as owner approval.
 
 ### I. Fun Is Proven in Grey Box First
 
-- No art, monetization or live-ops work MUST start until a grey-box build of ball control,
-  absorption and growth has been playtested with at least 3 adults and 3 children aged
-  10–12, and the owner has signed off.
-- Every new mechanic MUST get a grey-box playtest before any polish (art, VFX, audio, UI
-  styling) is applied to it.
+- Art, monetization and live-ops work MUST NOT start until the owner has played a grey-box
+  build of ball control, absorption and growth and signed off. The sign-off MUST be recorded
+  in that feature's `playtest.md`.
+- Every new mechanic MUST get a grey-box check before any polish (art, VFX, audio, UI
+  styling) is applied to it. The check is an agent-driven Studio playtest through the Studio
+  MCP server (with simulated clients when the mechanic needs several players) plus the owner
+  playing it. Outside players are not required for this check.
+- A playtest with outside people (at least 3 adults and at least 3 children aged 10–12) MUST
+  take place once the game has its world art and animation, and MUST be recorded with the
+  owner's sign-off before the first publish to the live place. A mechanic that lands after
+  that round MUST get its own round with outside people before it ships to the live place.
 - Each playtest MUST be recorded in the feature's spec folder (`specs/<feature>/playtest.md`)
-  with the date, the build or commit, participant counts per age group, findings, and the
-  owner's sign-off. Children are recorded by age group only, never by name.
+  with the date, the build or commit, participant counts per age group (when people take
+  part), findings, and the owner's sign-off. Children are recorded by age group only, never
+  by name.
 
 Rationale: the genre is crowded and art is expensive. A mechanic that is not fun in grey
-boxes will not be saved by polish.
+boxes will not be saved by polish, so grey box still proves each mechanic before polish. But
+showing a grey-box room to children gives little signal: they judge what looks like a game.
+Outside people therefore test once the game reads as a game, and always before launch.
 
 ### II. Server Authority
 
@@ -258,4 +233,4 @@ Agents MUST stop and get owner approval before any of the following:
   flag conflicts in the plan or analysis instead of working around them. A conflict is
   resolved by changing the work or by amending the constitution, never by ignoring it.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-10-24
+**Version**: 1.1.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-10-26
