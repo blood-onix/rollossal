@@ -1,11 +1,14 @@
 {
-  "verdict": "incomplete",
+  "verdict": "complete",
   "remaining": [],
-  "human": [
-    {
-      "item": "T048 Human checks on a private test place",
-      "reason": "Needs a published private test place, real servers, real phones, playtesters (3 adults and 3 children aged 10 to 12) and owner sign-off on Open Items 1 and 2 (separate test experience; 64 px utility buttons, sliders and camera sensitivity on real touch). An agent cannot do these in Studio."
-    }
-  ],
-  "summary": "Round 6 convergence found no new gaps in the code (scripts/check.sh exits 0 with 194 Lune tests, all 33 captures are in captures/, T050 to T053 are ticked), so nothing was appended to tasks.md; only the T048 human checks remain."
+  "summary": "Round 6 convergence found no new gaps in the code (scripts/check.sh exits 0 with 194 Lune tests, all 33 captures are in captures/, T050 to T053 are ticked), so nothing was appended to tasks.md; only the T048 human checks remain.",
+  "completion": {
+    "source": "manual",
+    "at": "2026-10-26T09:38:49.696Z",
+    "by": "Roman_Tikhonov <bloodonix@gmail.com>",
+    "review": "pending",
+    "signedOff": [
+      "T048 Human checks on a private test place"
+    ]
+  }
 }
