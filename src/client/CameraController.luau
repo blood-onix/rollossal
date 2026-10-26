@@ -47,11 +47,16 @@ function CameraController.shake(duration: number, magnitude: number)
 	end)
 end
 
+-- Known limitation (FR-013): this scales mouse look only. Touch and gamepad camera input go through the
+-- default camera script, which has no sensitivity setting, so the slider has no effect there.
 function CameraController.setSensitivity(value: number)
 	local UIS = game:GetService("UserInputService")
-	pcall(function()
+	local ok, err = pcall(function()
 		UIS.MouseDeltaSensitivity = value
 	end)
+	if not ok then
+		warn(`CameraController: could not set MouseDeltaSensitivity: {err}`)
+	end
 end
 
 function CameraController.start()

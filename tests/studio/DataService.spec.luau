@@ -317,6 +317,29 @@ describe("DataService", function()
 		DataService.setStore(ProfileStore.New("test").Mock)
 	end)
 
+	it("an unreadable stored version is released unchanged and kicked", function()
+		local store = ProfileStore.New("test").Mock
+		DataService.setStore(store)
+		local cases: { { [string]: any } } =
+			{ { version = 0, coins = 5 }, { version = 1.5, coins = 5 }, { coins = 5 } }
+		for _, stored in cases do
+			table.clear(capturedKicks)
+			local uid = newUserId()
+			local key = Config.playerKeyPrefix .. tostring(uid)
+			local profile = store:StartSessionAsync(key, {}) :: any
+			profile.Data = table.clone(stored)
+			profile:EndSession()
+			expect(DataService.load(uid, fakePlayer(uid))).toBe(false)
+			expect(#capturedKicks).toBe(1)
+			expect(capturedKicks[1].msg).toBe(Localizer.t("error.profile_version", nil, "en-us"))
+			expect(DataService.snapshot(uid)).toBe(nil)
+			local after = store:StartSessionAsync(key, {}) :: any
+			expect(after.Data).toEqual(stored)
+			after:EndSession()
+		end
+		DataService.setStore(ProfileStore.New("test").Mock)
+	end)
+
 	it("shutdown releases every profile and later apply returns nil", function()
 		local uid = newUserId()
 		local player = fakePlayer(uid)
@@ -518,6 +541,16 @@ describe("DataService remote handlers", function()
 		DataService.handleRequestProfile(player)
 		expect(#capturedSyncs).toBe(1)
 		expect(capturedSyncs[1].snap.coins).toBe(0)
+		DataService.release(uid)
+	end)
+
+	it("RequestProfile ignores requests past the rate limit", function()
+		local uid, player = loadedPlayer()
+		table.clear(capturedSyncs)
+		for _ = 1, Config.settingsRateLimit + 5 do
+			DataService.handleRequestProfile(player)
+		end
+		expect(#capturedSyncs).toBe(Config.settingsRateLimit)
 		DataService.release(uid)
 	end)
 

@@ -77,6 +77,7 @@ local savingKeys = {
 	"ui.hub.coins",
 	"ui.hub.best_size",
 	"ui.results.coins_total",
+	"ui.results.more_entries",
 	"ui.results.first_run_tip",
 	"reward.greybox.tier1.name",
 	"reward.greybox.tier2.name",
@@ -120,7 +121,7 @@ test("Strings: every key listed in the contract exists", function()
 end)
 
 test("Strings: every key of the saving-and-economy contract exists with Spanish text", function()
-	expect.equal(#savingKeys, 37)
+	expect.equal(#savingKeys, 38)
 	for _, key in savingKeys do
 		local entry = Strings[key]
 		if entry == nil then

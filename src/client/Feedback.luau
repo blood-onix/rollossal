@@ -32,9 +32,20 @@ function Feedback.setVolumes(music: number, effects: number)
 	effectsGroup.Volume = effects
 end
 
+-- The ReduceMotion attribute is the saved setting OR the engine's reduced-motion setting. Both sources
+-- recompute it from here, so neither can overwrite the other.
+local savedReduceMotion = false
+
+local function applyReduceMotion()
+	Players.LocalPlayer:SetAttribute(
+		"ReduceMotion",
+		savedReduceMotion or GuiService.ReducedMotionEnabled
+	)
+end
+
 function Feedback.setReduceMotion(on: boolean)
-	local player = Players.LocalPlayer
-	player:SetAttribute("ReduceMotion", on or GuiService.ReducedMotionEnabled)
+	savedReduceMotion = on
+	applyReduceMotion()
 end
 
 local function play(soundId: string, speed: number?)
@@ -75,14 +86,10 @@ local function preloadSounds()
 end
 
 -- The engine exposes the player's reduced-motion setting (GuiService.ReducedMotionEnabled, checked in
--- T038), so the ReduceMotion attribute follows it (research R11).
+-- T038), so the ReduceMotion attribute follows it as well as the saved setting (research R11).
 local function followReducedMotion()
-	local player = Players.LocalPlayer
-	local function sync()
-		player:SetAttribute("ReduceMotion", GuiService.ReducedMotionEnabled)
-	end
-	sync()
-	GuiService:GetPropertyChangedSignal("ReducedMotionEnabled"):Connect(sync)
+	applyReduceMotion()
+	GuiService:GetPropertyChangedSignal("ReducedMotionEnabled"):Connect(applyReduceMotion)
 end
 
 function Feedback.start()

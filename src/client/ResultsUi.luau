@@ -176,9 +176,13 @@ function ResultsUi.start()
 		bestRow.Size = UDim2.new(1, 0, 0, BEST_ROW_HEIGHT)
 		bestRow.TextSize = BODY_SIZE
 		if result.isFirstRun then
+			-- The last visible line becomes "+N more" so every first-time entry is accounted for (FR-014).
+			local hidden = #result.newBookIds - FIRST_RUN_ENTRY_LINES
 			for index, entryLine in entryLines do
 				if index > FIRST_RUN_ENTRY_LINES then
 					entryLine.Text = ""
+				elseif index == FIRST_RUN_ENTRY_LINES and hidden > 0 then
+					entryLine.Text = Localizer.t("ui.results.more_entries", { count = hidden + 1 })
 				end
 			end
 			bestRow.Position =

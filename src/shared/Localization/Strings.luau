@@ -74,6 +74,7 @@ local Strings: { [string]: { en: string, es: string? } } = {
 		en = "Coins: {coins} (total {total})",
 		es = "Monedas: {coins} (total {total})",
 	},
+	["ui.results.more_entries"] = { en = "+{count} more", es = "+{count} más" },
 	["ui.results.first_run_tip"] = {
 		en = "Coins and book entries are saved. Fill book pages for rewards!",
 		es = "Monedas y libro guardados. ¡Completa páginas por premios!",

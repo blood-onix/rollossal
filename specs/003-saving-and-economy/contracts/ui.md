@@ -95,7 +95,8 @@ Panel is 464×320 (was 600×320 in 002), centred in the space left of the TopBar
 (`Coins: 12 (total 20)`) when `coinsTotal` exists, else the 002 `ui.results.coins`. Right column: unchanged
 `ui.results.new_entries` header and ≤ 4 object lines (each `[icon] name`), then the friend/self-best row,
 where `bestSelfSize` is now the persistent best. **First run (`isFirstRun`)**: the best-size row is replaced
-by `ui.results.first_run_tip` (two lines of 18 px) and the entry list shows at most 3 lines. The TopBar stays
+by `ui.results.first_run_tip` (two lines of 18 px) and the entry list shows at most 3 lines; when there are more than 3 entries the third line reads
+`ui.results.more_entries` (`+N more`, N counting every entry not shown by name). The TopBar stays
 visible above the dim layer (it is a separate ScreenGui; `UiKit.screen` gets an optional `displayOrder`
 argument and TopBar passes a higher one), so Book can be opened from the results screen.
 

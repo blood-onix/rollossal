@@ -111,6 +111,7 @@ Entry type becomes `{ en: string, es: string? }`. Placeholder names must match b
 | `ui.hub.coins` | `Coins: {coins}` | `Monedas: {coins}` | `coins` |
 | `ui.hub.best_size` | `Best size: {size}` | `Mejor tamaño: {size}` | `size` |
 | `ui.results.coins_total` | `Coins: {coins} (total {total})` | `Monedas: {coins} (total {total})` | `coins`, `total` |
+| `ui.results.more_entries` | `+{count} more` | `+{count} más` | `count` |
 | `ui.results.first_run_tip` | `Coins and book entries are saved. Fill book pages for rewards!` | `Monedas y libro guardados. ¡Completa páginas por premios!` | |
 | `reward.greybox.tier1.name` | `Tiny Cube Trail` | `Estela de cubo diminuto` | |
 | `reward.greybox.tier2.name` | `Small Cube Trail` | `Estela de cubo pequeño` | |
