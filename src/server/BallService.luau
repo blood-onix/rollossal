@@ -50,6 +50,9 @@ export type Session = {
 	violations: number,
 	violationLog: { Violation },
 	lastWarnAt: number,
+	-- Run loop: which floor the ball belongs on, and whether the server holds it still (after the bell).
+	zone: "Room" | "Hub",
+	frozen: boolean,
 }
 
 local BallService = {}
@@ -104,6 +107,10 @@ end
 
 function BallService.getSession(player: Player): Session?
 	return sessions[player.UserId]
+end
+
+function BallService.getSessionByUserId(userId: number): Session?
+	return sessions[userId]
 end
 
 -- The cubes these entries can still release: those waiting to respawn from the same pickup. A cube
@@ -169,6 +176,8 @@ function BallService.newSession(userId: number, player: Player?): Session
 		violations = 0,
 		violationLog = {},
 		lastWarnAt = -math.huge,
+		zone = "Room",
+		frozen = false,
 	}
 	if player then
 		part:SetNetworkOwner(player)
@@ -189,7 +198,9 @@ function BallService.removeSession(session: Session)
 end
 
 local function placeAtSpawn(session: Session)
-	local spawn = WorldSpawner.getSpawnSlot(session.slot)
+	local spawn = if session.zone == "Hub"
+		then WorldSpawner.getHubSpawn()
+		else WorldSpawner.getSpawnSlot(session.slot)
 	session.part.AssemblyLinearVelocity = Vector3.zero
 	session.part.AssemblyAngularVelocity = Vector3.zero
 	session.part.Position = spawn
@@ -211,6 +222,43 @@ function BallService.respawn(session: Session, now: number)
 		WorldSpawner.scatter(cube, spots[index], now)
 	end
 	session.stuckStack = {}
+	BallService.setDiameter(session, Config.startDiameter)
+	placeAtSpawn(session)
+	BallService.publishStuck(session)
+end
+
+-- Position and velocity only: size, stuck stack and anything the run owns stay as they are.
+function BallService.returnToSpawn(session: Session)
+	placeAtSpawn(session)
+end
+
+-- Holds the ball still (anchored, no velocity) or hands it back to its player.
+function BallService.setFrozen(session: Session, frozen: boolean)
+	local part = session.part
+	session.frozen = frozen
+	if frozen then
+		part.AssemblyLinearVelocity = Vector3.zero
+		part.AssemblyAngularVelocity = Vector3.zero
+		part.Anchored = true
+		return
+	end
+	part.Anchored = false
+	if session.player then
+		part:SetNetworkOwner(session.player)
+	end
+	session.lastValidPosition = part.Position
+	session.lastValidVelocity = Vector3.zero
+end
+
+-- Fresh ball for a new run: releases cubes still pending from the stack, empties it, starts at the
+-- start diameter and moves to the spawn of the current zone.
+function BallService.resetBall(session: Session)
+	for _, cube in BallService.releasableCubes(session.stuckStack) do
+		WorldSpawner.returnToSpawn(cube)
+	end
+	session.stuckStack = {}
+	session.physicalDiameter = Config.startDiameter
+	session.part.Size = Vector3.one * Config.startDiameter
 	BallService.setDiameter(session, Config.startDiameter)
 	placeAtSpawn(session)
 	BallService.publishStuck(session)
@@ -246,8 +294,12 @@ function BallService.step(now: number, dt: number)
 		session.physicalDiameter += (session.authoritativeDiameter - session.physicalDiameter) * alpha
 		part.Size = Vector3.one * session.physicalDiameter
 
+		if session.frozen then
+			continue
+		end
+
 		if part.Position.Y < Config.fallRespawnY then
-			BallService.respawn(session, now)
+			BallService.returnToSpawn(session)
 			continue
 		end
 

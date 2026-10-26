@@ -44,11 +44,48 @@ local Config = {
 	stuckVisualMode = "Weld",
 	stuckEmbed = 0.35,
 
-	-- Flags (exist, unused, off)
+	-- Run loop (specs/002-run-loop/data-model.md §1)
+	runDurationSeconds = 240,
+	rollAgainDelaySeconds = 3,
+	starThresholds = { 20, 45, 80 },
+	friendBonusRate = 0.20,
+	friendBoostRate = 0.25,
+	pickupPopDuration = 1.0,
+	tierBannerDuration = 2.5,
+	knockOffShakeDuration = 0.35,
+	knockOffShakeMagnitude = 0.6,
+	pickupPitchStep = 0.08,
+	minTextSize = 18,
+	minTouchTarget = 96,
+	uiReferenceShortSide = 720,
+
+	-- Saving and economy (specs/003-saving-and-economy/contracts/content-and-config.md)
+	dataStoreName = "PlayerProfiles_v1",
+	playerKeyPrefix = "Player_",
+	useMockDataStoreInStudio = true,
+	runStartUiLockSeconds = 5,
+	settingsRateLimit = 20,
+	settingsSendDelay = 0.3,
+	minUtilityTouchTarget = 64,
+	noticeSeconds = 2,
+	Settings = {
+		musicVolume = { default = 0.8, min = 0, max = 1 },
+		effectsVolume = { default = 0.8, min = 0, max = 1 },
+		cameraSensitivity = { default = 1.0, min = 0.5, max = 2.0 },
+		reduceMotionDefault = false,
+		languageDefault = "auto",
+		languages = { "auto", "en-us", "es-es" },
+	},
+	DefaultWorldsUnlocked = { greybox = true, snow_village = true },
+
+	-- Flags (AvatarPusher, BigBallMode and RewardedAds exist, unused, off)
 	Flags = {
 		AvatarPusher = false,
 		BigBallMode = false,
 		RewardedAds = false,
+		RunLoop = true,
+		Saving = true,
+		Shop = false,
 	},
 
 	-- Budgets. meshTriangles is indexed by tier.

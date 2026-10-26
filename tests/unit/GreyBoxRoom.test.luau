@@ -5,6 +5,8 @@
 local harness = require("./harness")
 local Room = require("../../src/shared/Content/GreyBoxRoom")
 local Growth = require("../../src/shared/Rules/Growth")
+local Strings = require("../../src/shared/Localization/Strings")
+local Icons = require("../../src/shared/Content/Icons")
 
 local test, expect = harness.test, harness.expect
 
@@ -115,6 +117,129 @@ test("Room: chain of pickups opens Tier 2, then Tier 3, then Tier 4", function()
 		n3 += 1
 	end
 	expect.equal(n3, 25)
+end)
+
+test("Room: size tiers are sequential, ascending and chained", function()
+	local tiers = Room.sizeTiers
+	expect.equal(#tiers, 4)
+	expect.equal(tiers[1].minDiameter, 2)
+	for i, def in tiers do
+		expect.equal(def.tier, i)
+		if i > 1 then
+			expect.truthy(def.minDiameter > tiers[i - 1].minDiameter)
+			expect.equal(tiers[i - 1].maxDiameter, def.minDiameter)
+		end
+	end
+	expect.equal(tiers[#tiers].maxDiameter, nil)
+end)
+
+test("Room: a tier opens exactly when its cubes become absorbable (size / 0.4)", function()
+	for tier = 2, #Room.sizeTiers do
+		expect.near(Room.sizeTiers[tier].minDiameter, tierSize(tier) / 0.4, 1e-9)
+	end
+end)
+
+test("Room: objects are unique, positive and match the layout tiers", function()
+	local ids: { [string]: boolean } = {}
+	local books: { [string]: boolean } = {}
+	expect.equal(#Room.objects, #Room.tiers)
+	for _, object in Room.objects do
+		expect.falsy(ids[object.id])
+		expect.falsy(books[object.bookId])
+		ids[object.id] = true
+		books[object.bookId] = true
+		expect.truthy(object.coins > 0)
+		expect.equal(object.coins, math.floor(object.coins))
+		expect.equal(object.size, tierSize(object.tier))
+	end
+	for _, cube in Room.cubes do
+		local found = false
+		for _, object in Room.objects do
+			found = found or object.tier == cube.tier
+		end
+		expect.truthy(found)
+	end
+end)
+
+test("Room: star thresholds are ascending, positive, three", function()
+	local thresholds = Room.starThresholds
+	assert(thresholds, "missing starThresholds")
+	expect.equal(#thresholds, 3)
+	expect.truthy(thresholds[1] > 0)
+	for i = 2, #thresholds do
+		expect.truthy(thresholds[i] > thresholds[i - 1])
+	end
+end)
+
+test("Room: every string key and icon the content names exists", function()
+	local function hasString(key: string)
+		local entry = Strings[key]
+		expect.truthy(entry ~= nil and entry.en ~= "")
+	end
+	for _, def in Room.sizeTiers do
+		hasString(def.nameKey)
+		hasString(def.headlineKey)
+		expect.truthy(Icons[def.headlineIcon] ~= nil)
+	end
+	for _, object in Room.objects do
+		hasString(object.nameKey)
+		expect.truthy(Icons[object.icon] ~= nil)
+	end
+end)
+
+test("Room: tier rewards have unique ids, a skin or trail type and a known name key", function()
+	-- Hand-copied from contracts/content-and-config.md §Content, not read from the room data.
+	local expected = {
+		{ id = "greybox.reward.tier1", kind = "trail", nameKey = "reward.greybox.tier1.name" },
+		{ id = "greybox.reward.tier2", kind = "trail", nameKey = "reward.greybox.tier2.name" },
+		{ id = "greybox.reward.tier3", kind = "skin", nameKey = "reward.greybox.tier3.name" },
+		{ id = "greybox.reward.tier4", kind = "skin", nameKey = "reward.greybox.tier4.name" },
+	}
+	local seen: { [string]: boolean } = {}
+	local count = 0
+	for _, def in Room.sizeTiers do
+		local reward = def.reward
+		if reward ~= nil then
+			count += 1
+			expect.truthy(#reward.rewardId > 0)
+			expect.falsy(seen[reward.rewardId])
+			seen[reward.rewardId] = true
+			expect.truthy(reward.rewardType == "skin" or reward.rewardType == "trail")
+			expect.truthy(Strings[reward.nameKey] ~= nil)
+		end
+	end
+	expect.equal(count, 4)
+	for tier, want in expected do
+		local reward = Room.sizeTiers[tier].reward
+		expect.truthy(reward ~= nil)
+		if reward then
+			expect.equal(reward.rewardId, want.id)
+			expect.equal(reward.rewardType, want.kind)
+			expect.equal(reward.nameKey, want.nameKey)
+		end
+	end
+	for _, want in expected do
+		expect.truthy(Strings[want.nameKey] ~= nil)
+	end
+end)
+
+test("Room: every object tier has a size tier entry and every book id is unique", function()
+	local tiers: { [number]: boolean } = {}
+	for _, def in Room.sizeTiers do
+		tiers[def.tier] = true
+	end
+	local bookIds: { [string]: boolean } = {}
+	for _, object in Room.objects do
+		expect.truthy(tiers[object.tier])
+		expect.falsy(bookIds[object.bookId])
+		bookIds[object.bookId] = true
+	end
+end)
+
+test("Room: the hub is sized and sits clear of the room", function()
+	local hub = Room.hub
+	expect.truthy(hub.halfExtent > 0)
+	expect.truthy(math.abs(hub.center.x) - hub.halfExtent > Room.halfExtent + 2)
 end)
 
 return {}

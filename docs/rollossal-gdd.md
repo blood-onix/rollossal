@@ -304,7 +304,8 @@ art/source, art/export Blender files and exports
 ## 11. Feature backlog (in `/speckit-specify` order)
 
 1. **Grey-box prototype:** ball control, the absorb rule, growth, camera and one room with 30
-   cubes of 4 sizes. A fun test with 6 people.
+   cubes of 4 sizes. A fun test: an agent-driven Studio playtest, then the owner plays it and
+   signs off.
 2. **Run loop:** the timer, targets, stars, the results screen, Roll again.
 3. **Saving and economy:** DataService with ProfileStore, coins, best size, collection book.
 4. **Snow Village content:** about 60 objects in 4 tiers via the Blender pipeline, respawning,
@@ -314,7 +315,8 @@ art/source, art/export Blender files and exports
 7. **Onboarding, analytics and localisation:** the first-60-seconds flow, events, English and
    Spanish tables.
 8. **Launch kit:** icon, thumbnails, completed questionnaire, Kids and Select prerequisites,
-   test place to live (owner).
+   a playtest with at least 3 adults and 3 children aged 10–12 once the world art and
+   animation are in (recorded with the owner's sign-off), test place to live (owner).
 9. **After launch:** Big Ball mode, the avatar pusher, the Candy Town reskin, weekly object
    drops.
 

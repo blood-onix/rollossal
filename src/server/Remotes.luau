@@ -1,5 +1,6 @@
 --!strict
--- Creates ReplicatedStorage.Remotes with the three RemoteEvents from contracts/remotes.md.
+-- Creates ReplicatedStorage.Remotes with the twelve RemoteEvents from the contracts/remotes.md files of 001 (three),
+-- 002 (six) and 003 (three).
 -- Required by Main.server before any player joins; idempotent if the folder already exists.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -32,6 +33,17 @@ local Remotes = {
 	Absorb = getOrCreateEvent(folder, "Absorb"),
 	Bump = getOrCreateEvent(folder, "Bump"),
 	RespawnBall = getOrCreateEvent(folder, "RespawnBall"),
+	-- Run loop (specs/002-run-loop/contracts/remotes.md): two zero-argument intents, four facts.
+	RollAgain = getOrCreateEvent(folder, "RollAgain"),
+	BackToHub = getOrCreateEvent(folder, "BackToHub"),
+	PickupConfirmed = getOrCreateEvent(folder, "PickupConfirmed"),
+	TierUnlocked = getOrCreateEvent(folder, "TierUnlocked"),
+	KnockedOff = getOrCreateEvent(folder, "KnockedOff"),
+	RunResult = getOrCreateEvent(folder, "RunResult"),
+	-- Saving and economy (specs/003-saving-and-economy/contracts/remotes.md): two intents, one fact.
+	UpdateSettings = getOrCreateEvent(folder, "UpdateSettings"),
+	RequestProfile = getOrCreateEvent(folder, "RequestProfile"),
+	ProfileSync = getOrCreateEvent(folder, "ProfileSync"),
 }
 
 return Remotes

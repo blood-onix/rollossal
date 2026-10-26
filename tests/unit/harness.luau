@@ -14,9 +14,10 @@ end
 
 local expect = {}
 
-function expect.equal<T>(actual: T, expected: T)
+function expect.equal<T>(actual: T, expected: T, label: string?)
 	if actual ~= expected then
-		fail(`expected {tostring(expected)}, got {tostring(actual)}`, 2)
+		local prefix = if label then `{label}: ` else ""
+		fail(`{prefix}expected {tostring(expected)}, got {tostring(actual)}`, 2)
 	end
 end
 

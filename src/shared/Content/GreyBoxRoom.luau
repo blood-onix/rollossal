@@ -1,10 +1,41 @@
 --!strict
 -- Grey-box room data. Data only: no Roblox APIs, so Lune can validate it.
 -- Layout and tiers: specs/001-grey-box-prototype/data-model.md §2 and research.md R1.
+-- Run-loop tiers, objects, star targets and hub: specs/002-run-loop/data-model.md §2.
 
 export type TierDef = { tier: number, size: number, count: number, shade: number }
 export type CubeSpawn = { id: string, tier: number, x: number, z: number }
+export type RewardDef = { rewardId: string, rewardType: "skin" | "trail", nameKey: string }
+export type SizeTierDef = {
+	tier: number,
+	nameKey: string,
+	minDiameter: number,
+	maxDiameter: number?,
+	headlineKey: string,
+	headlineIcon: string,
+	reward: RewardDef?,
+}
+export type ObjectDef = {
+	id: string,
+	tier: number,
+	size: number,
+	coins: number,
+	bookId: string,
+	nameKey: string,
+	icon: string,
+}
+export type HubDef = {
+	center: { x: number, z: number },
+	halfExtent: number,
+	spawn: { x: number, z: number },
+	padRadius: number,
+}
 export type Room = {
+	worldId: string,
+	starThresholds: { number }?,
+	sizeTiers: { SizeTierDef },
+	objects: { ObjectDef },
+	hub: HubDef,
 	halfExtent: number,
 	wallHeight: number,
 	kerb: { x: number, z: number, length: number, depth: number, height: number },
@@ -15,6 +46,107 @@ export type Room = {
 }
 
 local GreyBoxRoom: Room = {
+	worldId = "greybox",
+	-- Provisional: a 30-cube room cannot grow a ball far past 5 studs (plan.md F-1). Retune after the playtest.
+	starThresholds = { 3.0, 4.0, 5.0 },
+	sizeTiers = {
+		{
+			tier = 1,
+			nameKey = "tier.greybox.1.name",
+			minDiameter = 2.0,
+			maxDiameter = 2.375,
+			headlineKey = "tier.greybox.1.headline",
+			headlineIcon = "cube",
+			reward = {
+				rewardId = "greybox.reward.tier1",
+				rewardType = "trail",
+				nameKey = "reward.greybox.tier1.name",
+			},
+		},
+		{
+			tier = 2,
+			nameKey = "tier.greybox.2.name",
+			minDiameter = 2.375,
+			maxDiameter = 3.0,
+			headlineKey = "tier.greybox.2.headline",
+			headlineIcon = "cube",
+			reward = {
+				rewardId = "greybox.reward.tier2",
+				rewardType = "trail",
+				nameKey = "reward.greybox.tier2.name",
+			},
+		},
+		{
+			tier = 3,
+			nameKey = "tier.greybox.3.name",
+			minDiameter = 3.0,
+			maxDiameter = 3.75,
+			headlineKey = "tier.greybox.3.headline",
+			headlineIcon = "cube",
+			reward = {
+				rewardId = "greybox.reward.tier3",
+				rewardType = "skin",
+				nameKey = "reward.greybox.tier3.name",
+			},
+		},
+		{
+			tier = 4,
+			nameKey = "tier.greybox.4.name",
+			minDiameter = 3.75,
+			maxDiameter = nil,
+			headlineKey = "tier.greybox.4.headline",
+			headlineIcon = "cube",
+			reward = {
+				rewardId = "greybox.reward.tier4",
+				rewardType = "skin",
+				nameKey = "reward.greybox.tier4.name",
+			},
+		},
+	},
+	objects = {
+		{
+			id = "cube_t1",
+			tier = 1,
+			size = 0.75,
+			coins = 1,
+			bookId = "greybox.cube_t1",
+			nameKey = "object.greybox.cube_t1",
+			icon = "cube",
+		},
+		{
+			id = "cube_t2",
+			tier = 2,
+			size = 0.95,
+			coins = 2,
+			bookId = "greybox.cube_t2",
+			nameKey = "object.greybox.cube_t2",
+			icon = "cube",
+		},
+		{
+			id = "cube_t3",
+			tier = 3,
+			size = 1.2,
+			coins = 3,
+			bookId = "greybox.cube_t3",
+			nameKey = "object.greybox.cube_t3",
+			icon = "cube",
+		},
+		{
+			id = "cube_t4",
+			tier = 4,
+			size = 1.5,
+			coins = 5,
+			bookId = "greybox.cube_t4",
+			nameKey = "object.greybox.cube_t4",
+			icon = "cube",
+		},
+	},
+	hub = {
+		center = { x = 160, z = 0 },
+		halfExtent = 16,
+		spawn = { x = 0, z = 0 },
+		padRadius = 4,
+	},
 	halfExtent = 36,
 	wallHeight = 20,
 	kerb = { x = -20, z = -12, length = 22, depth = 2, height = 1.0 },
