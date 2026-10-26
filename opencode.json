@@ -7,6 +7,11 @@
         "/Applications/RobloxStudio.app/Contents/MacOS/StudioMCP"
       ],
       "enabled": true
+    },
+    "blender": {
+      "type": "local",
+      "command": ["/opt/homebrew/bin/uvx", "mcp-for-blender"],
+      "enabled": true
     }
   }
 }
