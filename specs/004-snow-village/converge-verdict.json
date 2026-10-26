@@ -1,17 +1,15 @@
 {
   "verdict": "incomplete",
-  "remaining": [
-    "T033 🔒 Studio: phone-size UI captures (Hud, Book 18 cards, Results) at 640×360/844×390/1280×720 with TextFits + glyph checks, stored in specs/004-snow-village/captures/"
-  ],
+  "remaining": [],
   "human": [
     {
-      "item": "T031 Final validation — owner-dependent residue: SC-002 Studio import of Assets.meshes, SC-003 balance-tuning decision, SC-004 reference-phone fps, SC-005 sign-off",
-      "reason": "Needs the owner's 3D Importer session, their reference phone and their sign-off; the agent-verifiable parts already re-ran green at build 451e448 (check.sh exit 0, Jest 5/5, rollback smoke test) and are recorded in tasks.md/playtest.md."
+      "item": "T031 Final validation residue: owner Studio 3D-Importer import to fill Assets.meshes/palette (then REQUIRE_ASSET_IDS=1 scripts/check.sh for SC-002), owner reference-phone fps/part measurement (SC-004), owner sign-off (SC-005); SC-003 balance tuning deferred by the owner until the map design settles",
+      "reason": "Needs the owner's 3D Importer GUI session, physical reference phone and sign-off; agent-verifiable halves re-verified this round (check.sh exit 0, 270 Lune tests, guards green) and recorded in tasks.md/playtest.md"
     },
     {
-      "item": "T032 👤 Human checks: owner plays the build on PC and reference phone, picks the final audio IDs and the post-pace-gate growthK, signs off playtest.md",
-      "reason": "Requires physical play by the owner on devices and owner-only approvals (audio, growthK) an agent cannot make; outside-people playtest is deferred to 004d by owner decision."
+      "item": "T032 👤 Owner plays the build on PC and reference phone, picks the final audio IDs and the post-pace-gate growthK, signs off playtest.md; outside-people playtest deferred to 004d",
+      "reason": "Requires physical device play and owner-only approvals (audio IDs, growthK balance) an agent cannot make in this environment"
     }
   ],
-  "summary": "Round 2 of 8: the art pipeline (T024) completed after the owner's grey-box sign-off and all agent-verifiable validation re-ran green at build 451e448, so the only agent-executable gap left is the phone-size UI capture task (T033, appended under Phase 7), while T031's residue and T032 stay with the owner."
+  "summary": "Round 3 of 8: T033's phone-size UI captures are done and recorded (14 captures, TextFits/glyph checks clean), SC-001 re-verified green on the unchanged code tree, no new code gaps were found, so no convergence tasks were appended and the only remaining work is the owner-side residue of T031 and T032."
 }

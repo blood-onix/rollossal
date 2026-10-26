@@ -104,3 +104,39 @@ The owner's "Art may start" unblocked T024; the art was modelled and exported th
   palette colours. Shapes read as intended at game scale (carousel, cabin, town house, sled, bicycle,
   snowmen, fences, crumbs); chunky cartoonish look with the exaggerated pieces doing the exaggeration.
   Owner eyes-on with the finished meshes is still part of T032's phone/PC pass.
+
+## Phone-size UI captures (agent, 2026-10-27, T033)
+
+Method: AGENTS.md clone-into-exact-size-frame. A `CaptureHarness` ScreenGui on the Client holds a full-viewport
+black backdrop and an exact W×H frame with the cloned live screen (Hud, BookUi, Results with TopBar). Red
+translucent zones mark the Jump (96 px, bottom right, 24 px in) and Thumb (120 px, bottom left) areas. Studio's
+viewport is 1180×979, so the 1280×720 frame runs at UIScale 0.9219; the 640×360 and 844×390 frames run at 1.
+Measured with `TextFits`, `TextSize`, `AbsolutePosition`/`AbsoluteSize` (divided by the scale).
+
+Results (all text labels and buttons with text):
+
+- Hud at 640×360, 844×390 and 1280×720: no `TextFits` failures, minimum TextSize 18.
+- Book page 1 (18 cards) at 640×360, 844×390 and 1280×720; pages 2–5 at 640×360 only. Card counts per page
+  18 / 16 / 14 / 12 / 4 (64 total). Next is disabled on page 5. Pages 2–5 are not captured at the two larger
+  sizes: the panel is a fixed 464×240 at every size and the grid scrolls, so 640×360 is the tightest check.
+- Results at 640×360, 844×390 and 1280×720: no `TextFits` failures, minimum TextSize 18. Final size 2.0,
+  0 of 3 stars, Coins 0 (total 0), "No new book entries", and the first-run tip at 18 px in the captures.
+- Glyphs: a sheet at 1280×720 shows all 18 `Icons` entries (star, star_empty, clock, coin, cube, arrow, book,
+  retry, home, play, gear, shop, lock, unknown, prev, next, close, check) in both `FredokaOne` and
+  `GothamMedium`. All of them render; none is blank or a box. The tier-headline icons are all `cube`.
+
+Observations (layout facts for the owner, not T033 failures):
+
+- (a) Hud, 640×360: the three star-target labels touch with no gap.
+- (b) Results, 640×360: the RollAgain button (about x 17–231, y 232–328) overlaps the thumb zone (0–120,
+  240–360). Results is modal and the run has ended, so there is no live thumb input here. Still, a 1 px
+  clearance is tight.
+- (c) Book, 640×360: the bottom-left cards overlap the thumb zone. Book is modal.
+- (d) The 1280×720 captures are drawn at 0.92 to fit Studio's viewport. The TextSize values in this section
+  are the true values; only the picture is scaled.
+
+Capture files (`captures/`): hud_640x360, hud_844x390, hud_1280x720, book_p1_640x360, book_p2_640x360,
+book_p3_640x360, book_p4_640x360, book_p5_640x360, book_p1_844x390, book_p1_1280x720,
+glyphs_icons_fredoka_gotham_1280x720, results_640x360, results_844x390, results_1280x720 (all `.jpg`).
+The first `book_p1_640x360` attempt is not stored: its backdrop was missing, so the live panel showed through.
+It was re-captured after the backdrop fix.
