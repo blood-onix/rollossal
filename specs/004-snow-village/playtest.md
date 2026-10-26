@@ -61,8 +61,27 @@ collide (a real client does that for what it can eat). One real ball idles in sl
 - **SC-004**: open — phone measurement belongs to the owner (T032).
 - **SC-005**: open — owner sign-off pending (T032).
 
+## BotRun after the owner's PC play (agent, 2026-10-26, build 3dc60b2)
+
+12 playerless balls, 240 s, run from the owner's Play session (the owner's ball was the 13th).
+
+- First pickup 0.03 to 0.22 s and Tier 2 at 10 to 28 s for every bot. Part count 1,701 (budget 2,000).
+- Tier 4: 5 of 12 bots (at 69, 72, 78, 110, 151 s), final diameters 40.7 to 75.5 studs. The other 7 stalled
+  between 5.5 and 9.0 studs, as in the earlier run.
+- Available share at 60 / 120 / 180 / 240 s: T1 0.26 / 0.80 / 0.97 / 1.0, T2 0.08 / 0.55 / 0.97 / 1.0,
+  T3 0.44 / 0.19 / 0.66 / 0.71, T4 1.0 / 0.24 / 0.18 / 0.05, T5 1.0 / 1.0 / 1.0 / 0.75.
+- `everyTierKeptShare` is false: Tier 2 at 60 s (0.08) and Tier 4 at 180 s and 240 s (0.18, 0.05) are under the
+  20 % floor. SC-003 stays open and is deferred with the balance tuning.
+- Console: no game-script errors. Three `Displacement violation` lines (two bots, one real user) were logged;
+  not investigated.
+
 ## Owner section (to fill in)
 
-- [ ] Played on PC, build commit: ____, date: ____, notes: ____
-- [ ] Played on the reference phone (fps at Tier 4, part count): ____
-- [ ] Sign-off (grey-box layout gate): ____
+- [x] Played on PC, build commit: 3dc60b2 (branch tip when recorded), date: 2026-10-26, notes: owner played and
+  could not reach the maximum size within a run, even while trying hard. Owner reads this as a balance matter
+  that depends on the final map design, not a layout fault.
+- [ ] Played on the reference phone (fps at Tier 4, part count): not done yet (SC-004 stays open)
+- [x] Sign-off (grey-box layout gate): signed off by the owner on 2026-10-26 (recorded by the agent at the
+  owner's instruction in chat). Art may start. Balance tuning is deliberately deferred until the map design
+  settles: `growthK = 1.5` stays provisional and the Tier 3/Tier 4 placement counts stay as they are, so
+  SC-003 remains open and is not waived. Audio IDs are not chosen yet.
