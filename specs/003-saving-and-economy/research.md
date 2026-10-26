@@ -135,7 +135,7 @@ Fields are independent: one bad field never blocks the others.
 | --- | --- | --- |
 | `musicVolume` | `Feedback` | `SoundGroup "Music"` in `SoundService`, `Volume = value`; no music asset exists yet (Feature 007), the group is ready |
 | `effectsVolume` | `Feedback` | `SoundGroup "Effects"`; every sound created by `play` sets `SoundGroup` |
-| `cameraSensitivity` | `CameraController` | spike result (Risk Results): `UserInputService.MouseDeltaSensitivity = value`; if the touch pan cannot be scaled, the effect is PC-only and documented |
+| `cameraSensitivity` | `CameraController` | `CameraController.setSensitivity(value)`; applied after the default camera script through pure `Rules/CameraLook` so mouse, touch and gamepad are all scaled (the `MouseDeltaSensitivity` approach from the first spike was dropped, see plan.md F-7 and Risk Results) |
 | `reduceMotion` | `Feedback.followReducedMotion` | `ReduceMotion` attribute = `setting or GuiService.ReducedMotionEnabled`; `Hud` and `CameraController` already read the attribute, so no change there |
 | `language` | `Localizer.setLanguage` | R8 |
 

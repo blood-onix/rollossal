@@ -61,24 +61,61 @@ test("advance: a pitch already past maxPitch is pulled back to it", function()
 	expect.near(ep, MAX_PITCH - 1.45, 1e-9)
 end)
 
--- A default camera that continues from whatever direction it finds: each frame it adds the drag to the
--- direction left last frame. The client's increment must not be re-applied on top of itself.
-test(
-	"advance: a camera that continues from its own CFrame ends at factor times the drag",
-	function()
-		local drag = 0.1
-		local factor = 2
-		local camera = 0 -- yaw of the camera CFrame
-		local prevYaw: number? = nil
-		for _ = 1, 4 do
-			local yaw = camera + drag -- the default script's output this frame
-			local ey = CameraLook.advance(prevYaw, 0, yaw, 0, factor, MAX_PITCH)
-			camera = yaw + ey
-			prevYaw = CameraLook.wrap(camera)
-		end
-		-- First frame has no previous direction, so only 3 of the 4 drags are scaled: 0.1 + 3 * 0.2.
-		expect.near(camera, 0.7, 1e-9)
+-- Closed loop, as in CameraController.bindLook: the default script continues from the CFrame the client
+-- left, adds the player's drag to it, and the client then adds `advance`'s extra on top and remembers the
+-- direction it left. A feedback error shows up as a turn that is not factor times the drag, or as a camera
+-- that keeps turning once the drag stops.
+local function simulate(factor: number, yawDrags: { number }, pitchDrags: { number })
+	local cameraYaw, cameraPitch = 0, 0
+	local prevYaw: number? = nil
+	local prevPitch: number? = nil
+	local history: { number } = {}
+	for frame, dragYaw in yawDrags do
+		local yaw = CameraLook.wrap(cameraYaw + dragYaw)
+		local pitch = cameraPitch + (pitchDrags[frame] or 0)
+		local ey, ep = CameraLook.advance(prevYaw, prevPitch, yaw, pitch, factor, MAX_PITCH)
+		cameraYaw, cameraPitch = yaw + ey, pitch + ep
+		prevYaw, prevPitch = CameraLook.wrap(cameraYaw), cameraPitch
+		table.insert(history, cameraYaw)
 	end
-)
+	return cameraYaw, cameraPitch, history
+end
+
+-- The first frame has no previous direction and is only used to prime the loop, so it carries no drag.
+test("closed loop: factor 2 turns twice the drag, then stops when the input stops", function()
+	local yaw, _, history = simulate(2, { 0, 0.1, 0.1, 0.1, 0, 0, 0, 0 }, {})
+	expect.near(yaw, 0.6, 1e-9)
+	expect.near(history[5], history[8], 1e-9)
+end)
+
+test("closed loop: factor 0.5 turns half the drag, then stops when the input stops", function()
+	local yaw, _, history = simulate(0.5, { 0, 0.1, 0.1, 0.1, 0, 0, 0, 0 }, {})
+	expect.near(yaw, 0.15, 1e-9)
+	expect.near(history[5], history[8], 1e-9)
+end)
+
+test("closed loop: factor 1 turns exactly the drag", function()
+	local yaw = simulate(1, { 0, 0.1, 0.1, 0.1, 0, 0 }, {})
+	expect.near(yaw, 0.3, 1e-9)
+end)
+
+test("closed loop: no drag means no turn at any factor", function()
+	for _, factor in { 0.5, 1, 2 } do
+		local yaw, pitch = simulate(factor, { 0, 0, 0, 0, 0, 0 }, {})
+		expect.equal(yaw, 0)
+		expect.equal(pitch, 0)
+	end
+end)
+
+test("closed loop: pitch scales too and holds once the input stops", function()
+	local _, pitch = simulate(2, { 0, 0, 0, 0, 0, 0 }, { 0, 0.1, 0.1, 0, 0, 0 })
+	expect.near(pitch, 0.4, 1e-9)
+end)
+
+test("closed loop: a drag across the +/-pi seam still scales by the short way round", function()
+	local yaw = simulate(2, { 0, math.pi - 0.05, 0.1, 0, 0 }, {})
+	-- The drags add up to pi + 0.05, doubled and wrapped to [-pi, pi].
+	expect.near(CameraLook.wrap(yaw), CameraLook.wrap(2 * (math.pi + 0.05)), 1e-9)
+end)
 
 return {}

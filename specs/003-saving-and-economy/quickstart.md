@@ -64,8 +64,9 @@ are ignored or clamped without error.
 1. Open **Settings**: five controls, all text ≥ 18 px.
 2. Drag **Music volume** and **Effects volume** to 0 then 100 %: the next pickup sound is silent / full.
 3. Toggle **Reduce motion** on, trigger a knock-off: no camera shake, the "Bump!" label still shows.
-4. Change **Camera sensitivity** to 200 %: record the result in plan.md Risk Results (PC mouse; touch pan
-   if reachable).
+4. Change **Camera sensitivity** to 50 % and 200 %: look around with the mouse, on a real phone with touch and
+   with a gamepad if available. The turn should be about half / double, and the camera must stop turning when
+   the input stops. Record the result in plan.md Risk Results.
 5. Choose **Español**: new-feature screens (Book, Settings, Hub rows, Results coins line) switch to Spanish,
    002 strings stay English until Feature 007. Choose **Auto** again.
 6. Leave and rejoin: all five values are restored and applied.
