@@ -45,6 +45,22 @@ collide (a real client does that for what it can eat). One real ball idles in sl
 96 s to Tier 2 and ends a run at about 15 studs, so the Tier 2 in 60 s rule cannot hold. 1.5 gives 34 s and
 63 to 71 studs for an ideal eater. The owner confirms or changes it (T032).
 
+## Round 1 final-validation re-run (agent, 2026-10-26, build 6781340, tree clean)
+
+| Check | Result |
+| --- | --- |
+| Lune / static gate | `scripts/check.sh` exit 0: StyLua, Selene, luau-lsp strict, 270 Lune tests, world-agnostic and Rules purity guards green. |
+| Jest (Studio MCP runner) | 5/5 suites, 0 failures: AbsorbService 19, RunManager 26, DataService 29, WorldSpawner 15, WorldCuller (all passed). |
+| Rollback smoke test (T031) | Re-run on the current tree: probe `mismatches = {}` (60 files), Config flipped to `Flags.SnowVillage = false` in Studio, Play run showed `Workspace.World` with 30 objects, 6 geometry blocks, the hub and 1 spawned ball; console had no game-script errors (DataStore Studio warning and `rbxassetid://203785492` are Studio's own). Flag restored, probe re-run: `mismatches = {}`. |
+
+### SC scoreboard (agent-verifiable parts only)
+
+- **SC-001**: met (this round).
+- **SC-002**: open — no exported art until T024 (owner grey-box sign-off); manifest passes in fallback mode.
+- **SC-003**: open — recorded BotRun shows Tier 3 at 11 % / Tier 4 at 7 % available at the 180 s mark; needs the owner's tuning decision (T032).
+- **SC-004**: open — phone measurement belongs to the owner (T032).
+- **SC-005**: open — owner sign-off pending (T032).
+
 ## Owner section (to fill in)
 
 - [ ] Played on PC, build commit: ____, date: ____, notes: ____
