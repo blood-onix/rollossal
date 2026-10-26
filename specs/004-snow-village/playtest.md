@@ -45,19 +45,22 @@ collide (a real client does that for what it can eat). One real ball idles in sl
 96 s to Tier 2 and ends a run at about 15 studs, so the Tier 2 in 60 s rule cannot hold. 1.5 gives 34 s and
 63 to 71 studs for an ideal eater. The owner confirms or changes it (T032).
 
-## Round 1 final-validation re-run (agent, 2026-10-26, build 6781340, tree clean)
+## Round 2 final-validation re-run (agent, 2026-10-26, build 71eb5dc, tree clean)
+
+Real art is now exported (T024), so every check re-ran with the manifest engaged.
 
 | Check | Result |
 | --- | --- |
-| Lune / static gate | `scripts/check.sh` exit 0: StyLua, Selene, luau-lsp strict, 270 Lune tests, world-agnostic and Rules purity guards green. |
-| Jest (Studio MCP runner) | 5/5 suites, 0 failures: AbsorbService 19, RunManager 26, DataService 29, WorldSpawner 15, WorldCuller (all passed). |
-| Rollback smoke test (T031) | Re-run on the current tree: probe `mismatches = {}` (60 files), Config flipped to `Flags.SnowVillage = false` in Studio, Play run showed `Workspace.World` with 30 objects, 6 geometry blocks, the hub and 1 spawned ball; console had no game-script errors (DataStore Studio warning and `rbxassetid://203785492` are Studio's own). Flag restored, probe re-run: `mismatches = {}`. |
+| Lune / static gate | `scripts/check.sh` exit 0: 270 Lune tests (incl. `ArtManifest` hashing every FBX against the manifest), StyLua, Selene, luau-lsp strict, world-agnostic and Rules purity guards green. |
+| Jest (Studio MCP runner) | 5/5 suites, 0 failures: AbsorbService 19, RunManager 26, DataService 29, WorldSpawner 15, WorldCuller 12. |
+| SC-002 static half | No `rbxassetid://` anywhere in `src` outside `Assets.luau` (grep); one palette texture (`art/palette.png`, referenced by `manifest.json`); `Assets.meshes` still empty — the `REQUIRE_ASSET_IDS=1` import is the owner's hand-off, so SC-002 stays open until then. |
+| Rollback smoke test | `Flags.SnowVillage` flipped to `false` in the repo (Rojo synced, Edit-mode read-back `flag = false`); Play run: `Workspace.World` 30 objects, 6 geometry blocks, hub with floor, world id `greybox`, one spawned ball (`Ball_7967226345`, unanchored, on the old spawn ring); console had no game-script errors (only Studio's own DataStore warning and `rbxassetid://203785492` lines, which are not in the repo). Flag restored to `true`, sync probe re-run: `mismatches = {}` (60 files). |
 
-### SC scoreboard (agent-verifiable parts only)
+### SC scoreboard (agent-verifiable parts only, round 2)
 
 - **SC-001**: met (this round).
-- **SC-002**: open — no exported art until T024 (owner grey-box sign-off); manifest passes in fallback mode.
-- **SC-003**: open — recorded BotRun shows Tier 3 at 11 % / Tier 4 at 7 % available at the 180 s mark; needs the owner's tuning decision (T032).
+- **SC-002**: agent half met; open on the owner's Studio import of `Assets.meshes` / `Assets.palette` (T032 hand-off).
+- **SC-003**: open — balance tuning deliberately deferred by the owner's grey-box sign-off (`growthK = 1.5` provisional; Tier 3/Tier 4 placement counts unchanged). Latest recorded numbers: the "BotRun after the owner's PC play" section below.
 - **SC-004**: open — phone measurement belongs to the owner (T032).
 - **SC-005**: open — owner sign-off pending (T032).
 
