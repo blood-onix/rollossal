@@ -4,12 +4,11 @@
 measurements are in `../playtest.md` ("Studio convergence round 3"). Each frame is an exact-size clone of the live
 screens (UI scale 1); the 1280×720 frame is displayed at 0.921 because the Studio viewport is 1180 px wide.
 
-**The image files are not here yet.** `screen_capture` saves only into the harness folder
-`/Users/Roman_Tikhonov/.claude/projects/-Users-Roman-Tikhonov-Projects-Personal-rollossal/ea589b4c-7ba1-4481-aebd-fca235c57409/tool-results/`
-and the agent's shell policy blocks copying from outside the project. Run the commands at the end of this file
-once, from the repo root, to put them here.
+All 33 files are in this folder (copied from the harness `tool-results/` folder on 2026-10-26, round 6, after the
+copy restriction was lifted). The table lists each file, its view, and the source file it was copied from. The `cp`
+commands at the end are kept as the record of how they were copied; they are not needed again.
 
-| File to create | View | Source file in `tool-results/` |
+| File | View | Source file in `tool-results/` |
 | --- | --- | --- |
 | `hud-topbar-active_640x360.jpg` | HUD with TopBar, Active (timer visible, bar clear) | `mcp-Roblox_Studio-blob-1792969725619-vjhxk4.jpg` |
 | `hud-topbar-active_844x390.jpg` | HUD with TopBar, Active (timer visible, bar clear) | `mcp-Roblox_Studio-blob-1792969727521-gt97n9.jpg` |

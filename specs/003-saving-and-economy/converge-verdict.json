@@ -3,21 +3,9 @@
   "remaining": [],
   "human": [
     {
-      "item": "T052 (with T031, T044, T045) Copy the 33 Studio captures into specs/003-saving-and-economy/captures/, then tick T031, T044, T045",
-      "reason": "screen_capture writes only to the harness tool-results folder, and this round the shell hook blocked every command that reads from that folder (not-on-allowlist), so the files cannot be copied in this environment. A person runs the cp commands at the end of captures/README.md once from the repo root, or adds cp from that folder to the allowlist; the measurements and the plan.md Risk Results rows are already recorded."
-    },
-    {
-      "item": "T051 (and T040) Capture SettingsUi at 640x360 into captures/ and tick T040",
-      "reason": "The Studio sub-checks (Reduce motion, Camera sensitivity 200%, Espanol, fuzz, rejoin) are already run and recorded in playtest.md; only the image file is missing, and it is blocked by the same copy restriction. Retaking it would write to the same blocked folder."
-    },
-    {
-      "item": "T053 Final re-run and correction of the T049 note",
-      "reason": "Depends on T051 and T052. scripts/check.sh already exits 0 (194 Lune tests, purity guard green) and the Jest runner passed 59/59 in round 3; after the captures are copied in, the agent only needs to correct the T049 note and tick T053."
-    },
-    {
       "item": "T048 Human checks on a private test place",
-      "reason": "Needs a published place, real servers, real phones, playtesters (3 adults and 3 children aged 10 to 12) and owner sign-off on Open Items 1 and 2, including the camera sensitivity effect on touch."
+      "reason": "Needs a published private test place, real servers, real phones, playtesters (3 adults and 3 children aged 10 to 12) and owner sign-off on Open Items 1 and 2 (separate test experience; 64 px utility buttons, sliders and camera sensitivity on real touch). An agent cannot do these in Studio."
     }
   ],
-  "summary": "Round 6 found no new gaps in the code (scripts/check.sh exits 0) and appended nothing; the only unmet work is getting the 33 captures from the harness folder into the repo, which the shell policy blocked this round, plus the T048 human checks."
+  "summary": "Round 6 convergence found no new gaps in the code (scripts/check.sh exits 0 with 194 Lune tests, all 33 captures are in captures/, T050 to T053 are ticked), so nothing was appended to tasks.md; only the T048 human checks remain."
 }

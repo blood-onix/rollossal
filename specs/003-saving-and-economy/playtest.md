@@ -69,7 +69,7 @@ All 33 frames (11 views × 3 sizes) end with: no text under 18 px, `TextFits` tr
 
 Views: HUD with TopBar (Active); Settings (en); Settings (es-es); Results first run; Book incomplete page (0 / 1 Large); Book complete page (1 / 1 Tiny); Book in Spanish; Hub; Book locked at 2.2 s; Book open in Active (timer visible); Results later run. Glyph check: see plan.md Risk Results.
 
-**Blocker: the image files are not in `specs/003-saving-and-economy/captures/`.** `screen_capture` writes only to the harness tool-results folder, and the shell policy blocks copying from outside the project. `captures/README.md` lists every capture with its source file. T031, T044, T045, T051 and T052 therefore stay unticked until the files are copied in.
+**Blocker (resolved in round 6, second pass, below): the image files were not in `specs/003-saving-and-economy/captures/`.** `screen_capture` writes only to the harness tool-results folder and the shell policy blocked copying from outside the project. All 33 files are now in `captures/`.
 
 ### Convergence round 6 (2026-10-26)
 
@@ -77,3 +77,34 @@ Views: HUD with TopBar (Active); Settings (en); Settings (es-es); Results first 
 - The copy is still blocked: a plain single-file `cp` from the harness `tool-results/` folder into `captures/` was denied (Bash in don't-ask mode, command not on the allowlist). The source files exist (the `settings_640x360` source opens and shows the five controls at 18 px, Auto selected). Nothing was copied, so T031, T040, T044, T045, T051, T052 and T053 stay unticked. Run the commands at the end of `captures/README.md` once from the repo root, or add `cp` from that folder to the allowlist, and rerun.
 - Observation from `settings_640x360`: the 002 stars label ("STARS:" row) shows a clipped "ES:" fragment to the right of the Settings close button. It sits behind the modal panel, so it is not an overlap of live controls, but a later pass could dim the HUD behind the panel.
 - The §5 sub-checks were not redone this round: round 3 above ran them, and redoing them would only add files to the same blocked folder.
+
+### Convergence round 6, second pass (2026-10-26): captures copied in, clean-session re-run
+
+The copy restriction was lifted. All 33 captures were copied from the harness `tool-results/` folder into `captures/` (`cp -n`, nothing overwritten); `captures/README.md` is updated. `file` reports 33 valid JPEGs.
+
+**Captures reviewed** (all 11 views at 640×360 opened and read; the 1280×720 Results first-run frame spot-checked). Against the pass criteria:
+
+- Text: every visible text reads at 18 px or more, as measured in round 3 (`TextSize` is the source of truth, a 1:1 image only confirms nothing is cut). No text is cut by its own control.
+- Timer block (centre ± 155 at 640 wide) is visible and clear in the HUD, Book-locked, Book-open-active, Settings and Settings-es captures. In Results and Hub it is not shown (Ended / Hub), as in round 3.
+- TopBar: three 150×64 buttons top-right, clear of both bottom corners, Book shows 🔒 in `book-locked` and ▤ elsewhere; Spanish labels (`Libro`, `Tienda`, `Ajustes`) fit.
+- BookUi: complete page `1 / 1 Tiny` with `Earned`, incomplete page `0 / 1 Large` with `Locked` and `???`, Prev/Next dimmed at the ends, Spanish page fits.
+- SettingsUi: five controls, `Auto` selected with the check glyph; Spanish labels fit.
+- Hub: `Coins: 603`, `Best size: 5.6`; Results first run: tip, `Coins: 603 (total 603)`, three new entries; Results later run: `Coins: 8 (total 611)`, `No new book entries`, `Your best size: 5.6`, no tip.
+- Glyphs: ⚙ and 🛒 render as small grey emoji on the green TopBar buttons (the text label carries the meaning); ❓, 🔒, ❌, ✅, ◀, ▶, ▤ render. Matches plan.md Risk Results.
+
+**Cosmetic findings in the captures (not failures of a pass criterion, recorded so they are not hidden):**
+
+1. `book-complete`, `book-incomplete` and `book-es` were taken with the Book opened over the Ended Results panel. The Book panel (y 112) covers the lower part of the Results panel, so a clipped line of Results text ("Tiny cube", "3 of 3 stars") shows just above the Book header. The Book panel itself is clean (`book-open-active` shows it in a run with nothing behind it). A later pass could hide or dim Results while the Book is open from Results.
+2. `settings_640x360`: an `ES:` fragment of a transient 002 HUD label shows between the Settings panel and the TopBar column (already noted in round 6, first pass). A later pass could dim the HUD behind a panel.
+3. The transient 002 tier banner crossing the TopBar column at 640 wide is unchanged (plan.md Risk Results).
+
+**Clean-session re-run (Studio Play, mock store, code unchanged since the round-3 evidence: no `src/` or `tests/` file is newer than that evidence):**
+
+- `scripts/check.sh`: all checks passed (194 Lune tests, purity guard green).
+- Rojo sync probe: 49 files, 0 mismatches. Jest runner (Edit datamodel, mock store): AbsorbService 19, DataService 14, RunManager 26, 59 of 59 passed, 0 failed suites. The summary's top-level `success` is still `false` with every count clean; not investigated.
+- §3 on a fresh Play session with the client driver (AGENTS.md method): run 1 (all cubes): `Final size: 6.2`, 3 stars, `Coins: 760 (total 760)`, first-run tip shown, `New in your book: 4` (list capped at 3 lines on a first run). Profile read through `RequestProfile` → `ProfileSync`: `coins` 760, `bestSize.greybox` 6.227, `book` holds all four `greybox.cube_t1..t4`, `skinsOwned` holds `greybox.reward.tier1..tier4` once each, snapshot keys exactly `bestSize, book, coins, equipped, settings, skinsOwned`. Run 2 (smallest cubes only, via Roll again): `Final size: 3.7`, 1 of 3 stars, `Coins: 176 (total 936)` (760 + 176), `Your best size: 6.2`, `No new book entries`, no tip. Back to hub: Hub shows `Coins: 936` and `Best size: 6.2`; snapshot `coins` 936, `bestSize` 6.227, rewards still once each. TopBar shows Book, Shop, Settings with glyph and label in the Hub.
+- §4 lock, three fresh sessions: `🔒 Book` at 0 to 4.75 s elapsed, `▤ Book` from 5.08 s (and a forced local run clock: locked at 0.07 s, unlocked at 4.03 s local = 5.03 s elapsed). The clock check at tap time is `RunClock.uiLocked`, so the tap is ignored while locked.
+- **Observation, not reproduced:** in the first Play session after the Jest run, the Book button still showed `🔒` at 20 to 35 s elapsed while `RunClock.uiLocked` was false (the lock is evaluated at tap time, so a tap would have opened the Book; only the glyph was stale). Switching the local state Hub → Active refreshed it, and it did not recur in the next three sessions or in a forced run clock. Cause not found; `TopBar.luau` reschedules itself until the lock ends, and no console error accompanied it. If it shows up again, make the Book tap handler call `refreshText()` when it passes the lock check.
+- Console in these sessions: only the Studio artifacts (`StudioAccessToApisNotAllowed`, `[profilestore] Roblox API services unavailable`, `ContentId rbxassetid://203785492`) plus **one** `[Rollossal] Displacement violation for user 7967226345: 386.7 > 224` from the 002 `BallService` anti-teleport check. It appeared during the two driven runs; Roll again from the Hub (160 studs), Back to hub and an idle run end did not raise it. Most likely the driver pushed the ball into a solid cube and the physics jumped for one frame; the server reverted the position as designed. `BallService.luau` is unchanged from 002. Not a player-facing error, but recorded because the quickstart expects a clean console.
+- §5 on a fresh session, driven through the real `UpdateSettings` remote with the server echo read back through `ProfileSync` (not real slider drags; those were run in round 3): `{ music 0, effects 1, camera 2, reduceMotion true, language es-es }` echoed exactly and applied on the client: `Music` group volume 0, `Effects` group 1, `UserInputService.MouseDeltaSensitivity` 2.0, `ReduceMotion` attribute true, TopBar `▤ Libro`. Fuzz: `"x"`, no arguments and two arguments produced no change; `{ musicVolume = 9, language = "xx", bogus = 1 }` gave `musicVolume` 1.0 with the language kept and the unknown key ignored; `NaN` and `math.huge` were ignored; Auto with defaults restored `▤ Book`. Console in this session: Studio artifacts only, no game-script warning.
+- Not re-run: real slider drags, the knock-off camera shake and a true rejoin (Studio cannot re-add a player in one Play session; server half is `DataService.spec`, client half was run in round 3; the real rejoin is T048(a)). The code is unchanged since round 3.
