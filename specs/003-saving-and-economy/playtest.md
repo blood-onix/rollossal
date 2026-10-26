@@ -70,3 +70,10 @@ All 33 frames (11 views × 3 sizes) end with: no text under 18 px, `TextFits` tr
 Views: HUD with TopBar (Active); Settings (en); Settings (es-es); Results first run; Book incomplete page (0 / 1 Large); Book complete page (1 / 1 Tiny); Book in Spanish; Hub; Book locked at 2.2 s; Book open in Active (timer visible); Results later run. Glyph check: see plan.md Risk Results.
 
 **Blocker: the image files are not in `specs/003-saving-and-economy/captures/`.** `screen_capture` writes only to the harness tool-results folder, and the shell policy blocks copying from outside the project. `captures/README.md` lists every capture with its source file. T031, T044, T045, T051 and T052 therefore stay unticked until the files are copied in.
+
+### Convergence round 6 (2026-10-26)
+
+- `scripts/check.sh`: all checks passed (194 Lune tests, purity guard green).
+- The copy is still blocked: a plain single-file `cp` from the harness `tool-results/` folder into `captures/` was denied (Bash in don't-ask mode, command not on the allowlist). The source files exist (the `settings_640x360` source opens and shows the five controls at 18 px, Auto selected). Nothing was copied, so T031, T040, T044, T045, T051, T052 and T053 stay unticked. Run the commands at the end of `captures/README.md` once from the repo root, or add `cp` from that folder to the allowlist, and rerun.
+- Observation from `settings_640x360`: the 002 stars label ("STARS:" row) shows a clipped "ES:" fragment to the right of the Settings close button. It sits behind the modal panel, so it is not an overlap of live controls, but a later pass could dim the HUD behind the panel.
+- The §5 sub-checks were not redone this round: round 3 above ran them, and redoing them would only add files to the same blocked folder.
