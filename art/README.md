@@ -7,9 +7,10 @@ Contract: `specs/004-snow-village/contracts/art-pipeline.md`.
 | Tool | Version | Status |
 | --- | --- | --- |
 | Blender | 5.2.3 LTS (binary `/Applications/Blender.app/Contents/MacOS/Blender`) | installed, MCP addon connected |
-| `mcp-for-blender` (the Blender MCP server, started with `uvx`) | **not pinned yet** | `.vscode/mcp.json` and `opencode.json` run `uvx mcp-for-blender` unpinned. Task T002 stays open until the release is looked up (`uvx mcp-for-blender --version`) and written into both files as `mcp-for-blender==<version>` |
+| `mcp-for-blender` (the Blender MCP server, started with `uvx`) | **2.2.4** (pinned in `.vscode/mcp.json` and `opencode.json` as `uvx mcp-for-blender==2.2.4`; latest PyPI release as of 2026-10-26, addon protocol 15 — the protocol the installed addon runs) | pinned |
 
-No script under `art/scripts` other than `budgets.json` exists yet; the Blender tasks (T024) wait for the pin.
+Update the pin only together with the Blender addon (re-running `uvx mcp-for-blender` upgrades the addon on disk;
+keep both at one release).
 
 ## Files
 

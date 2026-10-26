@@ -41,7 +41,7 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 **Purpose**: Project initialization and basic structure
 
 - [X] T001 Setup: Bring the `004-snow-village` branch up to date with prerequisites 001 and 002 (merge `main` into the branch), confirm the design brief sections exist, and run `scripts/check.sh` recording the baseline (exit 0).
-- [ ] T002 Setup: Owner-approved Blender install and pinned `blender-mcp`: the owner installs the pinned Blender LTS (version recorded in `art/README.md`) and the pinned release is added to `.vscode/mcp.json` and `opencode.json` (Constitution XI, XII; owner approval 2026-10-26 in spec "Owner Approval Gate"). No task under `art/` may run before this is done.
+- [X] T002 Setup: Owner-approved Blender install and pinned `blender-mcp`: the owner installs the pinned Blender LTS (version recorded in `art/README.md`) and the pinned release is added to `.vscode/mcp.json` and `opencode.json` (Constitution XI, XII; owner approval 2026-10-26 in spec "Owner Approval Gate"). No task under `art/` may run before this is done.
 
 ---
 
@@ -52,7 +52,7 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
 - [X] T003 [P] Studio preflight and Rojo sync probe before any Studio task: run `scripts/studio-preflight.sh`, then run `scripts/studio-sync-probe.sh` through the Studio MCP `execute_luau`; confirm `mismatches = {}`.
-- [ ] T004 [P] Streaming spike (plan Phase A, spike T003): edit `default.project.json` with `"StreamingEnabled": true`, `"StreamingMinRadius": 128`, `"StreamingTargetRadius": 512`, `"StreamingIntegrityMode": "PauseOutsideLoadedArea"`; run the preflight + sync probe; in a Play session teleport a ball between a spawn and the hub through the existing path, read back at unfreeze whether the ground exists, and watch for pop-in at 128 studs at ball speed 32.
+- [X] T004 [P] Streaming spike (plan Phase A, spike T003): edit `default.project.json` with `"StreamingEnabled": true`, `"StreamingMinRadius": 128`, `"StreamingTargetRadius": 512`, `"StreamingIntegrityMode": "PauseOutsideLoadedArea"`; run the preflight + sync probe; in a Play session teleport a ball between a spawn and the hub through the existing path, read back at unfreeze whether the ground exists, and watch for pop-in at 128 studs at ball speed 32.
 - [X] T005 [P] Create `tests/unit/Respawn.test.luau` with every case in `contracts/rules-api.md` §`Respawn.luau` "Test values" (write first, must fail before `src/shared/Rules/Respawn.luau` exists): radius and view-distance boundaries inclusive, heading dot products, delay clamp, no watchers -> not seen.
 - [X] T006 [P] Create `tests/unit/Layout.test.luau` with the hand-computed cases in `contracts/rules-api.md` §`Layout.luau` (LCG steps, `normaliseSeed`, `cellEdge`, `capacity`, determinism, no overlap, `count > capacity` error) (write first, must fail before `src/shared/Rules/Layout.luau` exists).
 - [X] T007 [P] Edit `tests/unit/Tiers.test.luau`: add the `Tiers.isCulled` table from `contracts/rules-api.md` §`Tiers.luau`.
@@ -118,7 +118,7 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 
 ### Implementation for User Story 3
 
-- [ ] T024 [US3] 🔒 Studio: Blender claim task: drive Blender through the owner-approved pinned `blender-mcp` (task marked `CLAIMED:<agent>` per Constitution X) to model the tier collections, run `blender --background --python art/scripts/export_all.py -- --out art/export`, write `art/export/manifest.json`; exit non-zero on any modelling-rule violation.
+- [ ] T024 [US3] 🔒 Studio: Blender claim task: drive Blender through the owner-approved pinned `blender-mcp` (task marked `CLAIMED:<agent>` per Constitution X) to model the tier collections, run `blender --background --python art/scripts/export_all.py -- --out art/export`, write `art/export/manifest.json`; exit non-zero on any modelling-rule violation. BLOCKED: Constitution I gates art on the owner's grey-box sign-off recorded in `playtest.md` (T032, see 2026-10-26 round 1 report).
 - [X] T025 [US3] [P] Edit `src/shared/Assets.luau`: add `Assets.meshes` keys (one per object `assetKey` + `hub`, empty until the owner import session), `Assets.palette`, `Assets.sounds.music` placeholder; IDs are the only place a `rbxassetid://` string may appear. The final task sets `REQUIRE_ASSET_IDS=1 scripts/check.sh`.
 - [X] T026 [P] [US3] Create `tests/studio/WorldCuller.spec.luau` (Jest-Lua, Studio MCP runner): hides Tiers <= player - 2, restores on shrink, never revives a `Taken` part, other players unaffected.
 - [X] T027 [US3] Create `src/client/WorldCuller.luau`: client-side sub-tier culling via `Tiers.isCulled` and tag buckets; restore recomputes from the authoritative `Taken` attribute; started from `Main.client` after `StuckVisuals`.

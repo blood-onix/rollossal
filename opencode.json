@@ -10,7 +10,7 @@
     },
     "blender": {
       "type": "local",
-      "command": ["/opt/homebrew/bin/uvx", "mcp-for-blender"],
+      "command": ["/opt/homebrew/bin/uvx", "mcp-for-blender==2.2.4"],
       "enabled": true
     }
   }

@@ -302,15 +302,20 @@ change). Music starts on the first run state and keeps playing in the hub (it is
 
 ## Spike results (2026-10-26)
 
-**Streaming (T004, partly done).** `default.project.json` now sets the four `Workspace` streaming properties and
-Rojo 7.7.1 serialises it. In Play, `Workspace.StreamingEnabled` reads `true` on server and client. Parts do
-stream out: with the replication focus parked 4,000 studs away the client dropped the room to 2 descendants;
-at 700 and 1,400 studs they stayed (Roblox unloads lazily). **Not verified**: `StreamingMinRadius`,
-`StreamingTargetRadius` and `StreamingIntegrityMode` cannot be read from a script in this Studio build (not a
-valid member), so it is unproven that Rojo applied them, and the fallback in the contract (set them in
-`WorldBuilder.start`) is unavailable for the same reason. The hub teleport works: after "Back to hub" the ball
-rests on `World.Hub.Floor`, unanchored, no fall, with `RequestStreamAroundAsync` holding the ball first.
-Pop-in at 128 studs at ball speed 32 cannot be judged from the API and is left to the owner's phone check.
+**Streaming (T004).** `default.project.json` sets the four `Workspace` streaming properties and Rojo 7.7.1
+serialises it. In Play, `Workspace.StreamingEnabled` reads `true` on server and client. Parts do stream out:
+with the replication focus parked 4,000 studs away the client dropped the room to 2 descendants; at 700 and
+1,400 studs they stayed (Roblox unloads lazily). `StreamingMinRadius`, `StreamingTargetRadius` and
+`StreamingIntegrityMode` are **not valid Workspace members in this Studio build** (confirmed twice by script
+reflection on 2026-10-26, `Workspace` and `Player` both checked): Rojo cannot have applied them and the
+fallback in the contract (set them in `WorldBuilder.start`) is unavailable for the same reason, so streaming
+works at the engine's default radii (a ~600-stud town stays fully replicated until about 1,400+ studs). The
+hub teleport works: after "Back to hub" the ball rests on `World.Hub.Floor`, unanchored, no fall, with
+`RequestStreamAroundAsync` holding the ball first. A fresh Play check on 2026-10-26 also confirmed the
+server's guard corrects whole-CFrame client teleports (horizontal *and* a vertical drop below
+`fallRespawnY`), so the streaming unfreeze path must be driven through the game's own code as done above.
+Pop-in at 128 studs cannot be produced or measured from the API in this build and is left to the owner's
+phone check.
 
 **Pace (R1).** The model fails with `growthK = 0.6` (96 s to Tier 2, about 15 studs at 240 s) and passes with
 1.5 (34 s, 63 to 71 studs). Snow Village sets `growthK = 1.5` as a provisional value for the owner to confirm.
@@ -318,5 +323,7 @@ Table of the modelled eater by `k`: 1.0 gives Tier 2 at 53 s and 32 to 38 studs;
 
 **Blender.** Blender 5.2.3 LTS is installed and its MCP addon (1.8, protocol 15) answers. The CLI binary is
 `/Applications/Blender.app/Contents/MacOS/Blender`, not on `PATH`. The `mcp-for-blender` release in both MCP
-config files is still unpinned (`uvx mcp-for-blender`), because the release number could not be looked up from
-here.
+config files is pinned to **2.2.4** (latest PyPI release as of 2026-10-26; the wrapper today was already
+resolving 2.2.4, so only the pin text changed). `.vscode/mcp.json` and `opencode.json` invoke
+`uvx mcp-for-blender==2.2.4`, which was started once against the running Blender and answered with the same
+addon protocol (15).
