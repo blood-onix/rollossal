@@ -1,6 +1,6 @@
 # PR description draft: Snow Village launch world (004)
 
-Status: **in progress** (art and the owner's play are not done). This file says how each Quality Gate was met
+Status: **in progress** (the owner's play/internal import is not done). This file says how each Quality Gate was met
 and what is still open. It is rewritten when the branch is ready.
 
 ## What this changes
@@ -13,6 +13,9 @@ and what is still open. It is rewritten when the branch is ready.
   see the spot (radius 45, 120-stud heading cone), forced after 180 s. Spawn clusters refresh at run start.
 - New pure rules `Respawn`, `Layout`, `Tiers.isCulled`, each with fixed-value Lune tests.
 - Client culling (`WorldCuller`), `StreamingEnabled`, winter lighting, a looping-music path in `Feedback`.
+- All 65 Blender meshes modelled headlessly and exported (`art/source/*.blend`, `art/export/*.fbx`, manifest);
+  the palette ships as `art/palette.png` and the studio import of the FBX files is the owner's hand-off.
+  Proportion QA sheet at `art/qa/grid.png`.
 
 ## Quality Gates
 
@@ -20,7 +23,7 @@ and what is still open. It is rewritten when the branch is ready.
 | --- | --- |
 | 1. `scripts/check.sh` | exits 0: StyLua, Selene, luau-lsp strict, 270 Lune tests (`SnowVillage`, `Layout`, `Respawn`, `Pace`, `ArtManifest`, `Config`, `Strings`, `Tiers`), the new "no GreyBoxRoom in src/server or src/client" guard, the Rules purity guard. |
 | 2. Studio playtest, console read, phone captures | Studio MCP runs recorded in `playtest.md` (world build, hand-driven ball, back to hub, culling, rollback, 12-ball bot run); Jest suites pass (96 tests in 5 suites). **Open**: phone-size captures of Hud, Book (18 cards) and Results, the owner's play on PC and phone, fps at Tier 4 on the reference phone. |
-| 3. Assets | `Assets.luau` holds every mesh, palette and sound id (meshes are `""` until the owner's import); `ArtManifest.test` scans `src` for hard-coded ids. **Open**: no Blender mesh exists yet, so the manifest is absent and the test runs in fallback mode. |
+| 3. Assets | `Assets.luau` holds every mesh, palette and sound id (meshes are `""` until the owner's import); `ArtManifest.test` scans `src` for hard-coded ids. All 65 meshes are modelled and exported: `art/export/*.fbx` plus `art/export/manifest.json` (65 entries with per-file size and sha256), `art/palette.png` holds the world's palette swatches, and the ArtManifest tests hash the exported files and check the triangle budgets against the real manifest (no fallback mode left). **Open**: the owner's Studio import of the FBX files fills `Assets.meshes`. |
 | 4. Strings | 79 new keys with English and Spanish (64 objects, 5 tier names, 5 headlines, 5 rewards); `Strings.test` and `SnowVillage.test` check them. Spanish is a draft for owner review. |
 | 5. `tasks.md` ticks | see the file; open items are listed there. |
 
@@ -38,5 +41,7 @@ and what is still open. It is rewritten when the branch is ready.
 
 ## Not in this PR
 
-Blender meshes (T024), the grey-box owner sign-off (T032), the outside-people playtest (004d, deferred by
-owner decision), booster and trap behaviour (004b; only the marker spots are placed).
+Blender meshes: done (T024; the studio import of the exports remains owner work). The grey-box owner sign-off:
+recorded 2026-10-26; the phone/PC pass with the real meshes, the audio IDs and `growthK` stay with the owner
+(T032). The outside-people playtest (004d, deferred by owner decision), booster and trap behaviour (004b;
+only the marker spots are placed).

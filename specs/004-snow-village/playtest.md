@@ -85,3 +85,19 @@ collide (a real client does that for what it can eat). One real ball idles in sl
   owner's instruction in chat). Art may start. Balance tuning is deliberately deferred until the map design
   settles: `growthK = 1.5` stays provisional and the Tier 3/Tier 4 placement counts stay as they are, so
   SC-003 remains open and is not waived. Audio IDs are not chosen yet.
+
+## Round 2 art pipeline run (agent, 2026-10-26, T024)
+
+The owner's "Art may start" unblocked T024; the art was modelled and exported the same day.
+
+- 65 collections modelled procedurally (`art/scripts/build_objects.py`) and written to
+  `art/source/{tier1_crumbs,tier2_toys,tier3_furniture,tier4_street,tier5_town,hub}.blend`.
+- `art/scripts/export_all.py` exits 0: collection names, single `Palette` material, flat shading / no custom
+  normals / no unapplied modifiers / scale 1 rotation 0, per-face UVs inside one swatch cell, sizes and
+  origin, and all triangle budgets hold. `art/export/manifest.json` written (65 meshes, sha256 per file).
+- `scripts/check.sh` exit 0 with the real manifest engaged (ArtManifest tests hash every FBX against the
+  manifest; `Assets.meshes` stay empty strings — the REQUIRE_ASSET_IDS import is the owner's hand-off).
+- Proportion QA (art-pipeline rule 6): headless contact sheet `art/qa/grid.png`, every mesh rendered with its
+  palette colours. Shapes read as intended at game scale (carousel, cabin, town house, sled, bicycle,
+  snowmen, fences, crumbs); chunky cartoonish look with the exaggerated pieces doing the exaggeration.
+  Owner eyes-on with the finished meshes is still part of T032's phone/PC pass.
