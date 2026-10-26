@@ -10,18 +10,27 @@ local Worlds = require(Shared.Worlds)
 local RunClient = require(script.Parent.RunClient)
 local UiKit = require(script.Parent.UiKit)
 
-local PANEL_WIDTH = 600
+local PANEL_WIDTH = 464
 local PANEL_HEIGHT = 320
-local COLUMN_WIDTH = 270
-local COLUMN_TOP = 56
-local BUTTON_WIDTH = 250
+local COLUMN_WIDTH = 214
+local COLUMN_TOP = 52
+local COLUMN_MARGIN = 12
+-- The TopBar column (150 wide, 8 from the edge) stays on screen over the dim layer, so the panel is centred
+-- in the space to its left instead of in the whole screen.
+local TOPBAR_CLEARANCE = 166
+local BUTTON_WIDTH = 214
 local BUTTON_HEIGHT = 96
-local BUTTON_GAP = 20
+local BUTTON_GAP = 12
 local DIM_TRANSPARENCY = 0.35
 local TITLE_SIZE = 36
 local STAR_SIZE = 36
 local BODY_SIZE = 20
 local MAX_ENTRY_LINES = 4
+local FIRST_RUN_ENTRY_LINES = 3
+local ENTRY_LINE_HEIGHT = 24
+local BEST_ROW_HEIGHT = 28
+local TIP_HEIGHT = 54
+local TIP_TEXT_SIZE = 18
 
 local ResultsUi = {}
 
@@ -44,7 +53,7 @@ function ResultsUi.start()
 	local panel = Instance.new("Frame")
 	panel.Name = "Panel"
 	panel.AnchorPoint = Vector2.new(0.5, 0.5)
-	panel.Position = UDim2.fromScale(0.5, 0.5)
+	panel.Position = UDim2.new(0.5, -TOPBAR_CLEARANCE / 2, 0.5, 0)
 	panel.Size = UDim2.fromOffset(PANEL_WIDTH, PANEL_HEIGHT)
 	panel.BackgroundColor3 = Color3.fromRGB(40, 44, 52)
 	panel.Parent = dim
@@ -52,7 +61,7 @@ function ResultsUi.start()
 	corner.CornerRadius = UDim.new(0, 16)
 	corner.Parent = panel
 
-	UiKit.label({
+	local title = UiKit.label({
 		parent = panel,
 		name = "Title",
 		text = Localizer.t("ui.results.title"),
@@ -71,8 +80,8 @@ function ResultsUi.start()
 		frame.Parent = panel
 		return frame
 	end
-	local left = column("Left", 20)
-	local right = column("Right", PANEL_WIDTH - COLUMN_WIDTH - 20)
+	local left = column("Left", COLUMN_MARGIN)
+	local right = column("Right", PANEL_WIDTH - COLUMN_WIDTH - COLUMN_MARGIN)
 
 	local function line(parent: Instance, name: string, row: number, height: number): TextLabel
 		return UiKit.label({
@@ -90,14 +99,17 @@ function ResultsUi.start()
 	local starGlyphs = line(left, "StarGlyphs", 30, STAR_SIZE)
 	starGlyphs.TextSize = STAR_SIZE
 	local starCount = line(left, "StarCount", 68, 28)
-	local coins = line(left, "Coins", 98, 28)
+	-- Two lines: the Spanish "Monedas: 600 (total 600)" is wider than the column.
+	local coins = line(left, "Coins", 98, 48)
 
 	local newEntries = line(right, "NewEntries", 0, 28)
 	local entryLines: { TextLabel } = {}
 	for index = 1, MAX_ENTRY_LINES do
-		entryLines[index] = line(right, `Entry{index}`, 28 + (index - 1) * 24, 24)
+		entryLines[index] =
+			line(right, `Entry{index}`, 28 + (index - 1) * ENTRY_LINE_HEIGHT, ENTRY_LINE_HEIGHT)
 	end
-	local bestRow = line(right, "BestRow", 28 + MAX_ENTRY_LINES * 24 + 4, 28)
+	local bestRowY = 28 + MAX_ENTRY_LINES * ENTRY_LINE_HEIGHT + 4
+	local bestRow = line(right, "BestRow", bestRowY, BEST_ROW_HEIGHT)
 
 	local roll = UiKit.button({
 		parent = panel,
@@ -124,7 +136,10 @@ function ResultsUi.start()
 		(Remotes:WaitForChild("BackToHub") :: RemoteEvent):FireServer()
 	end)
 
-	RunClient.result:Connect(function(result: RunClient.RunResult)
+	-- Everything below is built from the RunResult alone, so a language switch can rebuild it.
+	local lastResult: RunClient.RunResult? = nil
+	local function render(result: RunClient.RunResult)
+		lastResult = result
 		finalSize.Text =
 			Localizer.t("ui.results.final_size", { size = sizeText(result.finalDiameter) })
 		local glyphs = {}
@@ -133,7 +148,14 @@ function ResultsUi.start()
 		end
 		starGlyphs.Text = table.concat(glyphs, "")
 		starCount.Text = Localizer.t("ui.results.stars", { stars = result.stars })
-		coins.Text = `{Icons.coin} {Localizer.t("ui.results.coins", { coins = result.coins })}`
+		if result.coinsTotal ~= nil then
+			coins.Text = `{Icons.coin} {Localizer.t(
+				"ui.results.coins_total",
+				{ coins = result.coins, total = result.coinsTotal }
+			)}`
+		else
+			coins.Text = `{Icons.coin} {Localizer.t("ui.results.coins", { coins = result.coins })}`
+		end
 
 		if #result.newBookIds > 0 then
 			newEntries.Text = `{Icons.book} {Localizer.t(
@@ -149,7 +171,26 @@ function ResultsUi.start()
 				then `{Icons[object.icon]} {Localizer.t(object.nameKey)}`
 				else ""
 		end
-		if result.bestFriendSize ~= nil then
+		-- The first-run tip takes the best-size row and one entry line: two 18 px lines need 40 px.
+		bestRow.Position = UDim2.fromOffset(0, bestRowY)
+		bestRow.Size = UDim2.new(1, 0, 0, BEST_ROW_HEIGHT)
+		bestRow.TextSize = BODY_SIZE
+		if result.isFirstRun then
+			-- The last visible line becomes "+N more" so every first-time entry is accounted for (FR-014).
+			local hidden = #result.newBookIds - FIRST_RUN_ENTRY_LINES
+			for index, entryLine in entryLines do
+				if index > FIRST_RUN_ENTRY_LINES then
+					entryLine.Text = ""
+				elseif index == FIRST_RUN_ENTRY_LINES and hidden > 0 then
+					entryLine.Text = Localizer.t("ui.results.more_entries", { count = hidden + 1 })
+				end
+			end
+			bestRow.Position =
+				UDim2.fromOffset(0, 28 + FIRST_RUN_ENTRY_LINES * ENTRY_LINE_HEIGHT + 4)
+			bestRow.Size = UDim2.new(1, 0, 0, TIP_HEIGHT)
+			bestRow.TextSize = TIP_TEXT_SIZE
+			bestRow.Text = Localizer.t("ui.results.first_run_tip")
+		elseif result.bestFriendSize ~= nil then
 			bestRow.Text =
 				Localizer.t("ui.results.friend_best", { size = sizeText(result.bestFriendSize) })
 		else
@@ -157,7 +198,19 @@ function ResultsUi.start()
 				Localizer.t("ui.results.self_best", { size = sizeText(result.bestSelfSize) })
 		end
 		dim.Visible = RunClient.state() == "Ended"
-	end)
+	end
+	RunClient.result:Connect(render)
+
+	local function refreshText()
+		title.Text = Localizer.t("ui.results.title")
+		roll.Text = `{Icons.retry} {Localizer.t("ui.results.roll_again")}`
+		hub.Text = `{Icons.home} {Localizer.t("ui.results.back_to_hub")}`
+		local result = lastResult
+		if result ~= nil then
+			render(result)
+		end
+	end
+	Localizer.changed:Connect(refreshText)
 	-- Hidden by the state change, not by a click, so a rejected request leaves the screen up.
 	RunClient.stateChanged:Connect(function(state)
 		if state ~= "Ended" then

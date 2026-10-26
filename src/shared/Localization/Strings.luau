@@ -1,9 +1,10 @@
 --!strict
 -- Every player-facing string, keyed. Data only: no Roblox APIs, so Lune can validate it.
--- Placeholders use {name}. English is complete; Spanish arrives with Feature 007.
+-- Placeholders use {name}. English is complete; Spanish exists for the Feature 003 keys (a draft
+-- for owner review) and the rest arrives with Feature 007. A key with no Spanish falls back to English.
 -- Key list: specs/002-run-loop/contracts/content-and-config.md
 
-local Strings: { [string]: { en: string } } = {
+local Strings: { [string]: { en: string, es: string? } } = {
 	["ui.hud.time_label"] = { en = "Time" },
 	["ui.hud.target_label"] = { en = "Target" },
 	["ui.hud.star_target"] = { en = "{stars} star: {size}" },
@@ -38,6 +39,62 @@ local Strings: { [string]: { en: string } } = {
 	["object.greybox.cube_t2"] = { en = "Small cube" },
 	["object.greybox.cube_t3"] = { en = "Medium cube" },
 	["object.greybox.cube_t4"] = { en = "Large cube" },
+	["ui.topbar.book"] = { en = "Book", es = "Libro" },
+	["ui.topbar.shop"] = { en = "Shop", es = "Tienda" },
+	["ui.topbar.settings"] = { en = "Settings", es = "Ajustes" },
+	["ui.hud.shop_after_run"] = { en = "After this run", es = "Después de esta partida" },
+	["ui.hud.shop_soon"] = { en = "Shop opens soon", es = "La tienda abre pronto" },
+	["ui.common.close"] = { en = "Close", es = "Cerrar" },
+	["ui.book.title"] = { en = "Collection book", es = "Libro de colección" },
+	["ui.book.page_progress"] = { en = "{collected} / {total}", es = "{collected} / {total}" },
+	["ui.book.unknown"] = { en = "???", es = "???" },
+	["ui.book.reward"] = { en = "Reward: {name}", es = "Premio: {name}" },
+	["ui.book.reward_earned"] = { en = "Earned", es = "Conseguido" },
+	["ui.book.reward_locked"] = { en = "Locked", es = "Bloqueado" },
+	["ui.book.prev"] = { en = "Back", es = "Atrás" },
+	["ui.book.next"] = { en = "Next", es = "Siguiente" },
+	["ui.settings.title"] = { en = "Settings", es = "Ajustes" },
+	["ui.settings.music_volume"] = { en = "Music volume", es = "Volumen de música" },
+	["ui.settings.effects_volume"] = { en = "Effects volume", es = "Volumen de efectos" },
+	["ui.settings.camera_sensitivity"] = {
+		en = "Camera sensitivity",
+		es = "Sensibilidad cámara",
+	},
+	["ui.settings.reduce_motion"] = { en = "Reduce motion", es = "Reducir movimiento" },
+	["ui.settings.on"] = { en = "On", es = "Sí" },
+	["ui.settings.off"] = { en = "Off", es = "No" },
+	["ui.settings.language"] = { en = "Language", es = "Idioma" },
+	["ui.settings.language_auto"] = { en = "Auto", es = "Auto" },
+	["ui.settings.language_en_us"] = { en = "English", es = "English" },
+	["ui.settings.language_es_es"] = { en = "Español", es = "Español" },
+	["ui.settings.percent"] = { en = "{value}%", es = "{value}%" },
+	["ui.hub.coins"] = { en = "Coins: {coins}", es = "Monedas: {coins}" },
+	["ui.hub.best_size"] = { en = "Best size: {size}", es = "Mejor tamaño: {size}" },
+	["ui.results.coins_total"] = {
+		en = "Coins: {coins} (total {total})",
+		es = "Monedas: {coins} (total {total})",
+	},
+	["ui.results.more_entries"] = { en = "+{count} more", es = "+{count} más" },
+	["ui.results.first_run_tip"] = {
+		en = "Coins and book entries are saved. Fill book pages for rewards!",
+		es = "Monedas y libro guardados. ¡Completa páginas por premios!",
+	},
+	["reward.greybox.tier1.name"] = { en = "Tiny Cube Trail", es = "Estela de cubo diminuto" },
+	["reward.greybox.tier2.name"] = { en = "Small Cube Trail", es = "Estela de cubo pequeño" },
+	["reward.greybox.tier3.name"] = { en = "Medium Cube Skin", es = "Aspecto de cubo mediano" },
+	["reward.greybox.tier4.name"] = { en = "Large Cube Skin", es = "Aspecto de cubo grande" },
+	["error.profile_load_failed"] = {
+		en = "We could not load your saved progress. Please rejoin in a moment.",
+		es = "No pudimos cargar tu progreso guardado. Vuelve a entrar en un momento.",
+	},
+	["error.profile_version"] = {
+		en = "Your save is from a newer version of the game. Please try again later.",
+		es = "Tu partida guardada es de una versión más nueva del juego. Inténtalo más tarde.",
+	},
+	["error.session_ended"] = {
+		en = "Your progress was opened on another server. Please rejoin.",
+		es = "Tu progreso se abrió en otro servidor. Vuelve a entrar.",
+	},
 }
 
 return Strings

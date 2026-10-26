@@ -68,7 +68,7 @@ function Hud.start()
 	timerFrame.Position = UDim2.new(0.5, 0, 0, TIMER_TOP)
 	timerFrame.Size = UDim2.fromOffset(TIMER_WIDTH, TIMER_HEIGHT)
 	timerFrame.Parent = root
-	UiKit.label({
+	local timeLabel = UiKit.label({
 		parent = timerFrame,
 		name = "TimeLabel",
 		text = `{Icons.clock} {Localizer.t("ui.hud.time_label")}`,
@@ -111,7 +111,7 @@ function Hud.start()
 	meter.Position = UDim2.fromOffset(METER_MARGIN, METER_MARGIN)
 	meter.Size = UDim2.fromOffset(METER_WIDTH, METER_HEIGHT)
 	meter.Parent = root
-	UiKit.label({
+	local sizeLabel = UiKit.label({
 		parent = meter,
 		name = "SizeLabel",
 		text = Localizer.t("ui.hud.size_label"),
@@ -310,6 +310,14 @@ function Hud.start()
 		end
 	end)
 	refresh()
+	-- A language switch re-applies the static labels and rebuilds the star targets and the size meter.
+	local function refreshText()
+		timeLabel.Text = `{Icons.clock} {Localizer.t("ui.hud.time_label")}`
+		sizeLabel.Text = Localizer.t("ui.hud.size_label")
+		renderStars()
+		renderMeter()
+	end
+	Localizer.changed.Connect(Localizer.changed, refreshText)
 end
 
 return Hud

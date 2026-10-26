@@ -98,4 +98,62 @@ test("Config: mesh triangle budgets per tier are 300, 300, 800, 2500, 2500", fun
 	end
 end)
 
+test("Config: data store name, key prefix and run-start lock are the approved values", function()
+	expect.equal(Config.dataStoreName, "PlayerProfiles_v1")
+	expect.equal(Config.playerKeyPrefix, "Player_")
+	expect.equal(Config.runStartUiLockSeconds, 5)
+	expect.equal(Config.useMockDataStoreInStudio, true)
+end)
+
+test("Config: settings rate limit, send delay and notice length", function()
+	expect.equal(Config.settingsRateLimit, 20)
+	expect.equal(Config.settingsSendDelay, 0.3)
+	expect.equal(Config.noticeSeconds, 2)
+end)
+
+test("Config.Settings: each default lies inside its range and min is below max", function()
+	local fields = {
+		Config.Settings.musicVolume,
+		Config.Settings.effectsVolume,
+		Config.Settings.cameraSensitivity,
+	}
+	for _, field in fields do
+		expect.truthy(field.min < field.max)
+		expect.truthy(field.default >= field.min)
+		expect.truthy(field.default <= field.max)
+	end
+	expect.equal(Config.Settings.musicVolume.max, 1)
+	expect.equal(Config.Settings.cameraSensitivity.min, 0.5)
+	expect.equal(Config.Settings.cameraSensitivity.max, 2.0)
+end)
+
+test("Config.Settings: languages are auto, en-us, es-es and the default is one of them", function()
+	local languages = Config.Settings.languages
+	expect.equal(#languages, 3)
+	expect.equal(languages[1], "auto")
+	expect.equal(languages[2], "en-us")
+	expect.equal(languages[3], "es-es")
+	expect.truthy(table.find(languages, Config.Settings.languageDefault) ~= nil)
+	expect.equal(Config.Settings.reduceMotionDefault, false)
+end)
+
+test(
+	"Config: utility touch target is between the text size and the primary touch target",
+	function()
+		expect.truthy(Config.minUtilityTouchTarget < Config.minTouchTarget)
+		expect.truthy(Config.minUtilityTouchTarget >= Config.minTextSize)
+		expect.equal(Config.minUtilityTouchTarget, 64)
+	end
+)
+
+test("Config: default unlocked worlds are greybox and snow_village", function()
+	expect.equal(Config.DefaultWorldsUnlocked.greybox, true)
+	expect.equal(Config.DefaultWorldsUnlocked.snow_village, true)
+end)
+
+test("Config: Saving flag is on and Shop flag is off", function()
+	expect.equal(Config.Flags.Saving, true)
+	expect.equal(Config.Flags.Shop, false)
+end)
+
 return {}

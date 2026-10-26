@@ -426,3 +426,43 @@ describe("RunManager events", function()
 		expect(#events).toBe(0)
 	end)
 end)
+
+describe("RunManager with profile", function()
+	setup()
+
+	it("published result carries coinsTotal and isFirstRun when profile loaded", function()
+		local DataService = require(ServerScriptService.DataService)
+		local ProfileStore =
+			require(ServerScriptService.ServerPackages:WaitForChild("ProfileStore"))
+		DataService.setStore(ProfileStore.New("test").Mock)
+		local uid = newSession().ownerUserId
+		-- load profile for this user via a fake player
+		local Players = game:GetService("Players")
+		local player = { Parent = Players, LocaleId = "en-us", UserId = uid } :: any
+		DataService.load(uid, player)
+
+		local now = os.clock()
+		-- need a session owned by uid; reuse newSession? owner differs. Use RunManager.startRun directly
+		local session = BallService.newSession(uid, nil)
+		table.insert(created, session)
+		RunManager.startRun(uid, nil, now)
+		expect(eat(session, "T1-01", now + 1)).toBe("Ok")
+		RunManager.step(now + 240)
+		expect(#published).toBe(1)
+		local result = published[1].result
+		expect(result.coinsTotal).never.toBe(nil)
+		expect(result.isFirstRun).toBe(true)
+		BallService.removeSession(session)
+		DataService.release(uid)
+	end)
+
+	it("user with no profile gets 002 behaviour", function()
+		local now = os.clock()
+		local session = newSession()
+		startRun(session, now)
+		RunManager.step(now + 240)
+		local result = published[#published].result
+		expect(result.coinsTotal).toBe(nil)
+		expect(result.isFirstRun).toBe(false)
+	end)
+end)

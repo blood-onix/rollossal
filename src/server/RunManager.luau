@@ -17,6 +17,7 @@ local Tiers = require(Shared.Rules.Tiers)
 local BallService = require(script.Parent.BallService)
 local FriendCache = require(script.Parent.FriendCache)
 local Remotes = require(script.Parent.Remotes)
+local DataService = if Config.Flags.Saving then require(script.Parent.DataService) else nil
 
 type ObjectDef = Worlds.ObjectDef
 
@@ -45,6 +46,8 @@ export type RunResult = {
 	newBookIds: { string },
 	bestSelfSize: number,
 	bestFriendSize: number?,
+	coinsTotal: number?,
+	isFirstRun: boolean,
 }
 
 type Publisher = (userId: number, result: RunResult) -> ()
@@ -219,6 +222,21 @@ local function bestFriendSize(userId: number): number?
 	for _, otherId in presentUserIds() do
 		if otherId ~= userId and FriendCache.areFriends(userId, otherId) then
 			local size = bestSelfSize[otherId]
+			if Config.Flags.Saving and DataService then
+				local worldId = nil
+				for _, r in runs do
+					if r.userId == userId then
+						worldId = r.worldId
+						break
+					end
+				end
+				if worldId then
+					local v = DataService.getBestSize(otherId, worldId)
+					if v ~= nil then
+						size = v
+					end
+				end
+			end
 			if size ~= nil and (best == nil or size > best) then
 				best = size
 			end
@@ -229,12 +247,33 @@ end
 
 local function buildResult(run: RunSession, finalDiameter: number): RunResult
 	local userId = run.userId
-	local seen = seenBookIds[userId] or {}
+	local seen = {}
+	if Config.Flags.Saving and DataService then
+		local b = DataService.getBook(userId)
+		if b then
+			seen = b
+		else
+			seen = seenBookIds[userId] or {}
+		end
+	else
+		seen = seenBookIds[userId] or {}
+	end
 	local newBookIds = {}
 	for _, bookId in run.absorbedBookIds do
 		if not seen[bookId] then
 			table.insert(newBookIds, bookId)
 		end
+	end
+	local best = 0
+	if Config.Flags.Saving and DataService then
+		local v = DataService.getBestSize(userId, run.worldId)
+		if v ~= nil then
+			best = v
+		else
+			best = bestSelfSize[userId] or 0
+		end
+	else
+		best = bestSelfSize[userId] or 0
 	end
 	return {
 		runId = run.runId,
@@ -249,8 +288,10 @@ local function buildResult(run: RunSession, finalDiameter: number): RunResult
 			friendBoostCount = 0,
 		}),
 		newBookIds = newBookIds,
-		bestSelfSize = math.max(bestSelfSize[userId] or 0, finalDiameter),
+		bestSelfSize = math.max(best, finalDiameter),
 		bestFriendSize = bestFriendSize(userId),
+		coinsTotal = nil,
+		isFirstRun = false,
 	}
 end
 
@@ -275,6 +316,14 @@ local function endRun(run: RunSession, now: number)
 	end
 	seenBookIds[run.userId] = seen
 	bestSelfSize[run.userId] = result.bestSelfSize
+
+	if Config.Flags.Saving and DataService then
+		local outcome = DataService.applyRunResult(run.userId, result)
+		if outcome ~= nil then
+			result.coinsTotal = outcome.coinsTotal
+			result.isFirstRun = outcome.isFirstRun
+		end
+	end
 
 	publisher(run.userId, result)
 end

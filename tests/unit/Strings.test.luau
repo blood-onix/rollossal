@@ -46,6 +46,48 @@ local contractKeys = {
 	"object.greybox.cube_t4",
 }
 
+-- Keys added by Feature 003 (contracts/content-and-config.md §Strings): English and Spanish ship together.
+local savingKeys = {
+	"ui.topbar.book",
+	"ui.topbar.shop",
+	"ui.topbar.settings",
+	"ui.hud.shop_after_run",
+	"ui.hud.shop_soon",
+	"ui.common.close",
+	"ui.book.title",
+	"ui.book.page_progress",
+	"ui.book.unknown",
+	"ui.book.reward",
+	"ui.book.reward_earned",
+	"ui.book.reward_locked",
+	"ui.book.prev",
+	"ui.book.next",
+	"ui.settings.title",
+	"ui.settings.music_volume",
+	"ui.settings.effects_volume",
+	"ui.settings.camera_sensitivity",
+	"ui.settings.reduce_motion",
+	"ui.settings.on",
+	"ui.settings.off",
+	"ui.settings.language",
+	"ui.settings.language_auto",
+	"ui.settings.language_en_us",
+	"ui.settings.language_es_es",
+	"ui.settings.percent",
+	"ui.hub.coins",
+	"ui.hub.best_size",
+	"ui.results.coins_total",
+	"ui.results.more_entries",
+	"ui.results.first_run_tip",
+	"reward.greybox.tier1.name",
+	"reward.greybox.tier2.name",
+	"reward.greybox.tier3.name",
+	"reward.greybox.tier4.name",
+	"error.profile_load_failed",
+	"error.profile_version",
+	"error.session_ended",
+}
+
 test("Strings: every entry has a non-empty English text", function()
 	for key, texts in Strings do
 		expect.equal(type(texts.en), "string")
@@ -78,20 +120,85 @@ test("Strings: every key listed in the contract exists", function()
 	end
 end)
 
-test("Strings: every Localizer.t literal key used in src/client exists", function()
+test("Strings: every key of the saving-and-economy contract exists with Spanish text", function()
+	expect.equal(#savingKeys, 38)
+	for _, key in savingKeys do
+		local entry = Strings[key]
+		if entry == nil then
+			error(`missing key {key}`)
+		end
+		expect.truthy(#entry.en > 0)
+		if entry.es == nil or #entry.es == 0 then
+			error(`missing Spanish text for {key}`)
+		end
+	end
+end)
+
+local function placeholderSet(text: string): { [string]: boolean }
+	local names: { [string]: boolean } = {}
+	for name in string.gmatch(text, "{([^{}]*)}") do
+		names[name] = true
+	end
+	return names
+end
+
+test("Strings: placeholder names are equal between English and Spanish", function()
+	for key, texts in Strings do
+		if texts.es ~= nil then
+			local en, es = placeholderSet(texts.en), placeholderSet(texts.es)
+			for name in en do
+				if not es[name] then
+					error(key .. ": Spanish text lacks {" .. name .. "}")
+				end
+			end
+			for name in es do
+				if not en[name] then
+					error(key .. ": Spanish text adds {" .. name .. "}")
+				end
+			end
+		end
+	end
+end)
+
+test("Strings: every Localizer.t literal key used in src/client and src/server exists", function()
 	local checked = 0
-	for _, name in fs.readDir("src/client") do
-		if string.match(name, "%.luau$") then
-			local source = fs.readFile(`src/client/{name}`)
-			for key in string.gmatch(source, 'Localizer%.t%("([^"]+)"') do
-				checked += 1
-				if Strings[key] == nil then
-					error(`{name} uses unknown key {key}`)
+	for _, folder in { "src/client", "src/server" } do
+		for _, name in fs.readDir(folder) do
+			if string.match(name, "%.luau$") then
+				local source = fs.readFile(`{folder}/{name}`)
+				for key in string.gmatch(source, 'Localizer%.t%("([^"]+)"') do
+					checked += 1
+					if Strings[key] == nil then
+						error(`{folder}/{name} uses unknown key {key}`)
+					end
 				end
 			end
 		end
 	end
 	expect.truthy(checked > 0)
 end)
+
+-- A key with {placeholders} called without arguments fails to format and shows the raw key on screen.
+test(
+	"Strings: a Localizer.t call with no arguments never names a key that has placeholders",
+	function()
+		local checked = 0
+		for _, folder in { "src/client", "src/server" } do
+			for _, name in fs.readDir(folder) do
+				if string.match(name, "%.luau$") then
+					local source = fs.readFile(`{folder}/{name}`)
+					for key in string.gmatch(source, 'Localizer%.t%("([^"]+)"%)') do
+						checked += 1
+						local entry = Strings[key]
+						if entry ~= nil and string.find(entry.en, "{", 1, true) then
+							error(`{folder}/{name} calls {key} without its placeholder arguments`)
+						end
+					end
+				end
+			end
+		end
+		expect.truthy(checked > 0)
+	end
+)
 
 return {}
