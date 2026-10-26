@@ -1,0 +1,52 @@
+# Playtest log: Snow Village (004)
+
+Constitution I (fun proven in grey box first). The outside-people round is deferred to 004d by owner decision.
+This file records the **agent-driven Studio runs**. The owner's play on PC and phone, and the sign-off, are
+still to be written (task T032).
+
+## Grey-box section (placeholder meshes, flat colours)
+
+Build: branch `004-snow-village`, uncommitted working tree on 2026-10-26 (all art is the stand-in part
+fallback; `Assets.meshes` is empty). Studio local server through the Studio MCP, Rojo synced.
+
+| Check | Result |
+| --- | --- |
+| World builds | `Workspace.World`: 1,610 pooled objects (T1 856, T2 361, T3 311, T4 74, T5 8), 45 geometry parts, 16 marker parts, hub with floor and pad. Console clean (the `ContentId rbxassetid://203785492` lines are Studio's own; the id is not in the repo). |
+| Pool never destroyed | child count of `World.Objects` stayed 1,610 through a full run; Jest `WorldSpawner.spec` checks the same `Instance` after respawn. |
+| First pickup | one hand-driven ball from spawn slot 1: first pickup within 0.1 s (gumdrops and acorns lie on the porch). |
+| Tier 2 within 60 s | hand-driven ball (client Heartbeat bot with sphere-cast obstacle avoidance): Tier 2 at 55.8 s on one run; a second run of the same bot had not reached it by 160 s because it kept bumping solid Tier 1 big crumbs. The pace model says 34 s for an ideal eater. **Open: a human may be nearer the second number than the first.** |
+| Growth over a run | same bot, first run: Tier 3 at 100 s, 40 studs at 150 s, 74.6 studs at 240 s (2 stars, close to 3). |
+| Back to hub | Results "Back to hub" put the ball on `Workspace.World.Hub.Floor`, not anchored, no fall. |
+| Culling | at D = 14 all 856 Tier 1 objects are hidden locally and Tier 2 is shown; at D = 40 Tiers 1 and 2 are hidden; back at D = 6 everything is shown. |
+| Music path | with a temporary id, the looping `WinterMusic` sound plays in the `Music` group, loaded. No track is shipped (`Assets.sounds.music` is empty: nothing bundled with the engine is music). |
+| Rollback | `Flags.SnowVillage = false`: world id `greybox`, 30 objects, 6 geometry blocks, ball on the old spawn ring, console clean. |
+
+### 12 playerless balls, one full run (`tests/studio/BotRun.server.luau`)
+
+Bots are server-owned balls with a greedy eater and no obstacle avoidance; the objects and the bots do not
+collide (a real client does that for what it can eat). One real ball idles in slot 1, so 13 balls in total.
+
+- First pickup: 0.05 to 0.23 s for every bot.
+- Tier 2 (5 studs): 10 to 40 s for every bot.
+- Tier 4 (30 studs): 5 of 12 bots, between 70 and 141 s; final diameters 5.5 to 90 studs. The other 7 stalled
+  between 5.5 and 9.3 studs: the Tier 3 pool (311) is eaten by the leaders and a stalled bot cannot eat Tier 3
+  until 10.5 studs.
+- Available share per tier at 60 / 120 / 180 / 240 s: T1 0.25 / 0.83 / 0.94 / 0.81, T2 0.19 / 0.59 / 0.93 /
+  0.96, T3 0.31 / 0.11 / 0.54 / 0.68, T4 1.0 / 0.35 / 0.18 / 0.07, T5 1.0 / 1.0 / 0.88 / 0.75.
+- Part count: 1,701 including 12 balls (budget 2,000).
+- **SC-003 is not met by this run as it stands**: Tier 3 fell to 11 % and Tier 4 to 7 % available, so "no tier
+  zone runs dry" fails when five greedy bots race through the top tiers. Levers (data only, for the grey-box
+  tuning with the owner): more Tier 3 and Tier 4 placements (the pool has room up to about 1,900), a lower
+  `growthK`, or both. They interact with the Tier 2 in 60 s rule, which needs the high `growthK`.
+
+### `growthK` is provisional
+
+`Content/Worlds/SnowVillage.luau` sets `growthK = 1.5`. With the global 0.6 the pace model (`Pace.test`) takes
+96 s to Tier 2 and ends a run at about 15 studs, so the Tier 2 in 60 s rule cannot hold. 1.5 gives 34 s and
+63 to 71 studs for an ideal eater. The owner confirms or changes it (T032).
+
+## Owner section (to fill in)
+
+- [ ] Played on PC, build commit: ____, date: ____, notes: ____
+- [ ] Played on the reference phone (fps at Tier 4, part count): ____
+- [ ] Sign-off (grey-box layout gate): ____

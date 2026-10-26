@@ -1,6 +1,8 @@
 --!strict
--- Placeholder sound paths: engine-bundled files, nothing uploaded (Constitution XI).
--- The only file that may hold a SoundId. Contract: specs/002-run-loop/contracts/content-and-config.md
+-- The only file that may hold a SoundId or a mesh or texture id (Constitution XI).
+-- Sounds are engine-bundled placeholders: nothing uploaded. Contract: specs/002-run-loop/contracts/content-and-config.md
+-- Meshes and the shared palette texture: specs/004-snow-village/contracts/world-content.md. An empty string
+-- means "not imported yet", and the world falls back to a plain stand-in part.
 
 local Assets = {
 	sounds = {
@@ -8,7 +10,80 @@ local Assets = {
 		tierUnlock = "rbxasset://sounds/button.wav",
 		bump = "rbxasset://sounds/snap.mp3",
 		bell = "rbxasset://sounds/bass.wav",
+		-- The looping winter music. "" means the owner has not picked a track yet (plan F-12): no engine-bundled
+		-- file is music, so nothing plays rather than a placeholder that would be annoying on a loop.
+		music = "",
 	},
+	-- Content id of the shared palette texture, "" until imported.
+	palette = "",
+	-- One key per ObjectDef.assetKey, plus the hub.
+	meshes = {
+		gumdrop = "",
+		button = "",
+		jingle_bell = "",
+		acorn = "",
+		marshmallow = "",
+		peppermint = "",
+		pine_cone = "",
+		bauble = "",
+		cookie = "",
+		ribbon_bow = "",
+		mini_snow_globe = "",
+		wooden_star = "",
+		candy_cane = "",
+		sock_ornament = "",
+		gingerbread_man = "",
+		matchbox_car = "",
+		toy_soldier = "",
+		cocoa_mug = "",
+		rubber_duck = "",
+		mitten_pair = "",
+		gift_box = "",
+		block_stack = "",
+		snowball = "",
+		toy_drum = "",
+		snow_boot = "",
+		teddy_bear = "",
+		plush_penguin = "",
+		tin_robot = "",
+		lantern = "",
+		cat = "",
+		wreath = "",
+		flower_pot = "",
+		toy_sled = "",
+		rocking_horse = "",
+		barrel = "",
+		mailbox = "",
+		giant_gift = "",
+		snow_mound = "",
+		dog = "",
+		fence_section = "",
+		firewood_stack = "",
+		sledge = "",
+		bicycle = "",
+		bench = "",
+		snowman = "",
+		cocoa_cart = "",
+		pine_sapling = "",
+		street_lamp = "",
+		bus_shelter = "",
+		market_stall = "",
+		big_snowman = "",
+		kiosk = "",
+		fountain = "",
+		car = "",
+		sleigh = "",
+		van = "",
+		bandstand = "",
+		christmas_tree = "",
+		snowplough = "",
+		bus = "",
+		cottage = "",
+		town_house = "",
+		skating_rink = "",
+		clock_tower = "",
+		hub = "",
+	} :: { [string]: string },
 }
 
 return Assets

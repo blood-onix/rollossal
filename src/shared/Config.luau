@@ -13,9 +13,20 @@ local Config = {
 	bumpSpeedThreshold = 15,
 	bumpSpeedWindow = 0.35,
 	bumpCooldown = 1.0,
-	respawnDelay = 15,
 	scatterDistance = 6,
 	scatterGrace = 1.0,
+
+	-- Snow Village world (specs/004-snow-village/contracts/world-content.md)
+	respawnDelayMin = 60,
+	respawnDelayMax = 120,
+	respawnOutOfSightRadius = 45,
+	respawnViewDistance = 120,
+	respawnViewCos = 0.5,
+	respawnHeadingMinSpeed = 2,
+	respawnForceAfterSeconds = 180,
+	cullTierDelta = 2,
+	spawnClusterRadius = 45,
+	streamRequestTimeout = 5,
 
 	-- Anti-exploit
 	absorbRateLimit = 10,
@@ -86,11 +97,12 @@ local Config = {
 		RunLoop = true,
 		Saving = true,
 		Shop = false,
+		SnowVillage = true,
 	},
 
 	-- Budgets. meshTriangles is indexed by tier.
 	Budgets = {
-		maxActivePartsPerServer = 500,
+		maxActivePartsPerServer = 2000,
 		meshTriangles = { 300, 300, 800, 2500, 2500 },
 	},
 }

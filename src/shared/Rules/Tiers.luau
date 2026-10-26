@@ -31,4 +31,9 @@ function Tiers.progress(diameter: number, tiers: { TierLike }): number
 	return math.clamp((diameter - currentMin) / (nextMin - currentMin), 0, 1)
 end
 
+-- True when an object's tier is at least `delta` tiers below the player's (the client may hide it).
+function Tiers.isCulled(objectTier: number, playerTier: number, delta: number): boolean
+	return objectTier <= playerTier - delta
+end
+
 return Tiers

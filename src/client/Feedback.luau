@@ -27,6 +27,25 @@ local effectsGroup = Instance.new("SoundGroup")
 effectsGroup.Name = "Effects"
 effectsGroup.Parent = SoundService
 
+-- The one looping background track, in the Music group so settings.musicVolume controls it. Nil until the
+-- owner picks a track (Assets.sounds.music is empty).
+local musicTrack: Sound? = nil
+
+local function createMusic()
+	local soundId = Assets.sounds.music
+	if soundId == "" then
+		return
+	end
+	local track = Instance.new("Sound")
+	track.Name = "WinterMusic"
+	track.SoundId = soundId
+	track.Looped = true
+	track.Volume = 1
+	track.SoundGroup = musicGroup
+	track.Parent = SoundService
+	musicTrack = track
+end
+
 function Feedback.setVolumes(music: number, effects: number)
 	musicGroup.Volume = music
 	effectsGroup.Volume = effects
@@ -79,9 +98,26 @@ local function preloadSounds()
 	task.spawn(function()
 		local ids = {}
 		for _, soundId in Assets.sounds do
-			table.insert(ids, soundId)
+			if soundId ~= "" then
+				table.insert(ids, soundId)
+			end
+		end
+		-- Imported meshes and the palette texture load here too; empty ids mean "not imported yet".
+		for _, meshId in Assets.meshes do
+			if meshId ~= "" then
+				table.insert(ids, meshId)
+			end
+		end
+		if Assets.palette ~= "" then
+			table.insert(ids, Assets.palette)
 		end
 		pcall(ContentProvider.PreloadAsync, ContentProvider, ids)
+		-- The music starts only once it is loaded, so it never begins late or stutters.
+		local track = musicTrack
+		if track then
+			pcall(ContentProvider.PreloadAsync, ContentProvider, { track })
+			track:Play()
+		end
 	end)
 end
 
@@ -94,6 +130,7 @@ end
 
 function Feedback.start()
 	followReducedMotion()
+	createMusic()
 	preloadSounds()
 
 	RunClient.pickup:Connect(function(objectId: string)

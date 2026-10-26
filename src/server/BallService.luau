@@ -8,11 +8,12 @@ local Workspace = game:GetService("Workspace")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
-local GreyBoxRoom = require(Shared.Content.GreyBoxRoom)
+local Respawn = require(Shared.Rules.Respawn)
 local StuckStack = require(Shared.Rules.StuckStack)
+local Worlds = require(Shared.Worlds)
 local WorldSpawner = require(script.Parent.WorldSpawner)
 
--- A visual-only record of one pickup. key is unique per pickup (`<id>#<n>`), so the same cube can
+-- A visual-only record of one pickup. key is unique per pickup (`<id>#<n>`), so the same object can
 -- appear twice after it respawns and is eaten again.
 export type StuckEntry = {
 	key: string,
@@ -53,6 +54,8 @@ export type Session = {
 	-- Run loop: which floor the ball belongs on, and whether the server holds it still (after the bell).
 	zone: "Room" | "Hub",
 	frozen: boolean,
+	-- True while the ball is held still until the world around its spawn has streamed in.
+	streamHold: boolean,
 }
 
 local BallService = {}
@@ -80,7 +83,7 @@ local function freeSlot(): number
 	for _, session in sessions do
 		used[session.slot] = true
 	end
-	for index = 1, GreyBoxRoom.spawnSlots do
+	for index = 1, #Worlds.active.spawnPoints do
 		if not used[index] then
 			return index
 		end
@@ -113,12 +116,12 @@ function BallService.getSessionByUserId(userId: number): Session?
 	return sessions[userId]
 end
 
--- The cubes these entries can still release: those waiting to respawn from the same pickup. A cube
+-- The objects these entries can still release: those waiting to respawn from the same pickup. An object
 -- that has already respawned (or been taken again) stays where it is.
-function BallService.releasableCubes(entries: { StuckEntry }): { WorldSpawner.RoomCube }
-	local cubes: { WorldSpawner.RoomCube } = {}
+function BallService.releasableObjects(entries: { StuckEntry }): { WorldSpawner.PooledWorldObject }
+	local cubes: { WorldSpawner.PooledWorldObject } = {}
 	for _, entry in entries do
-		local cube = WorldSpawner.getCube(entry.id)
+		local cube = WorldSpawner.getObject(entry.id)
 		if cube and WorldSpawner.isHeldBy(cube, entry.key) then
 			table.insert(cubes, cube)
 		end
@@ -178,6 +181,7 @@ function BallService.newSession(userId: number, player: Player?): Session
 		lastWarnAt = -math.huge,
 		zone = "Room",
 		frozen = false,
+		streamHold = false,
 	}
 	if player then
 		part:SetNetworkOwner(player)
@@ -189,12 +193,48 @@ function BallService.newSession(userId: number, player: Player?): Session
 end
 
 function BallService.removeSession(session: Session)
-	for _, cube in BallService.releasableCubes(session.stuckStack) do
+	for _, cube in BallService.releasableObjects(session.stuckStack) do
 		WorldSpawner.returnToSpawn(cube)
 	end
 	session.stuckStack = {}
 	session.part:Destroy()
 	sessions[session.ownerUserId] = nil
+end
+
+-- Anchored while the run holds the ball or the world around it is still streaming in; otherwise handed back
+-- to its player.
+local function applyAnchor(session: Session)
+	local part = session.part
+	local held = session.frozen or session.streamHold
+	part.Anchored = held
+	if not held then
+		if session.player then
+			part:SetNetworkOwner(session.player)
+		end
+		session.lastValidPosition = part.Position
+		session.lastValidVelocity = Vector3.zero
+	end
+end
+
+-- Holds the ball still until the client has the ground around `position` (streaming), then lets the run
+-- release it. The request is protected: a failure or timeout only means the ball is released as it was.
+local function holdUntilStreamed(session: Session, position: Vector3)
+	local player = session.player
+	if player == nil then
+		return
+	end
+	session.streamHold = true
+	session.part.Anchored = true
+	task.spawn(function()
+		pcall(function()
+			player:RequestStreamAroundAsync(position, Config.streamRequestTimeout)
+		end)
+		if session.part.Parent == nil then
+			return
+		end
+		session.streamHold = false
+		applyAnchor(session)
+	end)
 end
 
 local function placeAtSpawn(session: Session)
@@ -206,12 +246,13 @@ local function placeAtSpawn(session: Session)
 	session.part.Position = spawn
 	session.lastValidPosition = spawn
 	session.lastValidVelocity = Vector3.zero
+	holdUntilStreamed(session, spawn)
 end
 
 -- Scatters the cubes the stack can still release around the ball, empties the stack, resets the
 -- diameter and returns the ball to its spawn slot. Scattered cubes are immediately absorbable.
 function BallService.respawn(session: Session, now: number)
-	local released = BallService.releasableCubes(session.stuckStack)
+	local released = BallService.releasableObjects(session.stuckStack)
 	local spots = WorldSpawner.scatterSpots(
 		session.part.Position,
 		math.max(#released, 1),
@@ -224,6 +265,7 @@ function BallService.respawn(session: Session, now: number)
 	session.stuckStack = {}
 	BallService.setDiameter(session, Config.startDiameter)
 	placeAtSpawn(session)
+	WorldSpawner.refreshCluster(session.slot, now)
 	BallService.publishStuck(session)
 end
 
@@ -239,21 +281,14 @@ function BallService.setFrozen(session: Session, frozen: boolean)
 	if frozen then
 		part.AssemblyLinearVelocity = Vector3.zero
 		part.AssemblyAngularVelocity = Vector3.zero
-		part.Anchored = true
-		return
 	end
-	part.Anchored = false
-	if session.player then
-		part:SetNetworkOwner(session.player)
-	end
-	session.lastValidPosition = part.Position
-	session.lastValidVelocity = Vector3.zero
+	applyAnchor(session)
 end
 
 -- Fresh ball for a new run: releases cubes still pending from the stack, empties it, starts at the
 -- start diameter and moves to the spawn of the current zone.
 function BallService.resetBall(session: Session)
-	for _, cube in BallService.releasableCubes(session.stuckStack) do
+	for _, cube in BallService.releasableObjects(session.stuckStack) do
 		WorldSpawner.returnToSpawn(cube)
 	end
 	session.stuckStack = {}
@@ -261,7 +296,27 @@ function BallService.resetBall(session: Session)
 	session.part.Size = Vector3.one * Config.startDiameter
 	BallService.setDiameter(session, Config.startDiameter)
 	placeAtSpawn(session)
+	if session.zone == "Room" then
+		WorldSpawner.refreshCluster(session.slot, os.clock())
+	end
 	BallService.publishStuck(session)
+end
+
+-- One watcher per ball for the respawn sight rule: its position and, when it moves fast enough, the unit
+-- heading of its horizontal velocity.
+function BallService.watchers(): { Respawn.Watcher }
+	local list: { Respawn.Watcher } = {}
+	for _, session in sessions do
+		local position = session.part.Position
+		local velocity = horizontal(session.part.AssemblyLinearVelocity)
+		local hx, hz = 0, 0
+		if velocity.Magnitude >= Config.respawnHeadingMinSpeed then
+			local unit = velocity.Unit
+			hx, hz = unit.X, unit.Z
+		end
+		table.insert(list, { x = position.X, z = position.Z, hx = hx, hz = hz })
+	end
+	return list
 end
 
 local function recordViolation(
@@ -294,7 +349,7 @@ function BallService.step(now: number, dt: number)
 		session.physicalDiameter += (session.authoritativeDiameter - session.physicalDiameter) * alpha
 		part.Size = Vector3.one * session.physicalDiameter
 
-		if session.frozen then
+		if session.frozen or session.streamHold then
 			continue
 		end
 

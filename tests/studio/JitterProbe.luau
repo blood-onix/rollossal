@@ -34,8 +34,8 @@ type Stats = {
 }
 
 local function attachVisuals(session: BallService.Session)
-	local room = Workspace:WaitForChild("GreyBoxRoom") :: Folder
-	local cubes = (room:WaitForChild("Cubes") :: Folder):GetChildren()
+	local world = Workspace:WaitForChild("World") :: Folder
+	local cubes = (world:WaitForChild("Objects") :: Folder):GetChildren()
 	for index = 1, VISUAL_COUNT do
 		local cube = cubes[index] :: BasePart
 		local angle = index / VISUAL_COUNT * math.pi * 2

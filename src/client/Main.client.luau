@@ -3,6 +3,7 @@
 
 local CameraController = require(script.Parent.CameraController)
 local StuckVisuals = require(script.Parent.StuckVisuals)
+local WorldCuller = require(script.Parent.WorldCuller)
 local BallController = require(script.Parent.BallController)
 local RunClient = require(script.Parent.RunClient)
 local Hud = require(script.Parent.Hud)
@@ -15,6 +16,7 @@ local Config = require(Shared.Config)
 
 CameraController.start()
 StuckVisuals.start()
+WorldCuller.start()
 BallController.start()
 RunClient.start()
 Hud.start()

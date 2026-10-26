@@ -15,6 +15,36 @@ local Config = require(ReplicatedStorage.Shared.Config)
 local ProfileStore = require(ServerScriptService.ServerPackages:WaitForChild("ProfileStore"))
 local DataService = require(ServerScriptService.DataService)
 local Localizer = require(ReplicatedStorage.Shared.Localization.Localizer)
+local Worlds = require(ReplicatedStorage.Shared.Worlds)
+
+local WORLD = Worlds.active.worldId
+
+-- Book ids of every object of one tier, and of every object in the world, from the world data.
+local function bookIdsOfTier(tier: number): { string }
+	local ids: { string } = {}
+	local list = Worlds.objectsByTier[tier]
+	assert(list, `no objects in tier {tier}`)
+	for _, object in list do
+		table.insert(ids, object.bookId)
+	end
+	return ids
+end
+
+local function allBookIds(): { string }
+	local ids: { string } = {}
+	for _, object in Worlds.active.objects do
+		table.insert(ids, object.bookId)
+	end
+	return ids
+end
+
+local function rewardIdOf(tier: number): string
+	local reward = Worlds.sizeTiers[tier].reward
+	assert(reward, `tier {tier} has no reward`)
+	return reward.rewardId
+end
+
+local FIRST_BOOK_ID = bookIdsOfTier(1)[1]
 
 local nextUserId = 900000
 local function newUserId(): number
@@ -87,48 +117,44 @@ describe("DataService", function()
 		DataService.load(uid, player)
 		local result = {
 			runId = "r1",
-			worldId = "greybox",
+			worldId = WORLD,
 			finalDiameter = 5,
 			coins = 10,
-			newBookIds = { "greybox.cube_t1" },
+			newBookIds = { FIRST_BOOK_ID },
 		}
 		local outcome = DataService.applyRunResult(uid, result)
 		expect(outcome).never.toBe(nil)
 		local snap = DataService.snapshot(uid)
 		expect(snap.coins).toBe(10)
-		expect(snap.book["greybox.cube_t1"]).toBe(true)
+		expect(snap.book[FIRST_BOOK_ID]).toBe(true)
 		expect(#capturedSyncs).toBeGreaterThan(0)
 		local lastSync = capturedSyncs[#capturedSyncs].snap
 		expect(lastSync.coins).toBe(10)
-		expect(lastSync.book["greybox.cube_t1"]).toBe(true)
-		expect(lastSync.bestSize.greybox).toBe(5)
+		expect(lastSync.book[FIRST_BOOK_ID]).toBe(true)
+		expect(lastSync.bestSize[WORLD]).toBe(5)
 		DataService.release(uid)
 	end)
 
-	it("completing all four pages grants every page reward into skinsOwned", function()
+	it("completing all five pages grants every page reward into skinsOwned", function()
 		local uid = newUserId()
 		local player = fakePlayer(uid)
 		DataService.load(uid, player)
 		local outcome = DataService.applyRunResult(uid, {
 			runId = "rw1",
-			worldId = "greybox",
+			worldId = WORLD,
 			finalDiameter = 12,
 			coins = 4,
-			newBookIds = {
-				"greybox.cube_t1",
-				"greybox.cube_t2",
-				"greybox.cube_t3",
-				"greybox.cube_t4",
-			},
+			newBookIds = allBookIds(),
 		})
 		expect(outcome).never.toBe(nil)
-		expect(#outcome.newRewardIds).toBe(4)
+		expect(#outcome.newRewardIds).toBe(#Worlds.sizeTiers)
 		local snap = DataService.snapshot(uid)
-		expect(snap.skinsOwned["greybox.reward.tier1"]).toBe(true)
-		expect(snap.skinsOwned["greybox.reward.tier2"]).toBe(true)
-		expect(snap.skinsOwned["greybox.reward.tier3"]).toBe(true)
-		expect(snap.skinsOwned["greybox.reward.tier4"]).toBe(true)
-		expect(capturedSyncs[#capturedSyncs].snap.skinsOwned["greybox.reward.tier4"]).toBe(true)
+		for tier = 1, #Worlds.sizeTiers do
+			expect(snap.skinsOwned[rewardIdOf(tier)]).toBe(true)
+		end
+		expect(capturedSyncs[#capturedSyncs].snap.skinsOwned[rewardIdOf(#Worlds.sizeTiers)]).toBe(
+			true
+		)
 		DataService.release(uid)
 	end)
 
@@ -138,15 +164,15 @@ describe("DataService", function()
 		DataService.load(uid, player)
 		DataService.applyRunResult(uid, {
 			runId = "rw2",
-			worldId = "greybox",
+			worldId = WORLD,
 			finalDiameter = 6,
 			coins = 1,
-			newBookIds = { "greybox.cube_t1" },
+			newBookIds = bookIdsOfTier(1),
 		})
-		-- greybox has one object per tier, so cube_t1 completes page 1 and nothing else.
+		-- Every tier 1 object completes page 1 and nothing else.
 		local owned = DataService.snapshot(uid).skinsOwned
-		expect(owned["greybox.reward.tier1"]).toBe(true)
-		expect(owned["greybox.reward.tier2"]).toBe(nil)
+		expect(owned[rewardIdOf(1)]).toBe(true)
+		expect(owned[rewardIdOf(2)]).toBe(nil)
 		DataService.release(uid)
 	end)
 
@@ -155,7 +181,7 @@ describe("DataService", function()
 		local player = fakePlayer(uid)
 		DataService.load(uid, player)
 		local result =
-			{ runId = "r1", worldId = "greybox", finalDiameter = 5, coins = 10, newBookIds = {} }
+			{ runId = "r1", worldId = WORLD, finalDiameter = 5, coins = 10, newBookIds = {} }
 		DataService.applyRunResult(uid, result)
 		local coinsBefore = DataService.snapshot(uid).coins
 		DataService.applyRunResult(uid, result)
@@ -169,7 +195,7 @@ describe("DataService", function()
 		DataService.load(uid, player)
 		DataService.release(uid)
 		local result =
-			{ runId = "r2", worldId = "greybox", finalDiameter = 5, coins = 10, newBookIds = {} }
+			{ runId = "r2", worldId = WORLD, finalDiameter = 5, coins = 10, newBookIds = {} }
 		expect(DataService.applyRunResult(uid, result)).toBe(nil)
 	end)
 
@@ -178,7 +204,7 @@ describe("DataService", function()
 		local player = fakePlayer(uid)
 		DataService.load(uid, player)
 		local result =
-			{ runId = "r3", worldId = "greybox", finalDiameter = 5, coins = -5, newBookIds = {} }
+			{ runId = "r3", worldId = WORLD, finalDiameter = 5, coins = -5, newBookIds = {} }
 		DataService.applyRunResult(uid, result)
 		expect(DataService.snapshot(uid).coins).toBeGreaterThanOrEqual(0)
 		DataService.release(uid)
@@ -190,13 +216,13 @@ describe("DataService", function()
 		DataService.load(uid, player)
 		DataService.applyRunResult(
 			uid,
-			{ runId = "r4", worldId = "greybox", finalDiameter = 10, coins = 0, newBookIds = {} }
+			{ runId = "r4", worldId = WORLD, finalDiameter = 10, coins = 0, newBookIds = {} }
 		)
 		DataService.applyRunResult(
 			uid,
-			{ runId = "r5", worldId = "greybox", finalDiameter = 5, coins = 0, newBookIds = {} }
+			{ runId = "r5", worldId = WORLD, finalDiameter = 5, coins = 0, newBookIds = {} }
 		)
-		expect(DataService.snapshot(uid).bestSize.greybox).toBe(10)
+		expect(DataService.snapshot(uid).bestSize[WORLD]).toBe(10)
 		DataService.release(uid)
 	end)
 
@@ -346,7 +372,7 @@ describe("DataService", function()
 		DataService.load(uid, player)
 		DataService.shutdown()
 		local result =
-			{ runId = "r6", worldId = "greybox", finalDiameter = 5, coins = 1, newBookIds = {} }
+			{ runId = "r6", worldId = WORLD, finalDiameter = 5, coins = 1, newBookIds = {} }
 		expect(DataService.applyRunResult(uid, result)).toBe(nil)
 	end)
 
@@ -401,14 +427,14 @@ describe("DataService best-size acceptance", function()
 		DataService.load(uid, player)
 		DataService.applyRunResult(
 			uid,
-			{ runId = "a", worldId = "greybox", finalDiameter = 18.5, coins = 12, newBookIds = {} }
+			{ runId = "a", worldId = WORLD, finalDiameter = 18.5, coins = 12, newBookIds = {} }
 		)
 		local o2 = DataService.applyRunResult(
 			uid,
-			{ runId = "b", worldId = "greybox", finalDiameter = 14.0, coins = 8, newBookIds = {} }
+			{ runId = "b", worldId = WORLD, finalDiameter = 14.0, coins = 8, newBookIds = {} }
 		)
 		expect(DataService.snapshot(uid).coins).toBe(20)
-		expect(DataService.snapshot(uid).bestSize.greybox).toBe(18.5)
+		expect(DataService.snapshot(uid).bestSize[WORLD]).toBe(18.5)
 		expect(o2.isFirstRun).toBe(false)
 		expect(o2.bestSize).toBe(18.5)
 		DataService.release(uid)
@@ -425,15 +451,10 @@ describe("DataService round trip", function()
 		expect(DataService.load(uid, fakePlayer(uid))).toBe(true)
 		local result = {
 			runId = "rt1",
-			worldId = "greybox",
+			worldId = WORLD,
 			finalDiameter = 9.5,
 			coins = 17,
-			newBookIds = {
-				"greybox.cube_t1",
-				"greybox.cube_t2",
-				"greybox.cube_t3",
-				"greybox.cube_t4",
-			},
+			newBookIds = allBookIds(),
 		}
 		expect(DataService.applyRunResult(uid, result)).never.toBe(nil)
 		expect(DataService.updateSettings(uid, {
@@ -451,7 +472,7 @@ describe("DataService round trip", function()
 		local after = DataService.snapshot(uid)
 		expect(after).toEqual(before)
 		expect(after.settings.language).toBe("es-es")
-		expect(after.skinsOwned["greybox.reward.tier3"]).toBe(true)
+		expect(after.skinsOwned[rewardIdOf(3)]).toBe(true)
 
 		-- The ledger is per session: the same runId is a new run after a reload.
 		local again = DataService.applyRunResult(uid, result)

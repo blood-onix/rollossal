@@ -1,0 +1,535 @@
+--!strict
+-- Snow Village world data. Data only: no Roblox APIs and no requires, so Lune can load it directly.
+-- Shape: the WorldDef type in Content/GreyBoxRoom.luau; checked against it in Worlds.luau.
+-- Design: specs/004-snow-village/data-model.md. Zone counts are provisional until the grey-box gate.
+
+-- Object catalogue: tier, id, size (longest side in studs), fallback shape of the placeholder part.
+local catalogue: { { tier: number, id: string, size: number, shape: string } } = {
+	{ tier = 1, id = "gumdrop", size = 0.3, shape = "Ball" },
+	{ tier = 1, id = "button", size = 0.4, shape = "Cylinder" },
+	{ tier = 1, id = "jingle_bell", size = 0.5, shape = "Ball" },
+	{ tier = 1, id = "acorn", size = 0.5, shape = "Ball" },
+	{ tier = 1, id = "marshmallow", size = 0.6, shape = "Cylinder" },
+	{ tier = 1, id = "peppermint", size = 0.7, shape = "Cylinder" },
+	{ tier = 1, id = "pine_cone", size = 0.7, shape = "Block" },
+	{ tier = 1, id = "bauble", size = 0.8, shape = "Ball" },
+	{ tier = 1, id = "cookie", size = 0.9, shape = "Cylinder" },
+	{ tier = 1, id = "ribbon_bow", size = 1.0, shape = "Block" },
+	{ tier = 1, id = "mini_snow_globe", size = 1.0, shape = "Ball" },
+	{ tier = 1, id = "wooden_star", size = 1.1, shape = "Block" },
+	{ tier = 1, id = "candy_cane", size = 1.2, shape = "Cylinder" },
+	{ tier = 1, id = "sock_ornament", size = 1.3, shape = "Block" },
+	{ tier = 1, id = "gingerbread_man", size = 1.3, shape = "Block" },
+	{ tier = 1, id = "matchbox_car", size = 1.4, shape = "Block" },
+	{ tier = 1, id = "toy_soldier", size = 1.5, shape = "Cylinder" },
+	{ tier = 1, id = "cocoa_mug", size = 1.5, shape = "Cylinder" },
+
+	{ tier = 2, id = "rubber_duck", size = 1.6, shape = "Ball" },
+	{ tier = 2, id = "mitten_pair", size = 1.7, shape = "Block" },
+	{ tier = 2, id = "gift_box", size = 1.8, shape = "Block" },
+	{ tier = 2, id = "block_stack", size = 1.9, shape = "Block" },
+	{ tier = 2, id = "snowball", size = 2.0, shape = "Ball" },
+	{ tier = 2, id = "toy_drum", size = 2.2, shape = "Cylinder" },
+	{ tier = 2, id = "snow_boot", size = 2.4, shape = "Block" },
+	{ tier = 2, id = "teddy_bear", size = 2.5, shape = "Block" },
+	{ tier = 2, id = "plush_penguin", size = 2.6, shape = "Block" },
+	{ tier = 2, id = "tin_robot", size = 2.7, shape = "Block" },
+	{ tier = 2, id = "lantern", size = 2.8, shape = "Cylinder" },
+	{ tier = 2, id = "cat", size = 3.0, shape = "Block" },
+	{ tier = 2, id = "wreath", size = 3.0, shape = "Cylinder" },
+	{ tier = 2, id = "flower_pot", size = 3.1, shape = "Cylinder" },
+	{ tier = 2, id = "toy_sled", size = 3.2, shape = "Block" },
+	{ tier = 2, id = "rocking_horse", size = 3.5, shape = "Block" },
+
+	{ tier = 3, id = "barrel", size = 4.2, shape = "Cylinder" },
+	{ tier = 3, id = "mailbox", size = 4.5, shape = "Block" },
+	{ tier = 3, id = "giant_gift", size = 4.5, shape = "Block" },
+	{ tier = 3, id = "snow_mound", size = 4.8, shape = "Ball" },
+	{ tier = 3, id = "dog", size = 5.0, shape = "Block" },
+	{ tier = 3, id = "fence_section", size = 5.0, shape = "Block" },
+	{ tier = 3, id = "firewood_stack", size = 5.0, shape = "Block" },
+	{ tier = 3, id = "sledge", size = 6.0, shape = "Block" },
+	{ tier = 3, id = "bicycle", size = 6.5, shape = "Block" },
+	{ tier = 3, id = "bench", size = 7.0, shape = "Block" },
+	{ tier = 3, id = "snowman", size = 8.0, shape = "Ball" },
+	{ tier = 3, id = "cocoa_cart", size = 8.0, shape = "Block" },
+	{ tier = 3, id = "pine_sapling", size = 9.0, shape = "Cylinder" },
+	{ tier = 3, id = "street_lamp", size = 9.5, shape = "Cylinder" },
+
+	{ tier = 4, id = "bus_shelter", size = 10, shape = "Block" },
+	{ tier = 4, id = "market_stall", size = 11, shape = "Block" },
+	{ tier = 4, id = "big_snowman", size = 12, shape = "Ball" },
+	{ tier = 4, id = "kiosk", size = 12, shape = "Block" },
+	{ tier = 4, id = "fountain", size = 13, shape = "Cylinder" },
+	{ tier = 4, id = "car", size = 14, shape = "Block" },
+	{ tier = 4, id = "sleigh", size = 15, shape = "Block" },
+	{ tier = 4, id = "van", size = 17, shape = "Block" },
+	{ tier = 4, id = "bandstand", size = 18, shape = "Cylinder" },
+	{ tier = 4, id = "christmas_tree", size = 20, shape = "Cylinder" },
+	{ tier = 4, id = "snowplough", size = 22, shape = "Block" },
+	{ tier = 4, id = "bus", size = 25, shape = "Block" },
+
+	{ tier = 5, id = "cottage", size = 28, shape = "Block" },
+	{ tier = 5, id = "town_house", size = 34, shape = "Block" },
+	{ tier = 5, id = "skating_rink", size = 40, shape = "Cylinder" },
+	{ tier = 5, id = "clock_tower", size = 48, shape = "Block" },
+}
+
+-- Coin range per tier. Within a tier coins rise with size, from the low end to the high end.
+local coinRange: { { number } } = { { 1, 2 }, { 3, 5 }, { 8, 15 }, { 20, 40 }, { 60, 100 } }
+
+local tierSizeSpan: { { number } } = {}
+for _, entry in catalogue do
+	local span = tierSizeSpan[entry.tier]
+	if span == nil then
+		tierSizeSpan[entry.tier] = { entry.size, entry.size }
+	else
+		span[1] = math.min(span[1], entry.size)
+		span[2] = math.max(span[2], entry.size)
+	end
+end
+
+local objects = {}
+for _, entry in catalogue do
+	local span = tierSizeSpan[entry.tier]
+	local range = coinRange[entry.tier]
+	local fraction = (entry.size - span[1]) / (span[2] - span[1])
+	table.insert(objects, {
+		id = entry.id,
+		tier = entry.tier,
+		size = entry.size,
+		coins = range[1] + math.floor((range[2] - range[1]) * fraction + 0.5),
+		bookId = "snow_village." .. entry.id,
+		nameKey = "object.snow_village." .. entry.id,
+		icon = "cube",
+		assetKey = entry.id,
+		fallback = entry.shape,
+		shade = nil,
+	})
+end
+
+local rewardTypes: { "trail" | "skin" } = { "trail", "skin", "trail", "skin", "trail" }
+local headlineIcons = { "cube", "cube", "cube", "cube", "cube" }
+local minDiameters = { 2, 5, 12, 30, 70 }
+local sizeTiers = {}
+for tier = 1, 5 do
+	table.insert(sizeTiers, {
+		tier = tier,
+		nameKey = `tier.snow_village.{tier}.name`,
+		minDiameter = minDiameters[tier],
+		maxDiameter = minDiameters[tier + 1],
+		headlineKey = `tier.snow_village.{tier}.headline`,
+		headlineIcon = headlineIcons[tier],
+		reward = {
+			rewardId = `snow_village.reward.tier{tier}`,
+			rewardType = rewardTypes[tier],
+			nameKey = `reward.snow_village.tier{tier}.name`,
+		},
+	})
+end
+
+-- Object groups used by the zone mixes below. Weights are relative.
+local function mix(ids: { string }, weight: number): { { objectId: string, weight: number } }
+	local entries = {}
+	for _, id in ids do
+		table.insert(entries, { objectId = id, weight = weight })
+	end
+	return entries
+end
+
+local function join(
+	...: { { objectId: string, weight: number } }
+): { { objectId: string, weight: number } }
+	local joined = {}
+	for _, part in { ... } do
+		for _, entry in part do
+			table.insert(joined, entry)
+		end
+	end
+	return joined
+end
+
+local tinyCrumbs = {
+	"gumdrop",
+	"button",
+	"jingle_bell",
+	"acorn",
+	"marshmallow",
+	"peppermint",
+	"pine_cone",
+	"bauble",
+}
+local bigCrumbs = {
+	"cookie",
+	"ribbon_bow",
+	"mini_snow_globe",
+	"wooden_star",
+	"candy_cane",
+	"sock_ornament",
+	"gingerbread_man",
+	"matchbox_car",
+	"toy_soldier",
+	"cocoa_mug",
+}
+local smallToys = { "rubber_duck", "mitten_pair", "gift_box", "block_stack", "snowball" }
+local midToys = { "toy_drum", "snow_boot", "teddy_bear", "plush_penguin", "tin_robot" }
+local bigToys = { "lantern", "cat", "wreath", "flower_pot", "toy_sled", "rocking_horse" }
+local smallYard =
+	{ "barrel", "mailbox", "giant_gift", "snow_mound", "dog", "fence_section", "firewood_stack" }
+local bigYard =
+	{ "sledge", "bicycle", "bench", "snowman", "cocoa_cart", "pine_sapling", "street_lamp" }
+local smallStreet = { "bus_shelter", "market_stall", "big_snowman", "kiosk", "fountain" }
+local midStreet = { "car", "sleigh", "van", "bandstand" }
+local bigStreet = { "christmas_tree", "snowplough", "bus" }
+
+-- Twelve spawn points on a 4 x 3 grid with a wide gap in the middle for the town square.
+local spawnColumns = { -200, -100, 100, 200 }
+local spawnRows = { -120, 0, 120 }
+local porchHeight = 0.6
+
+local spawnPoints = {}
+local zones = {}
+local blocks = {}
+local markers = {}
+
+local function zone(
+	id: string,
+	x: number,
+	z: number,
+	w: number,
+	d: number,
+	y: number,
+	entries: { { objectId: string, weight: number } },
+	count: number,
+	seed: number,
+	slot: number?
+)
+	table.insert(zones, {
+		id = id,
+		x = x,
+		z = z,
+		w = w,
+		d = d,
+		y = y,
+		mix = entries,
+		count = count,
+		seed = seed,
+		spawnSlot = slot,
+	})
+end
+
+local function block(
+	id: string,
+	kind: string,
+	x: number,
+	y: number,
+	z: number,
+	yaw: number,
+	sx: number,
+	sy: number,
+	sz: number,
+	swatch: string
+)
+	table.insert(blocks, {
+		id = id,
+		kind = kind,
+		cframe = { x = x, y = y, z = z, yaw = yaw },
+		size = { x = sx, y = sy, z = sz },
+		swatch = swatch,
+	})
+end
+
+local slot = 0
+for rowIndex, rowZ in spawnRows do
+	for columnIndex, columnX in spawnColumns do
+		slot += 1
+		local name = string.format("sv_%02d", slot)
+		table.insert(spawnPoints, { slot = slot, x = columnX, y = porchHeight, z = rowZ, yaw = 0 })
+
+		-- Which way is the middle of the town: the porch ramp and the kerb face it.
+		local inward = if columnX < 0 then 1 else -1
+
+		zone(
+			name .. "_porch",
+			columnX,
+			rowZ,
+			20,
+			20,
+			porchHeight,
+			join(mix(tinyCrumbs, 3), mix(bigCrumbs, 1)),
+			40,
+			slot * 100 + 1,
+			slot
+		)
+		zone(
+			name .. "_yard_a",
+			columnX + 37,
+			rowZ,
+			22,
+			20,
+			0,
+			join(mix(bigCrumbs, 2), mix(smallToys, 1)),
+			20,
+			slot * 100 + 2,
+			nil
+		)
+		zone(
+			name .. "_yard_b",
+			columnX - 37,
+			rowZ,
+			22,
+			20,
+			0,
+			join(mix(bigCrumbs, 2), mix(smallToys, 1)),
+			20,
+			slot * 100 + 3,
+			nil
+		)
+		zone(
+			name .. "_lawn_n",
+			columnX,
+			rowZ - 23,
+			96,
+			22,
+			0,
+			join(mix(midToys, 2), mix(bigToys, 2)),
+			14,
+			slot * 100 + 4,
+			nil
+		)
+		zone(
+			name .. "_lawn_s",
+			columnX,
+			rowZ + 23,
+			96,
+			22,
+			0,
+			join(mix(midToys, 1), mix(smallYard, 1)),
+			12,
+			slot * 100 + 5,
+			nil
+		)
+		zone(
+			name .. "_lane_n",
+			columnX,
+			rowZ - 47,
+			96,
+			22,
+			0,
+			mix(smallYard, 1),
+			10,
+			slot * 100 + 6,
+			nil
+		)
+		zone(
+			name .. "_lane_s",
+			columnX,
+			rowZ + 47,
+			96,
+			22,
+			0,
+			mix(bigYard, 1),
+			7,
+			slot * 100 + 7,
+			nil
+		)
+
+		block(
+			name .. "_porch",
+			"Block",
+			columnX,
+			porchHeight / 2,
+			rowZ,
+			0,
+			22,
+			porchHeight,
+			22,
+			"wood"
+		)
+		-- A wedge rises towards local +Z, so yaw -90 raises it towards -x and yaw 90 towards +x. One ramp on
+		-- each side, both rising onto the porch.
+		block(
+			name .. "_ramp_in",
+			"Wedge",
+			columnX + inward * 18,
+			porchHeight / 2,
+			rowZ,
+			if inward == 1 then -90 else 90,
+			10,
+			porchHeight,
+			14,
+			"snow_light"
+		)
+		block(
+			name .. "_ramp_out",
+			"Wedge",
+			columnX - inward * 18,
+			porchHeight / 2,
+			rowZ,
+			if inward == 1 then 90 else -90,
+			10,
+			porchHeight,
+			14,
+			"snow_light"
+		)
+		block(
+			name .. "_kerb",
+			"Block",
+			columnX + inward * 30,
+			0.75,
+			rowZ + 11,
+			0,
+			28,
+			1.5,
+			2,
+			"stone"
+		)
+		if rowIndex ~= 2 or columnIndex % 2 == 1 then
+			table.insert(markers, {
+				kind = if slot % 2 == 0 then "BoosterSpot" else "TrapSpot",
+				x = columnX + inward * 40,
+				y = 0,
+				z = rowZ - 16,
+			})
+		end
+	end
+end
+
+-- Town square in the middle and the T4 streets around it.
+zone("sv_square", 0, 0, 100, 120, 0, join(mix(bigStreet, 1), mix(midStreet, 1)), 10, 9001, nil)
+zone("sv_street_n", 0, -155, 100, 50, 0, join(mix(smallStreet, 1), mix(midStreet, 1)), 6, 9002, nil)
+zone("sv_street_s", 0, 155, 100, 50, 0, join(mix(smallStreet, 1), mix(midStreet, 1)), 6, 9003, nil)
+zone(
+	"sv_band_n",
+	0,
+	-240,
+	590,
+	100,
+	0,
+	join(mix(smallStreet, 2), mix(midStreet, 2), mix(bigStreet, 1)),
+	26,
+	9004,
+	nil
+)
+zone(
+	"sv_band_s",
+	0,
+	240,
+	590,
+	100,
+	0,
+	join(mix(smallStreet, 2), mix(midStreet, 2), mix(bigStreet, 1)),
+	26,
+	9005,
+	nil
+)
+zone("sv_edge_e", 276, 0, 40, 340, 0, mix(bigYard, 1), 14, 9006, nil)
+zone("sv_edge_w", -276, 0, 40, 340, 0, mix(bigYard, 1), 14, 9007, nil)
+
+-- Two low rooftops reached by long snow ramps, with Tier 2 toys on top.
+for index, roofZ in { -100, 100 } do
+	local direction = if roofZ < 0 then 1 else -1
+	local name = if roofZ < 0 then "sv_roof_n" else "sv_roof_s"
+	block(name, "Block", 0, 5.5, roofZ, 0, 24, 11, 24, "brick")
+	block(
+		name .. "_ramp",
+		"Wedge",
+		0,
+		5.5,
+		roofZ + direction * 25,
+		if direction == 1 then 180 else 0,
+		12,
+		11,
+		26,
+		"snow_light"
+	)
+	zone(
+		name .. "_top",
+		0,
+		roofZ,
+		20,
+		20,
+		11,
+		join(mix(midToys, 1), mix(bigToys, 1)),
+		12,
+		9100 + index,
+		nil
+	)
+end
+
+-- Ground, the landmark ring boundary and the Tier 5 landmarks.
+block("sv_ground", "Block", 0, -0.5, 0, 0, 800, 1, 800, "snow")
+block("sv_wall_n", "Block", 0, 20, -402, 0, 808, 40, 4, "stone")
+block("sv_wall_s", "Block", 0, 20, 402, 0, 808, 40, 4, "stone")
+block("sv_wall_e", "Block", 402, 20, 0, 0, 4, 40, 808, "stone")
+block("sv_wall_w", "Block", -402, 20, 0, 0, 4, 40, 808, "stone")
+
+local fixedPlacements: { { id: string, objectId: string, x: number, y: number, z: number, yaw: number, spawnSlot: number? } } =
+	{
+		{ id = "sv_landmark_01", objectId = "cottage", x = -330, y = 0, z = -330, yaw = 0 },
+		{ id = "sv_landmark_02", objectId = "cottage", x = 330, y = 0, z = 330, yaw = 0 },
+		{ id = "sv_landmark_03", objectId = "town_house", x = 330, y = 0, z = -330, yaw = 0 },
+		{ id = "sv_landmark_04", objectId = "town_house", x = -330, y = 0, z = 330, yaw = 0 },
+		{ id = "sv_landmark_05", objectId = "skating_rink", x = 0, y = 0, z = -355, yaw = 0 },
+		{ id = "sv_landmark_06", objectId = "skating_rink", x = 0, y = 0, z = 355, yaw = 0 },
+		{ id = "sv_landmark_07", objectId = "clock_tower", x = -355, y = 0, z = 0, yaw = 0 },
+		{ id = "sv_landmark_08", objectId = "clock_tower", x = 355, y = 0, z = 0, yaw = 0 },
+	}
+
+-- Extra marker spots (Feature 004b) in the streets, so there are at least 6 of each kind.
+for index, spot in { { -60, 0 }, { 60, 0 }, { 0, -60 }, { 0, 60 }, { -150, -180 }, { 150, 180 } } do
+	table.insert(markers, {
+		kind = if index % 2 == 0 then "BoosterSpot" else "TrapSpot",
+		x = spot[1],
+		y = 0,
+		z = spot[2],
+	})
+end
+
+local SnowVillage = {
+	worldId = "snow_village",
+	starThresholds = { 20, 45, 80 },
+	-- PROVISIONAL, owner to confirm (T032). With Config.growthK = 0.6 the pace model (tests/unit/Pace.test)
+	-- needs 96 s for Tier 2 and ends a run at about 15 studs; 1.5 gives Tier 2 in 34 s and 63-71 studs.
+	growthK = 1.5,
+	halfExtent = 300,
+	outerHalfExtent = 400,
+	sizeTiers = sizeTiers,
+	objects = objects,
+	zones = zones,
+	fixedPlacements = fixedPlacements,
+	spawnPoints = spawnPoints,
+	environment = {
+		palette = {
+			snow = { 236, 242, 250 },
+			snow_light = { 247, 250, 255 },
+			stone = { 150, 158, 170 },
+			wood = { 150, 105, 70 },
+			brick = { 170, 85, 75 },
+			ice = { 170, 205, 235 },
+		},
+		blocks = blocks,
+		markers = markers,
+	},
+	hub = {
+		center = { x = -460, z = 0 },
+		halfExtent = 24,
+		spawn = { x = 0, z = 0 },
+		padRadius = 5,
+		assetKey = "hub",
+	},
+	lighting = {
+		ambient = { 150, 165, 190 },
+		outdoorAmbient = { 170, 185, 210 },
+		brightness = 2,
+		clockTime = 15.5,
+		fogColor = { 205, 218, 235 },
+		fogStart = 150,
+		fogEnd = 900,
+		atmosphereDensity = 0.3,
+		atmosphereColor = { 200, 215, 235 },
+		atmosphereDecay = { 190, 200, 220 },
+	},
+}
+
+return SnowVillage

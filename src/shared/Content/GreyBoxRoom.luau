@@ -2,6 +2,8 @@
 -- Grey-box room data. Data only: no Roblox APIs, so Lune can validate it.
 -- Layout and tiers: specs/001-grey-box-prototype/data-model.md §2 and research.md R1.
 -- Run-loop tiers, objects, star targets and hub: specs/002-run-loop/data-model.md §2.
+-- Feature 004 widens the shared types to the WorldDef schema (specs/004-snow-village/data-model.md §1) and
+-- adds the world-agnostic fields; the room's own data above stays as it was.
 
 export type TierDef = { tier: number, size: number, count: number, shade: number }
 export type CubeSpawn = { id: string, tier: number, x: number, z: number }
@@ -23,20 +25,100 @@ export type ObjectDef = {
 	bookId: string,
 	nameKey: string,
 	icon: string,
+	-- Key in Assets.meshes. Absent for the grey-box cubes, which are always plain parts.
+	assetKey: string?,
+	-- Shape of the procedural stand-in part: "Block", "Ball" or "Cylinder". Absent means "Block".
+	fallback: string?,
+	-- Grey level 0..255 of the stand-in. Absent means the colour comes from the tier.
+	shade: number?,
 }
 export type HubDef = {
 	center: { x: number, z: number },
 	halfExtent: number,
 	spawn: { x: number, z: number },
 	padRadius: number,
+	assetKey: string?,
 }
+export type MixEntry = { objectId: string, weight: number }
+export type ZoneDef = {
+	id: string,
+	x: number,
+	z: number,
+	w: number,
+	d: number,
+	y: number,
+	mix: { MixEntry },
+	count: number,
+	seed: number,
+	spawnSlot: number?,
+}
+export type PlacementSeed = {
+	id: string,
+	objectId: string,
+	x: number,
+	y: number,
+	z: number,
+	yaw: number,
+	spawnSlot: number?,
+}
+-- y is the surface the ball rests on; the ball sits at y + startDiameter / 2 + 0.5.
+export type SpawnPoint = { slot: number, x: number, y: number, z: number, yaw: number }
+export type BlockDef = {
+	id: string,
+	kind: string,
+	cframe: { x: number, y: number, z: number, yaw: number },
+	size: { x: number, y: number, z: number },
+	swatch: string,
+}
+export type MarkerDef = { kind: string, x: number, y: number, z: number }
+export type EnvironmentDef = {
+	palette: { [string]: { number } },
+	blocks: { BlockDef },
+	markers: { MarkerDef },
+}
+export type LightingDef = {
+	ambient: { number },
+	outdoorAmbient: { number },
+	brightness: number,
+	clockTime: number,
+	fogColor: { number },
+	fogStart: number,
+	fogEnd: number,
+	atmosphereDensity: number,
+	atmosphereColor: { number },
+	atmosphereDecay: { number },
+}
+export type WorldDef = {
+	worldId: string,
+	starThresholds: { number }?,
+	growthK: number?,
+	sizeTiers: { SizeTierDef },
+	objects: { ObjectDef },
+	zones: { ZoneDef },
+	fixedPlacements: { PlacementSeed },
+	spawnPoints: { SpawnPoint },
+	halfExtent: number,
+	outerHalfExtent: number,
+	environment: EnvironmentDef,
+	hub: HubDef,
+	lighting: LightingDef?,
+}
+-- The room's own fields plus every WorldDef field (spelled out: an intersection would stop the data table
+-- below from being checked against its type while it is written).
 export type Room = {
 	worldId: string,
 	starThresholds: { number }?,
+	growthK: number?,
 	sizeTiers: { SizeTierDef },
 	objects: { ObjectDef },
-	hub: HubDef,
+	zones: { ZoneDef },
+	fixedPlacements: { PlacementSeed },
+	spawnPoints: { SpawnPoint },
 	halfExtent: number,
+	outerHalfExtent: number,
+	environment: EnvironmentDef,
+	hub: HubDef,
+	lighting: LightingDef?,
 	wallHeight: number,
 	kerb: { x: number, z: number, length: number, depth: number, height: number },
 	spawnRingRadius: number,
@@ -190,6 +272,89 @@ local GreyBoxRoom: Room = {
 		{ id = "T4-02", tier = 4, x = -32, z = 31 },
 		{ id = "T4-03", tier = 4, x = 31, z = -31 },
 	},
+	-- World-agnostic fields, filled below from the data above.
+	zones = {},
+	fixedPlacements = {},
+	spawnPoints = {},
+	outerHalfExtent = 36,
+	environment = { palette = {}, blocks = {}, markers = {} },
 }
+
+-- The 30 cubes become placements: tier t uses the object "cube_t<t>", resting on the floor (y = 0).
+for _, cube in GreyBoxRoom.cubes do
+	table.insert(GreyBoxRoom.fixedPlacements, {
+		id = cube.id,
+		objectId = "cube_t" .. cube.tier,
+		x = cube.x,
+		y = 0,
+		z = cube.z,
+		yaw = 0,
+	})
+end
+for _, object in GreyBoxRoom.objects do
+	for _, def in GreyBoxRoom.tiers do
+		if def.tier == object.tier then
+			object.shade = def.shade
+		end
+	end
+	object.fallback = "Block"
+end
+
+-- The spawn ring becomes 12 spawn points on the floor.
+for slot = 0, GreyBoxRoom.spawnSlots - 1 do
+	local angle = (slot / GreyBoxRoom.spawnSlots) * math.pi * 2
+	table.insert(GreyBoxRoom.spawnPoints, {
+		slot = slot + 1,
+		x = math.cos(angle) * GreyBoxRoom.spawnRingRadius,
+		y = 0,
+		z = math.sin(angle) * GreyBoxRoom.spawnRingRadius,
+		yaw = 0,
+	})
+end
+
+-- Floor, four walls and the kerb as environment blocks.
+local environment = GreyBoxRoom.environment
+environment.palette = {
+	floor = { 90, 90, 90 },
+	wall = { 70, 70, 70 },
+	hub_floor = { 110, 110, 110 },
+	hub_pad = { 150, 150, 150 },
+}
+local half = GreyBoxRoom.halfExtent
+local wall = GreyBoxRoom.wallHeight
+local span = half * 2 + 4
+local function addBlock(
+	id: string,
+	x: number,
+	y: number,
+	z: number,
+	sx: number,
+	sy: number,
+	sz: number,
+	swatch: string
+)
+	table.insert(environment.blocks, {
+		id = id,
+		kind = "Block",
+		cframe = { x = x, y = y, z = z, yaw = 0 },
+		size = { x = sx, y = sy, z = sz },
+		swatch = swatch,
+	})
+end
+addBlock("floor", 0, -0.5, 0, half * 2, 1, half * 2, "floor")
+addBlock("wall_1", 0, wall / 2, -half - 1, span, wall, 2, "wall")
+addBlock("wall_2", 0, wall / 2, half + 1, span, wall, 2, "wall")
+addBlock("wall_3", half + 1, wall / 2, 0, 2, wall, span, "wall")
+addBlock("wall_4", -half - 1, wall / 2, 0, 2, wall, span, "wall")
+addBlock(
+	"kerb",
+	GreyBoxRoom.kerb.x,
+	GreyBoxRoom.kerb.height / 2,
+	GreyBoxRoom.kerb.z,
+	GreyBoxRoom.kerb.length,
+	GreyBoxRoom.kerb.height,
+	GreyBoxRoom.kerb.depth,
+	"wall"
+)
 
 return GreyBoxRoom

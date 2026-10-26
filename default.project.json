@@ -27,6 +27,15 @@
         "$path": "tests/studio"
       }
     },
+    "Workspace": {
+      "$className": "Workspace",
+      "$properties": {
+        "StreamingEnabled": true,
+        "StreamingMinRadius": 128,
+        "StreamingTargetRadius": 512,
+        "StreamingIntegrityMode": "PauseOutsideLoadedArea"
+      }
+    },
     "Players": {
       "$className": "Players",
       "$properties": {
