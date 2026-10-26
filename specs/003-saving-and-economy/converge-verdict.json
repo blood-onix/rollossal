@@ -3,17 +3,17 @@
   "remaining": [],
   "human": [
     {
-      "item": "T052 (with T031, T044, T045, T051) Copy the 33 Studio captures into specs/003-saving-and-economy/captures/ and tick those tasks",
+      "item": "T052 (with T031, T040, T044, T045, T051) Copy the 33 Studio captures into specs/003-saving-and-economy/captures/ and tick those tasks",
       "reason": "The Studio MCP screen_capture tool has no output path and writes only to the harness tool-results folder, and the shell policy blocks copying from outside the project. The user must run the cp commands at the end of specs/003-saving-and-economy/captures/README.md from the repo root. The measurements and glyph checks are already recorded in playtest.md and plan.md."
     },
     {
       "item": "T053 Final re-validation and correction of the T049 note",
-      "reason": "Gated on the capture copy above. After the copy, run scripts/check.sh (currently 194 passed, exit 0), the Jest runner and quickstart sections 1 to 6, then fix the T049 note that says the captures are not yet in the repo."
+      "reason": "Gated on the capture copy above. After the copy, run scripts/check.sh (exits 0 as of this round), the Jest runner and quickstart sections 1 to 6, then fix the T049 note that says the captures are not yet in the repo."
     },
     {
       "item": "T048 Human checks on a private test place",
       "reason": "Needs a published place, real servers, real phones, playtesters (3 adults and 3 children aged 10 to 12) and owner sign-off on Open Items 1 and 2, including the camera sensitivity effect on touch."
     }
   ],
-  "summary": "Code, tests and Studio playtests are done (check.sh exits 0 with 194 Lune tests, Jest 59/59), and every open task is blocked on copying the 33 captures into the repo or on human checks, so no new tasks were appended."
+  "summary": "Round 4 found no new gaps (scripts/check.sh exits 0, code and tests match the spec), so no tasks were appended; every open task (T031, T040, T044, T045, T051 to T053) is blocked on copying the 33 captures into the repo, and T048 needs people."
 }
