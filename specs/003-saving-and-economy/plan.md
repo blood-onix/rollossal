@@ -144,6 +144,10 @@ first-run flag and the ledger bound are solved without one). Complexity Tracking
 - **F-7 Camera sensitivity may not be settable for touch.** Roblox exposes mouse delta scaling to scripts
   (`UserInputService.MouseDeltaSensitivity`); the default camera's touch pan speed is not documented as
   scriptable. Handled as a measured risk (Risk Results below) with a defined fallback.
+  Review round 4: instead of leaving touch unscaled, `CameraController` now scales every look input after the
+  default camera script runs (pure `Rules/CameraLook`, applied at `RenderPriority.Camera + 1`), so the slider
+  works on mouse, touch and gamepad. `MouseDeltaSensitivity` is left at its default to avoid scaling twice.
+  The feel on a real phone is still an owner check (T048 d).
 - **F-8 Rules cannot `require` each other.** `check.sh` forbids `require(script` under `src/shared/Rules`,
   and 001 made every Rules module standalone. The spec's "apply a run, grant page rewards" therefore cannot
   call `Book` from `Profile`; the server passes the reward lookup in as a function (R2).

@@ -78,9 +78,11 @@ value moves the control. The slider handles are the one place a utility control 
 wide); the track row is 56 px high and the whole row is the drag area, which the capture task checks
 against Roblox's 44 px guidance.
 
-Camera sensitivity is applied through `UserInputService.MouseDeltaSensitivity` (mouse only). The touch
-pan cannot be scaled by script, so on touch devices the setting is saved and restored but has no effect;
-no custom camera is built in this feature (plan finding F-7).
+Camera sensitivity scales the camera's look input for mouse, touch and gamepad. `CameraController` reads the
+direction the default camera script produced each frame and adds `(factor - 1)` times that frame's turn on top
+(`Rules/CameraLook`, applied at `RenderPriority.Camera + 1`, pitch kept within 80 degrees). No custom camera is
+built and `UserInputService.MouseDeltaSensitivity` stays at its default so mouse look is not scaled twice
+(plan finding F-7). The feel on a real phone is an owner check (T048 d).
 
 ## Hub screen additions (`HubUi`, state `Hub`)
 
