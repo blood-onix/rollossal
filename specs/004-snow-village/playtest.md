@@ -54,12 +54,13 @@ Real art is now exported (T024), so every check re-ran with the manifest engaged
 | Lune / static gate | `scripts/check.sh` exit 0: 270 Lune tests (incl. `ArtManifest` hashing every FBX against the manifest), StyLua, Selene, luau-lsp strict, world-agnostic and Rules purity guards green. |
 | Jest (Studio MCP runner) | 5/5 suites, 0 failures: AbsorbService 19, RunManager 26, DataService 29, WorldSpawner 15, WorldCuller 12. |
 | SC-002 static half | No `rbxassetid://` anywhere in `src` outside `Assets.luau` (grep); one palette texture (`art/palette.png`, referenced by `manifest.json`); `Assets.meshes` still empty — the `REQUIRE_ASSET_IDS=1` import is the owner's hand-off, so SC-002 stays open until then. |
+| SC-002 import (2026-10-27) | Owner ran the Studio bulk import: 65 `MeshId`s read by name through `execute_luau` and written to `Assets.meshes`; palette image id `rbxassetid://95185035371248` (owner copied it from Asset Manager → Images) written to `Assets.palette`, and it loads (`AssetFetchStatus.Success`). The 65 imported models were deleted from Workspace. `REQUIRE_ASSET_IDS=1 scripts/check.sh` exit 0 (270 tests, ArtManifest id test PASS). Studio, Rojo synced (`Assets` 4018 bytes): `ObjectVisual.build` for all 64 objects returned a `MeshPart` (0 stand-ins), longest side within 5 % of `ObjectDef.size`, 0 scripts in templates, `TextureID` = palette. Imported parts arrive about 100x too big (acorn about 50 studs); `ObjectVisual` rescales them. |
 | Rollback smoke test | `Flags.SnowVillage` flipped to `false` in the repo (Rojo synced, Edit-mode read-back `flag = false`); Play run: `Workspace.World` 30 objects, 6 geometry blocks, hub with floor, world id `greybox`, one spawned ball (`Ball_7967226345`, unanchored, on the old spawn ring); console had no game-script errors (only Studio's own DataStore warning and `rbxassetid://203785492` lines, which are not in the repo). Flag restored to `true`, sync probe re-run: `mismatches = {}` (60 files). |
 
 ### SC scoreboard (agent-verifiable parts only, round 2)
 
 - **SC-001**: met (this round).
-- **SC-002**: agent half met; open on the owner's Studio import of `Assets.meshes` / `Assets.palette` (T032 hand-off).
+- **SC-002**: met (2026-10-27): import done, ids in `Assets.luau`, `REQUIRE_ASSET_IDS=1 scripts/check.sh` exit 0, template size/script check green in Studio. Still to do: a Play restart look at the real art on a phone-size screen (part of SC-005).
 - **SC-003**: open — balance tuning deliberately deferred by the owner's grey-box sign-off (`growthK = 1.5` provisional; Tier 3/Tier 4 placement counts unchanged). Latest recorded numbers: the "BotRun after the owner's PC play" section below.
 - **SC-004**: open — phone measurement belongs to the owner (T032).
 - **SC-005**: open — owner sign-off pending (T032).
