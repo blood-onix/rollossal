@@ -1,21 +1,21 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T034 Stop the bare-string PreloadAsync of Assets.sounds.music in Feedback.preloadSounds (ContentId mismatch warning on every start; track already preloads as an instance)"
+    "T035 🔒 Studio: measure fps with Studio in the foreground during the full 12-ball BotRun's Tier-4 window and record it in playtest.md (SC-004 Studio half)"
   ],
   "human": [
     {
-      "item": "T031/T032 SC-003 balance tuning (Tier 3/Tier 4 pool counts and provisional growthK = 1.5)",
-      "reason": "Owner deliberately deferred until the map design settles; round-4 BotRun confirms everyTierKeptShare false again (T4 0.081 at 240 s), so it stays an owner policy decision, not agent work"
+      "item": "SC-004 phone half: owner plays the final art build on the reference phone and records >= 30 fps + part count",
+      "reason": "needs the owner's physical reference phone; cannot be done in this environment"
     },
     {
-      "item": "T031/T032 SC-004(b) reference-phone fps at Tier 4 and the related SC-005 phone half",
-      "reason": "Requires the owner's physical reference phone"
+      "item": "SC-005 phone half: owner's phone-size look at the real art with a clean console",
+      "reason": "same owner phone session as SC-004; a physical device check"
     },
     {
-      "item": "T031 SC-004(a) Studio fps at Tier 4 (parts 1701 <= 2000 already met; RenderStepped sampler is installed, first 37 focused seconds measured 60 fps)",
-      "reason": "Needs Roblox Studio kept in the foreground during the Tier-4 window; Studio idles at 15 fps when unfocused and the owner was working in other apps, so a non-interactive session cannot hold desktop focus without pulling it from the person"
+      "item": "SC-003 balance: growthK / Tier 3-Tier 4 placement tuning",
+      "reason": "deferred explicitly by the owner until the map design settles (playtest.md, not waived); needs the owner's direction"
     }
   ],
-  "summary": "Round 4 of 8: SC-001 and SC-002 re-verified green on build bce0a6d, a fresh real-art 12-ball BotRun met the part budget (1,701 of 2,000), one new small finding (music bare-id preload warning, appended as T034) and the remaining work is owner-side (SC-003 balance, phone fps, focused-Studio fps)."
+  "summary": "All code and pipeline items are verified green on the current tree (T034 fix confirmed); only the SC-004 Studio-foreground fps measurement is appended as agent work T035, with the phone measurements and owner-deferred SC-003 balance left to the owner."
 }

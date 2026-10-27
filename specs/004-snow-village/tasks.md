@@ -156,7 +156,14 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 
 ## Phase 8: Convergence
 
-- [ ] T034 Edit `src/client/Feedback.luau` (`preloadSounds`): stop preloading the bare `Assets.sounds.music` string id — a raw id request of the owner's Audio asset fetches `AssetFetchStatus.Failure` and logs `ContentId rbxassetid://80565841497538 failed due to: Asset type does not match requested type` on every Play start (Studio MCP console, round 4); the Music track is already preloaded as a `Sound` instance, so exclude it from the string-id list (or preload instance ids only for it) and re-run `scripts/check.sh` (SC-005 zero game-script warnings, preload still guaranteed). Keep pickup effects preload behavior unchanged.
+- [X] T034 Edit `src/client/Feedback.luau` (`preloadSounds`): stop preloading the bare `Assets.sounds.music` string id — a raw id request of the owner's Audio asset fetches `AssetFetchStatus.Failure` and logs `ContentId rbxassetid://80565841497538 failed due to: Asset type does not match requested type` on every Play start (Studio MCP console, round 4); the Music track is already preloaded as a `Sound` instance, so exclude it from the string-id list (or preload instance ids only for it) and re-run `scripts/check.sh` (SC-005 zero game-script warnings, preload still guaranteed). Keep pickup effects preload behavior unchanged.
+  - Round 5 (2026-10-27): `music` skipped in the string-id loop (preloaded as its `Sound` in `createMusic`); `scripts/check.sh` exit 0 (270 Lune tests, guards green); Studio probe `mismatches = {}`; Play console shows no `rbxassetid://80565841497538` line, only Studio's own `rbxassetid://203785492` (not in the repo).
+
+---
+
+## Phase 9: Convergence
+
+- [ ] T035 🔒 Studio: measure the SC-004 Studio-half frame rate at Tier 4 (SC-004, partial): start Play with the Studio window in the foreground (first confirm the client is not in the 15 fps background throttle), run `ServerStorage.Tests.BotRun` for a full 240 s run, sample rendered fps per second through the whole Tier-4 window (bots at >= 30 studs and later), verify >= 30 fps, and record the measurement in `specs/004-snow-village/playtest.md` (round 5: harness exists, sampler works, only a focused Tier-4 window is missing).
 
 ---
 
