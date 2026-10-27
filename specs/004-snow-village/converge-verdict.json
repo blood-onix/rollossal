@@ -1,16 +1,11 @@
 {
-  "verdict": "complete",
+  "verdict": "incomplete",
   "remaining": [],
-  "summary": "T035 closed this round: the SC-004 Studio-half Tier-4 window measured mean 42 fps (unthrottled mean 50) with the AppleScript-activation workaround, leaving only the owner's phone measurement and the owner-deferred SC-003 balance, so no agent-executable tasks remain.",
-  "completion": {
-    "source": "manual",
-    "at": "2026-10-27T14:31:04.232Z",
-    "by": "Roman_Tikhonov <bloodonix@gmail.com>",
-    "review": "pending",
-    "signedOff": [
-      "SC-004 phone half: owner plays the final art build on the reference phone and records >= 30 fps + part count",
-      "SC-005 phone half: owner's phone-size look at the real art with a clean console",
-      "SC-003 balance: growthK / Tier 3-Tier 4 placement tuning"
-    ]
-  }
+  "human": [
+    {"item": "T035 Studio-half SC-004 fps measurement at Tier 4 (withdrawn round 6, AppleScript activation loop forbidden by AGENTS.md)", "reason": "The honest fps check needs Studio in front of the owner; a background Studio is throttled to 15 fps and the agent may not activate windows. The owner must run ServerStorage.Tests.BotRun with Studio in front and record the result in playtest.md."},
+    {"item": "T032 / SC-004 phone half: >= 30 fps and part count on the reference phone", "reason": "Requires the owner's physical reference phone; the agent has no device."},
+    {"item": "T032 / SC-005 phone half: owner's phone-size look at the final art with a clean console", "reason": "Requires the owner's physical phone and visual sign-off."},
+    {"item": "T032 / SC-003 balance: growthK and Tier 3-Tier 4 placement tuning", "reason": "Owner tuning decision, deferred by the owner; not a code task the agent can close without the owner's choice."}
+  ],
+  "summary": "All 35 tasks in tasks.md except T035 are checked and check.sh exits 0, but T035's Studio fps measurement and the owner-only phone, balance and sign-off checks remain open, so the feature is not converged."
 }
