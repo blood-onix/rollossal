@@ -102,12 +102,9 @@ local function preloadSounds()
 				table.insert(ids, soundId)
 			end
 		end
-		-- Imported meshes and the palette texture load here too; empty ids mean "not imported yet".
-		for _, meshId in Assets.meshes do
-			if meshId ~= "" then
-				table.insert(ids, meshId)
-			end
-		end
+		-- The palette texture loads here too ("" means not imported yet). Meshes are not preloaded: PreloadAsync
+		-- on a bare mesh id logs "Asset type does not match requested type"; ObjectVisual loads them with
+		-- CreateMeshPartAsync.
 		if Assets.palette ~= "" then
 			table.insert(ids, Assets.palette)
 		end

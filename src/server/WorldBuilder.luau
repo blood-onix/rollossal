@@ -204,6 +204,27 @@ function WorldBuilder.start(world: WorldDef, placements: { Layout.Placement }): 
 		defs[def.id] = def
 	end
 
+	-- Mesh templates load in parallel: built one after another, 64 asset loads take longer than the 5 s the
+	-- clients wait for their ball before WaitForChild warns.
+	local pending = 0
+	local failure: string? = nil
+	for _, def in world.objects do
+		pending += 1
+		task.spawn(function()
+			local ok, err = pcall(templateFor, def)
+			if not ok and failure == nil then
+				failure = tostring(err)
+			end
+			pending -= 1
+		end)
+	end
+	while pending > 0 do
+		task.wait()
+	end
+	if failure ~= nil then
+		error(failure)
+	end
+
 	local objects: { BuiltObject } = {}
 	for _, placement in placements do
 		local def = defs[placement.objectId]
