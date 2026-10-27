@@ -62,7 +62,7 @@ Real art is now exported (T024), so every check re-ran with the manifest engaged
 - **SC-001**: met (this round).
 - **SC-002**: met (2026-10-27): import done, ids in `Assets.luau`, `REQUIRE_ASSET_IDS=1 scripts/check.sh` exit 0, template size/script check green in Studio. Still to do: a Play restart look at the real art on a phone-size screen (part of SC-005).
 - **SC-003**: open — balance tuning deliberately deferred by the owner's grey-box sign-off (`growthK = 1.5` provisional; Tier 3/Tier 4 placement counts unchanged). Latest recorded numbers: the "BotRun after the owner's PC play" section below.
-- **SC-004**: Studio half met (round 6, 2026-10-27: Tier-4 window mean 42 fps, unthrottled mean 50, see "Converge round 6"); phone measurement belongs to the owner (publish checklist).
+- **SC-004**: Studio half NOT validly measured. The round 6 figures (Tier-4 mean 42 fps, see "Converge round 6") came from an AppleScript focus loop that AGENTS.md forbids, so they are withdrawn; the Tier-4 real-fps check is the owner's, with Studio in front. Phone measurement also belongs to the owner (publish checklist).
 - **SC-005**: met on PC (owner sign-off 2026-10-27); the phone half is not measured (see SC-004).
 
 ## BotRun after the owner's PC play (agent, 2026-10-26, build 3dc60b2)
@@ -152,7 +152,7 @@ Result (Tier-4 window = from the earliest bot tier4 time, 68 s, to run end):
 - 191 one-second samples: mean **42 fps**, max 61, min 14.
 - 44 of 191 seconds are Studio's own 15 fps background throttle (missed activations - a Studio
   artifact, not game render cost). The 147 unthrottled seconds: mean **50 fps**, max 61, one dip 19.
-- **SC-004 Studio half: met** - the Tier-4 window averages 42 fps including the throttle dips, and
+- **SC-004 Studio half: withdrawn** (AppleScript focus loop, forbidden by AGENTS.md) - the Tier-4 window averaged 42 fps including the throttle dips, and
   every unthrottled second is >= 30 except one 19 fps bucket. The phone half stays with the owner
   (publish checklist).
 
