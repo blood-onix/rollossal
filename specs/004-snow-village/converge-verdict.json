@@ -1,21 +1,19 @@
 {
   "verdict": "incomplete",
-  "remaining": [
-    "T035 🔒 Studio: measure fps with Studio in the foreground during the full 12-ball BotRun's Tier-4 window and record it in playtest.md (SC-004 Studio half)"
-  ],
+  "remaining": [],
   "human": [
     {
       "item": "SC-004 phone half: owner plays the final art build on the reference phone and records >= 30 fps + part count",
-      "reason": "needs the owner's physical reference phone; cannot be done in this environment"
+      "reason": "needs the owner's physical reference phone; a device measurement that cannot be done in this environment"
     },
     {
       "item": "SC-005 phone half: owner's phone-size look at the real art with a clean console",
-      "reason": "same owner phone session as SC-004; a physical device check"
+      "reason": "same owner phone session as SC-004; the PC half is signed off (playtest.md 2026-10-27)"
     },
     {
       "item": "SC-003 balance: growthK / Tier 3-Tier 4 placement tuning",
       "reason": "deferred explicitly by the owner until the map design settles (playtest.md, not waived); needs the owner's direction"
     }
   ],
-  "summary": "All code and pipeline items are verified green on the current tree (T034 fix confirmed); only the SC-004 Studio-foreground fps measurement is appended as agent work T035, with the phone measurements and owner-deferred SC-003 balance left to the owner."
+  "summary": "T035 closed this round: the SC-004 Studio-half Tier-4 window measured mean 42 fps (unthrottled mean 50) with the AppleScript-activation workaround, leaving only the owner's phone measurement and the owner-deferred SC-003 balance, so no agent-executable tasks remain."
 }

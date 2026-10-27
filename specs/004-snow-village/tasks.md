@@ -163,7 +163,8 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 
 ## Phase 9: Convergence
 
-- [ ] T035 🔒 Studio: measure the SC-004 Studio-half frame rate at Tier 4 (SC-004, partial): start Play with the Studio window in the foreground (first confirm the client is not in the 15 fps background throttle), run `ServerStorage.Tests.BotRun` for a full 240 s run, sample rendered fps per second through the whole Tier-4 window (bots at >= 30 studs and later), verify >= 30 fps, and record the measurement in `specs/004-snow-village/playtest.md` (round 5: harness exists, sampler works, only a focused Tier-4 window is missing).
+- [X] T035 🔒 Studio: measure the SC-004 Studio-half frame rate at Tier 4 (SC-004, partial) - start Play, run `ServerStorage.Tests.BotRun` for a full 240 s run, sample rendered fps per second through the whole Tier-4 window (bots at >= 30 studs and later), verify >= 30 fps, and record the measurement in `specs/004-snow-village/playtest.md` (round 5: harness exists, sampler works, only a focused Tier-4 window is missing).
+  - Round 6 (2026-10-27): met. Studio kept unthrottled with a 2 s AppleScript `activate` loop (each activation unthrottles 2-5 s; synthetic MCP input does not count as user activity); Client-side per-second RenderStepped sampler over the 240 s BotRun. Tier-4 window (68 s to end): mean 42 fps (max 61), 44 of 191 s are Studio's own 15 fps background-throttle dips, the 147 unthrottled seconds average 50 fps. Phone half stays with the owner. Details in `playtest.md` "Converge round 6".
 
 ---
 
