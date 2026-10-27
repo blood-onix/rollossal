@@ -12,7 +12,7 @@ local Assets = {
 		bell = "rbxasset://sounds/bass.wav",
 		-- The looping winter music. "" means the owner has not picked a track yet (plan F-12): no engine-bundled
 		-- file is music, so nothing plays rather than a placeholder that would be annoying on a loop.
-		music = "",
+		music = "rbxassetid://80565841497538",
 	},
 	-- Content id of the shared palette texture, "" until imported.
 	palette = "rbxassetid://95185035371248",

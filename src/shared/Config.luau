@@ -80,7 +80,7 @@ local Config = {
 	minUtilityTouchTarget = 64,
 	noticeSeconds = 2,
 	Settings = {
-		musicVolume = { default = 0.8, min = 0, max = 1 },
+		musicVolume = { default = 0.4, min = 0, max = 1 },
 		effectsVolume = { default = 0.8, min = 0, max = 1 },
 		cameraSensitivity = { default = 1.0, min = 0.5, max = 2.0 },
 		reduceMotionDefault = false,

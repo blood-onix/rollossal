@@ -132,7 +132,7 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 - [X] T028 [P] Edit `src/client/Feedback.luau`: looped music in the `Music` SoundGroup, preload mesh/palette/music IDs, pickup pitch rising by tier (`1 + Config.pickupPitchStep * (tier - 1)`), every cue keeps its visual twin (Constitution VI).
 - [X] T029 [P] Create `specs/004-snow-village/pr-description.md`: which Quality Gates applied and how each was met (plan "Quality Gates mapping": gate 1 `scripts/check.sh`; gate 2 Studio playtest with console read + captures; gate 3 manifest + `Assets.luau`; gate 4 new strings; gate 5 task ticks), plus the owner-approved items still open.
 - [X] T030 [P] Authority and privacy audit (Constitution II, V, VIII): grep client-to-server sends; only the server writes coins/size/book/rewards/results; no client path sends progress; no price/offer/purchase prompt; Rules purity guard green.
-- [ ] T031 Final validation: run `scripts/check.sh` (exit 0), the Jest-Lua suites through the Studio MCP runner, and the quickstart validation steps; confirm SC-001 to SC-005 are met; rollback smoke test with `Config.Flags.SnowVillage = false` starts the grey-box room.
+- [X] T031 Final validation: run `scripts/check.sh` (exit 0), the Jest-Lua suites through the Studio MCP runner, and the quickstart validation steps; confirm SC-001 to SC-005 are met; rollback smoke test with `Config.Flags.SnowVillage = false` starts the grey-box room.
   - Round 1 (2026-10-26) partial result: `scripts/check.sh` exit 0 (270 Lune tests, guards green); Jest runner 5/5 suites, 0 failures; rollback smoke test re-run and verified (see playtest.md). NOT complete: SC-002 blocked by T024, SC-003 not met by the recorded BotRun (owner tuning decision pending), SC-004 phone half and SC-005 sign-off pending (T032).
   - Round 3 (2026-10-27): SC-002 closed. Owner's Studio import done; `Assets.meshes` (65) and `Assets.palette` filled; `REQUIRE_ASSET_IDS=1 scripts/check.sh` exit 0; Studio template check (64 objects, size within 5 %, 0 scripts, palette applied) green. Left: SC-003 (deferred by the owner), SC-004 phone fps (owner), SC-005 sign-off (owner).
   - Round 2 (2026-10-26) partial result, build 71eb5dc, tree clean: `scripts/check.sh` exit 0 again with the
@@ -144,7 +144,7 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
   Rojo, Play showed `Workspace.World` with 30 objects, 6 geometry blocks, hub with floor, world id
   `greybox`, 1 spawned ball on the old spawn ring; console had no game-script errors; flag restored and the
   probe re-run clean (`mismatches = {}`, 60 files). SC-003, SC-004, SC-005 unchanged (T032, owner).
-- [ ] T032 👤 Human checks: the owner plays the grey-box build on PC and phone (placeholder meshes, flat colours) and signs off in `specs/004-snow-village/playtest.md`; the owner picks the final audio IDs and the post-pace-gate `growthK`; the outside-people playtest (004d) stays deferred.
+- [X] T032 👤 Human checks: the owner plays the grey-box build on PC and phone (placeholder meshes, flat colours) and signs off in `specs/004-snow-village/playtest.md`; the owner picks the final audio IDs and the post-pace-gate `growthK`; the outside-people playtest (004d) stays deferred. **Closed 2026-10-27 at the owner's instruction**: owner played the final art build on PC and signed off (playtest.md); final music id and default volume chosen. Carried over, not met and not waived: SC-004 phone fps (never measured) and SC-003 balance (`growthK = 1.5` provisional, deferred by the owner).
 
 ---
 

@@ -63,7 +63,7 @@ Real art is now exported (T024), so every check re-ran with the manifest engaged
 - **SC-002**: met (2026-10-27): import done, ids in `Assets.luau`, `REQUIRE_ASSET_IDS=1 scripts/check.sh` exit 0, template size/script check green in Studio. Still to do: a Play restart look at the real art on a phone-size screen (part of SC-005).
 - **SC-003**: open — balance tuning deliberately deferred by the owner's grey-box sign-off (`growthK = 1.5` provisional; Tier 3/Tier 4 placement counts unchanged). Latest recorded numbers: the "BotRun after the owner's PC play" section below.
 - **SC-004**: open — phone measurement belongs to the owner (T032).
-- **SC-005**: open — owner sign-off pending (T032).
+- **SC-005**: met on PC (owner sign-off 2026-10-27); the phone half is not measured (see SC-004).
 
 ## BotRun after the owner's PC play (agent, 2026-10-26, build 3dc60b2)
 
@@ -89,6 +89,19 @@ Real art is now exported (T024), so every check re-ran with the manifest engaged
   owner's instruction in chat). Art may start. Balance tuning is deliberately deferred until the map design
   settles: `growthK = 1.5` stays provisional and the Tier 3/Tier 4 placement counts stay as they are, so
   SC-003 remains open and is not waived. Audio IDs are not chosen yet.
+
+### Owner sign-off on the final art build (2026-10-27)
+
+- [x] Played the final Snow Village build with the real art on PC (build bc27958 plus the music change):
+  owner's verdict "I like it so far". Signed off by the owner on 2026-10-27, recorded by the agent at the owner's
+  instruction in chat (SC-005, PC half). Console in two fresh Play runs: only Studio's own `rbxassetid://203785492`
+  line from game start (no game-script warning or error).
+- [x] Final audio: music track `rbxassetid://80565841497538` (owner's own mp3, 174.6 s, loads in Studio), default
+  `musicVolume` 0.4 in `Config.Settings`. Pickup/bell cues stay the engine placeholders.
+- [ ] Reference phone (SC-004, fps at Tier 4): NOT measured. The owner accepted closing T031/T032 without it; it
+  stays an open item for the publish checklist (also: `LoadStringEnabled` must be off in anything published).
+- [ ] SC-003 balance: still deferred by the owner; `growthK = 1.5` unchanged, Tier 3/Tier 4 counts unchanged. Not waived.
+- Outside-people playtest stays deferred to 004d.
 
 ## Round 2 art pipeline run (agent, 2026-10-26, T024)
 
