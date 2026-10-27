@@ -119,6 +119,19 @@ The owner's "Art may start" unblocked T024; the art was modelled and exported th
   snowmen, fences, crumbs); chunky cartoonish look with the exaggerated pieces doing the exaggeration.
   Owner eyes-on with the finished meshes is still part of T032's phone/PC pass.
 
+## Converge round 4 (agent, 2026-10-27, build bce0a6d, tree clean)
+
+A fresh 12-ball BotRun with the real art (`Assets.meshes` filled, Studio frontmost at Play start, Rojo probe
+`mismatches = {}`, 60 files). Recorded before T034 exists, as the SC-004 evidence pass.
+
+| Check | Result |
+| --- | --- |
+| Parts at Tier 4 (SC-004 server half) | 1,701 including 12 balls at every sample (60 to 241 s): inside the 2,000 budget. |
+| SC-003 (BotRun) | `everyTierKeptShare` false again: T2 0.119 at 60 s, T3 0.118 at 120 s, T4 0.108 at 180 s and 0.081 at 240 s. Same shape as the two earlier runs; owners' SC-003 deferral unchanged. |
+| Bots | 5 of 12 reached Tier 4 (69 to 117 s, final diameters 42.7 to 81.3); first pickup 0.03 to 0.4 s; Tier 2 at 10 to 28 s; 1,522 pickups. |
+| Console | Game-script lines: three `Displacement violation` bot lines (bots race past the speed ceiling; known BotRun artefact) and `ContentId rbxassetid://80565841497538 failed due to: Asset type does not match requested type`. Traced in-Play: the WinterMusic `Sound` itself loads and plays fine (`IsLoaded` true, `TimeLength` 174.55 s), the failure comes from the bare-string `PreloadAsync` of `Assets.sounds.music` in `Feedback.preloadSounds`; appended as T034. The `rbxassetid://203785492` line is Studio's own (id not in the repo). |
+| SC-004 fps in Studio | Not measurable this session: Studio's render loop idles at exactly 15 fps whenever the window is in the background and the owner was working in other apps (Brave/Telegram) during the 70 to 150 s Tier-4 window; a per-second RenderStepped sampler recorded 60 fps for the first 37 focused seconds at Tier 1-2 and no unthrottled window at Tier 4. Needs a session with Studio kept in the foreground for the Tier-4 phase (measurement harness is in place). |
+
 ## Phone-size UI captures (agent, 2026-10-27, T033)
 
 Method: AGENTS.md clone-into-exact-size-frame. A `CaptureHarness` ScreenGui on the Client holds a full-viewport

@@ -1,15 +1,21 @@
 {
   "verdict": "incomplete",
-  "remaining": [],
+  "remaining": [
+    "T034 Stop the bare-string PreloadAsync of Assets.sounds.music in Feedback.preloadSounds (ContentId mismatch warning on every start; track already preloads as an instance)"
+  ],
   "human": [
     {
-      "item": "T031 Final validation residue: owner Studio 3D-Importer import to fill Assets.meshes/palette (then REQUIRE_ASSET_IDS=1 scripts/check.sh for SC-002), owner reference-phone fps/part measurement (SC-004), owner sign-off (SC-005); SC-003 balance tuning deferred by the owner until the map design settles",
-      "reason": "Needs the owner's 3D Importer GUI session, physical reference phone and sign-off; agent-verifiable halves re-verified this round (check.sh exit 0, 270 Lune tests, guards green) and recorded in tasks.md/playtest.md"
+      "item": "T031/T032 SC-003 balance tuning (Tier 3/Tier 4 pool counts and provisional growthK = 1.5)",
+      "reason": "Owner deliberately deferred until the map design settles; round-4 BotRun confirms everyTierKeptShare false again (T4 0.081 at 240 s), so it stays an owner policy decision, not agent work"
     },
     {
-      "item": "T032 👤 Owner plays the build on PC and reference phone, picks the final audio IDs and the post-pace-gate growthK, signs off playtest.md; outside-people playtest deferred to 004d",
-      "reason": "Requires physical device play and owner-only approvals (audio IDs, growthK balance) an agent cannot make in this environment"
+      "item": "T031/T032 SC-004(b) reference-phone fps at Tier 4 and the related SC-005 phone half",
+      "reason": "Requires the owner's physical reference phone"
+    },
+    {
+      "item": "T031 SC-004(a) Studio fps at Tier 4 (parts 1701 <= 2000 already met; RenderStepped sampler is installed, first 37 focused seconds measured 60 fps)",
+      "reason": "Needs Roblox Studio kept in the foreground during the Tier-4 window; Studio idles at 15 fps when unfocused and the owner was working in other apps, so a non-interactive session cannot hold desktop focus without pulling it from the person"
     }
   ],
-  "summary": "Round 3 of 8: T033's phone-size UI captures are done and recorded (14 captures, TextFits/glyph checks clean), SC-001 re-verified green on the unchanged code tree, no new code gaps were found, so no convergence tasks were appended and the only remaining work is the owner-side residue of T031 and T032."
+  "summary": "Round 4 of 8: SC-001 and SC-002 re-verified green on build bce0a6d, a fresh real-art 12-ball BotRun met the part budget (1,701 of 2,000), one new small finding (music bare-id preload warning, appended as T034) and the remaining work is owner-side (SC-003 balance, phone fps, focused-Studio fps)."
 }

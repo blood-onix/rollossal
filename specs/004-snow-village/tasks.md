@@ -154,6 +154,12 @@ Roblox project, Rojo tree as in plan.md "Project Structure": `src/shared` (Repli
 
 ---
 
+## Phase 8: Convergence
+
+- [ ] T034 Edit `src/client/Feedback.luau` (`preloadSounds`): stop preloading the bare `Assets.sounds.music` string id — a raw id request of the owner's Audio asset fetches `AssetFetchStatus.Failure` and logs `ContentId rbxassetid://80565841497538 failed due to: Asset type does not match requested type` on every Play start (Studio MCP console, round 4); the Music track is already preloaded as a `Sound` instance, so exclude it from the string-id list (or preload instance ids only for it) and re-run `scripts/check.sh` (SC-005 zero game-script warnings, preload still guaranteed). Keep pickup effects preload behavior unchanged.
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
