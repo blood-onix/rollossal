@@ -53,9 +53,8 @@ local function standIn(def: ObjectDef): Part
 	return part
 end
 
--- The imported mesh scaled so its longest side is ObjectDef.size, or nil with a one-time warning.
-local function meshPart(def: ObjectDef): MeshPart?
-	local assetKey = def.assetKey
+-- The imported mesh scaled so its longest side is `longestSide`, or nil with a one-time warning.
+function ObjectVisual.buildMesh(assetKey: string?, label: string, longestSide: number): MeshPart?
 	local contentId = if assetKey then Assets.meshes[assetKey] else nil
 	if contentId == nil or contentId == "" then
 		return nil
@@ -64,13 +63,13 @@ local function meshPart(def: ObjectDef): MeshPart?
 		return AssetService:CreateMeshPartAsync(contentId :: any)
 	end)
 	if not ok then
-		warnOnce(def.id, tostring(result))
+		warnOnce(label, tostring(result))
 		return nil
 	end
 	local mesh = result :: MeshPart
 	local longest = math.max(mesh.Size.X, mesh.Size.Y, mesh.Size.Z)
-	if longest > 0 and math.abs(longest - def.size) > def.size * SIZE_TOLERANCE then
-		mesh.Size = mesh.Size * (def.size / longest)
+	if longest > 0 and math.abs(longest - longestSide) > longestSide * SIZE_TOLERANCE then
+		mesh.Size = mesh.Size * (longestSide / longest)
 	end
 	if Assets.palette ~= "" then
 		mesh.TextureID = Assets.palette
@@ -80,7 +79,7 @@ end
 
 -- A fresh, unparented template. May yield when a mesh id is set; callers cache the result per object id.
 function ObjectVisual.build(def: ObjectDef): BasePart
-	return meshPart(def) or standIn(def)
+	return ObjectVisual.buildMesh(def.assetKey, def.id, def.size) or standIn(def)
 end
 
 return ObjectVisual

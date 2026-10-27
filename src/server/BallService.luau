@@ -373,6 +373,7 @@ function BallService.step(now: number, dt: number)
 		if speed > Config.maxServerBallSpeed then
 			local clamped = horizontal(velocity).Unit * Config.maxServerBallSpeed
 			part.AssemblyLinearVelocity = Vector3.new(clamped.X, velocity.Y, clamped.Z)
+			session.lastValidPosition = part.Position
 			recordViolation(session, "Speed", speed, Config.maxServerBallSpeed, now)
 		elseif stepSpeed > displacementLimit then
 			part.Position = session.lastValidPosition

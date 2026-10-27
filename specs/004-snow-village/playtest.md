@@ -200,3 +200,16 @@ book_p3_640x360, book_p4_640x360, book_p5_640x360, book_p1_844x390, book_p1_1280
 glyphs_icons_fredoka_gotham_1280x720, results_640x360, results_844x390, results_1280x720 (all `.jpg`).
 The first `book_p1_640x360` attempt is not stored: its backdrop was missing, so the live panel showed through.
 It was re-captured after the backdrop fix.
+
+## Review round 1 (2026-10-27): hub mesh and bot run
+
+- Hub (F1): Play in Studio shows `Workspace.World.Hub` with `Floor`, `StartPad` and `HubMesh` (MeshPart, anchored,
+  centred on the hub at (-460, 0), bottom at y 0, size 12 x 7.92 x 12.75). Console: only Studio's own
+  `rbxassetid://203785492` lines and the DataStore/ProfileStore notices.
+- Open for the owner: `StartPad` is at `hub.center + hub.spawn` (the same centre as the carousel plinth). Not
+  checked by eye; `hub.spawn` is unchanged pending the owner's decision (see `questions.json`).
+- BotRun 240 s (F6, F3 data): `everyTierKeptShare` false. Available share at 60 s T2 0.116, T4 1.0; at 240 s T2 1.0,
+  T3 0.874, T4 0.121, T5 0.75 (1,702 parts). Displacement violations: 2 (`user 7967226345` 247.4 > 224, bot
+  `700007` 338.1 > 224). Speed violations: 2, both for `user 7967226345` (79.7 and 56.5 > 56). The previous 12-bot
+  runs logged 3 to 4 displacement lines, so the `BallService` lastValidPosition change reduces the count but does
+  not remove it; the remaining bot line is the known BotRun speed artefact.

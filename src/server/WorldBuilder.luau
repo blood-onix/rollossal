@@ -27,6 +27,8 @@ local PAD_THICKNESS = 0.2
 local ATMOSPHERE_NAME = "WorldAtmosphere"
 local DEFAULT_HUB_FLOOR = { 110, 110, 110 }
 local DEFAULT_HUB_PAD = { 150, 150, 150 }
+-- Authored footprint of art/export/hub.fbx in studs (the hub has no ObjectDef size rule).
+local HUB_LONGEST_SIDE = 12.75
 
 local WorldBuilder = {}
 
@@ -218,11 +220,23 @@ function WorldBuilder.start(world: WorldDef, placements: { Layout.Placement }): 
 			pending -= 1
 		end)
 	end
+	local hubMesh: MeshPart? = nil
+	pending += 1
+	task.spawn(function()
+		hubMesh = ObjectVisual.buildMesh(world.hub.assetKey, "hub", HUB_LONGEST_SIDE)
+		pending -= 1
+	end)
 	while pending > 0 do
 		task.wait()
 	end
 	if failure ~= nil then
 		error(failure)
+	end
+	if hubMesh then
+		hubMesh.Name = "HubMesh"
+		hubMesh.Anchored = true
+		hubMesh.CFrame = CFrame.new(world.hub.center.x, hubMesh.Size.Y / 2, world.hub.center.z)
+		hubMesh.Parent = hub
 	end
 
 	local objects: { BuiltObject } = {}

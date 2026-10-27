@@ -2,6 +2,8 @@
 -- Content validation for src/shared/Content/Worlds/SnowVillage.luau (spec FR-004, data-model.md). The ranges
 -- below are written out by hand from the spec and the GDD, not read from the data under test.
 
+local fs = require("@lune/fs")
+
 local harness = require("./harness")
 local Assets = require("../../src/shared/Assets")
 local Config = require("../../src/shared/Config")
@@ -138,6 +140,20 @@ test("SnowVillage: every asset key, the hub key and the music resolve in Assets"
 	used[hubKey] = true
 	for key in Assets.meshes do
 		expect.truthy(used[key])
+	end
+end)
+
+test("SnowVillage: every audio key the client plays exists in Assets.sounds", function()
+	local sounds = Assets.sounds :: { [string]: string }
+	for _, key in { "pickup", "tierUnlock", "bump", "bell", "music" } do
+		expect.truthy(type(sounds[key]) == "string", `sound {key} missing`)
+	end
+	for _, key in { "pickup", "tierUnlock", "bump", "bell" } do
+		expect.truthy(sounds[key] ~= "", `sound {key} is empty`)
+	end
+	local feedback = fs.readFile("src/client/Feedback.luau")
+	for key in string.gmatch(feedback, "Assets%.sounds%.(%w+)") do
+		expect.truthy(sounds[key] ~= nil, `Feedback plays Assets.sounds.{key}, not in Assets.luau`)
 	end
 end)
 

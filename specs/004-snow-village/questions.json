@@ -1,0 +1,20 @@
+{
+  "source": "clarify",
+  "questions": [
+    {
+      "id": "SC-003-deferral",
+      "question": "SC-003 (every tier stays available for at least 20% of the run) is not met in the 12-bot run: Tier 2 is at 0.08 at 60 s and Tier 4 at 0.05 at 240 s. Do you accept deferring SC-003 and keeping it open in this PR, or should the world data be tuned before merge?",
+      "context": "specs/004-snow-village/playtest.md (BotRun sections); specs/004-snow-village/pr-description.md open item 2. No requirement has been changed."
+    },
+    {
+      "id": "SC-003-levers",
+      "question": "If the data is to be tuned, which levers should change: growthK, the Tier 3 and Tier 4 placement counts, or both?",
+      "context": "src/shared/Content/Worlds/SnowVillage.luau sets growthK = 1.5 (a provisional override). growthK interacts with the Tier 2 in 60 s rule: at 0.6 the pace model needs 96 s for Tier 2, so that rule cannot hold at that value."
+    },
+    {
+      "id": "hub-spawn-on-plinth",
+      "question": "Should hub.spawn stay at (0, 0) relative to the hub centre? That puts the 10 x 10 StartPad on the centre of the carousel mesh, whose plinth is at the same spot. Keep the spawn, or move it to a clear point in the hub?",
+      "context": "src/shared/Content/Worlds/SnowVillage.luau hub entry (center -460, 0; spawn 0, 0); src/server/WorldBuilder.luau places StartPad at hub.center + hub.spawn. Found in the Studio check for review finding F1; not verified visually."
+    }
+  ]
+}

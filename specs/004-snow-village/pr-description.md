@@ -34,8 +34,9 @@ and what is still open. It is rewritten when the branch is ready.
 2. **SC-003 is not met yet**: in the 12-bot run Tier 3 fell to 11 % and Tier 4 to 7 % available. Tuning is
    data only (more Tier 3 and 4 placements, or a lower `growthK`); see `playtest.md`.
 3. Pin the `mcp-for-blender` release in `.vscode/mcp.json`, `opencode.json` and `art/README.md` (T002).
-4. The 3D Importer upload session, the final music track (none ships: `Assets.sounds.music` is empty) and the
-   primitive-geometry interpretation of Constitution XI (ground, kerbs, ramps are plain parts, not meshes).
+4. The final music track is in (`Assets.sounds.music`, the owner's own mp3). The pickup, tier unlock, bump and bell
+   cues are still engine placeholders: the owner must accept that in place of the final audio named in US3. Also
+   the primitive-geometry interpretation of Constitution XI (ground, kerbs, ramps are plain parts, not meshes).
 5. `LoadStringEnabled` is on in the dev place for Jest and **must be off in anything published**.
 6. Streaming radii and integrity mode could not be read back from a script, so they are unverified.
 

@@ -10,6 +10,7 @@ local serde = require("@lune/serde")
 
 local harness = require("./harness")
 local ArtBudgets = require("../../scripts/art-budgets")
+local Fbx = require("../../scripts/fbx-geometry")
 local Assets = require("../../src/shared/Assets")
 local Config = require("../../src/shared/Config")
 local SnowVillage = require("../../src/shared/Content/Worlds/SnowVillage")
@@ -97,44 +98,44 @@ test("Art: Assets.meshes has one key per object asset key plus the hub, and no o
 	expect.equal(SnowVillage.hub.assetKey, "hub")
 end)
 
-test(
-	"Art: the manifest has one entry per object plus the hub, inside the triangle budgets",
-	function()
-		if not hasManifest then
-			expect.falsy(requireIds)
-			return
-		end
-		local manifest = readManifest()
-		local byId: { [string]: ManifestEntry } = {}
-		for _, entry in manifest.meshes do
-			expect.falsy(byId[entry.id])
-			byId[entry.id] = entry
-		end
-		expect.equal(#manifest.meshes, #SnowVillage.objects + 1)
-		for _, object in SnowVillage.objects do
-			local entry = byId[object.id]
-			expect.truthy(entry ~= nil)
-			expect.equal(entry.tier, object.tier)
-			expect.truthy(entry.triangles <= Config.Budgets.meshTriangles[object.tier])
-		end
-		local hub = byId.hub
-		expect.truthy(hub ~= nil)
-		expect.truthy(hub.triangles <= Config.Budgets.meshTriangles[#Config.Budgets.meshTriangles])
-	end
-)
-
-test("Art: every manifest entry matches its exported file in size and SHA-256", function()
+test("Art: the manifest has one entry per object plus the hub, with the object tiers", function()
 	if not hasManifest then
+		expect.falsy(requireIds)
 		return
 	end
-	for _, entry in readManifest().meshes do
-		local path = `art/export/{entry.id}.fbx`
-		expect.truthy(fs.isFile(path))
-		local data = fs.readFile(path)
-		expect.equal(#data, entry.bytes, `{entry.id} bytes`)
-		expect.equal(serde.hash("sha256", data), entry.sha256, `{entry.id} sha256`)
+	local manifest = readManifest()
+	local byId: { [string]: ManifestEntry } = {}
+	for _, entry in manifest.meshes do
+		expect.falsy(byId[entry.id])
+		byId[entry.id] = entry
 	end
+	expect.equal(#manifest.meshes, #SnowVillage.objects + 1)
+	for _, object in SnowVillage.objects do
+		local entry = byId[object.id]
+		expect.truthy(entry ~= nil)
+		expect.equal(entry.tier, object.tier)
+	end
+	expect.truthy(byId.hub ~= nil)
 end)
+
+test(
+	"Art: every exported FBX matches its manifest entry and its triangle budget, counted from the file",
+	function()
+		if not hasManifest then
+			return
+		end
+		for _, entry in readManifest().meshes do
+			local path = `art/export/{entry.id}.fbx`
+			expect.truthy(fs.isFile(path))
+			local data = fs.readFile(path)
+			expect.equal(#data, entry.bytes, `{entry.id} bytes`)
+			expect.equal(serde.hash("sha256", data), entry.sha256, `{entry.id} sha256`)
+			local geometry = Fbx.read(data)
+			expect.equal(geometry.triangles, entry.triangles, `{entry.id} triangles`)
+			expect.truthy(geometry.triangles <= Config.Budgets.meshTriangles[entry.tier])
+		end
+	end
+)
 
 test("Art: with REQUIRE_ASSET_IDS=1 every mesh and the palette have an imported id", function()
 	if not requireIds then
