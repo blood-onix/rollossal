@@ -250,3 +250,9 @@ Task T016: Update Content/GreyBoxRoom.luau types
 ## Phase 16: Convergence
 
 - [ ] T060 [Owner] Decide whether `SnowVillage` declares `gate` and `shortcut` keep-out areas (its layout has no ring gates or small-only shortcut corridors): add those zones with checks in `tests/unit/SnowVillage.test.luau`, or drop the two kinds from FR-010 in `spec.md`; the owner decides, the agent does not edit spec text per FR-010 (partial)
+
+## Phase 17: Convergence
+
+- [ ] T061 Replace the dynamic `Enum.CollisionFidelity[Tiers.collisionClass(tier)]` index in `buildMesh` (`src/shared/ObjectVisual.luau` line 100) with an explicit `Box`/`Hull` branch so luau-lsp strict analysis passes, then re-run `scripts/check.sh` until it exits 0 per SC-001 (partial)
+- [ ] T062 Add a repeatable negative test for `art/scripts/export_all.py` failure paths (UV crossing a cell or strip edge, a second material, triangles over `Config.Budgets.meshTriangles[tier]`), each exiting non-zero with a descriptive error, run through the Blender MCP per US2/AC2 and T020 (partial)
+- [ ] T063 [Studio] Check that the `Icons.retry` glyph used by the returning-page label (`src/shared/Content/Icons.luau` line 13, drawn in `src/client/BookUi.luau`) renders in both `FredokaOne` and `GothamMedium` in the 640 × 360 capture per FR-006 and AGENTS.md Glyphs; use a text-only label if either font shows it blank or as a box (partial)

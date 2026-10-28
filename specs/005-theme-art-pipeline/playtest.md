@@ -64,3 +64,11 @@ Quality gates: not met yet. Open: T037 overlay/hero identity, T039 collision cla
 - T041: not run (needs Studio in front; out of scope for the agent this round).
 - Gap for the next round: the client/server diameter mismatch and the oscillation are a gameplay observation to investigate (not diagnosed here).
 - Quality gates: not met. Open: T040 Book proof, T041 fps and capture.
+
+## Round 8, 2026-10-28 (commit cf4a371 plus uncommitted working tree)
+
+- Studio: one instance (Rollossal, placeId 112788738500883, id 7a58188e). Sync probe on Edit: 69 checked, `mismatches = {}`.
+- T040 (Book proof): not passed. Play on winter: `activeThemeId` = `winter`, 6 `winter_lights` instances in the world, ball at `Diameter` 2. The Book page needs `winter_lights` absorbed, which needs `size` 2.2 ≤ 0.4 × diameter, so diameter ≥ 5.5. With `growthK` 0.6 that is about 260 units of tier-1 volume (`size³`), far beyond one 240 s run with the client driver used in rounds 5 to 7. No Book page was read and the city switch was not run for this check. Play was stopped.
+- T041: not run. Needs Studio in front for an unthrottled window (owner); out of scope for the agent.
+- Open for the next round: T040 needs either a longer run with an owner-approved test diameter, or a test-only way to grow the ball to 5.5 that the owner approves.
+- Quality gates: not met. Open: T040 Book proof, T041 fps and 640×360 capture.
