@@ -219,3 +219,8 @@ Task T016: Update Content/GreyBoxRoom.luau types
 ## Phase 10: Convergence
 
 - [ ] T047 Write `tests/studio/ThemeSwitch.spec.luau` (Jest-Lua) asserting that `Worlds.forTheme("winter")` and `Worlds.forTheme("city")` change palette, lighting, weather, music key, slot objects, overlay placements and hero variant while non-slot base placements stay identical, and that `WeatherController.isEmitting()` is false under `ReduceMotion` per plan: tests/studio ThemeSwitch.spec (missing)
+
+## Phase 11: Convergence
+
+- [ ] T048 Make `fidelity()` in `src/shared/ObjectVisual.luau` tolerate the locked `CollisionFidelity` write the same way `RenderFidelity` is tolerated (`pcall`), so `WorldBuilder` builds Snow Village without aborting; re-run Play and confirm no CollisionFidelity error, a `World` folder exists, and note in `specs/005-theme-art-pipeline/playtest.md` that the tier Box/Hull collision class is not settable at runtime per FR-004 (contradicts)
+- [ ] T049 Extend `tests/studio/ObjectTemplates.spec.luau` to assert, for every template in `Worlds.active.objects`, `RenderFidelity == Automatic`, `Transparency == 0`, and zero `SurfaceAppearance`/`Light` descendants (`PointLight`, `SpotLight`, `SurfaceLight`) per Constitution XI and T039 (missing)

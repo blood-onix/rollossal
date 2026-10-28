@@ -8,17 +8,15 @@
     "T040 Studio Book proof: winter page 1/1 with returning label after switching to city",
     "T041 Studio 640x360 capture and 60 s fps measurement with throttled seconds reported separately",
     "T042 Record Studio observations in specs/005-theme-art-pipeline/playtest.md",
-    "T047 Write tests/studio/ThemeSwitch.spec.luau per plan"
+    "T047 Finish tests/studio/ThemeSwitch.spec.luau: the ReduceMotion half is covered only by T038",
+    "T048 Tolerate the locked CollisionFidelity write in ObjectVisual.fidelity so the world builds",
+    "T049 Extend tests/studio/ObjectTemplates.spec.luau with render, transparency and no-light/no-surface assertions"
   ],
   "human": [
     {
       "item": "T045 Owner hand-off: upload atlases and 65 FBX, flip Assets.meshUv to atlas, delete Assets.palette",
       "reason": "Roblox asset uploads and the publish step need the owner's Roblox account and approval (Principle X: agents do not publish live)"
-    },
-    {
-      "item": "T046 Verify tasks.md format and commit it",
-      "reason": "The commit needs the owner's explicit go-ahead; the format check itself already passes"
     }
   ],
-  "summary": "Code, data, and Lune tests (335 passing) match the spec and plan, but the Studio proof is unrun, one plan-specified Studio spec is missing, and the owner hand-off is pending."
+  "summary": "Code, data and Lune tests match the spec, but the Studio proof is blocked by a runtime CollisionFidelity write that aborts the world build, ObjectTemplates.spec does not yet assert the Constitution XI rules, and the owner hand-off is pending."
 }
