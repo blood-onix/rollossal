@@ -20,7 +20,11 @@
     {
       "item": "T059 Confirm plan deviations D1 and D2 and record them in spec.md FR-001 to FR-003",
       "reason": "The plan asks the owner to confirm these design deviations before the owner-approved spec text changes; the agent does not edit spec text on its own"
+    },
+    {
+      "item": "T060 Decide whether SnowVillage declares gate and shortcut keep-out areas",
+      "reason": "Snow Village has no ring gates or small-only shortcut corridors to protect, so the owner must choose between adding those zones to the layout or amending FR-010 in spec.md; the agent does not edit spec text"
     }
   ],
-  "summary": "Code, 343 Lune tests, token and atlas checks pass and the placement, hero-variant, keep-out and returning-label rules are enforced, but the Studio Book proof (T040), its observation record (T042), the fps capture (T041), the owner hand-off items (T045, T054), and a new spec-deviation confirmation (T059, appended) remain open."
+  "summary": "Code, 343 passing Lune tests and the theme, pipeline and runtime rules are in place, but the Studio Book proof (T040), its playtest record (T042), the owner items (T041, T045, T054, T059, T060) remain, and one new owner task (T060) was appended for FR-010's undeclared gate and shortcut keep-outs."
 }

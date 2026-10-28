@@ -246,3 +246,7 @@ Task T016: Update Content/GreyBoxRoom.luau types
 ## Phase 15: Convergence
 
 - [ ] T059 [Owner] Confirm plan deviations D1 (slots, overlays, heroVariants and bookPage live on `WorldDef.themeBindings`, not `ThemeDef`) and D2 (`Worlds.forTheme(themeId)` takes no world argument), then record them in `spec.md` FR-001, FR-002 and FR-003 per plan "Spec deviations to confirm"; the owner decides, the agent does not edit spec text (contradicts)
+
+## Phase 16: Convergence
+
+- [ ] T060 [Owner] Decide whether `SnowVillage` declares `gate` and `shortcut` keep-out areas (its layout has no ring gates or small-only shortcut corridors): add those zones with checks in `tests/unit/SnowVillage.test.luau`, or drop the two kinds from FR-010 in `spec.md`; the owner decides, the agent does not edit spec text per FR-010 (partial)
