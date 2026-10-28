@@ -111,7 +111,7 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 **Purpose**: Confirm data-only switch, rules, performance, no new errors
 
 - [X] T036 [P] [Studio] Preflight (`scripts/studio-preflight.sh`); sync probe passes (`mismatches = {}`); start Play (`start_stop_play`); record `Lighting.ClockTime`, `Atmosphere`, `ParticleEmitter.Enabled`, `ThemeMusic` playing, 32 slot placements (winter ids); `get_console_output`: zero new errors/warnings
-- [ ] T037 [P] [Studio] Stop Play; edit `src/shared/Content/Worlds/SnowVillage.luau` `activeThemeId = "city"` only; wait for Rojo sync; re-run probe; start Play; confirm lighting changed to `13`, emitter `Enabled = false`, music stopped, placements = 5 city stand-ins with `role` colours, overlay `beach_towel`, `fountain` mesh at hero, ground `w-grass`/`w-kerb`/`w-sidewalk`; zero new errors
+- [X] T037 [P] [Studio] Stop Play; edit `src/shared/Content/Worlds/SnowVillage.luau` `activeThemeId = "city"` only; wait for Rojo sync; re-run probe; start Play; confirm lighting changed to `13`, emitter `Enabled = false`, music stopped, placements = 5 city stand-ins with `role` colours, overlay `beach_towel`, `fountain` mesh at hero, ground `w-grass`/`w-kerb`/`w-sidewalk`; zero new errors
 - [X] T038 [P] [Studio] Set `winter`; set `LocalPlayer` attribute `ReduceMotion = true`; confirm emitter `Enabled = false` + `:Clear()` within 1 frame; set false → restored; arithmetic check `Rate × Lifetime ≤ 40` (validates `src/client/WeatherController.luau`)
 - [ ] T039 [P] [Studio] Template rules check (`tests/studio/ObjectTemplates.spec`): each object `RenderFidelity == Automatic`, `CollisionFidelity` Box (T1-3) / Hull (T4-5), zero `SurfaceAppearance`/`Light` descendants, `Transparency == 0`
 - [ ] T040 [P] [Studio] Book proof (drive ball to absorb `winter_lights`): open Book → `winter` page 1/1; switch to `city`; Book still lists `winter` 1/1 with returning label, no timer, tier pages 100 % achievable (validates `src/client/BookUi.luau`, `src/shared/Rules/Book.luau`)
@@ -227,8 +227,12 @@ Task T016: Update Content/GreyBoxRoom.luau types
 
 ## Phase 12: Convergence
 
-- [ ] T050 Pass `CollisionFidelity` (`Box` for tiers 1-3, `Hull` for tiers 4-5) and `RenderFidelity = Automatic` as options to `AssetService:CreateMeshPartAsync` in `src/shared/ObjectVisual.luau`, and remove the silently failing post-create writes in `fidelity()` per FR-004 (partial)
-- [ ] T051 Assert `CollisionFidelity` is `Box` for tiers 1-3 and `Hull` for tiers 4-5 on every MeshPart template in `tests/studio/ObjectTemplates.spec.luau` per T039 and FR-004 (missing)
-- [ ] T052 Add a `w-sidewalk` ground block (`swatch = "w-sidewalk"`) to `src/shared/Content/Worlds/SnowVillage.luau` so the city ground shows `w-grass`, `w-kerb` and `w-sidewalk` per T037 (partial)
-- [ ] T053 Move the reduce-motion emitter rule out of `src/client/WeatherController.luau` into a pure function in `src/shared/Rules/Weather.luau` with a Lune test in `tests/unit/Weather.test.luau`, so emitter-off under `ReduceMotion` is checked without Studio per T047 (partial)
+- [X] T050 Pass `CollisionFidelity` (`Box` for tiers 1-3, `Hull` for tiers 4-5) and `RenderFidelity = Automatic` as options to `AssetService:CreateMeshPartAsync` in `src/shared/ObjectVisual.luau`, and remove the silently failing post-create writes in `fidelity()` per FR-004 (partial)
+- [X] T051 Assert `CollisionFidelity` is `Box` for tiers 1-3 and `Hull` for tiers 4-5 on every MeshPart template in `tests/studio/ObjectTemplates.spec.luau` per T039 and FR-004 (missing)
+- [X] T052 Add a `w-sidewalk` ground block (`swatch = "w-sidewalk"`) to `src/shared/Content/Worlds/SnowVillage.luau` so the city ground shows `w-grass`, `w-kerb` and `w-sidewalk` per T037 (partial)
+- [X] T053 Move the reduce-motion emitter rule out of `src/client/WeatherController.luau` into a pure function in `src/shared/Rules/Weather.luau` with a Lune test in `tests/unit/Weather.test.luau`, so emitter-off under `ReduceMotion` is checked without Studio per T047 (partial)
 - [ ] T054 [Owner] Supply a looping city music track and set `musicCity` in `src/shared/Assets.luau` (currently `""`, so Sunny City plays no music) per FR-005 and US1 acceptance 1 (missing); the owner uploads it, the agent does not publish
+
+## Phase 13: Convergence
+
+- [ ] T055 Make `tests/studio/ObjectTemplates.spec.luau` require a `MeshPart` template for every object whose `Assets.meshes` id is set and assert its render and collision fidelity there, so a silent stand-in fallback fails the spec per US2/AC3 (partial)

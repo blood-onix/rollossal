@@ -45,3 +45,12 @@ Changes this round: `ObjectVisual.fidelity` wraps both `RenderFidelity` and `Col
 - Pre-existing, not from this feature: `DataStoreService` `StudioAccessToApisNotAllowed` (profilestore, data not saved), `ContentId rbxassetid://203785492 failed`.
 
 Quality gates: not met yet. Open: T037 overlay/hero identity, T039 collision class, T040 Book proof, T041 fps and 640×360 capture (needs Studio in front).
+
+## Round 4, 2026-10-28 (working tree after f898c19)
+
+- Studio: one instance (Rollossal, placeId 112788738500883). Sync probe on Edit: 69 checked, `mismatches = {}`, before and after the city edit.
+- T050: `ObjectVisual.buildMesh` passes `RenderFidelity` and `CollisionFidelity` to `CreateMeshPartAsync`; no `fidelity()` post-create writes remain (grep).
+- T039 (Edit, `runner` on all 7 suites): 112 passed, 0 failed, including ObjectTemplates (5 tests) and ThemeSwitch (11). Limit: every template is a stand-in Part (no meshes imported), so the MeshPart-only `RenderFidelity` and collision Box/Hull assertions are vacuous until T045. T039 stays open for that reason.
+- T037 (city, data-only edit of `activeThemeId`, then reverted to `winter`): `ClockTime` 13; emitter `ThemeWeather` `Enabled = false`; `ThemeMusic` absent (`musicCity` empty); 32 slot stand-ins (ice_lolly 12, beach_ball 8, paddling_pool 6, ice_cream_truck 4, giant_duck 2) with distinct role colours; 6 `sv_ol_beach_towel_*` overlay parts; 3 `big_snowman` hero copies (fountain asset); ground `sv_ground` (111,191,74), kerb (154,149,142), `sv_sidewalk` (201,196,187). World has 0 scripts. Console: only pre-existing noise plus `ContentId rbxassetid://203785492` (the id appears only in spec notes, not game code).
+- T040 (Book proof): not passed. Driver loop (Client Heartbeat, nearest absorbable cube) left the ball at diameter 2 in ~90 s; the ball stalled on a porch lip about 1 stud above a ground gumdrop, so it never absorbed anything. Winter's page needs `winter_lights` (size 2.2, diameter ≥ 5.5). Still open.
+- T041 (fps, 640x360 capture): not run this round; needs Studio in front for an unthrottled window (owner to keep it there).
