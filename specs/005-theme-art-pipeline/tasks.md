@@ -51,7 +51,7 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 - [X] T013 [US1] Write `tests/unit/ThemeResolve.test.luau`: verify non-slot placements bit-identical across themes; slot share `≤ 0.15`; resolved object ids unique; `themeId` set; overlay clear of `keepOutAreas`
 - [X] T014 [US1] Update `src/shared/Worlds.luau`: at `require` time call `ThemeResolve.resolve` with `Worlds.activeThemeId`; expose `Worlds.resolved` (resolved def) and `Worlds.active` (base); `worlds.forTheme` thin wrapper for Studio specs
 - [X] T015 [US1] [P] Update `Content/Worlds/SnowVillage.luau`: declare `supportedThemes = {"winter","city"}`; `themeBindings["winter"]` with 5 slot kinds mapping to existing objects + `winter_lights` overlay + `big_snowman`; `themeBindings["city"]` with new stand-ins (`ice_lolly` T1 0.7, `beach_ball` T2 1.6, `paddling_pool` T3 6, `ice_cream_truck` T4 14, `giant_duck` T5 30) + `beach_towel` overlay; `heroVariant big_snowman → fountain`; `bookPage` for both; `keepOutAreas` (markers + 4 sightlines); `maxPlacements = 1700`; `activeThemeId = "winter"` (default)
-- [ ] T016 [US1] [P] Update `Content/GreyBoxRoom.luau` types (`ObjectDef.role`, `ThemeBinding.slots/overlays/heroVariants/objects/bookPage`); add `WorldDef.activeThemeId`, `supportedThemes`, `themeBindings`, `keepOutAreas`, `maxPlacements`
+- [X] T016 [US1] [P] Update `Content/GreyBoxRoom.luau` types (`ObjectDef.role`, `ThemeBinding.slots/overlays/heroVariants/objects/bookPage`); add `WorldDef.activeThemeId`, `supportedThemes`, `themeBindings`, `keepOutAreas`, `maxPlacements`
 
 ---
 
@@ -64,9 +64,9 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 - [X] T017 [US2] [P] Rewrite `art/scripts/palette.py`: stdlib-only (no `bpy`); read `tokens.json`; generate 6 PNGs (`city`, `winter`, `spring`, `autumn`, `toon`, `neon`) 1024×1024; gradient `factor(y) = 1.12 − 0.27·y/63`; 8 trim strips with procedural patterns (no words/logos); write `art/palette.json` (UV bounds for 64 cells + 8 strips) and `art/atlases/atlas.json` (sha256 of scanline buffer per theme)
 - [X] T018 [US2] [P] Write `tests/unit/Atlas.test.luau` (if T004 not done): verify PNG dimensions, `atlas.json` completeness, pixel hash matches regenerated buffer
 - [X] T019 [US2] [P] Create `art/scripts/build_shared.py` (new, constants): atlas geometry (`128×64` cells, 8 strips `1024×64`), inset `≥ 1 px` half-texel inside cell/strip boundary, split-normal export flag
-- [ ] T020 [US2] Update `art/scripts/export_all.py`: allow `has_custom_normals` / `mesh_smooth_type`; validate UV within one cell/strip per `palette.json`; single `Palette` material only; identity world matrix; origin at footprint centre-bottom; longest dimension `±5%` of declared `size`; triangle count `≤ Config.Budgets.meshTriangles[tier]` (`500/700/1500/3500/5000`); exit non-zero with descriptive error on failure (negative test: move UV across edge → fail; add second material → fail; exceed budget → fail)
-- [ ] T021 [US2] [P] Create `art/scripts/qa_grid.py` (new): render one prop across 6 atlases into `art/qa/theme_grid_*.png` for cross-theme readability check
-- [ ] T022 [US2] Update `docs/design/01-world-kit.md` / design docs as needed (Principle XI v2.0.0 already in constitution; no new approval needed)
+- [X] T020 [US2] Update `art/scripts/export_all.py`: allow `has_custom_normals` / `mesh_smooth_type`; validate UV within one cell/strip per `palette.json`; single `Palette` material only; identity world matrix; origin at footprint centre-bottom; longest dimension `±5%` of declared `size`; triangle count `≤ Config.Budgets.meshTriangles[tier]` (`500/700/1500/3500/5000`); exit non-zero with descriptive error on failure (negative test: move UV across edge → fail; add second material → fail; exceed budget → fail)
+- [X] T021 [US2] [P] Create `art/scripts/qa_grid.py` (new): render one prop across 6 atlases into `art/qa/theme_grid_*.png` for cross-theme readability check
+- [X] T022 [US2] Update `docs/design/01-world-kit.md` / design docs as needed (Principle XI v2.0.0 already in constitution; no new approval needed)
 
 ---
 
