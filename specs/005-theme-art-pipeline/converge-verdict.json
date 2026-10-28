@@ -1,7 +1,7 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T064 [Blender] Run art/scripts/test_export_negative.py and confirm the cell-edge UV, second-material and over-budget cases each exit non-zero with their named rule"
+    "T066 Declare at least one fixedPlacements entry on the winter or city overlay in src/shared/Content/Worlds/SnowVillage.luau, clear of keepOutAreas and within maxPlacements, and assert it in tests/unit/SnowVillage.test.luau per FR-010 (partial)"
   ],
   "human": [
     {
@@ -10,7 +10,7 @@
     },
     {
       "item": "T041 [Studio] 640x360 capture and 60 s unthrottled fps run",
-      "reason": "AGENTS.md forbids the agent from focusing Studio; the round 3 run was throttled to 15 fps in 59 of 60 seconds, and the required owner request to keep Studio in front cannot be made in this non-interactive session"
+      "reason": "AGENTS.md forbids the agent from focusing Studio; earlier runs were throttled to 15 fps in most seconds, and the owner must keep Studio in front, which this non-interactive session cannot arrange"
     },
     {
       "item": "T042 [Studio] Record observations in playtest.md and confirm the quality gates are met",
@@ -37,5 +37,5 @@
       "reason": "The R-07 flag is a deliberate deviation from the spec text, and spec text is owner-owned"
     }
   ],
-  "summary": "Round 9 appended Phase 18 (T064 negative export test, not yet run; T065 FR-004 fallback wording), and the feature stays incomplete because the Studio book, fps and capture checks, the owner hand-off, and the owner spec decisions remain open."
+  "summary": "Round 10 verified T064 passes through the Blender MCP (all three export negative cases exit non-zero with their rule), appended T066 for the empty overlay fixedPlacements, and the feature stays incomplete on that task plus eight owner or Studio items."
 }
