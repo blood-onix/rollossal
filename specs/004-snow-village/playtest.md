@@ -165,6 +165,50 @@ Console: no game-script errors; Studio's own DataStore warning (API access off),
 `rbxassetid://203785492` line (id not in the repo) and 4 `Displacement violation` bot lines (known
 BotRun artefact). No `rbxassetid://80565841497538` line - the T034 fix still holds.
 
+## Converge round 7 (agent, 2026-10-28, T035 rerun without window activation)
+
+Rojo probe clean on the key scripts (7 checked, no mismatches). BotRun 240 s, 12 bots, with a Client
+`RenderStepped` sampler (one bucket per second), no activation, no keep-awake.
+
+- **No unthrottled seconds.** 262 buckets, 261 at 14-16 fps (Studio's background throttle); only the first
+  second read 60. Studio was not in front for the whole run, so there is no Tier-4 fps number from this run.
+  It is not evidence for or against SC-004.
+- Server half, same as before: 1,702 parts including balls (budget 2,000); 6 of 12 bots reached Tier 4
+  (75 to 201 s, final diameters 32 to 79); 1,695 pickups; `everyTierKeptShare` false (T4 0.067 at 180 s,
+  0.121 at 240 s; T3 0.118 at 120 s). SC-003 stays with the owner's deferred balance tuning.
+- T035 stays open: needs one rerun with Studio kept in front for the ~4 minute run (AGENTS.md rule).
+- The round-6 numbers (mean 42 fps, 50 fps unthrottled, one 19 fps dip) stay on record, but they were
+  taken with the AppleScript activation loop, which is forbidden, so they are not used to close T035.
+
+### Round 7 rerun with Studio in front (2026-10-28, T035)
+
+Same setup (no activation, no keep-awake), owner kept Studio in front for the whole run.
+
+- 267 one-second samples, **0 throttled seconds** (none at 14 to 16 fps): mean **59.9 fps**, min 56, max 60.
+- Tier-4 window (first bot at Tier 4 at 74 s, to run end): 167 samples, mean **59.9 fps**, min **57**; no second under 30.
+- **SC-004 Studio half: met** (>= 30 fps at Tier 4 with 12 bots and 1,702 parts). The phone half stays with the owner
+  (publish checklist).
+- Run facts: 5 of 12 bots reached Tier 4 (74 to 131 s, final diameters 38 to 80), 1,463 pickups, 1,702 parts
+  including balls (budget 2,000). `everyTierKeptShare` false (T4 0.108 at 180 s, 0.135 at 240 s; T3 0.128 at
+  120 s): SC-003 stays with the owner's deferred balance tuning, not waived.
+- Console: no game-script lines. Studio's own DataStore warning, ProfileStore notice and three
+  `rbxassetid://203785492` lines (Studio's, id not in the repo); no `80565841497538` line.
+
+## Owner phone check and sign-off of the remaining human items (2026-10-28, T032)
+
+Recorded by the agent at the owner's instruction in chat.
+
+- **SC-004 phone half**: owner played on their phone with the owner-only FPS readout (`FpsReadout`,
+  `Config.Flags.DebugFps`). Readout: **avg 59 fps, lowest 22 fps**. The lowest is below the 30 fps target; it is the
+  single lowest one-second reading of the session, not a sustained figure, and the owner judged the play "quite
+  smooth" and accepted it. Phone model and the Tier-4 share of the session were not noted. Server half: 1,702 parts
+  (budget 2,000), see the round 7 rerun above (59.9 fps in Studio, min 57).
+- **SC-003 balance (`growthK`, Tier 3/Tier 4 placement)**: **skipped for now**, by the owner. It cannot be measured
+  properly without the proper map; `growthK = 1.5` and the Tier 3/Tier 4 counts stay as they are. Not met, not waived:
+  revisit when the final map exists.
+- The owner asked to close the remaining human items on the card, so T032 and the card go on to Review with the two
+  points above as known limits.
+
 ## Phone-size UI captures (agent, 2026-10-27, T033)
 
 Method: AGENTS.md clone-into-exact-size-frame. A `CaptureHarness` ScreenGui on the Client holds a full-viewport
