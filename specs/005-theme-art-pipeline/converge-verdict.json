@@ -1,0 +1,24 @@
+{
+  "verdict": "incomplete",
+  "remaining": [
+    "T036 Studio preflight, Play, and console check of the winter proof",
+    "T037 Studio data-only switch to city with zero code edits, then playtest checks",
+    "T038 Studio Reduce motion check: weather emitter off and cleared, restored when off",
+    "T039 Studio ObjectTemplates.spec run for render, collision, and transparency rules",
+    "T040 Studio Book proof: winter page 1/1 with returning label after switching to city",
+    "T041 Studio 640x360 capture and 60 s fps measurement with throttled seconds reported separately",
+    "T042 Record Studio observations in specs/005-theme-art-pipeline/playtest.md",
+    "T047 Write tests/studio/ThemeSwitch.spec.luau per plan"
+  ],
+  "human": [
+    {
+      "item": "T045 Owner hand-off: upload atlases and 65 FBX, flip Assets.meshUv to atlas, delete Assets.palette",
+      "reason": "Roblox asset uploads and the publish step need the owner's Roblox account and approval (Principle X: agents do not publish live)"
+    },
+    {
+      "item": "T046 Verify tasks.md format and commit it",
+      "reason": "The commit needs the owner's explicit go-ahead; the format check itself already passes"
+    }
+  ],
+  "summary": "Code, data, and Lune tests (335 passing) match the spec and plan, but the Studio proof is unrun, one plan-specified Studio spec is missing, and the owner hand-off is pending."
+}
