@@ -29,6 +29,11 @@ for _, object in SnowVillage.objects do
 	sizes[object.id] = object.size
 	tiers[object.id] = object.tier
 end
+-- 005: the zones name dressing-slot kinds; under the base (winter) look they stand for their mapped
+-- object, so the expander sees real sizes.
+for slotId, objectId in SnowVillage.themeBindings.winter.slots do
+	sizes[slotId] = sizes[objectId]
+end
 
 local placements = Layout.expand(SnowVillage.zones, sizes)
 for _, fixed in SnowVillage.fixedPlacements do
