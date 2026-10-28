@@ -19,6 +19,7 @@ sourcemap.json
 /art/render/
 /art/qa/*
 !/art/qa/grid.png
+!/art/qa/theme_grid.png
 __pycache__/
 
 # Local tool state

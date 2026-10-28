@@ -32,8 +32,12 @@ effectsGroup.Parent = SoundService
 local musicTrack: Sound? = nil
 
 local function createMusic()
-	local soundId = Assets.sounds.musicWinter
-	if soundId == "" then
+	-- The active theme picks its own track (contract theme-content.md §6); with no theme the winter
+	-- track is today's behaviour (the rollback). "" means no track: nothing plays and no warning.
+	local theme = Worlds.activeTheme
+	local key = if theme ~= nil then theme.musicAssetKey else "musicWinter"
+	local soundId = Assets.sounds[key]
+	if soundId == "" or soundId == nil then
 		return
 	end
 	local track = Instance.new("Sound")
@@ -104,11 +108,15 @@ local function preloadSounds()
 				table.insert(ids, soundId)
 			end
 		end
-		-- The palette texture loads here too ("" means not imported yet). Meshes are not preloaded: PreloadAsync
-		-- on a bare mesh id logs "Asset type does not match requested type"; ObjectVisual loads them with
-		-- CreateMeshPartAsync.
-		if Assets.palette ~= "" then
-			table.insert(ids, Assets.palette)
+		-- The palette texture loads here too. The active theme's atlas when the meshes are atlas-era
+		-- ("" means not imported yet); else the legacy shared palette. "" skips the preload. Meshes
+		-- are not preloaded: PreloadAsync on a bare mesh id logs "Asset type does not match requested
+		-- type"; ObjectVisual loads them with CreateMeshPartAsync.
+		local theme = Worlds.activeTheme
+		local atlas = if theme ~= nil then Assets.palettes[theme.paletteAssetKey] else ""
+		local paletteId = if atlas ~= "" and atlas ~= nil then atlas else Assets.palette
+		if paletteId ~= nil and paletteId ~= "" then
+			table.insert(ids, paletteId)
 		end
 		pcall(ContentProvider.PreloadAsync, ContentProvider, ids)
 		-- The music starts only once it is loaded, so it never begins late or stutters.

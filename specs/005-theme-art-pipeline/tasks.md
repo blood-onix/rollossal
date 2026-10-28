@@ -76,10 +76,10 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 
 **Independent Test**: In Studio, absorb `winter_lights`; open Book → `winter` page shows 1/1. Switch data to `city`; Book still lists `winter` page with 1/1 and returning label; no timer word; tier pages untouched.
 
-- [ ] T023 [US3] Update `src/shared/Rules/Book.luau`: add `Book.themePages(pages, objects, book, activeThemeId)` returning `PageSummary` with `themeId`, `isActive`, `returningKey`; tier = 0; base tier pages call `Book.pages` with base objects only (excl. binding objects); theme page appended after tier pages in `supportedThemes` order; `returningKey` validated (no "limited", "left", "ends", "hurry", digits-with-colon)
-- [ ] T024 [US3] [P] Write `tests/unit/Book.test.luau` extensions: theme page visibility when active/inactive; progress preserved; `nameKey` loc; returning key forbidden words; base tier completeness unchanged across themes
-- [ ] T025 [US3] Update `src/client/BookUi.luau`: append theme summaries after tier pages; show returning label with calendar-free icon (no clock/hourglass) when inactive; active page highlighted; text ≥ 18 px (`TextFits` true at 640×360)
-- [ ] T026 [US3] [P] Update `src/shared/Localization/Strings.luau` keys for `theme.*.book.name` / `theme.*.book.returning` (en + es); extend `Strings.test`
+- [X] T023 [US3] Update `src/shared/Rules/Book.luau`: add `Book.themePages(pages, objects, book, activeThemeId)` returning `PageSummary` with `themeId`, `isActive`, `returningKey`; tier = 0; base tier pages call `Book.pages` with base objects only (excl. binding objects); theme page appended after tier pages in `supportedThemes` order; `returningKey` validated (no "limited", "left", "ends", "hurry", digits-with-colon)
+- [X] T024 [US3] [P] Write `tests/unit/Book.test.luau` extensions: theme page visibility when active/inactive; progress preserved; `nameKey` loc; returning key forbidden words; base tier completeness unchanged across themes
+- [X] T025 [US3] Update `src/client/BookUi.luau`: append theme summaries after tier pages; show returning label with calendar-free icon (no clock/hourglass) when inactive; active page highlighted; text ≥ 18 px (`TextFits` true at 640×360)
+- [X] T026 [US3] [P] Update `src/shared/Localization/Strings.luau` keys for `theme.*.book.name` / `theme.*.book.returning` (en + es); extend `Strings.test`
 
 ---
 
@@ -87,12 +87,12 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 
 **Purpose**: Theme applies at runtime without new remotes; weather capped; all rules pure
 
-- [ ] T027 [P] Update `src/shared/ObjectVisual.luau`: `MeshPart.TextureID = Assets.palettes[theme.paletteAssetKey]` (fallback to `Assets.palette` only if `meshUv == "legacy"` and id empty); `RenderFidelity = Automatic`; `ObjectDef.role` → `Part.Color = theme.palette[role]` else tier colour; ground/env `SmoothPlastic`, `Transparency = 0`; zero `SurfaceAppearance`, zero per-prop `Light`, `Neon` only on glow child (Tier 4-5 heroes, optional, not used in 005)
-- [ ] T028 [P] Update `src/server/WorldBuilder.luau`: resolve world via `Worlds.resolved`; apply hero variants to placed objects; add theme-only overlay objects; ground block colours from `w-*` roles
-- [ ] T029 [P] Update `src/server/WorldSpawner.luau`: pass `Worlds.resolved` to `WorldBuilder`
-- [ ] T030 [P] Create `src/client/WeatherController.luau`: single camera-attached transparent `Part` holding `ParticleEmitter`; `CFrame` updated to `Camera.CFrame * CFrame.new(0, 30, 0)` every `RenderStepped`; emit from `Worlds.activeTheme.weather`; `Rate = rate`, `Rate × Lifetime ≤ 40`; `Enabled = false` + `:Clear()` when `ReduceMotion` true; return when false; `kind = "none"` → disabled
-- [ ] T031 [P] Update `src/client/Feedback.luau`: play `musicAssetKey` from `Assets.sounds`; preload atlas `TextureID` via `Assets.palettes`
-- [ ] T032 [P] Update `src/client/Main.client.luau`: start `WeatherController`; connect `GetAttributeChangedSignal("ReduceMotion")`
+- [X] T027 [P] Update `src/shared/ObjectVisual.luau`: `MeshPart.TextureID = Assets.palettes[theme.paletteAssetKey]` (fallback to `Assets.palette` only if `meshUv == "legacy"` and id empty); `RenderFidelity = Automatic`; `ObjectDef.role` → `Part.Color = theme.palette[role]` else tier colour; ground/env `SmoothPlastic`, `Transparency = 0`; zero `SurfaceAppearance`, zero per-prop `Light`, `Neon` only on glow child (Tier 4-5 heroes, optional, not used in 005)
+- [X] T028 [P] Update `src/server/WorldBuilder.luau`: resolve world via `Worlds.resolved`; apply hero variants to placed objects; add theme-only overlay objects; ground block colours from `w-*` roles
+- [X] T029 [P] Update `src/server/WorldSpawner.luau`: pass `Worlds.resolved` to `WorldBuilder`
+- [X] T030 [P] Create `src/client/WeatherController.luau`: single camera-attached transparent `Part` holding `ParticleEmitter`; `CFrame` updated to `Camera.CFrame * CFrame.new(0, 30, 0)` every `RenderStepped`; emit from `Worlds.activeTheme.weather`; `Rate = rate`, `Rate × Lifetime ≤ 40`; `Enabled = false` + `:Clear()` when `ReduceMotion` true; return when false; `kind = "none"` → disabled
+- [X] T031 [P] Update `src/client/Feedback.luau`: play `musicAssetKey` from `Assets.sounds`; preload atlas `TextureID` via `Assets.palettes`
+- [X] T032 [P] Update `src/client/Main.client.luau`: start `WeatherController`; connect `GetAttributeChangedSignal("ReduceMotion")`
 
 ---
 
@@ -100,9 +100,9 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 
 **Purpose**: Re-UV 65 meshes, rebuild with split normals/bevel, export and validate
 
-- [ ] T033 [P] [Blender] Execute `remap_uv_atlas.py` via `execute_blender_code`: migrate 65 collections from legacy 256 px grid to new atlas cells (`snow…ice` at cells 32-37); verify idempotent on second run (`"already migrated"`)
-- [ ] T034 [P] [Blender] Execute `export_all.py --out art/export`: all 65 meshes with split normals, single `Palette` material, UV inside cell/strip, bevel modifier applied (`4-8%` size), identity transform, footprint-centre origin; budget check `≤ {500,700,1500,3500,5000}` per `Config.Budgets.meshTriangles`; manifest `art/export/manifest.json`
-- [ ] T035 [P] [Blender] Execute `qa_grid.py -- --object <name> --out art/qa`: generate `theme_grid_*.png` for a reference prop across 6 atlases; confirm readable in all themes
+- [X] T033 [P] [Blender] Execute `remap_uv_atlas.py` via `execute_blender_code`: migrate 65 collections from legacy 256 px grid to new atlas cells (`snow…ice` at cells 32-37); verify idempotent on second run (`"already migrated"`): migrate 65 collections from legacy 256 px grid to new atlas cells (`snow…ice` at cells 32-37); verify idempotent on second run (`"already migrated"`)
+- [X] T034 [P] [Blender] Execute `export_all.py --out art/export`: all 65 meshes with split normals, single `Palette` material, UV inside cell/strip, bevel modifier applied (`4-8%` size), identity transform, footprint-centre origin; budget check `≤ {500,700,1500,3500,5000}` per `Config.Budgets.meshTriangles`; manifest `art/export/manifest.json`: all 65 meshes with split normals, single `Palette` material, UV inside cell/strip, bevel modifier applied (`4-8%` size), identity transform, footprint-centre origin; budget check `≤ {500,700,1500,3500,5000}` per `Config.Budgets.meshTriangles`; manifest `art/export/manifest.json`
+- [X] T035 [P] [Blender] Execute `qa_grid.py -- --object <name> --out art/qa`: generate `theme_grid_*.png` for a reference prop across 6 atlases; confirm readable in all themes
 
 ---
 

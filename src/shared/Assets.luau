@@ -19,7 +19,7 @@ local Assets = {
 		musicAutumn = "",
 		musicToon = "",
 		musicNeon = "",
-	},
+	} :: { [string]: string },
 	-- Content ids for the six season atlases (005), "" until the owner uploads them. A theme's
 	-- paletteAssetKey equals its id.
 	palettes = {
@@ -29,7 +29,7 @@ local Assets = {
 		autumn = "",
 		toon = "",
 		neon = "",
-	},
+	} :: { [string]: string },
 	-- Which texture generation the currently uploaded meshes carry: the old 256 px shared palette
 	-- ("legacy") or the per-theme atlases ("atlas"). Flipped in the owner hand-off commit with the new
 	-- uploads; Assets.palette is deleted then (research R-07).

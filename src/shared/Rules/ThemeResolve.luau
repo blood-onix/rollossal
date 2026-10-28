@@ -1,5 +1,5 @@
 --!strict
--- Turns *base world + theme id* into the resolved world the game uses: slots mapped to the theme's
+-- Turns *base world + theme id* into the resolved world the runtime uses: slots mapped to the theme's
 -- objects, overlays added, hero variants applied, environment palette and lighting taken from the theme.
 -- Pure: no Roblox APIs, no clock, no randomness, and no sibling requires — `expand` (Layout.expand) is
 -- an argument, because Rules may not `require` scripts in the other runtimes (research R-06).
