@@ -1,22 +1,25 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T036 Studio preflight, Play, and console check of the winter proof",
-    "T037 Studio data-only switch to city with zero code edits, then playtest checks",
-    "T038 Studio Reduce motion check: weather emitter off and cleared, restored when off",
-    "T039 Studio ObjectTemplates.spec run for render, collision, and transparency rules",
-    "T040 Studio Book proof: winter page 1/1 with returning label after switching to city",
-    "T041 Studio 640x360 capture and 60 s fps measurement with throttled seconds reported separately",
-    "T042 Record Studio observations in specs/005-theme-art-pipeline/playtest.md",
-    "T047 Finish tests/studio/ThemeSwitch.spec.luau: the ReduceMotion half is covered only by T038",
-    "T048 Tolerate the locked CollisionFidelity write in ObjectVisual.fidelity so the world builds",
-    "T049 Extend tests/studio/ObjectTemplates.spec.luau with render, transparency and no-light/no-surface assertions"
+    "T037 Studio data-only switch to city and playtest checks (ground check needs T052)",
+    "T039 Studio ObjectTemplates.spec run (CollisionFidelity check needs T050 and T051)",
+    "T040 Studio Book proof: absorb winter_lights in winter, then confirm the returning label in city",
+    "T041 Studio 640x360 capture and 60 s fps run; ask the owner once to keep Studio in front, since throttled seconds do not count",
+    "T042 Record round observations in specs/005-theme-art-pipeline/playtest.md after T037-T041",
+    "T050 Pass tier CollisionFidelity and RenderFidelity via CreateMeshPartAsync options in ObjectVisual.fidelity",
+    "T051 ObjectTemplates.spec asserts MeshPart CollisionFidelity by tier",
+    "T052 Add a w-sidewalk ground block to SnowVillage",
+    "T053 Pure reduce-motion emitter rule in Rules/Weather with a Lune test"
   ],
   "human": [
     {
       "item": "T045 Owner hand-off: upload atlases and 65 FBX, flip Assets.meshUv to atlas, delete Assets.palette",
       "reason": "Roblox asset uploads and the publish step need the owner's Roblox account and approval (Principle X: agents do not publish live)"
+    },
+    {
+      "item": "T054 Supply a looping city music track and set Assets.musicCity",
+      "reason": "The track is owner-supplied audio with a Roblox asset ID; the agent has no such asset and cannot upload or publish it"
     }
   ],
-  "summary": "Code, data and Lune tests match the spec, but the Studio proof is blocked by a runtime CollisionFidelity write that aborts the world build, ObjectTemplates.spec does not yet assert the Constitution XI rules, and the owner hand-off is pending."
+  "summary": "Code and Lune tests (335 passing) largely match the spec, but the Studio proofs are unfinished, the tier collision class is never applied because the write is locked, and the owner hand-off (T045) and city music (T054) are pending."
 }

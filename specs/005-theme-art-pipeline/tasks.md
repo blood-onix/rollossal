@@ -110,9 +110,9 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 
 **Purpose**: Confirm data-only switch, rules, performance, no new errors
 
-- [ ] T036 [P] [Studio] Preflight (`scripts/studio-preflight.sh`); sync probe passes (`mismatches = {}`); start Play (`start_stop_play`); record `Lighting.ClockTime`, `Atmosphere`, `ParticleEmitter.Enabled`, `ThemeMusic` playing, 32 slot placements (winter ids); `get_console_output`: zero new errors/warnings
+- [X] T036 [P] [Studio] Preflight (`scripts/studio-preflight.sh`); sync probe passes (`mismatches = {}`); start Play (`start_stop_play`); record `Lighting.ClockTime`, `Atmosphere`, `ParticleEmitter.Enabled`, `ThemeMusic` playing, 32 slot placements (winter ids); `get_console_output`: zero new errors/warnings
 - [ ] T037 [P] [Studio] Stop Play; edit `src/shared/Content/Worlds/SnowVillage.luau` `activeThemeId = "city"` only; wait for Rojo sync; re-run probe; start Play; confirm lighting changed to `13`, emitter `Enabled = false`, music stopped, placements = 5 city stand-ins with `role` colours, overlay `beach_towel`, `fountain` mesh at hero, ground `w-grass`/`w-kerb`/`w-sidewalk`; zero new errors
-- [ ] T038 [P] [Studio] Set `winter`; set `LocalPlayer` attribute `ReduceMotion = true`; confirm emitter `Enabled = false` + `:Clear()` within 1 frame; set false → restored; arithmetic check `Rate × Lifetime ≤ 40` (validates `src/client/WeatherController.luau`)
+- [X] T038 [P] [Studio] Set `winter`; set `LocalPlayer` attribute `ReduceMotion = true`; confirm emitter `Enabled = false` + `:Clear()` within 1 frame; set false → restored; arithmetic check `Rate × Lifetime ≤ 40` (validates `src/client/WeatherController.luau`)
 - [ ] T039 [P] [Studio] Template rules check (`tests/studio/ObjectTemplates.spec`): each object `RenderFidelity == Automatic`, `CollisionFidelity` Box (T1-3) / Hull (T4-5), zero `SurfaceAppearance`/`Light` descendants, `Transparency == 0`
 - [ ] T040 [P] [Studio] Book proof (drive ball to absorb `winter_lights`): open Book → `winter` page 1/1; switch to `city`; Book still lists `winter` 1/1 with returning label, no timer, tier pages 100 % achievable (validates `src/client/BookUi.luau`, `src/shared/Rules/Book.luau`)
 - [ ] T041 [P] [Studio] 640 × 360 capture: clone root frame to `USC`-sized container (with `UIScale` if needed); record `AbsolutePosition` of Book theme page; `TextFits` true at `≥ 18 px`; fps per second for 60 s with 12 balls' parts; report throttled (15 fps) separately; unthrottled mean `≥ 30`; active parts `< 2000` (validates `src/shared/Config.luau` budgets)
@@ -218,9 +218,17 @@ Task T016: Update Content/GreyBoxRoom.luau types
 
 ## Phase 10: Convergence
 
-- [ ] T047 Write `tests/studio/ThemeSwitch.spec.luau` (Jest-Lua) asserting that `Worlds.forTheme("winter")` and `Worlds.forTheme("city")` change palette, lighting, weather, music key, slot objects, overlay placements and hero variant while non-slot base placements stay identical, and that `WeatherController.isEmitting()` is false under `ReduceMotion` per plan: tests/studio ThemeSwitch.spec (missing)
+- [X] T047 Write `tests/studio/ThemeSwitch.spec.luau` (Jest-Lua) asserting that `Worlds.forTheme("winter")` and `Worlds.forTheme("city")` change palette, lighting, weather, music key, slot objects, overlay placements and hero variant while non-slot base placements stay identical, and that `WeatherController.isEmitting()` is false under `ReduceMotion` per plan: tests/studio ThemeSwitch.spec (missing)
 
 ## Phase 11: Convergence
 
-- [ ] T048 Make `fidelity()` in `src/shared/ObjectVisual.luau` tolerate the locked `CollisionFidelity` write the same way `RenderFidelity` is tolerated (`pcall`), so `WorldBuilder` builds Snow Village without aborting; re-run Play and confirm no CollisionFidelity error, a `World` folder exists, and note in `specs/005-theme-art-pipeline/playtest.md` that the tier Box/Hull collision class is not settable at runtime per FR-004 (contradicts)
-- [ ] T049 Extend `tests/studio/ObjectTemplates.spec.luau` to assert, for every template in `Worlds.active.objects`, `RenderFidelity == Automatic`, `Transparency == 0`, and zero `SurfaceAppearance`/`Light` descendants (`PointLight`, `SpotLight`, `SurfaceLight`) per Constitution XI and T039 (missing)
+- [X] T048 Make `fidelity()` in `src/shared/ObjectVisual.luau` tolerate the locked `CollisionFidelity` write the same way `RenderFidelity` is tolerated (`pcall`), so `WorldBuilder` builds Snow Village without aborting; re-run Play and confirm no CollisionFidelity error, a `World` folder exists, and note in `specs/005-theme-art-pipeline/playtest.md` that the tier Box/Hull collision class is not settable at runtime per FR-004 (contradicts)
+- [X] T049 Extend `tests/studio/ObjectTemplates.spec.luau` to assert, for every template in `Worlds.active.objects`, `RenderFidelity == Automatic`, `Transparency == 0`, and zero `SurfaceAppearance`/`Light` descendants (`PointLight`, `SpotLight`, `SurfaceLight`) per Constitution XI and T039 (missing)
+
+## Phase 12: Convergence
+
+- [ ] T050 Pass `CollisionFidelity` (`Box` for tiers 1-3, `Hull` for tiers 4-5) and `RenderFidelity = Automatic` as options to `AssetService:CreateMeshPartAsync` in `src/shared/ObjectVisual.luau`, and remove the silently failing post-create writes in `fidelity()` per FR-004 (partial)
+- [ ] T051 Assert `CollisionFidelity` is `Box` for tiers 1-3 and `Hull` for tiers 4-5 on every MeshPart template in `tests/studio/ObjectTemplates.spec.luau` per T039 and FR-004 (missing)
+- [ ] T052 Add a `w-sidewalk` ground block (`swatch = "w-sidewalk"`) to `src/shared/Content/Worlds/SnowVillage.luau` so the city ground shows `w-grass`, `w-kerb` and `w-sidewalk` per T037 (partial)
+- [ ] T053 Move the reduce-motion emitter rule out of `src/client/WeatherController.luau` into a pure function in `src/shared/Rules/Weather.luau` with a Lune test in `tests/unit/Weather.test.luau`, so emitter-off under `ReduceMotion` is checked without Studio per T047 (partial)
+- [ ] T054 [Owner] Supply a looping city music track and set `musicCity` in `src/shared/Assets.luau` (currently `""`, so Sunny City plays no music) per FR-005 and US1 acceptance 1 (missing); the owner uploads it, the agent does not publish
