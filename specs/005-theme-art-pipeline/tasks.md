@@ -113,7 +113,7 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 - [X] T036 [P] [Studio] Preflight (`scripts/studio-preflight.sh`); sync probe passes (`mismatches = {}`); start Play (`start_stop_play`); record `Lighting.ClockTime`, `Atmosphere`, `ParticleEmitter.Enabled`, `ThemeMusic` playing, 32 slot placements (winter ids); `get_console_output`: zero new errors/warnings
 - [X] T037 [P] [Studio] Stop Play; edit `src/shared/Content/Worlds/SnowVillage.luau` `activeThemeId = "city"` only; wait for Rojo sync; re-run probe; start Play; confirm lighting changed to `13`, emitter `Enabled = false`, music stopped, placements = 5 city stand-ins with `role` colours, overlay `beach_towel`, `fountain` mesh at hero, ground `w-grass`/`w-kerb`/`w-sidewalk`; zero new errors
 - [X] T038 [P] [Studio] Set `winter`; set `LocalPlayer` attribute `ReduceMotion = true`; confirm emitter `Enabled = false` + `:Clear()` within 1 frame; set false → restored; arithmetic check `Rate × Lifetime ≤ 40` (validates `src/client/WeatherController.luau`)
-- [ ] T039 [P] [Studio] Template rules check (`tests/studio/ObjectTemplates.spec`): each object `RenderFidelity == Automatic`, `CollisionFidelity` Box (T1-3) / Hull (T4-5), zero `SurfaceAppearance`/`Light` descendants, `Transparency == 0`
+- [X] T039 [P] [Studio] Template rules check (`tests/studio/ObjectTemplates.spec`): each object `RenderFidelity == Automatic`, `CollisionFidelity` Box (T1-3) / Hull (T4-5), zero `SurfaceAppearance`/`Light` descendants, `Transparency == 0`
 - [ ] T040 [P] [Studio] Book proof (drive ball to absorb `winter_lights`): open Book → `winter` page 1/1; switch to `city`; Book still lists `winter` 1/1 with returning label, no timer, tier pages 100 % achievable (validates `src/client/BookUi.luau`, `src/shared/Rules/Book.luau`)
 - [ ] T041 [P] [Studio] 640 × 360 capture: clone root frame to `USC`-sized container (with `UIScale` if needed); record `AbsolutePosition` of Book theme page; `TextFits` true at `≥ 18 px`; fps per second for 60 s with 12 balls' parts; report throttled (15 fps) separately; unthrottled mean `≥ 30`; active parts `< 2000` (validates `src/shared/Config.luau` budgets)
 - [ ] T042 [P] [Studio] Record all observations in `specs/005-theme-art-pipeline/playtest.md` (date + commit); confirm Quality Gates met (server/client behaviour, UI, assets, strings)
@@ -235,4 +235,10 @@ Task T016: Update Content/GreyBoxRoom.luau types
 
 ## Phase 13: Convergence
 
-- [ ] T055 Make `tests/studio/ObjectTemplates.spec.luau` require a `MeshPart` template for every object whose `Assets.meshes` id is set and assert its render and collision fidelity there, so a silent stand-in fallback fails the spec per US2/AC3 (partial)
+- [X] T055 Make `tests/studio/ObjectTemplates.spec.luau` require a `MeshPart` template for every object whose `Assets.meshes` id is set and assert its render and collision fidelity there, so a silent stand-in fallback fails the spec per US2/AC3
+
+## Phase 14: Convergence
+
+- [ ] T056 Enforce the world placement budget in `src/shared/Rules/ThemeResolve.luau` (base placements plus overlay placements must not exceed `world.maxPlacements`, defaulting to `Config.Budgets.defaultMaxPlacements` = 1400 when nil) and assert it in `tests/unit/SnowVillage.test.luau` for every supported theme against `maxPlacements = 1700` per FR-002, FR-011 (missing)
+- [ ] T057 Add a pure collision-class rule to `src/shared/Rules/Tiers.luau` (Box for tiers 1-3, Hull for tiers 4-5), use it in `ObjectVisual.buildMesh`, and assert in `tests/unit/ThemeResolve.test.luau` that every `heroVariant` keeps its base hero's collision class per FR-011 (partial)
+- [ ] T058 In `tests/studio/ThemeSwitch.spec.luau` the reduce-motion case must set the `LocalPlayer` attribute `ReduceMotion = true`, assert `WeatherController.isEmitting()` is false, and restore the attribute; if no `LocalPlayer` exists in that Jest context, rename the case to say it checks only the unstarted state per US1/AC2 (partial)

@@ -1,10 +1,11 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T039 Studio ObjectTemplates.spec run on Edit after T055 (MeshPart checks must not pass vacuously)",
     "T040 Studio Book proof: absorb winter_lights in winter, then confirm the winter returning page in city",
-    "T042 Record round observations in specs/005-theme-art-pipeline/playtest.md after T039-T041",
-    "T055 ObjectTemplates.spec requires a MeshPart template for every object with an Assets.meshes id"
+    "T042 Record round observations in specs/005-theme-art-pipeline/playtest.md after T040 and T041",
+    "T056 Enforce and test the world placement budget (maxPlacements) for base plus overlay placements",
+    "T057 Pure Box/Hull collision-class rule with a Lune test that every heroVariant keeps its base class",
+    "T058 Make the ThemeSwitch reduce-motion case set ReduceMotion and assert isEmitting() is false"
   ],
   "human": [
     {
@@ -20,5 +21,5 @@
       "reason": "The track is owner-supplied audio with a Roblox asset ID; the agent has no such asset and cannot upload or publish it"
     }
   ],
-  "summary": "Code, Lune (338 passing), StyLua, Selene, luau-lsp and the atlas and token checks pass; open work is the Studio proofs T039, T040 and T042, one new test-coverage task T055, and the owner items T041, T045 and T054."
+  "summary": "Code, Lune tests, art pipeline and the constitution checks pass, but the placement budget is never enforced, the collision class is untested in Lune, and the reduce-motion Studio case is vacuous; three new convergence tasks (T056-T058) are appended and T040, T042 and the owner items T041, T045 and T054 remain open."
 }
