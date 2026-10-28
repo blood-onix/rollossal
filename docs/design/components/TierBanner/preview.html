@@ -1,0 +1,24 @@
+<!-- @dsCard group="UI" height=140 subtitle="Tier banner, 2.5 s" -->
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../tokens.css">
+<script>(function(){var t=new URLSearchParams(location.search).get('theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Montserrat:wght@500&display=swap">
+<style>
+  body { margin:0; background:var(--ui-panel); color:var(--ui-text); font-family:var(--font-body); }
+  .stroke { text-shadow: -2px -2px 0 var(--ui-stroke), 2px -2px 0 var(--ui-stroke), -2px 2px 0 var(--ui-stroke), 2px 2px 0 var(--ui-stroke), 0 2px 0 var(--ui-stroke), 0 -2px 0 var(--ui-stroke), 2px 0 0 var(--ui-stroke), -2px 0 0 var(--ui-stroke); }
+  .display { font-family:var(--font-display); font-weight:600; }
+  .stage { background:var(--light-sky); padding:var(--space-6) var(--space-3); display:flex; justify-content:center; }
+  .banner { display:flex; align-items:center; gap:var(--space-3); background:var(--ui-panel); border-radius:var(--radius-panel); padding:var(--space-3) var(--space-6); }
+  .chip { width:40px; height:40px; border-radius:var(--radius-round); background:var(--tier-4); color:#141414; font:700 22px/40px var(--font-body); text-align:center; }
+  .txt { font-size:28px; line-height:32px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="banner"><div class="chip">4</div><div class="txt display stroke">YOU CAN ROLL UP: BUSES</div></div>
+</div>
+</body>
+</html>

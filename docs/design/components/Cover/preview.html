@@ -1,0 +1,60 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../tokens.css">
+<script>(function(){var t=new URLSearchParams(location.search).get('theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+<meta charset="utf-8">
+<title>Rollossal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Montserrat:wght@500&display=swap">
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--ui-panel); color:var(--ui-text); font-family:var(--font-body); overflow:hidden; }
+  .cover { position:relative; width:960px; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .red { fill:var(--w-accent-red); }
+  .yel { fill:var(--w-accent-yellow); }
+  .teal { fill:var(--w-accent-teal); }
+  .tint { fill:var(--w-white); }
+  .cut { fill:var(--ui-panel); }
+  .crumb { fill:var(--w-white); }
+  .blk { rx:var(--radius-panel); }
+  .words { position:absolute; left:var(--space-6); bottom:var(--space-6); max-width:440px; }
+  .name { margin:0; font-family:var(--font-display); font-size:80px; line-height:.92; font-weight:600; color:var(--ui-text); }
+  .tag { margin:var(--space-2) 0 0 4px; font-size:14px; line-height:20px; color:var(--ui-unknown); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      w-accent-red 168x280 bled off the top (the default ball's red, largest) · w-accent-teal 160x208 bled off the right · w-accent-yellow 120x120 · w-white 120x112 tint · about 40% of 960x288
+  arrangement one tall red slab with satellites, bottoms on one line space-6 above the edge, space-3+4 gutters
+  pattern     literal motif, the ball that grows: radius-round discs cut in ui-panel, each 1.5x the last, rolling up a diagonal across the blocks, with four w-white crumbs where it starts
+  scales      gutters 16 (space-1 x4); corners radius-panel; discs radius-round (circles); growth step 1.5 echoes volume growth
+-->
+<rect class="red blk" x="16" y="-16" width="168" height="280" rx="16"/>
+<rect class="tint blk" x="200" y="16" width="120" height="112" rx="16"/>
+<rect class="yel blk" x="200" y="144" width="120" height="120" rx="16"/>
+<rect class="teal blk" x="336" y="56" width="160" height="208" rx="16"/>
+<circle class="crumb" cx="40" cy="244" r="2"/>
+<circle class="crumb" cx="52" cy="236" r="2"/>
+<circle class="crumb" cx="34" cy="230" r="2"/>
+<circle class="crumb" cx="60" cy="248" r="2"/>
+<circle class="cut" cx="72" cy="222" r="6"/>
+<circle class="cut" cx="102" cy="194" r="9"/>
+<circle class="cut" cx="146" cy="158" r="13.5"/>
+<circle class="cut" cx="232" cy="200" r="20"/>
+<circle class="cut" cx="290" cy="76" r="30"/>
+<circle class="cut" cx="420" cy="150" r="45"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Rollossal</h1>
+<p class="tag">Roll up the city. Then roll up the skyline.</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!-- @dsCard group="UI" height=170 subtitle="HUD: size meter and timer" -->
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../tokens.css">
+<script>(function(){var t=new URLSearchParams(location.search).get('theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Montserrat:wght@500&display=swap">
+<style>
+  body { margin:0; background:var(--ui-panel); color:var(--ui-text); font-family:var(--font-body); }
+  .stroke { text-shadow: -2px -2px 0 var(--ui-stroke), 2px -2px 0 var(--ui-stroke), -2px 2px 0 var(--ui-stroke), 2px 2px 0 var(--ui-stroke), 0 2px 0 var(--ui-stroke), 0 -2px 0 var(--ui-stroke), 2px 0 0 var(--ui-stroke), -2px 0 0 var(--ui-stroke); }
+  .display { font-family:var(--font-display); font-weight:600; }
+  .row { display:flex; gap:var(--space-6); padding:var(--space-3); align-items:flex-start; background:var(--light-sky); }
+  .meter { width:160px; height:104px; box-sizing:border-box; padding:var(--space-2); }
+  .lab { font-size:18px; line-height:22px; }
+  .val { font-size:32px; line-height:36px; }
+  .bar { height:12px; background:var(--ui-bar-back); border-radius:var(--radius-round); overflow:hidden; margin:2px 0 4px; }
+  .fill { height:100%; width:62%; background:var(--ui-bar-fill); }
+  .next { font-size:18px; line-height:22px; white-space:nowrap; }
+  .timer { width:170px; text-align:center; }
+  .time { font-size:28px; line-height:44px; }
+  .stars { display:flex; gap:var(--space-1); justify-content:center; font-size:18px; line-height:22px; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="meter">
+    <div class="lab stroke">SIZE</div>
+    <div class="val display stroke">34.6</div>
+    <div class="bar"><div class="fill"></div></div>
+    <div class="next stroke">Next: ■ BUILDINGS</div>
+  </div>
+  <div class="timer">
+    <div class="time display stroke">⏱ 1:12</div>
+    <div class="stars stroke"><span>★ 20</span><span>★ 45</span><span>☆ 80</span></div>
+  </div>
+</div>
+</body>
+</html>
