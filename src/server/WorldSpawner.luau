@@ -196,7 +196,7 @@ end
 
 -- Scattered objects become absorbable when their grace ends. A Taken object returns once its random delay is
 -- over and no ball can see its spot, or after the starvation ceiling whatever is watching. It returns even
--- while a ball still shows it: stack entries are visual-only records, so the world refills (research F-1).
+-- while a ball still shows it: stack entries are visual-only records, so the world refills.
 function WorldSpawner.update(now: number)
 	local watchers: { Respawn.Watcher }? = nil
 	for object in pending do
@@ -249,6 +249,20 @@ function WorldSpawner.refreshCluster(slot: number, _now: number)
 			WorldSpawner.returnToSpawn(object)
 		end
 	end
+end
+
+function WorldSpawner.availableInCluster(slot: number): number
+	local cluster = clusters[slot]
+	if cluster == nil then
+		return 0
+	end
+	local available = 0
+	for _, object in cluster do
+		if object.state == "Available" then
+			available += 1
+		end
+	end
+	return available
 end
 
 function WorldSpawner.registryCounts(): { free: number, pendingRespawn: number }

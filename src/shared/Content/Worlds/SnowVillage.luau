@@ -489,7 +489,7 @@ end
 local SnowVillage = {
 	worldId = "snow_village",
 	starThresholds = { 20, 45, 80 },
-	-- PROVISIONAL, owner to confirm (T032). With Config.growthK = 0.6 the pace model (tests/unit/Pace.test)
+	-- PROVISIONAL, owner to confirm. With Config.growthK = 0.6 the pace model (tests/unit/Pace.test)
 	-- needs 96 s for Tier 2 and ends a run at about 15 studs; 1.5 gives Tier 2 in 34 s and 63-71 studs.
 	growthK = 1.5,
 	halfExtent = 300,

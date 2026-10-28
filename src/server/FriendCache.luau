@@ -1,6 +1,6 @@
 --!strict
 -- Friend lookups per pair of present players. IsFriendsWith yields and can fail, so results are cached
--- off the hot path and readers get a synchronous answer that defaults to "not friends" (research R7).
+-- off the hot path and readers get a synchronous answer that defaults to "not friends".
 
 local Players = game:GetService("Players")
 

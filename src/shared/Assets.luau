@@ -1,6 +1,6 @@
 --!strict
 -- The only file that may hold a SoundId or a mesh or texture id (Constitution XI).
--- Sounds are engine-bundled placeholders: nothing uploaded. Contract: specs/002-run-loop/contracts/content-and-config.md
+-- Sounds are engine-bundled placeholders, except the looping music track. Contract: specs/002-run-loop/contracts/content-and-config.md
 -- Meshes and the shared palette texture: specs/004-snow-village/contracts/world-content.md. An empty string
 -- means "not imported yet", and the world falls back to a plain stand-in part.
 
@@ -10,8 +10,8 @@ local Assets = {
 		tierUnlock = "rbxasset://sounds/button.wav",
 		bump = "rbxasset://sounds/snap.mp3",
 		bell = "rbxasset://sounds/bass.wav",
-		-- The looping winter music. "" means the owner has not picked a track yet (plan F-12): no engine-bundled
-		-- file is music, so nothing plays rather than a placeholder that would be annoying on a loop.
+		-- The looping winter music. "" means no track is picked: nothing plays, rather than a placeholder that
+		-- would be annoying on a loop.
 		music = "rbxassetid://80565841497538",
 	},
 	-- Content id of the shared palette texture, "" until imported.

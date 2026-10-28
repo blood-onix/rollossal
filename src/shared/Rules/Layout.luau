@@ -128,6 +128,25 @@ local function expandZone(zone: Zone, sizes: { [string]: number }, into: { Place
 	end
 end
 
+-- Index of the slot with the most available objects. Slots not in `inUse` win over used ones; ties go to the
+-- lowest index.
+function Layout.healthiestSlot(available: { number }, inUse: { [number]: boolean }): number
+	local anyFree = false
+	for slot = 1, #available do
+		if not inUse[slot] then
+			anyFree = true
+		end
+	end
+	local best, bestCount = 1, -1
+	for slot = 1, #available do
+		local eligible = not anyFree or not inUse[slot]
+		if eligible and available[slot] > bestCount then
+			best, bestCount = slot, available[slot]
+		end
+	end
+	return best
+end
+
 -- Zones are expanded in order; each zone owns its seed, so editing one zone moves only its objects.
 function Layout.expand(zones: { Zone }, sizes: { [string]: number }): { Placement }
 	local placements: { Placement } = {}

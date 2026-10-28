@@ -122,6 +122,22 @@ test("expand: placements carry the zone height and spawn slot", function()
 	expect.equal(placements[1].spawnSlot, 3)
 end)
 
+test("healthiestSlot: the most available objects wins", function()
+	expect.equal(Layout.healthiestSlot({ 3, 7, 5 }, {}), 2)
+end)
+
+test("healthiestSlot: ties go to the lowest index", function()
+	expect.equal(Layout.healthiestSlot({ 4, 4, 2 }, {}), 1)
+end)
+
+test("healthiestSlot: a free slot beats a healthier slot already in use", function()
+	expect.equal(Layout.healthiestSlot({ 9, 1, 2 }, { [1] = true }), 3)
+end)
+
+test("healthiestSlot: when every slot is in use, the healthiest one is chosen", function()
+	expect.equal(Layout.healthiestSlot({ 9, 1, 2 }, { [1] = true, [2] = true, [3] = true }), 1)
+end)
+
 test("expand: a count above the capacity is an error", function()
 	local ok = pcall(Layout.expand, { zone("over", 20, 10, 129, 1, one) }, sizes)
 	expect.falsy(ok)

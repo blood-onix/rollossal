@@ -134,6 +134,10 @@ A fresh 12-ball BotRun with the real art (`Assets.meshes` filled, Studio frontmo
 
 ## Converge round 6 (agent, 2026-10-27, T035: SC-004 Studio-half fps)
 
+**Withdrawn.** The fps figures in this section (42 mean, 50 unthrottled, 19 dip) were measured with an AppleScript
+focus loop that AGENTS.md forbids. They stay on record for the history only and must not be cited for SC-004.
+The valid Studio measurement is in "Round 7 rerun with Studio in front".
+
 Build: current branch tip (round-5 tree, T034 fix in, working tree has the round-5
 `tasks.md`/`Feedback.luau` edits), Rojo probe `mismatches = {}` (60 files) before the run.
 
@@ -257,3 +261,10 @@ It was re-captured after the backdrop fix.
   `700007` 338.1 > 224). Speed violations: 2, both for `user 7967226345` (79.7 and 56.5 > 56). The previous 12-bot
   runs logged 3 to 4 displacement lines, so the `BallService` lastValidPosition change reduces the count but does
   not remove it; the remaining bot line is the known BotRun speed artefact.
+
+## Review round 1 SC-003 run (agent, 2026-10-28, 12 bots, 240 s)
+
+Placement counts raised (Tier 2 lawn_n 14 to 18 per spawn, Tier 3 lane_n 10 to 14, Tier 4 bands 26 to 44 and streets, square). Parts 1,840 of 2,000. Result: `everyTierKeptShare` false, the share did not reach 20 %.
+
+- Available share at 60 / 120 / 180 / 240 s: T2 0.078 / 0.283 / 0.559 / 0.919; T3 0.225 / 0.122 / 0.178 / 0.194; T4 0.982 / 0.086 / 0.103 / 0.051.
+- The placement counts were reverted after this run: they did not meet SC-003 and cost part headroom. The part budget (2,000) leaves about 160 parts for more placements, so placements alone cannot meet SC-003. The remaining levers (growthK, the part budget, or the pool shape) are the owner's decision; SC-003 stays open.

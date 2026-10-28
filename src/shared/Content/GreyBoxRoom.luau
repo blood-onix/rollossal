@@ -1,6 +1,6 @@
 --!strict
 -- Grey-box room data. Data only: no Roblox APIs, so Lune can validate it.
--- Layout and tiers: specs/001-grey-box-prototype/data-model.md §2 and research.md R1.
+-- Layout and tiers: specs/001-grey-box-prototype/data-model.md §2 and research.md.
 -- Run-loop tiers, objects, star targets and hub: specs/002-run-loop/data-model.md §2.
 -- Feature 004 widens the shared types to the WorldDef schema (specs/004-snow-village/data-model.md §1) and
 -- adds the world-agnostic fields; the room's own data above stays as it was.
@@ -129,7 +129,7 @@ export type Room = {
 
 local GreyBoxRoom: Room = {
 	worldId = "greybox",
-	-- Provisional: a 30-cube room cannot grow a ball far past 5 studs (plan.md F-1). Retune after the playtest.
+	-- Provisional: a 30-cube room cannot grow a ball far past 5 studs. Retune after the playtest.
 	starThresholds = { 3.0, 4.0, 5.0 },
 	sizeTiers = {
 		{

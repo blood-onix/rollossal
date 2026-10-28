@@ -8,6 +8,7 @@ local Workspace = game:GetService("Workspace")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
+local Layout = require(Shared.Rules.Layout)
 local Respawn = require(Shared.Rules.Respawn)
 local StuckStack = require(Shared.Rules.StuckStack)
 local Worlds = require(Shared.Worlds)
@@ -78,17 +79,18 @@ local function horizontal(vector: Vector3): Vector3
 	return Vector3.new(vector.X, 0, vector.Z)
 end
 
-local function freeSlot(): number
-	local used: { [number]: boolean } = {}
-	for _, session in sessions do
-		used[session.slot] = true
+local function healthiestSlot(except: Session?): number
+	local available: { number } = {}
+	for slot = 1, #Worlds.active.spawnPoints do
+		available[slot] = WorldSpawner.availableInCluster(slot)
 	end
-	for index = 1, #Worlds.active.spawnPoints do
-		if not used[index] then
-			return index
+	local inUse: { [number]: boolean } = {}
+	for _, session in sessions do
+		if session ~= except then
+			inUse[session.slot] = true
 		end
 	end
-	return 1
+	return Layout.healthiestSlot(available, inUse)
 end
 
 function BallService.publishStuck(session: Session)
@@ -156,7 +158,7 @@ function BallService.newSession(userId: number, player: Player?): Session
 	spin.AngularVelocity = Vector3.zero
 	spin.Parent = part
 
-	local slot = freeSlot()
+	local slot = healthiestSlot()
 	local spawn = WorldSpawner.getSpawnSlot(slot)
 	part.Position = spawn
 	part.Parent = getBallsFolder()
@@ -295,8 +297,12 @@ function BallService.resetBall(session: Session)
 	session.physicalDiameter = Config.startDiameter
 	session.part.Size = Vector3.one * Config.startDiameter
 	BallService.setDiameter(session, Config.startDiameter)
+	local room = session.zone == "Room"
+	if room then
+		session.slot = healthiestSlot(session)
+	end
 	placeAtSpawn(session)
-	if session.zone == "Room" then
+	if room then
 		WorldSpawner.refreshCluster(session.slot, os.clock())
 	end
 	BallService.publishStuck(session)

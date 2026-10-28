@@ -27,8 +27,8 @@ local effectsGroup = Instance.new("SoundGroup")
 effectsGroup.Name = "Effects"
 effectsGroup.Parent = SoundService
 
--- The one looping background track, in the Music group so settings.musicVolume controls it. Nil until the
--- owner picks a track (Assets.sounds.music is empty).
+-- The one looping background track, in the Music group so settings.musicVolume controls it. Nil while
+-- Assets.sounds.music is empty.
 local musicTrack: Sound? = nil
 
 local function createMusic()
@@ -97,8 +97,9 @@ end
 local function preloadSounds()
 	task.spawn(function()
 		local ids = {}
-		for _, soundId in Assets.sounds do
-			if soundId ~= "" then
+		-- Music is preloaded as its Sound instance below; a bare string id here fails as a type mismatch.
+		for key, soundId in Assets.sounds do
+			if key ~= "music" and soundId ~= "" then
 				table.insert(ids, soundId)
 			end
 		end
@@ -118,8 +119,8 @@ local function preloadSounds()
 	end)
 end
 
--- The engine exposes the player's reduced-motion setting (GuiService.ReducedMotionEnabled, checked in
--- T038), so the ReduceMotion attribute follows it as well as the saved setting (research R11).
+-- The engine exposes the player's reduced-motion setting (GuiService.ReducedMotionEnabled), so the
+-- ReduceMotion attribute follows it as well as the saved setting.
 local function followReducedMotion()
 	applyReduceMotion()
 	GuiService:GetPropertyChangedSignal("ReducedMotionEnabled"):Connect(applyReduceMotion)

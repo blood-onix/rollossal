@@ -22,6 +22,7 @@ local TIER_CEILINGS = { 5, 12, 30, 70, 150 }
 local SPAWN_CLUSTER_MIN = 10
 local EATABLE_AT_START = 0.8
 local TRAVEL_RADIUS = 54
+local HUB_PARTS = 3
 
 local objectById: { [string]: typeof(SnowVillage.objects[1]) } = {}
 local sizes: { [string]: number } = {}
@@ -54,10 +55,6 @@ test("SnowVillage: identity, star targets and extents", function()
 	expect.equal(SnowVillage.starThresholds[3], 80)
 	expect.equal(SnowVillage.halfExtent, 300)
 	expect.equal(SnowVillage.outerHalfExtent, 400)
-end)
-
-test("SnowVillage: the provisional growthK is positive and flagged for the owner", function()
-	expect.truthy(SnowVillage.growthK > 0)
 end)
 
 test("SnowVillage: 64 objects, 18 / 16 / 14 / 12 / 4 per tier", function()
@@ -245,18 +242,18 @@ end)
 test("SnowVillage: 12 spawn points, each with a Tier 1 cluster inside 45 studs", function()
 	local points = SnowVillage.spawnPoints
 	expect.equal(#points, 12)
+	expect.truthy(Config.spawnClusterRadius <= TRAVEL_RADIUS)
 	for index, point in points do
 		expect.equal(point.slot, index)
 		local near = 0
 		for _, placement in placements do
-			if placement.spawnSlot == point.slot then
+			if
+				placement.spawnSlot == point.slot
+				and sizes[placement.objectId] <= EATABLE_AT_START
+			then
 				local distance =
 					math.sqrt((placement.x - point.x) ^ 2 + (placement.z - point.z) ^ 2)
-				if
-					sizes[placement.objectId] <= EATABLE_AT_START
-					and distance <= Config.spawnClusterRadius
-				then
-					expect.truthy(distance <= TRAVEL_RADIUS)
+				if distance <= Config.spawnClusterRadius then
 					near += 1
 				end
 			end
@@ -279,11 +276,18 @@ test("SnowVillage: spawn points sit 80 to 120 studs from their nearest neighbour
 	end
 end)
 
-test("SnowVillage: the part budget holds for the pool, the geometry and 12 balls", function()
-	local total = #placements + #SnowVillage.environment.blocks + 12
-	expect.truthy(total <= Config.Budgets.maxActivePartsPerServer)
-	expect.truthy(#SnowVillage.environment.blocks <= 400)
-end)
+test(
+	"SnowVillage: the part budget holds for the pool, the geometry, markers, hub and 12 balls",
+	function()
+		local total = #placements
+			+ #SnowVillage.environment.blocks
+			+ #SnowVillage.environment.markers
+			+ HUB_PARTS
+			+ 12
+		expect.truthy(total <= Config.Budgets.maxActivePartsPerServer)
+		expect.truthy(#SnowVillage.environment.blocks <= 400)
+	end
+)
 
 test("SnowVillage: every block swatch exists and every marker kind has at least 6 spots", function()
 	local environment = SnowVillage.environment

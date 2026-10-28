@@ -1,6 +1,6 @@
 --!strict
 -- Hides the world objects far below the local player's tier, for this client only. Contract:
--- specs/004-snow-village/contracts/runtime-api.md, research R6. No remote, no server state: the server still
+-- specs/004-snow-village/contracts/runtime-api.md. No remote, no server state: the server still
 -- decides every pickup, so this only changes what the local client draws and queries.
 
 local CollectionService = game:GetService("CollectionService")

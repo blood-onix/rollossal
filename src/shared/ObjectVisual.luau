@@ -1,7 +1,7 @@
 --!strict
 -- Builds the template part for one object type: a MeshPart when its asset id is imported, otherwise a plain
 -- stand-in part of the same size. Used by the server (pooled world objects) and the client (stuck visuals).
--- Plan R8: layout, gameplay and tests never wait for art.
+-- Layout, gameplay and tests never wait for art.
 
 local AssetService = game:GetService("AssetService")
 
