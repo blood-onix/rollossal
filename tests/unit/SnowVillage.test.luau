@@ -142,7 +142,7 @@ end)
 
 test("SnowVillage: every audio key the client plays exists in Assets.sounds", function()
 	local sounds = Assets.sounds :: { [string]: string }
-	for _, key in { "pickup", "tierUnlock", "bump", "bell", "music" } do
+	for _, key in { "pickup", "tierUnlock", "bump", "bell", "musicWinter" } do
 		expect.truthy(type(sounds[key]) == "string", `sound {key} missing`)
 	end
 	for _, key in { "pickup", "tierUnlock", "bump", "bell" } do

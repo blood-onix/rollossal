@@ -28,16 +28,16 @@ effectsGroup.Name = "Effects"
 effectsGroup.Parent = SoundService
 
 -- The one looping background track, in the Music group so settings.musicVolume controls it. Nil while
--- Assets.sounds.music is empty.
+-- the active theme's Assets.sounds key is empty.
 local musicTrack: Sound? = nil
 
 local function createMusic()
-	local soundId = Assets.sounds.music
+	local soundId = Assets.sounds.musicWinter
 	if soundId == "" then
 		return
 	end
 	local track = Instance.new("Sound")
-	track.Name = "WinterMusic"
+	track.Name = "ThemeMusic"
 	track.SoundId = soundId
 	track.Looped = true
 	track.Volume = 1
@@ -98,8 +98,9 @@ local function preloadSounds()
 	task.spawn(function()
 		local ids = {}
 		-- Music is preloaded as its Sound instance below; a bare string id here fails as a type mismatch.
+		-- (Contract theme-content.md §6: the preload list skips every music* key.)
 		for key, soundId in Assets.sounds do
-			if key ~= "music" and soundId ~= "" then
+			if string.sub(key, 1, 5) ~= "music" and soundId ~= "" then
 				table.insert(ids, soundId)
 			end
 		end

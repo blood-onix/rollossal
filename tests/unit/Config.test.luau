@@ -89,13 +89,22 @@ test("Config: the run loop flag is a boolean", function()
 	expect.equal(type(Config.Flags.RunLoop), "boolean")
 end)
 
-test("Config: mesh triangle budgets per tier are 300, 300, 800, 2500, 2500", function()
-	local expected = { 300, 300, 800, 2500, 2500 }
+test("Config: mesh triangle budgets per tier are 500, 700, 1500, 3500, 5000", function()
+	local expected = { 500, 700, 1500, 3500, 5000 }
 	local actual = Config.Budgets.meshTriangles
 	expect.equal(#actual, 5)
 	for tier, value in expected do
 		expect.equal(actual[tier], value)
 	end
+end)
+
+test("Config: theme budgets, flag and emitter geometry (005)", function()
+	expect.equal(Config.Budgets.maxWeatherParticles, 40)
+	expect.equal(Config.Budgets.maxDressingSlotShare, 0.15)
+	expect.equal(Config.Budgets.defaultMaxPlacements, 1400)
+	expect.equal(Config.Flags.ThemeSystem, true)
+	expect.equal(Config.weatherEmitterHeight, 30)
+	expect.equal(Config.weatherEmitterSize, 60)
 end)
 
 test("Config: data store name, key prefix and run-start lock are the approved values", function()

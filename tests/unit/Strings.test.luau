@@ -201,6 +201,72 @@ test(
 	end
 )
 
+-- Theme-system keys (005, contracts/theme-content.md §7). The returning labels must never create FOMO:
+-- no "limited"/timer wording, in either language (Principle V).
+local themeKeys = {
+	"theme.city.name",
+	"theme.winter.name",
+	"theme.spring.name",
+	"theme.autumn.name",
+	"theme.toon.name",
+	"theme.neon.name",
+	"object.snow_village.ice_lolly",
+	"object.snow_village.beach_ball",
+	"object.snow_village.paddling_pool",
+	"object.snow_village.ice_cream_truck",
+	"object.snow_village.giant_duck",
+	"object.snow_village.winter_lights",
+	"object.snow_village.beach_towel",
+	"object.snow_village.big_snowman_fountain",
+	"book.page.snow_village.winter.name",
+	"book.page.snow_village.city.name",
+}
+local returningKeys = {
+	"book.page.snow_village.winter.returning",
+	"book.page.snow_village.city.returning",
+}
+local fomoWords = {
+	"limited",
+	"left",
+	"ends",
+	"hurry",
+	"limitado",
+	"quedan",
+	"termina",
+	"date prisa",
+	"última",
+	"últimas",
+}
+
+test("Strings: every theme-system key exists with English and Spanish", function()
+	expect.equal(#themeKeys, 16)
+	for _, key in themeKeys do
+		local entry = (Strings :: { [string]: { en: string, es: string? } })[key]
+		expect.truthy(entry ~= nil, `missing key {key}`)
+		expect.truthy(entry ~= nil and entry.en ~= "")
+		expect.truthy(entry ~= nil and entry.es ~= nil and entry.es ~= "")
+	end
+end)
+
+test("Strings: returning labels have no limited or timer wording (Principle V)", function()
+	for _, key in returningKeys do
+		local entry = (Strings :: { [string]: { en: string, es: string? } })[key]
+		expect.truthy(entry ~= nil)
+		if entry then
+			for _, text in { entry.en, entry.es :: string } do
+				local lowered = string.lower(text)
+				for _, word in fomoWords do
+					expect.truthy(
+						string.find(lowered, word, 1, true) == nil,
+						`{key}: says the FOMO word {word}`
+					)
+				end
+				expect.truthy(string.match(text, "%d:%d") == nil, `{key}: looks like a timer`)
+			end
+		end
+	end
+end)
+
 test(
 	"Strings: every Snow Village key exists with English and Spanish and the same placeholders",
 	function()

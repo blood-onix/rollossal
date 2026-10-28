@@ -177,6 +177,42 @@ local Strings: { [string]: { en: string, es: string? } } = {
 	["object.snow_village.town_house"] = { en = "Town house", es = "Casa del pueblo" },
 	["object.snow_village.skating_rink"] = { en = "Skating rink", es = "Pista de patinaje" },
 	["object.snow_village.clock_tower"] = { en = "Clock tower", es = "Torre del reloj" },
+
+	-- Theme system (005): theme names, the theme-only stand-ins and the hero variant rename, all en + es.
+	["theme.city.name"] = { en = "Sunny City", es = "Ciudad soleada" },
+	["theme.winter.name"] = { en = "Holiday City", es = "Ciudad navideña" },
+	["theme.spring.name"] = { en = "Blossom City", es = "Ciudad florida" },
+	["theme.autumn.name"] = { en = "Harvest City", es = "Ciudad de cosecha" },
+	["theme.toon.name"] = { en = "Toon City", es = "Ciudad dibujo" },
+	["theme.neon.name"] = { en = "Night City", es = "Ciudad nocturna" },
+	["object.snow_village.ice_lolly"] = { en = "Ice lolly", es = "Polo de hielo" },
+	["object.snow_village.beach_ball"] = { en = "Beach ball", es = "Pelota de playa" },
+	["object.snow_village.paddling_pool"] = { en = "Paddling pool", es = "Piscina hinchable" },
+	["object.snow_village.ice_cream_truck"] = {
+		en = "Ice-cream truck",
+		es = "Furgoneta de helados",
+	},
+	["object.snow_village.giant_duck"] = { en = "Giant duck", es = "Pato gigante" },
+	["object.snow_village.winter_lights"] = { en = "Winter lights", es = "Luces de invierno" },
+	["object.snow_village.beach_towel"] = { en = "Beach towel", es = "Toalla de playa" },
+	-- The hero variant keeps the base object's bookId; only its shown name changes.
+	["object.snow_village.big_snowman_fountain"] = { en = "Frozen fountain", es = "Fuente helada" },
+	["book.page.snow_village.winter.name"] = {
+		en = "Holiday charm",
+		es = "Encanto navideño",
+	},
+	["book.page.snow_village.city.name"] = {
+		en = "Beach day",
+		es = "Día de playa",
+	},
+	["book.page.snow_village.winter.returning"] = {
+		en = "Back when the snow falls again",
+		es = "Vuelve cuando caiga la nieve otra vez",
+	},
+	["book.page.snow_village.city.returning"] = {
+		en = "Back when the sun shines again",
+		es = "Vuelve cuando brille el sol otra vez",
+	},
 }
 
 return Strings

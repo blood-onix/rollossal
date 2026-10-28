@@ -101,13 +101,22 @@ local Config = {
 		DebugFps = true,
 		Shop = false,
 		SnowVillage = true,
+		-- Theme system (005): worlds resolve their active theme's palette, lighting, weather and slots.
+		ThemeSystem = true,
 	},
 
-	-- Budgets. meshTriangles is indexed by tier.
+	-- Budgets. meshTriangles is indexed by tier. Theme budgets: weather particles, dressing slot share
+	-- and the default placement cap (snow village sets 1700; data-model.md §7 and research R-11).
 	Budgets = {
 		maxActivePartsPerServer = 2000,
-		meshTriangles = { 300, 300, 800, 2500, 2500 },
+		meshTriangles = { 500, 700, 1500, 3500, 5000 },
+		maxWeatherParticles = 40,
+		maxDressingSlotShare = 0.15,
+		defaultMaxPlacements = 1400,
 	},
+	-- Weather emitter geometry (studs: the emission box above and around the camera; researcher R-08).
+	weatherEmitterHeight = 30,
+	weatherEmitterSize = 60,
 }
 
 return table.freeze(Config)

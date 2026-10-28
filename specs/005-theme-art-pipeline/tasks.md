@@ -20,10 +20,10 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 
 **Purpose**: Regenerate design tokens and establish the new atlas schema
 
-- [ ] T001 Update `docs/design/tokens.json`: add `color.hero` (32 entries: 6 legacy refs `snow`/`snow_light`/`stone`/`wood`/`brick`/`ice` → `w-*`; 26 reserved `hero-07..hero-32` at `#ff00ff`); regenerate `tokens.css`/`tokens.md`
-- [ ] T002 [P] Run `python3 scripts/design-tokens.py` and verify the `GENERATED PALETTES` block in `Content/Themes.luau` is rewritten correctly (one cell per line, tabs preserved for StyLua)
-- [ ] T003 [P] Update `scripts/check.sh`: add "Design tokens in sync" step (compare `tokens.json` vs `Themes.luau` block via `--check`) and "Atlas determinism" step
-- [ ] T004 [P] Create `tests/unit/Atlas.test.luau` (new): verify exactly 6 theme PNGs exist, each 1024×1024 IHDR, `atlas.json` lists 6 ids with pixel sha256
+- [X] T001 Update `docs/design/tokens.json`: add `color.hero` (32 entries: 6 legacy refs `snow`/`snow_light`/`stone`/`wood`/`brick`/`ice` → `w-*`; 26 reserved `hero-07..hero-32` at `#ff00ff`); regenerate `tokens.css`/`tokens.md`
+- [X] T002 [P] Run `python3 scripts/design-tokens.py` and verify the `GENERATED PALETTES` block in `Content/Themes.luau` is rewritten correctly (one cell per line, tabs preserved for StyLua)
+- [X] T003 [P] Update `scripts/check.sh`: add "Design tokens in sync" step (compare `tokens.json` vs `Themes.luau` block via `--check`) and "Atlas determinism" step
+- [X] T004 [P] Create `tests/unit/Atlas.test.luau` (new): verify exactly 6 theme PNGs exist, each 1024×1024 IHDR, `atlas.json` lists 6 ids with pixel sha256
 
 ---
 
@@ -31,11 +31,11 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 
 **Purpose**: Blocking prerequisites — theme data, resolution and runtime all depend on these
 
-- [ ] T005 Update `src/shared/Config.luau`: `Budgets.meshTriangles = { 500, 700, 1500, 3500, 5000 }`; add `maxWeatherParticles = 40`, `maxDressingSlotShare = 0.15`, `defaultMaxPlacements = 1400`, `Flags.ThemeSystem = true`, `weatherEmitterHeight = 30`, `weatherEmitterSize = 60`
-- [ ] T006 [P] Regenerate `art/scripts/budgets.json` from `Config`; verify `scripts/art-budgets.luau` matches via `lune run scripts/art-sync`
-- [ ] T007 Update `src/shared/Assets.luau`: add `palettes = { city="", winter="", spring="", autumn="", toon="", neon="" }`, `meshUv = "legacy"`, rename `music` → `musicWinter`, add `musicCity`/`musicSpring`/`musicAutumn`/`musicToon`/`musicNeon = ""`, `sounds` map preserved
-- [ ] T008 Update `src/shared/Localization/Strings.luau`: add theme names (`theme.*.name` en+es), object/slot/overlay/book/returning keys (~25 new strings); extend `Strings.test`
-- [ ] T009 [P] Update `Content/GreyBoxRoom.luau`: add `ThemeBinding` type, `WorldDef.themeBindings`, `ThemeBookPage`, extend `ObjectDef.role: string?`; verify `lune run tests/unit/run` still passes (base types)
+- [X] T005 Update `src/shared/Config.luau`: `Budgets.meshTriangles = { 500, 700, 1500, 3500, 5000 }`; add `maxWeatherParticles = 40`, `maxDressingSlotShare = 0.15`, `defaultMaxPlacements = 1400`, `Flags.ThemeSystem = true`, `weatherEmitterHeight = 30`, `weatherEmitterSize = 60`
+- [X] T006 [P] Regenerate `art/scripts/budgets.json` from `Config`; verify `scripts/art-budgets.luau` matches via `lune run scripts/art-sync`
+- [X] T007 Update `src/shared/Assets.luau`: add `palettes = { city="", winter="", spring="", autumn="", toon="", neon="" }`, `meshUv = "legacy"`, rename `music` → `musicWinter`, add `musicCity`/`musicSpring`/`musicAutumn`/`musicToon`/`musicNeon = ""`, `sounds` map preserved
+- [X] T008 Update `src/shared/Localization/Strings.luau`: add theme names (`theme.*.name` en+es), object/slot/overlay/book/returning keys (~25 new strings); extend `Strings.test`
+- [X] T009 [P] Update `Content/GreyBoxRoom.luau`: add `ThemeBinding` type, `WorldDef.themeBindings`, `ThemeBookPage`, extend `ObjectDef.role: string?`; verify `lune run tests/unit/run` still passes (base types)
 
 ---
 
@@ -61,9 +61,9 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 
 **Independent Test**: `python3 art/scripts/palette.py --check` exits 0; `python3 art/scripts/export_all.py --out art/export` exits 0 on all `.blend`; `lune run tests/unit/Atlas.test` passes.
 
-- [ ] T017 [US2] [P] Rewrite `art/scripts/palette.py`: stdlib-only (no `bpy`); read `tokens.json`; generate 6 PNGs (`city`, `winter`, `spring`, `autumn`, `toon`, `neon`) 1024×1024; gradient `factor(y) = 1.12 − 0.27·y/63`; 8 trim strips with procedural patterns (no words/logos); write `art/palette.json` (UV bounds for 64 cells + 8 strips) and `art/atlases/atlas.json` (sha256 of scanline buffer per theme)
-- [ ] T018 [US2] [P] Write `tests/unit/Atlas.test.luau` (if T004 not done): verify PNG dimensions, `atlas.json` completeness, pixel hash matches regenerated buffer
-- [ ] T019 [US2] [P] Create `art/scripts/build_shared.py` (new, constants): atlas geometry (`128×64` cells, 8 strips `1024×64`), inset `≥ 1 px` half-texel inside cell/strip boundary, split-normal export flag
+- [X] T017 [US2] [P] Rewrite `art/scripts/palette.py`: stdlib-only (no `bpy`); read `tokens.json`; generate 6 PNGs (`city`, `winter`, `spring`, `autumn`, `toon`, `neon`) 1024×1024; gradient `factor(y) = 1.12 − 0.27·y/63`; 8 trim strips with procedural patterns (no words/logos); write `art/palette.json` (UV bounds for 64 cells + 8 strips) and `art/atlases/atlas.json` (sha256 of scanline buffer per theme)
+- [X] T018 [US2] [P] Write `tests/unit/Atlas.test.luau` (if T004 not done): verify PNG dimensions, `atlas.json` completeness, pixel hash matches regenerated buffer
+- [X] T019 [US2] [P] Create `art/scripts/build_shared.py` (new, constants): atlas geometry (`128×64` cells, 8 strips `1024×64`), inset `≥ 1 px` half-texel inside cell/strip boundary, split-normal export flag
 - [ ] T020 [US2] Update `art/scripts/export_all.py`: allow `has_custom_normals` / `mesh_smooth_type`; validate UV within one cell/strip per `palette.json`; single `Palette` material only; identity world matrix; origin at footprint centre-bottom; longest dimension `±5%` of declared `size`; triangle count `≤ Config.Budgets.meshTriangles[tier]` (`500/700/1500/3500/5000`); exit non-zero with descriptive error on failure (negative test: move UV across edge → fail; add second material → fail; exceed budget → fail)
 - [ ] T021 [US2] [P] Create `art/scripts/qa_grid.py` (new): render one prop across 6 atlases into `art/qa/theme_grid_*.png` for cross-theme readability check
 - [ ] T022 [US2] Update `docs/design/01-world-kit.md` / design docs as needed (Principle XI v2.0.0 already in constitution; no new approval needed)
