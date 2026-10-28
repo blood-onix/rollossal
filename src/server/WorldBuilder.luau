@@ -223,7 +223,13 @@ function WorldBuilder.start(world: WorldDef, placements: { Layout.Placement }): 
 	local hubMesh: MeshPart? = nil
 	pending += 1
 	task.spawn(function()
-		hubMesh = ObjectVisual.buildMesh(world.hub.assetKey, "hub", HUB_LONGEST_SIDE)
+		local ok, result =
+			pcall(ObjectVisual.buildMesh, world.hub.assetKey, "hub", HUB_LONGEST_SIDE)
+		if ok then
+			hubMesh = result
+		else
+			warn(`[Rollossal] Hub mesh failed to build, the hub stays bare: {result}`)
+		end
 		pending -= 1
 	end)
 	while pending > 0 do

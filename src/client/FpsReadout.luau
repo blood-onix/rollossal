@@ -11,6 +11,7 @@ local Workspace = game:GetService("Workspace")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
+local FpsStats = require(Shared.Rules.FpsStats)
 local UiKit = require(script.Parent.UiKit)
 
 local DISPLAY_ORDER = 50
@@ -24,7 +25,7 @@ local FpsReadout = {}
 
 function FpsReadout.start()
 	local player = Players.LocalPlayer
-	if not Config.Flags.DebugFps or game.CreatorId ~= player.UserId then
+	if not FpsStats.visibleTo(Config.Flags.DebugFps, game.CreatorId, player.UserId) then
 		return
 	end
 
@@ -45,19 +46,11 @@ function FpsReadout.start()
 
 	local frames = 0
 	local windowStart = os.clock()
-	local lowest = math.huge
-	local sum = 0
-	local seconds = 0
-	local lastShown = 0
-	local ignoreUntil = windowStart + Config.debugFpsWarmupSeconds
+	local stats = FpsStats.new(windowStart, Config.debugFpsWarmupSeconds)
 
-	local function reset()
-		lowest = math.huge
-		sum = 0
-		seconds = 0
-		ignoreUntil = os.clock() + Config.debugFpsWarmupSeconds
-	end
-	button.Activated:Connect(reset)
+	button.Activated:Connect(function()
+		FpsStats.reset(stats, os.clock(), Config.debugFpsWarmupSeconds)
+	end)
 
 	RunService.RenderStepped:Connect(function()
 		frames += 1
@@ -68,20 +61,15 @@ function FpsReadout.start()
 		local fps = math.floor(frames / (now - windowStart) + 0.5)
 		frames = 0
 		windowStart = now
-		lastShown = fps
-		if now >= ignoreUntil then
-			lowest = math.min(lowest, fps)
-			sum += fps
-			seconds += 1
-		end
+		FpsStats.record(stats, now, fps)
 		local ball = Workspace:FindFirstChild("Balls")
 		local ballPart = ball and ball:FindFirstChild(`Ball_{player.UserId}`)
 		local diameter = ballPart and ballPart:GetAttribute("Diameter")
 		button.Text = string.format(
 			READOUT_FORMAT,
-			lastShown,
-			if seconds > 0 then sum / seconds else lastShown,
-			if lowest == math.huge then lastShown else lowest,
+			fps,
+			FpsStats.average(stats, fps),
+			FpsStats.lowest(stats, fps),
 			if typeof(diameter) == "number" then diameter else 0
 		)
 	end)

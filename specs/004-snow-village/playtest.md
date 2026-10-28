@@ -233,3 +233,23 @@ Placement counts raised (Tier 2 lawn_n 14 to 18 per spawn, Tier 3 lane_n 10 to 1
 
 - Available share at 60 / 120 / 180 / 240 s: T2 0.078 / 0.283 / 0.559 / 0.919; T3 0.225 / 0.122 / 0.178 / 0.194; T4 0.982 / 0.086 / 0.103 / 0.051.
 - The placement counts were reverted after this run: they did not meet SC-003 and cost part headroom. The part budget (2,000) leaves about 160 parts for more placements, so placements alone cannot meet SC-003. The remaining levers (growthK, the part budget, or the pool shape) are the owner's decision; SC-003 stays open.
+
+## Review round 3 (agent, 2026-10-28)
+
+Fixed: CI `check` failed at "Install tools from rokit.toml" with a 403 from the GitHub API (unauthenticated
+rate limit on the shared runner); the step now passes `github.token`. The hub mesh task in `WorldBuilder` is
+protected by `pcall` and warns. The displacement and speed verdict moved into `Rules/BallGuard` with unit tests
+(including a 247.4 studs/s step, the logged value), and the FPS readout's window logic into `Rules/FpsStats`
+with tests for the warm-up, the reset on tap and the creator gate. F4 was already done: `ArtManifest.test`
+counts triangles from the FBX files with `scripts/fbx-geometry.luau`.
+
+Not fixed, with the reason:
+
+- **SC-003 balance and the SC-004 phone half (F3, F7, F11, F20)**: the owner's recorded decision (spec.md, "Deferred
+  Balance and Phone Check", 2026-10-28) is to re-measure both on the new map. Not met, not waived.
+- **The logged 247.4 > 224 displacement (F6, F17)**: only seen in BotRun, whose bots set velocity directly; it was
+  not reproduced with a player. The verdict logic is now tested, so the remaining question is only whether a real
+  player can trigger it; the `Displacement` log (`session.violationLog`) is the place to look in the new-map run.
+- **Respawn sight rule (F15)**: the server only knows the ball's heading, not the player's camera. Modelling the
+  view cone needs the client to report its look direction; left for the mechanics pass (004b).
+- **Porches (F16)**: single 0.6-stud block with ramps is a content change for the new map.

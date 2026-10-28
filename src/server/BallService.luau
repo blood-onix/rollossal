@@ -8,6 +8,7 @@ local Workspace = game:GetService("Workspace")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
+local BallGuard = require(Shared.Rules.BallGuard)
 local Layout = require(Shared.Rules.Layout)
 local Respawn = require(Shared.Rules.Respawn)
 local StuckStack = require(Shared.Rules.StuckStack)
@@ -373,15 +374,19 @@ function BallService.step(now: number, dt: number)
 			table.remove(session.speedSamples, 1)
 		end
 
-		local stepSpeed = horizontal(part.Position - session.lastValidPosition).Magnitude / dt
+		local position = part.Position
+		local last = session.lastValidPosition
+		local stepSpeed = BallGuard.stepSpeed(last.X, last.Z, position.X, position.Z, dt)
 		local displacementLimit = Config.maxServerBallSpeed * Config.displacementSlack
+		local verdict =
+			BallGuard.verdict(speed, stepSpeed, Config.maxServerBallSpeed, Config.displacementSlack)
 
-		if speed > Config.maxServerBallSpeed then
+		if verdict == "Speed" then
 			local clamped = horizontal(velocity).Unit * Config.maxServerBallSpeed
 			part.AssemblyLinearVelocity = Vector3.new(clamped.X, velocity.Y, clamped.Z)
 			session.lastValidPosition = part.Position
 			recordViolation(session, "Speed", speed, Config.maxServerBallSpeed, now)
-		elseif stepSpeed > displacementLimit then
+		elseif verdict == "Displacement" then
 			part.Position = session.lastValidPosition
 			recordViolation(session, "Displacement", stepSpeed, displacementLimit, now)
 		else
