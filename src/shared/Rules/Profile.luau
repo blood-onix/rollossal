@@ -148,7 +148,7 @@ function Profile.prepare(data: { [string]: any }, defaults: Defaults): (boolean,
 		end
 	end
 	Profile.reconcile(data, defaults)
-	-- The ledger only guards against a run applied twice in one session (plan finding F-2).
+	-- The ledger only guards against a run applied twice in one session.
 	data.appliedRuns = {}
 	return true, nil
 end

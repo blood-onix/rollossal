@@ -1,0 +1,29 @@
+<!-- @dsCard group="UI" height=150 subtitle="UiKit.button, toggle and utility button" -->
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../tokens.css">
+<script>(function(){var t=new URLSearchParams(location.search).get('theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Montserrat:wght@500&display=swap">
+<style>
+  body { margin:0; background:var(--ui-panel); color:var(--ui-text); font-family:var(--font-body); }
+  .stroke { text-shadow: -2px -2px 0 var(--ui-stroke), 2px -2px 0 var(--ui-stroke), -2px 2px 0 var(--ui-stroke), 2px 2px 0 var(--ui-stroke), 0 2px 0 var(--ui-stroke), 0 -2px 0 var(--ui-stroke), 2px 0 0 var(--ui-stroke), -2px 0 0 var(--ui-stroke); }
+  .display { font-family:var(--font-display); font-weight:600; }
+  .row { display:flex; flex-wrap:wrap; gap:var(--space-3); padding:var(--space-3); align-items:center; }
+  .btn { border:0; border-radius:var(--radius-button); color:var(--ui-text); font-size:28px; line-height:32px; min-height:var(--touch-main); padding:0 var(--space-6); }
+  .primary { background:var(--ui-button); width:214px; height:96px; }
+  .off { background:var(--ui-off); width:214px; height:96px; }
+  .util { background:var(--ui-off); width:var(--touch-utility); height:var(--touch-utility); min-height:0; padding:0; font-size:28px; }
+  .note { font-size:18px; line-height:22px; color:var(--ui-unknown); max-width:220px; }
+</style>
+</head>
+<body>
+<div class="row">
+  <button class="btn primary display stroke">ROLL AGAIN</button>
+  <button class="btn off display stroke">HUB</button>
+  <button class="btn util stroke" aria-label="Settings">⚙</button>
+  <span class="note">Shop opens after this run</span>
+</div>
+</body>
+</html>

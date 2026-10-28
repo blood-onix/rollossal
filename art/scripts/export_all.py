@@ -1,0 +1,215 @@
+# Exports every Snow Village collection to art/export/<id>.fbx and writes art/export/manifest.json.
+# Validates the modelling rules and exits non-zero on any violation, so a broken model can never reach
+# the manifest (contract art-pipeline.md "Modelling rules"); tests/unit/ArtManifest.test.luau re-checks
+# the manifest offline against the FBX files (bytes, sha256, budgets, hard-coded id scan).
+# Run: blender --background --python art/scripts/export_all.py -- --out art/export
+
+import datetime
+import hashlib
+import json
+import os
+import sys
+
+import bmesh
+import bpy
+
+CELLS = 8      # the palette texture is an 8 x 8 grid of one-colour swatch cells (build_shared.py)
+EPS = 1e-4
+
+REQUIRED_MATERIAL = "Palette"
+
+
+def art_dir() -> str:
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def load_json(path):
+    with open(path, "r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def fbx_op():
+    # The FBX exporter operator name moved between Blender releases; use whichever exists.
+    for candidate in ("export_scene.fbx", "io_scene_fbx.export", "io_scene_fbx.export_fb"):
+        node = bpy.ops
+        try:
+            for part in candidate.split("."):
+                node = getattr(node, part)
+            return node
+        except AttributeError:
+            continue
+    raise RuntimeError("no FBX export operator found in this Blender build")
+
+
+def face_failures(obj, rects):
+    """Every polygon's UVs must lie inside one palette swatch cell; returns the failing faces."""
+    rects_area = {}
+    for name, (u, v) in rects.items():
+        half = (1.0 / CELLS) / 2.0
+        rects_area[name] = (u - half, v - half, u + half, v + half)
+    layer = obj.data.uv_layers.active
+    if layer is None:
+        return ["%s: no UV layer" % obj.name]
+    failures = []
+    for polygon in obj.data.polygons:
+        ok = False
+        for u0, v0, u1, v1 in rects_area.values():
+            if all(u0 <= layer.data[loop].uv.x <= u1 and v0 <= layer.data[loop].uv.y <= v1
+                   for loop in polygon.loop_indices):
+                ok = True
+                break
+        if not ok:
+            failures.append(f"{obj.name}: face {polygon.index} UVs span outside every swatch")
+    return failures
+
+
+def check_collection(coll, object_id, budgets, rects):
+    """Validates one objectId collection against the modelling rules; returns its triangle count."""
+    errors = []
+    meshes = [o for o in coll.objects if o.type == "MESH"]
+    others = [o.name for o in coll.objects if o.type != "MESH"]
+    if not meshes:
+        errors.append("collection holds no mesh")
+    if others:
+        errors.append(f"non-mesh children {others}")
+    for obj in meshes:
+        if obj.modifiers:
+            errors.append(f"{obj.name}: unapplied modifiers {[m.name for m in obj.modifiers]}")
+        if any(p.use_smooth for p in obj.data.polygons):
+            errors.append(f"{obj.name}: has smooth-shaded faces")
+        if getattr(obj.data, "has_custom_normals", False):
+            errors.append(f"{obj.name}: has custom normals")
+        identity = obj.matrix_world.Identity(4)
+        if obj.matrix_world != identity:
+            errors.append(f"{obj.name}: world matrix not identity ({obj.matrix_world!r})")
+        if len(obj.data.materials) != 1 or obj.data.materials[0].name != REQUIRED_MATERIAL:
+            errors.append(f"{obj.name}: expected exactly one material '{REQUIRED_MATERIAL}', "
+                          f"got {[m.name if m else None for m in obj.data.materials]}")
+
+    min_x = max_x = min_y = max_y = min_z = max_z = None
+    triangles = 0
+    for obj in meshes:
+        holes = face_failures(obj, rects)
+        if holes:
+            errors.extend(holes[:4])
+        matrix = obj.matrix_world
+        for vert in obj.data.vertices:
+            wx, wy, wz = matrix @ vert.co
+            min_x = wx if min_x is None else min(min_x, wx)
+            max_x = wx if max_x is None else max(max_x, wx)
+            min_y = wy if min_y is None else min(min_y, wy)
+            max_y = wy if max_y is None else max(max_y, wy)
+            min_z = wz if min_z is None else min(min_z, wz)
+            max_z = wz if max_z is None else max(max_z, wz)
+        bm = bmesh.new()
+        bm.from_mesh(obj.data)
+        bmesh.ops.triangulate(bm, faces=bm.faces[:])
+        triangles += len(bm.faces)
+        bm.free()
+    if min_x is not None:
+        centre_x, centre_y = (min_x + max_x) / 2.0, (min_y + max_y) / 2.0
+        longest = max(max_x - min_x, max_y - min_y, max_z - min_z)
+        if abs(centre_x) > 0.02 or abs(centre_y) > 0.02:
+            errors.append(f"origin not at the footprint centre ({centre_x:.3f}, {centre_y:.3f})")
+        if abs(min_z) > 0.02:
+            errors.append(f"origin not at the footprint bottom (min z {min_z:.3f})")
+        size = budgets["sizes"].get(object_id)
+        if size and abs(longest - size) > 0.05 * size:
+            errors.append(f"longest side {longest:.3f} not within 5% of size {size}")
+    tier = budgets["tiers"].get(object_id)
+    limit = budgets["meshTriangles"][tier - 1] if tier else 10 ** 9
+    if triangles > limit:
+        errors.append(f"{triangles} post-triangulation triangles over budget {limit}")
+    if errors:
+        raise RuntimeError(f"{object_id}: " + "; ".join(errors))
+    return triangles
+
+
+def export_to_fbx(meshes, out_path) -> None:
+    bpy.ops.object.select_all(action="DESELECT")
+    bpy.context.view_layer.objects.active = meshes[-1]
+    for obj in meshes:
+        obj.select_set(True)
+    exporter = fbx_op()
+    kwargs = {
+        "filepath": out_path,
+        "use_selection": True,
+        "apply_unit_scale": True,
+        "axis_forward": "-Z",
+        "axis_up": "Y",
+        "object_types": {"MESH"},
+        "add_leaf_bones": False,
+        "bake_anim": False,
+        "bake_space_transform": False,
+        "mesh_smooth_type": "OFF",
+        "path_mode": "STRIP",
+    }
+    try:
+        exporter(**kwargs)
+    except TypeError as exc:
+        print(f"export: FBX operator rejected some kwargs ({exc}); retrying with the core set")
+        exporter(filepath=out_path, use_selection=True, apply_unit_scale=True,
+                 axis_forward="-Z", axis_up="Y", object_types={"MESH"})
+
+
+def run() -> None:
+    argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+    art = art_dir()
+    out_abs = os.path.join(art, "export")
+    if "--out" in argv:
+        out_abs = os.path.normpath(os.path.join(art, "..", argv[argv.index("--out") + 1].strip()))
+    source_dir = os.path.join(art, "source")
+    os.makedirs(out_abs, exist_ok=True)
+
+    budgets = load_json(os.path.join(art, "scripts", "budgets.json"))
+    rects = {name: (centre["u"], centre["v"])
+             for name, centre in load_json(os.path.join(art, "palette.json")).items()}
+
+    entries = []
+    for name in sorted(os.listdir(source_dir)):
+        if not name.endswith(".blend"):
+            continue
+        bpy.ops.wm.open_mainfile(filepath=os.path.join(source_dir, name))
+        collections = list(bpy.data.collections)
+        if not collections:
+            raise RuntimeError(f"{name}: no collections to export")
+        for coll in sorted(collections, key=lambda c: c.name):
+            object_id = coll.name
+            triangles = check_collection(coll, object_id, budgets, rects)
+            out_path = os.path.join(out_abs, f"{object_id}.fbx")
+            export_to_fbx([o for o in coll.objects if o.type == "MESH"], out_path)
+            data = open(out_path, "rb").read()
+            entries.append({
+                "id": object_id,
+                "tier": budgets["tiers"][object_id],
+                "triangles": triangles,
+                "bytes": len(data),
+                "sha256": hashlib.sha256(data).hexdigest(),
+            })
+            print(f"export: {object_id} ({triangles} tris, {len(data)} bytes)")
+
+    expected = set(budgets["tiers"])
+    exported = {entry["id"] for entry in entries}
+    if expected != exported:
+        raise RuntimeError(f"id mismatch: missing={sorted(expected - exported)} "
+                           f"extra={sorted(exported - expected)}")
+
+    manifest = {
+        "generated": datetime.date.today().isoformat(),
+        "blender": bpy.app.version_string,
+        "palette": "palette.png",
+        "meshes": sorted(entries, key=lambda entry: entry["id"]),
+    }
+    manifest_path = os.path.join(out_abs, "manifest.json")
+    with open(manifest_path, "w", encoding="utf-8") as handle:
+        json.dump(manifest, handle, indent=2)
+        handle.write("\n")
+    print(f"export: wrote {manifest_path} ({len(entries)} meshes)")
+
+
+try:
+    run()
+    print("export: OK")
+except Exception as exc:  # Blender swallows python failures with exit code 0; make the failure real.
+    print(f"export: FAILED\n{exc}")
+    sys.exit(1)

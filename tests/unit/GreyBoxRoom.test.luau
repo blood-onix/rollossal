@@ -242,4 +242,39 @@ test("Room: the hub is sized and sits clear of the room", function()
 	expect.truthy(math.abs(hub.center.x) - hub.halfExtent > Room.halfExtent + 2)
 end)
 
+test("Room: the WorldDef fields mirror the cubes, the ring and the walls", function()
+	expect.equal(#Room.fixedPlacements, 30)
+	for index, placement in Room.fixedPlacements do
+		local cube = Room.cubes[index]
+		expect.equal(placement.id, cube.id)
+		expect.equal(placement.objectId, "cube_t" .. cube.tier)
+		expect.equal(placement.x, cube.x)
+		expect.equal(placement.z, cube.z)
+		expect.equal(placement.y, 0)
+	end
+	expect.equal(#Room.zones, 0)
+	expect.equal(#Room.spawnPoints, Room.spawnSlots)
+	for index, point in Room.spawnPoints do
+		expect.equal(point.slot, index)
+		expect.near(math.sqrt(point.x ^ 2 + point.z ^ 2), Room.spawnRingRadius, 1e-9)
+		expect.equal(point.y, 0)
+	end
+	expect.equal(#Room.environment.blocks, 6)
+	for _, block in Room.environment.blocks do
+		expect.truthy(Room.environment.palette[block.swatch] ~= nil)
+	end
+	expect.truthy(Room.outerHalfExtent >= Room.halfExtent)
+end)
+
+test("Room: every placement names a known object and every object carries its shade", function()
+	local shades: { [string]: number } = {}
+	for _, object in Room.objects do
+		expect.truthy(object.shade ~= nil)
+		shades[object.id] = object.shade :: number
+	end
+	for _, placement in Room.fixedPlacements do
+		expect.truthy(shades[placement.objectId] ~= nil)
+	end
+end)
+
 return {}

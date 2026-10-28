@@ -1,7 +1,39 @@
 # Agent notes for Rollossal
 
-Read by every coding agent (Claude Code loads it through `CLAUDE.md`, opencode reads it directly). The
-constitution (`.specify/memory/constitution.md`) still governs; this file is about how to get the work done.
+Read by every coding agent (Claude Code loads it through `CLAUDE.md`; opencode and GitHub Copilot read it
+directly, Copilot also through `.github/copilot-instructions.md`). The constitution (`.specify/memory/constitution.md`) still governs; this file is about how to get the work done.
+
+## Design system
+
+`docs/design/` is the art and content direction: the themes (seasons), the city asset list by tier, the
+Downtown layout, cosmetics, Roblox budgets and safety rules, and the colour, type and touch tokens. Read its
+`README.md` before speccing or building a world, prop, theme, cosmetic or UI screen. It is a proposal: the
+items its README lists as needing the owner's approval stay open until a spec or the constitution records the
+decision. `tokens.css` and `tokens.md` are generated from `tokens.json`: change the JSON, then run
+`python3 scripts/design-tokens.py`.
+
+## Never take over the user's screen
+
+The user works on this same laptop while the agent runs. Nothing the agent starts may steal focus, move the
+mouse, press keys, switch apps or windows, or otherwise act on the user's desktop outside the Studio MCP tools.
+
+- Forbidden, in the foreground or in a background task, loop, cron or `ScheduleWakeup`: `osascript` /
+  AppleScript / JXA (`tell application ... to activate`, `System Events`), `open -a`, `cliclick`, `caffeinate`
+  tricks that wake the display, `xdotool`, and anything else that raises, focuses or drives an app window.
+- Loops are not the problem. Running a test, a playtest, a sampler or a poll in a loop or a background task is
+  fine, as long as the loop only touches files, `rojo`, git, the Studio MCP tools or the game itself. What is
+  forbidden is a loop (or any one-off) that acts on the owner's desktop: activating or focusing Studio, moving
+  the mouse, pressing keys, keeping the display awake.
+- Do not "keep Studio awake" or unthrottled by activating it on a timer, and do not stop the laptop from
+  sleeping. The owner is working on the machine, so it does not sleep, and Studio is in front whenever they
+  want it to be.
+- A throttled Studio (15 fps in the background) is a known limit, not a reason to skip a task. Run the
+  measurement anyway without touching the window, record per-second samples, report the seconds at exactly
+  15 fps as "throttled" separately from the rest, and judge the result on the unthrottled seconds. Do not
+  withdraw or hand back a 🔒 task only because Studio might be in the background. If there are no unthrottled
+  seconds in the window that matters, ask the owner once to keep Studio in front for the run, then rerun.
+- Background tasks may poll files, `rojo`, git or the Studio MCP probe. They may not touch the GUI.
+- If a step seems to need this, stop and ask. Approval covers one named action, once, not a loop.
 
 ## Studio tasks (🔒) are done by the agent, not handed back
 

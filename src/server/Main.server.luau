@@ -20,6 +20,7 @@ if Config.Flags.Saving then
 end
 
 WorldSpawner.start()
+WorldSpawner.setWatcherSource(BallService.watchers)
 FriendCache.start()
 BallService.start()
 AbsorbService.start()

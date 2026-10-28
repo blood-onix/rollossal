@@ -1,0 +1,15 @@
+{
+  "verdict": "complete",
+  "remaining": [],
+  "summary": "The repo gate passes and no agent-actionable gap remains, but SC-003 balance and the SC-004 phone half (both needed to close T031) are owner-only, so the feature is incomplete.",
+  "completion": {
+    "source": "manual",
+    "at": "2026-10-28T10:42:16.245Z",
+    "by": "Roman_Tikhonov <bloodonix@gmail.com>",
+    "review": "pending",
+    "signedOff": [
+      "T031 / SC-003: every tier zone keeps available objects in a 240 s 12-ball run (latest run: Tier 4 available share 0.05 to 0.12 at 240 s against the 20 % target)",
+      "T031 / SC-004 phone half: at least 30 fps at Tier 4 on the reference phone, with active parts within budget"
+    ]
+  }
+}

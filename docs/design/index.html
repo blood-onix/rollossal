@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rollossal design system</title>
+<style>
+body { margin: 0; padding: 16px; background: #1b1d22; color: #e8e8ea; font: 15px/1.4 system-ui, sans-serif; }
+header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; max-width: 1000px; margin: 0 auto 16px; }
+h1 { font-size: 22px; margin: 0; }
+ul { max-width: 1000px; margin: 0 auto 24px; padding-left: 20px; columns: 2; }
+a { color: #9cc8ff; }
+section { max-width: 1000px; margin: 0 auto 24px; }
+h2 { font-size: 16px; margin: 0 0 6px; }
+h2 small { font-weight: 400; color: #a0a4ad; margin-left: 8px; }
+iframe { width: 100%; border: 0; border-radius: 8px; background: #fff; display: block; }
+select { font: inherit; padding: 4px 8px; }
+</style>
+</head>
+<body>
+<header><h1>Rollossal design system</h1><label>Theme <select id="theme"><option value="city">Sunny City</option><option value="winter">Holiday City</option><option value="spring">Blossom City</option><option value="autumn">Harvest City</option><option value="toon">Toon City</option><option value="neon">Night City</option></select></label></header>
+<ul><li><a href="README.md">Brand book</a></li><li><a href="01-world-kit.md">World kit and seasons</a></li><li><a href="02-city-assets.md">City asset list</a></li><li><a href="03-city-level.md">Default level: Downtown</a></li><li><a href="04-player-cosmetics.md">Player cosmetics and shop</a></li><li><a href="05-roblox-limits.md">Roblox limits, safety and performance</a></li><li><a href="06-art-style.md">Art style: how realistic</a></li><li><a href="07-holiday-city.md">Launch theme: Holiday City</a></li><li><a href="tokens.md">Tokens</a></li></ul>
+<section><h2>Cover<small></small></h2><iframe data-src="components/Cover/preview.html" style="height:288px" loading="lazy" title="Cover"></iframe></section><section><h2>CityMap<small>World · Downtown, top-down: rings from doorstep to skyline</small></h2><iframe data-src="components/CityMap/preview.html" style="height:470px" loading="lazy" title="CityMap"></iframe></section><section><h2>PaletteGrid<small>World · The 32 shared palette roles. Switch theme to reskin.</small></h2><iframe data-src="components/PaletteGrid/preview.html" style="height:360px" loading="lazy" title="PaletteGrid"></iframe></section><section><h2>PropCard<small>World · Hero props in the stylised-real look, by palette role</small></h2><iframe data-src="components/PropCard/preview.html" style="height:330px" loading="lazy" title="PropCard"></iframe></section><section><h2>SizeLadder<small>World · Five tiers, ball beside what it can eat</small></h2><iframe data-src="components/SizeLadder/preview.html" style="height:300px" loading="lazy" title="SizeLadder"></iframe></section><section><h2>StyleCompare<small>World · One hydrant in three art styles</small></h2><iframe data-src="components/StyleCompare/preview.html" style="height:360px" loading="lazy" title="StyleCompare"></iframe></section><section><h2>BallSkin<small>Cosmetics · Sports balls, sets and meme-safe toppers</small></h2><iframe data-src="components/BallSkin/preview.html" style="height:540px" loading="lazy" title="BallSkin"></iframe></section><section><h2>TrailAura<small>Cosmetics · Trails: inspired-by and crazy originals, plus an aura</small></h2><iframe data-src="components/TrailAura/preview.html" style="height:540px" loading="lazy" title="TrailAura"></iframe></section><section><h2>Button<small>UI · UiKit.button, toggle and utility button</small></h2><iframe data-src="components/Button/preview.html" style="height:150px" loading="lazy" title="Button"></iframe></section><section><h2>ShopTile<small>UI · Shop tiles: tabs, price, selected, owned</small></h2><iframe data-src="components/ShopTile/preview.html" style="height:290px" loading="lazy" title="ShopTile"></iframe></section><section><h2>SizeMeter<small>UI · HUD: size meter and timer</small></h2><iframe data-src="components/SizeMeter/preview.html" style="height:170px" loading="lazy" title="SizeMeter"></iframe></section><section><h2>TierBanner<small>UI · Tier banner, 2.5 s</small></h2><iframe data-src="components/TierBanner/preview.html" style="height:140px" loading="lazy" title="TierBanner"></iframe></section>
+<script>
+var sel = document.getElementById('theme');
+function apply() {
+  document.querySelectorAll('iframe').forEach(function (f) { f.src = f.dataset.src + '?theme=' + sel.value; });
+}
+sel.addEventListener('change', apply);
+apply();
+</script>
+</body>
+</html>

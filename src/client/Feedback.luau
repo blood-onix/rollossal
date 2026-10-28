@@ -27,6 +27,25 @@ local effectsGroup = Instance.new("SoundGroup")
 effectsGroup.Name = "Effects"
 effectsGroup.Parent = SoundService
 
+-- The one looping background track, in the Music group so settings.musicVolume controls it. Nil while
+-- Assets.sounds.music is empty.
+local musicTrack: Sound? = nil
+
+local function createMusic()
+	local soundId = Assets.sounds.music
+	if soundId == "" then
+		return
+	end
+	local track = Instance.new("Sound")
+	track.Name = "WinterMusic"
+	track.SoundId = soundId
+	track.Looped = true
+	track.Volume = 1
+	track.SoundGroup = musicGroup
+	track.Parent = SoundService
+	musicTrack = track
+end
+
 function Feedback.setVolumes(music: number, effects: number)
 	musicGroup.Volume = music
 	effectsGroup.Volume = effects
@@ -78,15 +97,30 @@ end
 local function preloadSounds()
 	task.spawn(function()
 		local ids = {}
-		for _, soundId in Assets.sounds do
-			table.insert(ids, soundId)
+		-- Music is preloaded as its Sound instance below; a bare string id here fails as a type mismatch.
+		for key, soundId in Assets.sounds do
+			if key ~= "music" and soundId ~= "" then
+				table.insert(ids, soundId)
+			end
+		end
+		-- The palette texture loads here too ("" means not imported yet). Meshes are not preloaded: PreloadAsync
+		-- on a bare mesh id logs "Asset type does not match requested type"; ObjectVisual loads them with
+		-- CreateMeshPartAsync.
+		if Assets.palette ~= "" then
+			table.insert(ids, Assets.palette)
 		end
 		pcall(ContentProvider.PreloadAsync, ContentProvider, ids)
+		-- The music starts only once it is loaded, so it never begins late or stutters.
+		local track = musicTrack
+		if track then
+			pcall(ContentProvider.PreloadAsync, ContentProvider, { track })
+			track:Play()
+		end
 	end)
 end
 
--- The engine exposes the player's reduced-motion setting (GuiService.ReducedMotionEnabled, checked in
--- T038), so the ReduceMotion attribute follows it as well as the saved setting (research R11).
+-- The engine exposes the player's reduced-motion setting (GuiService.ReducedMotionEnabled), so the
+-- ReduceMotion attribute follows it as well as the saved setting.
 local function followReducedMotion()
 	applyReduceMotion()
 	GuiService:GetPropertyChangedSignal("ReducedMotionEnabled"):Connect(applyReduceMotion)
@@ -94,6 +128,7 @@ end
 
 function Feedback.start()
 	followReducedMotion()
+	createMusic()
 	preloadSounds()
 
 	RunClient.pickup:Connect(function(objectId: string)

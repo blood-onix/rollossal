@@ -38,6 +38,13 @@ luau-lsp analyze \
 step "Lune unit tests"
 lune run tests/unit/run
 
+step "World-agnostic guard (no GreyBoxRoom in src/server or src/client)"
+if grep -rn "GreyBoxRoom" src/server src/client --include='*.luau'; then
+  echo "FAIL: server and client code must read Worlds, not GreyBoxRoom (see lines above)" >&2
+  exit 1
+fi
+echo "OK: no GreyBoxRoom reference in src/server or src/client"
+
 step "Rules purity guard ($RULES_DIR)"
 forbidden='(^|[^[:alnum:]_])(Instance|workspace|game|task|DateTime|Vector3|CFrame|GetService|Enum|tick)([^[:alnum:]_]|$)|math\.random|os\.clock|os\.time|require\(script'
 if grep -rnE "$forbidden" "$RULES_DIR" --include='*.luau'; then
