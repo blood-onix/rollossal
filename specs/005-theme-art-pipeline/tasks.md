@@ -239,6 +239,10 @@ Task T016: Update Content/GreyBoxRoom.luau types
 
 ## Phase 14: Convergence
 
-- [ ] T056 Enforce the world placement budget in `src/shared/Rules/ThemeResolve.luau` (base placements plus overlay placements must not exceed `world.maxPlacements`, defaulting to `Config.Budgets.defaultMaxPlacements` = 1400 when nil) and assert it in `tests/unit/SnowVillage.test.luau` for every supported theme against `maxPlacements = 1700` per FR-002, FR-011 (missing)
-- [ ] T057 Add a pure collision-class rule to `src/shared/Rules/Tiers.luau` (Box for tiers 1-3, Hull for tiers 4-5), use it in `ObjectVisual.buildMesh`, and assert in `tests/unit/ThemeResolve.test.luau` that every `heroVariant` keeps its base hero's collision class per FR-011 (partial)
-- [ ] T058 In `tests/studio/ThemeSwitch.spec.luau` the reduce-motion case must set the `LocalPlayer` attribute `ReduceMotion = true`, assert `WeatherController.isEmitting()` is false, and restore the attribute; if no `LocalPlayer` exists in that Jest context, rename the case to say it checks only the unstarted state per US1/AC2 (partial)
+- [X] T056 Enforce the world placement budget in `src/shared/Rules/ThemeResolve.luau` (base placements plus overlay placements must not exceed `world.maxPlacements`, defaulting to `Config.Budgets.defaultMaxPlacements` = 1400 when nil) and assert it in `tests/unit/SnowVillage.test.luau` for every supported theme against `maxPlacements = 1700` per FR-002, FR-011 (missing)
+- [X] T057 Add a pure collision-class rule to `src/shared/Rules/Tiers.luau` (Box for tiers 1-3, Hull for tiers 4-5), use it in `ObjectVisual.buildMesh`, and assert in `tests/unit/ThemeResolve.test.luau` that every `heroVariant` keeps its base hero's collision class per FR-011 (partial)
+- [X] T058 In `tests/studio/ThemeSwitch.spec.luau` the reduce-motion case must set the `LocalPlayer` attribute `ReduceMotion = true`, assert `WeatherController.isEmitting()` is false, and restore the attribute; if no `LocalPlayer` exists in that Jest context, rename the case to say it checks only the unstarted state per US1/AC2 (partial)
+
+## Phase 15: Convergence
+
+- [ ] T059 [Owner] Confirm plan deviations D1 (slots, overlays, heroVariants and bookPage live on `WorldDef.themeBindings`, not `ThemeDef`) and D2 (`Worlds.forTheme(themeId)` takes no world argument), then record them in `spec.md` FR-001, FR-002 and FR-003 per plan "Spec deviations to confirm"; the owner decides, the agent does not edit spec text (contradicts)

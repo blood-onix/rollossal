@@ -1,16 +1,13 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T040 Studio Book proof: absorb winter_lights in winter, then confirm the winter returning page in city",
-    "T042 Record round observations in specs/005-theme-art-pipeline/playtest.md after T040 and T041",
-    "T056 Enforce and test the world placement budget (maxPlacements) for base plus overlay placements",
-    "T057 Pure Box/Hull collision-class rule with a Lune test that every heroVariant keeps its base class",
-    "T058 Make the ThemeSwitch reduce-motion case set ReduceMotion and assert isEmitting() is false"
+    "T040 Studio Book proof: drive the ball to absorb winter_lights in winter, open the Book, then confirm the winter returning page in city",
+    "T042 Record round observations in specs/005-theme-art-pipeline/playtest.md after T040 and T041 (date and commit)"
   ],
   "human": [
     {
       "item": "T041 640x360 capture and 60 s unthrottled fps run",
-      "reason": "The owner must keep Studio in front for the run: AGENTS.md forbids the agent from focusing or activating Studio, and the last 60 s run was throttled to 15 fps in 59 of 60 seconds"
+      "reason": "Studio must stay in front for an unthrottled window; AGENTS.md forbids the agent from focusing or activating Studio, and the round 3 run was throttled to 15 fps in 59 of 60 seconds"
     },
     {
       "item": "T045 Owner hand-off: upload atlases and 65 FBX, flip Assets.meshUv to atlas, delete Assets.palette",
@@ -19,7 +16,11 @@
     {
       "item": "T054 Supply a looping city music track and set Assets.musicCity",
       "reason": "The track is owner-supplied audio with a Roblox asset ID; the agent has no such asset and cannot upload or publish it"
+    },
+    {
+      "item": "T059 Confirm plan deviations D1 and D2 and record them in spec.md FR-001 to FR-003",
+      "reason": "The plan asks the owner to confirm these design deviations before the owner-approved spec text changes; the agent does not edit spec text on its own"
     }
   ],
-  "summary": "Code, Lune tests, art pipeline and the constitution checks pass, but the placement budget is never enforced, the collision class is untested in Lune, and the reduce-motion Studio case is vacuous; three new convergence tasks (T056-T058) are appended and T040, T042 and the owner items T041, T045 and T054 remain open."
+  "summary": "Code, 343 Lune tests, token and atlas checks pass and the placement, hero-variant, keep-out and returning-label rules are enforced, but the Studio Book proof (T040), its observation record (T042), the fps capture (T041), the owner hand-off items (T045, T054), and a new spec-deviation confirmation (T059, appended) remain open."
 }
