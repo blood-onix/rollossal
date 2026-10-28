@@ -205,7 +205,11 @@ Recorded by the agent at the owner's instruction in chat.
 - **SC-004 phone half**: owner played on their phone with the owner-only FPS readout (`FpsReadout`,
   `Config.Flags.DebugFps`). Readout: **avg 59 fps, lowest 22 fps**. The lowest is below the 30 fps target; it is the
   single lowest one-second reading of the session, not a sustained figure, and the owner judged the play "quite
-  smooth" and accepted it. Phone model and the Tier-4 share of the session were not noted. Server half: 1,702 parts
+  smooth" and accepted it. Phone model: **Google Pixel 7 Pro** (owner, in chat, 2026-10-28). The Tier-4 time window
+  and the Tier-4 share of the session were **not measured**: the owner says Tier 4 is hard to reach by hand on this
+  map, which suits bots that skip bumps, so the 59/22 fps readout is not a Tier-4 figure. **SC-004 phone half is
+  therefore not verifiably met, and not waived**; the owner chose to skip it in this spec and redo it on the new map
+  from the design system spec. Server half: 1,702 parts
   (budget 2,000), see the round 7 rerun above (59.9 fps in Studio, min 57).
 - **SC-003 balance (`growthK`, Tier 3/Tier 4 placement)**: **skipped for now**, by the owner. It cannot be measured
   properly without the proper map; `growthK = 1.5` and the Tier 3/Tier 4 counts stay as they are. Not met, not waived:

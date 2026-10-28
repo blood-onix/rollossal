@@ -1,17 +1,15 @@
 {
-  "verdict": "complete",
+  "verdict": "incomplete",
   "remaining": [],
-  "summary": "All 35 tasks in tasks.md except T035 are checked and check.sh exits 0, but T035's Studio fps measurement and the owner-only phone, balance and sign-off checks remain open, so the feature is not converged.",
-  "completion": {
-    "source": "manual",
-    "at": "2026-10-28T09:12:44.795Z",
-    "by": "Roman_Tikhonov <bloodonix@gmail.com>",
-    "review": "pending",
-    "signedOff": [
-      "T035 Studio-half SC-004 fps measurement at Tier 4 (withdrawn round 6, AppleScript activation loop forbidden by AGENTS.md)",
-      "T032 / SC-004 phone half: >= 30 fps and part count on the reference phone",
-      "T032 / SC-005 phone half: owner's phone-size look at the final art with a clean console",
-      "T032 / SC-003 balance: growthK and Tier 3-Tier 4 placement tuning"
-    ]
-  }
+  "human": [
+    {
+      "item": "T031 / SC-003: every tier zone keeps available objects in a 240 s 12-ball run (latest run: Tier 4 available share 0.05 to 0.12 at 240 s against the 20 % target)",
+      "reason": "Balance is an owner decision (growthK, part budget or pool shape); the owner deferred it to the final map, and adding placements alone cannot meet it within the 2,000-part budget."
+    },
+    {
+      "item": "T031 / SC-004 phone half: at least 30 fps at Tier 4 on the reference phone, with active parts within budget",
+      "reason": "Reaching Tier 4 needs a person playing on a phone; the 2026-10-28 owner phone check (avg 59 fps, lowest 22 fps) never reached Tier 4, and the owner deferred the redo to the final map."
+    }
+  ],
+  "summary": "The repo gate passes and no agent-actionable gap remains, but SC-003 balance and the SC-004 phone half (both needed to close T031) are owner-only, so the feature is incomplete."
 }
