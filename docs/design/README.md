@@ -24,6 +24,8 @@ the newer intent, but these points need the owner's approval before a spec relie
 - [Launch theme: Holiday City](07-holiday-city.md)
 - [Tokens](tokens.md): every colour per theme, type, spacing, radius and touch sizes ([tokens.json](tokens.json), [tokens.css](tokens.css)). Regenerate the CSS and tables with `python3 scripts/design-tokens.py` after editing the JSON.
 - [components/](components): one folder per preview, each with a `README.md` and a static `preview.html`.
+- [Spec Kit prompt](speckit-prompt.md): the `/speckit-specify` input for Downtown, Holiday City and the theme system.
+- [Constitution prompt](constitution-prompt.md): the `/speckit-constitution` input that amended the constitution to 2.0.0 for this design system.
 - [index.html](index.html): all previews on one page with a theme switch. Open it in a browser straight from disk.
 
 Previews take the theme from the URL, for example `components/CityMap/preview.html?theme=winter`.

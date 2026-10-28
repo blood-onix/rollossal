@@ -1,20 +1,27 @@
 # Rollossal: game design brief
 
-Status: draft 0.1, 2026-10-24. Numbers marked **(proposed)** are starting values to tune in
+Status: draft 0.2, 2026-10-28. Numbers marked **(proposed)** are starting values to tune in
 playtests; the owners confirm them in `/speckit-clarify` or in a pull request. **TBD (owner)**
 marks decisions only the owners make, such as prices.
+
+**Art and content direction lives in [`docs/design/`](design/README.md)** (the design system:
+world kit and seasons, the Downtown level and asset list, Holiday City, cosmetics, Roblox limits,
+art style and tokens). This brief covers the game as a whole and defers to it on worlds, props,
+themes, cosmetics and look. Since 0.2 the launch world is **Downtown in its Holiday City theme**
+(it replaces Snow Village) and January brings **Sunny City**, the same map re-themed (it replaces
+Candy Town). The detailed feature stories live in the Conveyor backlog (§11).
 
 ## 1. Summary
 
 | | |
 | --- | --- |
-| Logline | Roll a ball that sticks to everything smaller than itself and grow from crumbs to houses. Merge with friends to grow faster. |
+| Logline | Roll a ball that sticks to everything smaller than itself and grow from bottle caps to skyscrapers. Merge with friends to grow faster. |
 | Genre | Co-op growth / collection ("number goes up" with a physical toy) |
 | Inspiration | Katamari Damacy (the feel); Roblox "grow" simulators (the progression). No Katamari names, art or music. |
 | Platforms | Phone first, then PC, tablet, console (gamepad) |
 | Session | 4-minute runs (proposed); a typical session is 3–6 runs |
 | Rating target | Minimal |
-| Launch theme | Winter: **Snow Village**. Reskin in January: **Candy Town** |
+| Launch world | **Downtown**, one city re-themed by season: **Holiday City** at launch, **Sunny City** in January ([design](design/07-holiday-city.md)) |
 | Launch window | Release to the 16+ trial around 2026-12-01; aim for under-16 access before the school holidays |
 
 ### Audience
@@ -22,8 +29,9 @@ marks decisions only the owners make, such as prices.
 - **First audience:** age-checked 16+ players, who see every new Roblox game during its trial
   period and spend the most. They decide whether the game unlocks for ages 9–15. They need
   humour, a satisfying physical feel and a score to chase.
-- **Target audience:** ages 10–12. They need instant fun, visible progress, collecting,
-  friends, and moments worth a clip.
+- **Then:** ages 10–15 once under-16 access unlocks, with 10–12 at the core. They need
+  instant fun, visible progress, collecting, friends, and moments worth a clip. Every asset
+  stays Minimal-safe, so the same build works for both groups without a reskin.
 - **Design rule:** never babyish. The joke ("my ball just ate a bus") works at every age.
 
 ### Pillars
@@ -89,17 +97,26 @@ marks decisions only the owners make, such as prices.
   - the size rule passes;
   - the request is within the rate limit (proposed 10 per second).
 
-### 3.3 Size tiers (Snow Village, proposed)
+### 3.3 Size tiers (Downtown, proposed)
+
+The full list (74 core objects, heroes and theme slots) is in
+[design/02-city-assets.md](design/02-city-assets.md).
 
 | Tier | Ball diameter | Example objects (size) |
 | --- | --- | --- |
-| 1 Crumbs | 2–5 studs | sweets, buttons, pine cones, ornaments (0.3–1.5) |
-| 2 Toys | 5–12 | teddies, gift boxes, snowballs, cats (1.5–4) |
-| 3 Yard | 12–30 | snowmen, benches, sledges, fences, dogs (4–10) |
-| 4 Street | 30–70 | cars, Christmas trees, kiosks, buses (10–25) |
-| 5 Town | 70–150 | houses, the clock tower, the skating rink (25–60) |
+| 1 Pocket | 2–5 studs | cans, water bottles, tennis balls, phones (0.3–1.5) |
+| 2 Sidewalk | 5–12 | cones, hydrants, e-scooters, bins (1.6–4) |
+| 3 Street | 12–30 | bikes, lamps, vending machines, young trees (4–10) |
+| 4 Block | 30–70 | cars, vans, buses, bus stops, small shops (10–25) |
+| 5 Skyline | 70–150 | buildings, a crane, the Ferris Wheel, The Glass Tower (25–60) |
 
-- **Run targets (proposed):** 1 star = 20 studs, 2 stars = 45, 3 stars = 80.
+- **Never absorbable:** people and real animals. The city is empty of people; pigeons are
+  ambient and fly off ([design/05-roblox-limits.md](design/05-roblox-limits.md)).
+
+- **Run targets (proposed):** 1 star = 20 studs, 2 stars = 45, 3 stars = 80 (tier 5).
+- **Pacing (proposed):** first pickup by 0:05, tier 2 by about 0:30, tier 3 by about 1:30,
+  tier 4 by about 2:45, checked by bot runs in every theme that ships
+  ([design/03-city-level.md](design/03-city-level.md)).
 - **Experiences to tune for:** reaching tier 5 in one run is possible but rare. That is the
   moment players want to clip.
 
@@ -123,8 +140,10 @@ marks decisions only the owners make, such as prices.
 
 - **Coins:** the only currency, earned only by playing.
 - **What players progress through:**
-  - **Worlds:** Snow Village (free), then Candy Town, Junk City, Space. Each costs coins,
-    with a paid early unlock (§6).
+  - **Levels and themes:** Downtown (free) is re-themed by season instead of a new map per
+    season, which keeps the player base together in full servers. A second city level (for
+    example Beach Boardwalk) comes later, unlocked with coins, with a paid early unlock (§6).
+    Theme-only objects get their own book page that returns with the theme every year.
   - **Ball cores:** small stat flavours, for example Sticky (absorb rule 0.42), Heavy (fewer
     knock-offs) or Zoomy (+5% speed). They apply only in co-op and solo, never in Big Ball mode.
   - **Collection book:** one entry per object type, showing silhouettes for ones not yet
@@ -182,34 +201,41 @@ marks decisions only the owners make, such as prices.
 
 ### Store page
 
-- **Icon:** a giant snowball with things stuck in it, mid-roll, one bold word.
-- **Thumbnails:** 3–5 for Roblox's built-in thumbnail testing: a size contrast shot, friends
-  merging, a "ball ate the clock tower" moment, and the collection book.
+- **Icon:** a giant snowball-like ball with gifts stuck in it, mid-roll on Market Street in
+  Holiday City, one bold word.
+- **Thumbnails:** 3–5 for Roblox's built-in thumbnail testing: a size contrast shot ("my ball
+  just ate a bus"), friends merging, a tier 5 finale (the bow-wrapped Glass Tower or the Ferris
+  Wheel), and the collection book.
 - **Title:** "Rollossal: Roll Up Everything". No "Christmas" in the name; seasons go in the
   icon and thumbnails.
 
 ## 5. Art and audio direction
 
-**Look**
-- Low-poly, flat-shaded toy diorama: one shared palette texture, with soft lighting and
-  winter fog.
-- Objects are slightly oversized and cartoonish, so they read at small sizes on phones.
+**Look:** stylised real ([design/06-art-style.md](design/06-art-style.md)).
+- Real city objects in real proportions, simplified into clean low-poly forms: one bevel
+  segment on silhouette edges, smooth round parts, gradient shading baked into the texture.
+  Only the one hero feature is exaggerated, by at most 10%.
+- One 1,024 px gradient atlas per theme, all with the same layout, generated from
+  [design/tokens.json](design/tokens.json). A season swaps the atlas, lighting, weather and
+  music, never the meshes ([design/01-world-kit.md](design/01-world-kit.md)).
+- No PBR maps, no transparency, no light per prop. Constitution XI governs the details.
 
 **Blender pipeline (via MCP)**
 - **Files:** sources in `art/source/*.blend`, exported to `art/export/*.fbx`.
-- **Triangle budget (proposed):** tier 1–2 objects ≤ 300 triangles, tier 3 ≤ 800, tiers 4–5
-  ≤ 2,500.
+- **Triangle budget:** today 300 / 300 / 800 / 2,500 / 2,500 by tier; proposed for stylised
+  real 500 / 700 / 1,500 / 3,500 / 5,000, locked after a capture on the reference phone.
 - **Import and IDs:** upload through Studio's 3D Importer, then record each ID in
   `src/shared/Assets.luau`.
 - **Shared meshes:** objects of the same type reuse one MeshPart, so memory stays low.
 
-**Asset count for the MVP:** about 60 object types for Snow Village, plus 8 ball skins, 4 trails
+**Asset count for the MVP:** 74 core Downtown objects, 20 Holiday City objects, the Sunny City
+dressing, the cosmetic launch set in [design/04-player-cosmetics.md](design/04-player-cosmetics.md)
 and 1 hub.
 
 **Audio**
 - A pickup "pop" with pitch rising by tier.
 - A tier fanfare.
-- A gentle, looping winter music track.
+- A looping music track per theme (a holiday track at launch; the owner picks).
 - Every sound has a visual equivalent.
 
 ## 6. Monetization
@@ -221,14 +247,13 @@ and 1 hub.
 
 | Product | Type | What it does | Priority |
 | --- | --- | --- | --- |
-| Ball skins (snowglobe, disco, planet, …) | Dev product or pass per skin | Cosmetic | MVP |
-| Trails and pickup effects | Pass per item | Cosmetic | MVP |
+| Cosmetics: skins, toppers, trails, auras, pickup effects | Mostly coins; a few Robux items (creature sets, showcase trails) | Cosmetic ([design/04-player-cosmetics.md](design/04-player-cosmetics.md)) | MVP |
 | **2x Coins** | Game pass | Doubles coins earned (unlocks only, never size within a run) | MVP |
 | **Friend Boost** | Game pass | Everyone in your merged ball earns +25% coins. A purchase that benefits friends | MVP |
 | VIP server | Private server | Play with your own friends | MVP |
-| Early world unlock | Dev product | Unlocks the next world now; also earnable with coins | After MVP |
+| Early level unlock | Dev product | Unlocks the next level now; also earnable with coins | After MVP |
 | Auto-book | Game pass | Shows where uncollected objects are | After MVP |
-| Season cosmetic pack | Pass | Bundle of themed skins for each reskin | Live ops |
+| Season cosmetic pack | Pass | Themed skin, topper and trail; returns with its season every year, never "limited" | MVP (holiday pack) |
 
 **Not in the MVP:**
 - Rewarded video ads: rules for under-13 players are unclear. Behind a flag, using
@@ -239,16 +264,17 @@ and 1 hub.
 
 | When | Update |
 | --- | --- |
-| Launch (about Dec 1) | Snow Village, 60 objects, co-op merge |
-| Weekly in December | +8–10 new objects, a weekly golden-object event, and one new skin |
+| Launch (about Dec 1) | Downtown in Holiday City (see §10 for the launch scope) |
+| Weekly in December | +8–10 new holiday objects on the *Downtown: Holiday* book page, a weekly golden-object event, and one new cosmetic |
 | Late December | "Big Ball" opt-in mode |
-| January | Candy Town world (same code, new content data), with a store-page reskin to candy |
-| February onward | Junk City, Space; book pages; monthly world cadence |
+| January | Downtown switches to Sunny City by data in a release, with a store-page reskin; the Holiday page stays, marked as returning next December |
+| Later | Spring, autumn and night themes for Downtown; a second city level once the player base supports it |
 
 ## 8. Safety and rating
 
 **Expected questionnaire answers:** no violence beyond cartoon bumping, no blood, no fear, no
 romance, no gambling, no social hangout, no free-form drawing, no paid random items, no trading.
+No absorbable people or animals, no real brands or meme images, no words on textures.
 **Expected label: Minimal.**
 
 **Kids and Select (under-16 access) checklist:**
@@ -295,30 +321,34 @@ art/source, art/export Blender files and exports
 
 ## 10. MVP scope and keep/kill
 
-- **MVP:** Snow Village, tiers 1–4, 60 objects, solo and merge, runs and results, coins, book,
-  5 skins, 2 trails, 2x Coins, Friend Boost, VIP server, saving, English and Spanish, phone UI.
+- **MVP:** Downtown in Holiday City (tiers 1–5, the core kit and the holiday objects), solo
+  runs and results, coins, book, the cosmetic slots and coin shop, saving, English and Spanish,
+  phone UI. Merge and the Robux shop (2x Coins, Friend Boost, VIP server, creature sets) are
+  planned for launch; which of them make the 2026-12-01 build is an open question (§12).
 - **Keep or kill (proposed):**
   - Keep if players average at least 3 runs per session and D1 retention is at least 10%.
   - Kill if D1 is under 8%, or most first sessions end within 3 minutes.
 
 ## 11. Feature backlog (in `/speckit-specify` order)
 
-1. **Grey-box prototype:** ball control, the absorb rule, growth, camera and one room with 30
-   cubes of 4 sizes. A fun test: an agent-driven Studio playtest, then the owner plays it and
-   signs off.
-2. **Run loop:** the timer, targets, stars, the results screen, Roll again.
-3. **Saving and economy:** DataService with ProfileStore, coins, best size, collection book.
-4. **Snow Village content:** about 60 objects in 4 tiers via the Blender pipeline, respawning,
-   world layout.
-5. **Co-op:** merge and split, Friend Boost, party flow.
-6. **Shop and purchases:** skins, trails, passes, an idempotent receipt handler, the VIP server.
-7. **Onboarding, analytics and localisation:** the first-60-seconds flow, events, English and
-   Spanish tables.
-8. **Launch kit:** icon, thumbnails, completed questionnaire, Kids and Select prerequisites,
-   a playtest with at least 3 adults and 3 children aged 10–12 once the world art and
-   animation are in (recorded with the owner's sign-off), test place to live (owner).
-9. **After launch:** Big Ball mode, the avatar pusher, the Candy Town reskin, weekly object
-   drops.
+The full stories, with dependencies, tests and owner questions, live in the Conveyor backlog.
+Done: 001 grey-box prototype, 002 run loop, 003 saving and economy, 004 Snow Village content
+(now the rollback world).
+
+1. **004a Theme system and art pipeline:** themes as data, the per-theme gradient atlas,
+   stylised-real export checks, triangle budgets.
+2. **004b Mechanics pass:** a jump that matters, boosters, season-neutral traps.
+3. **004e Downtown in Holiday City:** the launch world, Holiday City art, Sunny City palette.
+4. **004c Juice pass:** animation, VFX and game feel, driven by the active theme.
+5. **004d People playtest:** at least 3 adults and 3 children aged 10–12 on Holiday City,
+   recorded with the owner's sign-off.
+6. **005 Co-op:** merge and split, friend bonus, party flow.
+7. **006a Cosmetics and coin shop**, then **006b Robux purchases**.
+8. **007 Onboarding, analytics and localisation.**
+9. **008 Launch kit:** store page, questionnaire, Kids and Select, test place to live (owner).
+10. **011 January switch to Sunny City.**
+11. **After launch:** 009 Big Ball mode, 010 avatar pusher, 012 live ops, 013 second level and
+    level select.
 
 ## 12. Risks and open questions
 
@@ -327,7 +357,11 @@ art/source, art/export Blender files and exports
   Fallback: the visual stuck objects follow the ball client-side and are not welded.
 - **Physics on a client-owned ball invites speed exploits.** Server speed checks, and absorbs
   are validated on the server.
-- **Phone performance at tier 5.** Test early on a mid-range Android phone.
+- **Phone performance at tier 5.** Test early on a mid-range Android phone, in Holiday City
+  (the heaviest theme) with 12 balls.
+- **Art volume before launch.** About 94 new meshes for Downtown and Holiday City at roughly
+  1.5–2× the old time per prop. Downtown loads with stand-in parts first, so layout and pacing
+  never wait on art.
 - **"Grow" fatigue: the genre is crowded.** The physical rolling ball must look different in
   the icon and first clip.
 
@@ -335,4 +369,7 @@ art/source, art/export Blender files and exports
 - Prices.
 - Extra locales.
 - Whether Big Ball mode is in the launch build.
+- Launch scope for 2026-12-01: which of co-op (005), the coin shop (006a) and the Robux shop
+  (006b) are in.
+- The holiday and Sunny City music tracks.
 - The DataStore key name.
