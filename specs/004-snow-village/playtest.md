@@ -61,8 +61,8 @@ Real art is now exported (T024), so every check re-ran with the manifest engaged
 
 - **SC-001**: met (this round).
 - **SC-002**: met (2026-10-27): import done, ids in `Assets.luau`, `REQUIRE_ASSET_IDS=1 scripts/check.sh` exit 0, template size/script check green in Studio. Still to do: a Play restart look at the real art on a phone-size screen (part of SC-005).
-- **SC-003**: open — balance tuning deliberately deferred by the owner's grey-box sign-off (`growthK = 1.5` provisional; Tier 3/Tier 4 placement counts unchanged). Latest recorded numbers: the "BotRun after the owner's PC play" section below.
-- **SC-004**: Studio half NOT validly measured. The round 6 figures (Tier-4 mean 42 fps, see "Converge round 6") came from an AppleScript focus loop that AGENTS.md forbids, so they are withdrawn; the Tier-4 real-fps check is the owner's, with Studio in front. Phone measurement also belongs to the owner (publish checklist).
+- **SC-003**: known limit, not met and not waived. Balance (`growthK = 1.5`, Tier 3/Tier 4 placement counts) is deferred by the owner to the new map from the design-system spec (spec.md, Owner Approval Gate, 2026-10-28). Latest numbers: "Converge round 7" below (T4 0.135 at 240 s against the 20% floor).
+- **SC-004**: Studio half met ("Converge round 7", Studio in front: 59.9 fps mean, min 57 in the Tier-4 window, 1,702 of 2,000 parts). Phone half is a known limit: the Pixel 7 Pro check never reached Tier 4, so it is deferred by the owner to the new map (see "Owner phone check and sign-off").
 - **SC-005**: met on PC (owner sign-off 2026-10-27); the phone half is not measured (see SC-004).
 
 ## BotRun after the owner's PC play (agent, 2026-10-26, build 3dc60b2)
@@ -132,43 +132,6 @@ A fresh 12-ball BotRun with the real art (`Assets.meshes` filled, Studio frontmo
 | Console | Game-script lines: three `Displacement violation` bot lines (bots race past the speed ceiling; known BotRun artefact) and `ContentId rbxassetid://80565841497538 failed due to: Asset type does not match requested type`. Traced in-Play: the WinterMusic `Sound` itself loads and plays fine (`IsLoaded` true, `TimeLength` 174.55 s), the failure comes from the bare-string `PreloadAsync` of `Assets.sounds.music` in `Feedback.preloadSounds`; appended as T034. The `rbxassetid://203785492` line is Studio's own (id not in the repo). |
 | SC-004 fps in Studio | Not measurable this session: Studio's render loop idles at exactly 15 fps whenever the window is in the background and the owner was working in other apps (Brave/Telegram) during the 70 to 150 s Tier-4 window; a per-second RenderStepped sampler recorded 60 fps for the first 37 focused seconds at Tier 1-2 and no unthrottled window at Tier 4. Needs a session with Studio kept in the foreground for the Tier-4 phase (measurement harness is in place). |
 
-## Converge round 6 (agent, 2026-10-27, T035: SC-004 Studio-half fps)
-
-**Withdrawn.** The fps figures in this section (42 mean, 50 unthrottled, 19 dip) were measured with an AppleScript
-focus loop that AGENTS.md forbids. They stay on record for the history only and must not be cited for SC-004.
-The valid Studio measurement is in "Round 7 rerun with Studio in front".
-
-Build: current branch tip (round-5 tree, T034 fix in, working tree has the round-5
-`tasks.md`/`Feedback.luau` edits), Rojo probe `mismatches = {}` (60 files) before the run.
-
-Throttle handling: AppleScript `activate` brings Studio frontmost, and each activation unthrottles
-the playtest client for only 2-5 s (Studio re-throttles to 15 fps while no real user input arrives;
-synthetic MCP mouse/keyboard events injected into the game do NOT count as user activity - both
-tested). A 2 s `activate` loop kept the client unthrottled for most of the run, with 1-3 s throttled
-dips when an activation was missed.
-
-Measurement: a Client-side `RenderStepped` sampler (spawned before the run, one bucket per second,
-`FpsSample` attribute) covered 0-260 s; `ServerStorage.Tests.BotRun` cloned into ServerScriptService
-for the standard 12-bot 240 s run.
-
-Result (Tier-4 window = from the earliest bot tier4 time, 68 s, to run end):
-
-- 191 one-second samples: mean **42 fps**, max 61, min 14.
-- 44 of 191 seconds are Studio's own 15 fps background throttle (missed activations - a Studio
-  artifact, not game render cost). The 147 unthrottled seconds: mean **50 fps**, max 61, one dip 19.
-- **SC-004 Studio half: withdrawn** (AppleScript focus loop, forbidden by AGENTS.md) - the Tier-4 window averaged 42 fps including the throttle dips, and
-  every unthrottled second is >= 30 except one 19 fps bucket. The phone half stays with the owner
-  (publish checklist).
-
-Run facts (same shape as the earlier rounds): 6 of 12 bots reached Tier 4 (68 to 200 s, final
-diameters 35 to 81 studs), first pickup 0.03-0.22 s, Tier 2 at 11-40 s, 1,605 pickups, part count
-1,701 including balls (budget 2,000). `everyTierKeptShare` false again: T2 0.149 at 60 s, T4 0.162 at
-180 s and 0.108 at 240 s - SC-003 stays with the owner's deferred balance tuning, not waived.
-
-Console: no game-script errors; Studio's own DataStore warning (API access off), Studio's own
-`rbxassetid://203785492` line (id not in the repo) and 4 `Displacement violation` bot lines (known
-BotRun artefact). No `rbxassetid://80565841497538` line - the T034 fix still holds.
-
 ## Converge round 7 (agent, 2026-10-28, T035 rerun without window activation)
 
 Rojo probe clean on the key scripts (7 checked, no mismatches). BotRun 240 s, 12 bots, with a Client
@@ -181,8 +144,6 @@ Rojo probe clean on the key scripts (7 checked, no mismatches). BotRun 240 s, 12
   (75 to 201 s, final diameters 32 to 79); 1,695 pickups; `everyTierKeptShare` false (T4 0.067 at 180 s,
   0.121 at 240 s; T3 0.118 at 120 s). SC-003 stays with the owner's deferred balance tuning.
 - T035 stays open: needs one rerun with Studio kept in front for the ~4 minute run (AGENTS.md rule).
-- The round-6 numbers (mean 42 fps, 50 fps unthrottled, one 19 fps dip) stay on record, but they were
-  taken with the AppleScript activation loop, which is forbidden, so they are not used to close T035.
 
 ### Round 7 rerun with Studio in front (2026-10-28, T035)
 

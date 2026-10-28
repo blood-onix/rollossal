@@ -174,7 +174,12 @@ function BallController.start()
 	local function contactScan(now: number, radius: number, diameter: number)
 		for part in objectParts do
 			local size = part:GetAttribute("Size")
-			if part:GetAttribute("Taken") == true or typeof(size) ~= "number" then
+			-- CanTouch is false for a Taken part and for one WorldCuller hides, so a culled part never sends a remote.
+			if
+				part:GetAttribute("Taken") == true
+				or not part.CanTouch
+				or typeof(size) ~= "number"
+			then
 				continue
 			end
 			if
