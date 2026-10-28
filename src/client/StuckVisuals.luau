@@ -1,5 +1,5 @@
 --!strict
--- Client-only visuals for the stuck cubes of every ball. Driven by the server's Stuck attribute.
+-- Client-only visuals for the stuck objects of every ball. Driven by the server's Stuck attribute.
 -- "Weld" re-seats the visuals through Weld.C1 on growth; "Follower" sets their CFrame each frame.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -8,7 +8,8 @@ local Workspace = game:GetService("Workspace")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
-local GreyBoxRoom = require(Shared.Content.GreyBoxRoom)
+local ObjectVisual = require(Shared.ObjectVisual)
+local Worlds = require(Shared.Worlds)
 
 type Visual = {
 	part: BasePart,
@@ -24,20 +25,26 @@ type BallRecord = {
 local StuckVisuals = {}
 
 local records: { [BasePart]: BallRecord } = {}
-local cubesFolder: Folder? = nil
 local visualFolder: Folder? = nil
+-- One template per object type, built on first use and cloned for every stuck visual.
+local templates: { [string]: BasePart } = {}
 
-local function shadeOf(tier: number): number
-	for _, def in GreyBoxRoom.tiers do
-		if def.tier == tier then
-			return def.shade
-		end
+local function templateFor(objectId: string): BasePart?
+	local existing = templates[objectId]
+	if existing then
+		return existing
 	end
-	return 128
+	local def = Worlds.objectById[objectId]
+	if def == nil then
+		return nil
+	end
+	local built = ObjectVisual.build(def)
+	templates[objectId] = built
+	return built
 end
 
--- Entries are `key,dx,dy,dz` with key `<cubeId>#<n>`, unique per pickup; the cube id is the part
--- before `#`. Visuals are keyed by key, so a cube eaten twice shows twice.
+-- Entries are `key,dx,dy,dz` with key `<placementId>#<n>`, unique per pickup; the placement id is the part
+-- before `#`. Visuals are keyed by key, so an object eaten twice shows twice.
 local function parseStuck(text: string): { { key: string, id: string, dir: Vector3 } }
 	local entries = {}
 	for segment in string.gmatch(text, "[^;]+") do
@@ -65,26 +72,20 @@ end
 
 local function createVisual(record: BallRecord, key: string, id: string, dir: Vector3): Visual?
 	local folder = visualFolder
-	local cubes = cubesFolder
-	if not folder or not cubes then
+	if not folder then
 		return nil
 	end
-	local cube = cubes:FindFirstChild(id)
-	if not cube then
+	-- The placement is shared data, so the visual never depends on the pooled part being streamed in.
+	local placement = Worlds.placementById[id]
+	local template = if placement then templateFor(placement.objectId) else nil
+	if not template then
 		return nil
 	end
-	local size = cube:GetAttribute("Size")
-	local tier = cube:GetAttribute("Tier")
-	if typeof(size) ~= "number" or typeof(tier) ~= "number" then
-		return nil
-	end
+	local size = math.max(template.Size.X, template.Size.Y, template.Size.Z)
 
-	local part = Instance.new("Part")
+	local part = template:Clone()
 	part.Name = `Stuck_{record.ball.Name}_{key}`
-	part.Size = Vector3.one * size
-	part.Color = Color3.fromRGB(shadeOf(tier), shadeOf(tier), shadeOf(tier))
-	part.TopSurface = Enum.SurfaceType.Smooth
-	part.BottomSurface = Enum.SurfaceType.Smooth
+	part.Anchored = false
 	part.CanCollide = false
 	part.CanTouch = false
 	part.CanQuery = false
@@ -107,7 +108,8 @@ local function createVisual(record: BallRecord, key: string, id: string, dir: Ve
 end
 
 local function sizeOf(visual: Visual): number
-	return visual.part.Size.X
+	local size = visual.part.Size
+	return math.max(size.X, size.Y, size.Z)
 end
 
 local function reseat(record: BallRecord)
@@ -171,9 +173,6 @@ end
 
 function StuckVisuals.start()
 	local ballsFolder = Workspace:WaitForChild("Balls")
-	local room = Workspace:WaitForChild("GreyBoxRoom")
-	cubesFolder = room:WaitForChild("Cubes") :: Folder
-
 	local folder = Instance.new("Folder")
 	folder.Name = "StuckVisuals"
 	folder.Parent = Workspace

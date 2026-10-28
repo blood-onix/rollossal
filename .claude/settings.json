@@ -11,5 +11,13 @@
         ]
       }
     ]
+  },
+  "permissions": {
+    "deny": [
+      "Bash(osascript:*)",
+      "Bash(*osascript *)",
+      "Bash(open -a:*)",
+      "Bash(cliclick:*)"
+    ]
   }
 }

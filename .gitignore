@@ -17,6 +17,9 @@ sourcemap.json
 *.blend1
 *.blend2
 /art/render/
+/art/qa/*
+!/art/qa/grid.png
+__pycache__/
 
 # Local tool state
 .claude/settings.local.json

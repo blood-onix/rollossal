@@ -1,0 +1,93 @@
+<!-- @dsCard group="World" height=470 subtitle="Downtown, top-down: rings from doorstep to skyline" -->
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../tokens.css">
+<script>(function(){var t=new URLSearchParams(location.search).get('theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Montserrat:wght@500&display=swap">
+<style>
+  body { margin:0; background:var(--ui-panel); color:var(--ui-text); font-family:var(--font-body); }
+  .wrap { display:grid; grid-template-columns:440px 1fr; gap:var(--space-3); padding:var(--space-3); }
+  svg { display:block; width:440px; height:440px; border-radius:var(--radius-panel); }
+  .as { fill:var(--w-asphalt); } .ln { stroke:var(--w-road-line); stroke-width:2; stroke-dasharray:8 8; fill:none; }
+  .sw { fill:var(--w-sidewalk); } .gr { fill:var(--w-grass); } .wt { fill:var(--w-water); } .sd { fill:var(--w-sand); } .so { fill:var(--w-soil); }
+  .wa { fill:var(--w-wall-a); } .wb { fill:var(--w-wall-b); } .wc { fill:var(--w-wall-c); } .rb { fill:var(--w-roof-b); } .ssn { fill:var(--w-season); }
+  .lf { fill:var(--w-leaf); } .ld { fill:var(--w-leaf-dark); } .kb { fill:var(--w-kerb); }
+  .red { fill:var(--w-accent-red); } .yel { fill:var(--w-accent-yellow); } .pnk { fill:var(--w-accent-pink); } .tea { fill:var(--w-accent-teal); } .md { fill:var(--w-metal-dark); }
+  .spawn { fill:var(--tier-1); stroke:#141414; stroke-width:2; }
+  .num { font:700 10px var(--font-body); fill:#141414; text-anchor:middle; dominant-baseline:central; }
+  .legend { display:flex; flex-direction:column; gap:var(--space-2); }
+  .h { font-family:var(--font-display); font-size:20px; line-height:24px; margin:0 0 var(--space-1); }
+  .row { display:grid; grid-template-columns:22px 1fr; gap:var(--space-2); align-items:start; font-size:13px; line-height:17px; }
+  .row b { font-weight:700; }
+  .row span.m { color:var(--ui-unknown); }
+  .key { width:22px; height:22px; border-radius:6px; color:#141414; font-size:12px; font-weight:700; line-height:22px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<svg viewBox="0 0 600 600" aria-label="Downtown map">
+  <!-- base: city blocks are sidewalk, streets asphalt -->
+  <rect class="sw" x="0" y="0" width="600" height="600"/>
+  <!-- waterfront south -->
+  <rect class="wt" x="0" y="540" width="600" height="60"/><rect class="kb" x="0" y="534" width="600" height="6"/>
+  <!-- streets: Market Street E-W, two N-S avenues, ring road -->
+  <rect class="as" x="0" y="282" width="600" height="36"/><path class="ln" d="M0 300 H600"/>
+  <rect class="as" x="182" y="0" width="28" height="534"/><rect class="as" x="390" y="0" width="28" height="534"/>
+  <rect class="as" x="0" y="140" width="600" height="22"/><rect class="as" x="0" y="438" width="600" height="22"/>
+  <rect class="as" x="20" y="0" width="22" height="534"/><rect class="as" x="558" y="0" width="22" height="534"/>
+  <!-- the park, west -->
+  <rect class="gr" x="52" y="172" width="120" height="100" rx="8"/><ellipse class="wt" cx="112" cy="224" rx="30" ry="18"/>
+  <circle class="lf" cx="70" cy="190" r="9"/><circle class="ld" cx="154" cy="256" r="9"/><circle class="lf" cx="150" cy="186" r="8"/><circle class="ld" cx="72" cy="258" r="8"/>
+  <rect class="pnk" x="106" y="218" width="10" height="8" rx="3"/>
+  <!-- plaza, centre -->
+  <rect class="sw" x="220" y="172" width="160" height="100"/><rect class="kb" x="220" y="172" width="160" height="100" fill="none" stroke="var(--w-kerb)" stroke-width="3"/>
+  <circle class="wt" cx="300" cy="222" r="26"/><circle class="yel" cx="300" cy="222" r="10"/>
+  <rect class="pnk" x="236" y="186" width="26" height="14" rx="3"/><rect class="red" x="352" y="252" width="6" height="14"/>
+  <!-- construction site, north-east -->
+  <rect class="sd" x="428" y="12" width="120" height="120" rx="4"/><rect class="yel" x="440" y="66" width="100" height="6"/><rect class="md" x="476" y="56" width="16" height="16"/>
+  <rect class="red" x="508" y="96" width="30" height="12"/><rect class="tea" x="508" y="110" width="30" height="12"/>
+  <!-- car park, south-east -->
+  <rect class="rb" x="428" y="328" width="120" height="100" rx="4"/><path d="M448 348 h80 v60 h-80z" fill="none" stroke="var(--w-road-line)" stroke-width="2"/>
+  <!-- skyline block, north centre -->
+  <rect class="wa" x="220" y="16" width="70" height="56"/><rect class="ssn" x="220" y="16" width="70" height="8"/>
+  <rect class="wc" x="300" y="16" width="80" height="116"/><rect class="ssn" x="300" y="16" width="80" height="8"/><circle class="tea" cx="340" cy="74" r="10"/>
+  <rect class="wb" x="220" y="80" width="70" height="52"/><rect class="ssn" x="220" y="80" width="70" height="8"/>
+  <!-- rocket water tower -->
+  <circle class="red" cx="160" cy="40" r="14"/><circle class="ssn" cx="160" cy="40" r="5"/>
+  <!-- waterfront: ferris wheel on the pier -->
+  <rect x="280" y="500" width="40" height="70" style="fill:var(--w-wood)"/><circle cx="300" cy="520" r="24" fill="none" stroke="var(--w-metal)" stroke-width="4"/>
+  <!-- shop rows along Market Street -->
+  <g class="wa"><rect x="52" y="330" width="56" height="40"/><rect x="226" y="330" width="56" height="40"/><rect x="430" y="470" width="56" height="40"/></g>
+  <g class="wb"><rect x="116" y="330" width="56" height="40"/><rect x="290" y="330" width="40" height="40"/><rect x="226" y="470" width="56" height="40"/></g>
+  <g class="wc"><rect x="338" y="330" width="42" height="40"/><rect x="52" y="470" width="56" height="40"/><rect x="494" y="470" width="54" height="40"/></g>
+  <!-- small-only alley + storm drain -->
+  <path d="M110 380 V430" stroke="var(--w-road-line)" stroke-width="3" stroke-dasharray="2 5" fill="none"/>
+  <!-- 12 doorstep spawns -->
+  <g>
+    <circle class="spawn" cx="60" cy="90" r="10"/><text class="num" x="60" y="90">1</text>
+    <circle class="spawn" cx="130" cy="110" r="10"/><text class="num" x="130" y="110">2</text>
+    <circle class="spawn" cx="470" cy="148" r="10"/><text class="num" x="470" y="148">3</text>
+    <circle class="spawn" cx="530" cy="250" r="10"/><text class="num" x="530" y="250">4</text>
+    <circle class="spawn" cx="470" cy="270" r="10"/><text class="num" x="470" y="270">5</text>
+    <circle class="spawn" cx="470" cy="480" r="10"/><text class="num" x="470" y="480">6</text>
+    <circle class="spawn" cx="350" cy="400" r="10"/><text class="num" x="350" y="400">7</text>
+    <circle class="spawn" cx="250" cy="400" r="10"/><text class="num" x="250" y="400">8</text>
+    <circle class="spawn" cx="140" cy="400" r="10"/><text class="num" x="140" y="400">9</text>
+    <circle class="spawn" cx="70" cy="420" r="10"/><text class="num" x="70" y="420">10</text>
+    <circle class="spawn" cx="150" cy="520" r="10"/><text class="num" x="150" y="520">11</text>
+    <circle class="spawn" cx="450" cy="520" r="10"/><text class="num" x="450" y="520">12</text>
+  </g>
+</svg>
+<div class="legend">
+  <p class="h">Downtown</p>
+  <div class="row"><div class="key" style="background:var(--tier-1)">1</div><div><b>Stoops and Alleys</b><br><span class="m">12 doorstep spawns, 40 pocket objects each; alleys fit tier 1–2 only</span></div></div>
+  <div class="row"><div class="key" style="background:var(--tier-2)">2</div><div><b>Sidewalks</b><br><span class="m">Corners of Market Street and the side streets</span></div></div>
+  <div class="row"><div class="key" style="background:var(--tier-3)">3</div><div><b>Park · Site · Car Park</b><br><span class="m">Pond and fence (W), ramps and crane (NE), spiral ramp (SE)</span></div></div>
+  <div class="row"><div class="key" style="background:var(--tier-4)">4</div><div><b>Market Street · Plaza</b><br><span class="m">Parked cars, bus stops, Donut Truck, the landmark slot in the fountain</span></div></div>
+  <div class="row"><div class="key" style="background:var(--tier-5)">5</div><div><b>Skyline · Waterfront</b><br><span class="m">The Glass Tower (N), Rocket Water Tower, Ferris Wheel on the pier (S)</span></div></div>
+</div>
+</div>
+</body>
+</html>

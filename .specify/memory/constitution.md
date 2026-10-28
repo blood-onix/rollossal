@@ -1,10 +1,46 @@
+<!--
+Sync Impact Report (temporary; remove before commit)
+Version change: 1.1.0 -> 2.0.0
+Bump reason: MAJOR. Principle XI's "flat-shaded, one shared palette texture" rule is redefined
+  incompatibly (smooth shading allowed on round parts, one gradient atlas per theme with UV and
+  material rules, PBR/transparency/per-prop lights banned). Assets built to the old rule do not
+  satisfy the new one. Principle IV also gains new MUST NOT rules.
+Modified principles:
+  - IV. Safe for Everyone (Target Rating: Minimal): added no absorbing people or real/live
+    animals (stand-ins fine, ambient animals non-absorbable); added no real brands, logos,
+    flags, memes or real faces, no words on textures; rationale now 16+ trial then 10-15.
+  - VII. Content Is Data: reskin example now "Holiday City to Sunny City"; added that a theme
+    is data (palette atlas, lighting, weather, music, dressing slots, overlays, hero variants,
+    book page), chosen by id, switched by release, never by code or a visible date check.
+  - XI. Asset Pipeline: flat-shaded/one-palette rule replaced by stylised-real rules (low-poly
+    real proportions, bevel, gradient atlas per theme, one material, no PBR/transparency/
+    prop lights, Neon glow, skins <= 512 px, toppers on world atlas); rationale updated.
+  - Preamble: added docs/design/ as the art and content direction, subordinate to this
+    constitution.
+Added sections: none
+Removed sections: none
+Unchanged: I, II, III, V, VI, VIII, IX, X, XII, Quality Gates, Human Approval, Governance.
+Templates checked: .specify/templates/*, AGENTS.md, CLAUDE.md, .github/copilot-instructions.md
+  do not repeat the changed rules; no change needed.
+Follow-up TODOs:
+  - Principle I still says outside playtests use "children aged 10-12"; left as is (outside
+    the approved amendment). Principle VI's mid-range phone and Principle I wording may need a
+    later look against the 16+ trial audience.
+  - Existing assets and art/scripts (build_shared.py, build_objects.py, export_all.py),
+    src/shared/Assets.luau, ObjectVisual.luau, specs/004-snow-village and docs/rollossal-gdd.md
+    still describe flat-shaded/one-palette art; migrate under stories 004a and 004e. The GDD
+    must be corrected to match (Governance), by its own editor.
+-->
+
 # Rollossal Constitution
 
 Rollossal is a Roblox co-op rolling game: players roll a ball that sticks to every object
 smaller than itself and grows until it can swallow the town; friends can merge balls. It is
 built by a two-person team (a father and his son) with several AI coding agents working in
 parallel, using Spec Kit, the Roblox Studio MCP server and, for 3D assets, a Blender MCP
-server. The design spec is `docs/rollossal-gdd.md`.
+server. The design spec is `docs/rollossal-gdd.md`. The art and content direction (themes, city
+assets, cosmetics, Roblox budgets, colour and type tokens) is `docs/design/`; it is
+subordinate to this constitution and, where it conflicts, this constitution wins.
 
 In this document, **the owner** means the human who owns the Roblox experience (the account
 or group it is published under). **Owner approval** means an approving review or a written
@@ -80,10 +116,16 @@ safe for parallel agents to change.
   default mode), and MUST NOT take away any persistent progress.
 - The game MUST be built from runs with clear endings. There is no endless feed and no
   infinite scrolling.
+- The ball MUST NOT absorb people or real or live animals. Stand-ins such as statues,
+  inflatables or decorations are fine. Ambient animals stay non-absorbable.
+- The game MUST NOT show real brands, logos, flags, meme images or real people's faces, and
+  MUST NOT put words on textures (pictograms only).
 - Any change that could alter the answers to the Roblox maturity questionnaire MUST have
   owner approval before work starts.
 
-Rationale: the target audience is 10–12; a Minimal label and under-16 access depend on it.
+Rationale: the launch audience is age-checked 16+ players during the trial, then 10–15. A
+Minimal label and under-16 access depend on these rules. Every asset stays Minimal-safe, so
+the same build works for both groups without a reskin.
 
 ### V. Ethical Monetization
 
@@ -122,8 +164,13 @@ Rationale: most of the audience plays on phones, and the first minute decides re
 
 - Worlds, objects, size tiers and theme skins MUST live in data modules under
   `src/shared/Content`.
-- A reskin (for example Winter to Candy) MUST change only data and assets, not code. A reskin
-  that needs a code change is a defect in the content model, fixed in its own task.
+- A reskin (for example Holiday City to Sunny City) MUST change only data and assets, not
+  code. A reskin that needs a code change is a defect in the content model, fixed in its own
+  task.
+- A world's theme MUST be data. A theme is a palette atlas, lighting, weather, music,
+  dressing slots, overlays, hero variants and a book page. The active theme is chosen by id
+  in data. Switching it is a content change shipped in a release, never a code change and
+  never a date check shown to players.
 - New features MUST ship behind flags in `src/shared/Config`.
 - Content data MUST be validated by Lune tests in `tests/unit` (for example: sizes ascend
   by tier, IDs are unique).
@@ -172,15 +219,26 @@ live game.
 
 - 3D assets MUST be made or edited in Blender. Sources live in `art/source` and exports
   (FBX or glTF) in `art/export`.
-- Assets MUST be low-poly and flat-shaded, MUST share one palette texture, and MUST stay
-  within the triangle budgets in `src/shared/Config`.
+- World assets MUST be low-poly in real-world proportions, and MUST stay within the triangle
+  budgets in `src/shared/Config`. Silhouette edges get one bevel segment. Round parts MAY be
+  smooth-shaded and hard edges stay sharp.
+- Every world mesh MUST use the theme's gradient atlas: one 1,024 px texture per theme, all
+  with the same layout, generated by script from `docs/design/tokens.json`. Each face's UVs
+  MUST sit inside one atlas cell or one trim strip, and each mesh has one material.
+- A theme swaps the atlas and never the meshes.
+- World assets MUST NOT use SurfaceAppearance/PBR maps, transparency or a light per prop.
+  Glow is `Material.Neon`.
+- Ball cosmetics (skins) MAY use their own texture of at most 512 px. Toppers use the world
+  atlas.
 - Uploaded asset IDs MUST be recorded in `src/shared/Assets.luau` and MUST NOT be hard-coded
   anywhere else.
 - Creator Store models containing scripts MUST NOT be used. Mesh-only models MAY be used
   after an inspection confirms they contain no scripts.
 
-Rationale: one palette and strict budgets keep the look coherent and phones fast; scripted
-free models are a security risk.
+Rationale: one atlas per theme keeps phones fast and makes a season a texture swap, and
+strict budgets keep the look coherent. Stylised real reads as a real city for the 16+ launch
+audience, where flat-shaded toy art reads as a kids' game. Scripted free models are a
+security risk.
 
 ### XII. Keep It Lean
 
@@ -233,4 +291,4 @@ Agents MUST stop and get owner approval before any of the following:
   flag conflicts in the plan or analysis instead of working around them. A conflict is
   resolved by changing the work or by amending the constitution, never by ignoring it.
 
-**Version**: 1.1.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-10-26
+**Version**: 2.0.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-10-28

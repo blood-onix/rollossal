@@ -5,6 +5,7 @@ A Roblox game in Luau. The current milestone is a grey-box prototype: one rollin
 ## Documentation
 
 - [Game design brief](docs/rollossal-gdd.md): the full design spec.
+- [Design system](docs/design/README.md): themes, the city asset list, the Downtown layout, cosmetics, budgets and tokens (a proposal; open `docs/design/index.html` for the previews).
 - [Constitution](.specify/memory/constitution.md): the principles every change must follow.
 - [Grey-box prototype spec](specs/001-grey-box-prototype/spec.md), [plan](specs/001-grey-box-prototype/plan.md) and [tasks](specs/001-grey-box-prototype/tasks.md).
 

@@ -1,7 +1,8 @@
 --!strict
 -- Drives the local ball: roll torque and force from the move vector, grounded hop, contact scan that
--- sends cube IDs to the server, local collision toggling, and the Reset button.
+-- sends object IDs to the server, local collision toggling, and the Reset button.
 
+local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
@@ -23,6 +24,7 @@ local AbsorbRemote = Remotes:WaitForChild("Absorb") :: RemoteEvent
 local BumpRemote = Remotes:WaitForChild("Bump") :: RemoteEvent
 local RespawnRemote = Remotes:WaitForChild("RespawnBall") :: RemoteEvent
 
+local OBJECT_TAG = "WorldObject"
 local UP = Vector3.new(0, 1, 0)
 local PENDING_SECONDS = 0.5
 local COLLIDE_INTERVAL = 0.1
@@ -107,15 +109,30 @@ end
 function BallController.start()
 	local player = Players.LocalPlayer
 	local ball = Workspace:WaitForChild("Balls"):WaitForChild(`Ball_{player.UserId}`) :: BasePart
-	local room = Workspace:WaitForChild("GreyBoxRoom") :: Folder
-	local cubes = room:WaitForChild("Cubes") :: Folder
+	local world = Workspace:WaitForChild("World") :: Folder
+	-- Pooled parts come and go with streaming; the tag signals keep this set to what is loaded right now.
+	local objectParts: { [BasePart]: boolean } = {}
+	local function trackObject(instance: Instance)
+		if instance:IsA("BasePart") then
+			objectParts[instance] = true
+		end
+	end
+	CollectionService:GetInstanceAddedSignal(OBJECT_TAG):Connect(trackObject)
+	CollectionService:GetInstanceRemovedSignal(OBJECT_TAG):Connect(function(instance: Instance)
+		if instance:IsA("BasePart") then
+			objectParts[instance] = nil
+		end
+	end)
+	for _, instance in CollectionService:GetTagged(OBJECT_TAG) do
+		trackObject(instance)
+	end
 	local spin = ball:WaitForChild("AngularVelocity") :: AngularVelocity
 	local readMove = moveReader(player)
 	local readTouch = TouchStick.create()
 
 	local groundParams = RaycastParams.new()
 	groundParams.FilterType = Enum.RaycastFilterType.Include
-	groundParams.FilterDescendantsInstances = { room }
+	groundParams.FilterDescendantsInstances = { world }
 
 	local function isGrounded(): boolean
 		local radius = ball.Size.X / 2
@@ -155,10 +172,14 @@ function BallController.start()
 	end)
 
 	local function contactScan(now: number, radius: number, diameter: number)
-		for _, cube in cubes:GetChildren() do
-			local part = cube :: BasePart
+		for part in objectParts do
 			local size = part:GetAttribute("Size")
-			if part:GetAttribute("Taken") == true or typeof(size) ~= "number" then
+			-- CanTouch is false for a Taken part and for one WorldCuller hides, so a culled part never sends a remote.
+			if
+				part:GetAttribute("Taken") == true
+				or not part.CanTouch
+				or typeof(size) ~= "number"
+			then
 				continue
 			end
 			if
@@ -185,8 +206,7 @@ function BallController.start()
 	end
 
 	local function updateCollisions(diameter: number)
-		for _, cube in cubes:GetChildren() do
-			local part = cube :: BasePart
+		for part in objectParts do
 			local size = part:GetAttribute("Size")
 			if typeof(size) ~= "number" then
 				continue

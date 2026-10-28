@@ -201,4 +201,29 @@ test(
 	end
 )
 
+test(
+	"Strings: every Snow Village key exists with English and Spanish and the same placeholders",
+	function()
+		local SnowVillage = require("../../src/shared/Content/Worlds/SnowVillage")
+		local keys: { string } = {}
+		for _, object in SnowVillage.objects do
+			table.insert(keys, object.nameKey)
+		end
+		for _, tier in SnowVillage.sizeTiers do
+			table.insert(keys, tier.nameKey)
+			table.insert(keys, tier.headlineKey)
+			if tier.reward then
+				table.insert(keys, tier.reward.nameKey)
+			end
+		end
+		expect.equal(#keys, 64 + 5 * 3)
+		for _, key in keys do
+			local entry = (Strings :: { [string]: { en: string, es: string? } })[key]
+			expect.truthy(entry ~= nil)
+			expect.truthy(entry ~= nil and entry.en ~= "")
+			expect.truthy(entry ~= nil and entry.es ~= nil and entry.es ~= "")
+		end
+	end
+)
+
 return {}

@@ -1,0 +1,38 @@
+<!-- @dsCard group="UI" height=290 subtitle="Shop tiles: tabs, price, selected, owned" -->
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../tokens.css">
+<script>(function(){var t=new URLSearchParams(location.search).get('theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Montserrat:wght@500&display=swap">
+<style>
+  body { margin:0; background:var(--ui-panel); color:var(--ui-text); font-family:var(--font-body); }
+  .stroke { text-shadow: -2px -2px 0 var(--ui-stroke), 2px -2px 0 var(--ui-stroke), -2px 2px 0 var(--ui-stroke), 2px 2px 0 var(--ui-stroke), 0 2px 0 var(--ui-stroke), 0 -2px 0 var(--ui-stroke), 2px 0 0 var(--ui-stroke), -2px 0 0 var(--ui-stroke); }
+  .display { font-family:var(--font-display); font-weight:600; }
+  .wrap { padding:var(--space-3); }
+  .tabs { display:flex; gap:var(--space-2); margin-bottom:var(--space-3); flex-wrap:wrap; }
+  .tab { border-radius:var(--radius-button); background:var(--ui-off); padding:0 var(--space-3); height:48px; line-height:48px; font-size:18px; }
+  .tab.on { background:var(--ui-button); }
+  .tiles { display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--space-3); }
+  .tile { background:var(--ui-card); border-radius:var(--radius-panel); padding:var(--space-3); display:flex; flex-direction:column; gap:var(--space-1); }
+  .tile.sel { box-shadow:0 0 0 3px var(--ui-highlight); }
+  .icon { height:56px; border-radius:var(--radius-button); background:var(--w-asphalt); position:relative; overflow:hidden; }
+  .name { font-size:20px; line-height:24px; }
+  .what { font-size:18px; line-height:22px; color:var(--ui-unknown); }
+  .price { margin-top:var(--space-1); height:48px; border-radius:var(--radius-button); background:var(--ui-button); text-align:center; line-height:48px; font-size:20px; }
+  .price.owned { background:var(--ui-off); }
+  .coin { color:var(--ui-highlight); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tabs"><span class="tab stroke">Skins</span><span class="tab stroke">Toppers</span><span class="tab on stroke">Trails</span><span class="tab stroke">Auras</span><span class="tab stroke">Effects</span><span class="tab stroke">Passes</span></div>
+  <div class="tiles">
+    <div class="tile"><div class="icon"><svg viewBox="0 0 200 56" width="100%" height="56"><rect x="0" y="22" width="200" height="4" fill="#e8483f"/><rect x="0" y="26" width="200" height="4" fill="#ffc93c"/><rect x="0" y="30" width="200" height="4" fill="#4fa83d"/><rect x="0" y="34" width="200" height="4" fill="#2f7de1"/></svg></div><div class="name stroke">Rainbow Lane</div><div class="what">A rainbow behind you</div><div class="price display stroke"><span class="coin">●</span> 1,200</div></div>
+    <div class="tile sel"><div class="icon"><svg viewBox="0 0 200 56" width="100%" height="56"><path d="M0 28 Q100 6 200 22 L200 40 Q100 50 0 28z" fill="var(--w-accent-orange)"/><path d="M80 28 Q150 16 200 26 L200 34 Q150 40 80 28z" fill="var(--w-accent-yellow)"/></svg></div><div class="name stroke">Comet</div><div class="what">A flaming tail, cartoon style</div><div class="price display stroke">R$ —</div></div>
+    <div class="tile"><div class="icon"><svg viewBox="0 0 200 56" width="100%" height="56"><path d="M0 40 C80 40 120 36 200 30" stroke="#111219" stroke-width="6" fill="none"/><path d="M0 22 C80 22 120 18 200 12" stroke="#111219" stroke-width="6" fill="none"/></svg></div><div class="name stroke">Tyre Skids</div><div class="what">Skid marks on every turn</div><div class="price owned display stroke">EQUIP</div></div>
+  </div>
+</div>
+</body>
+</html>

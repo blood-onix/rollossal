@@ -45,4 +45,23 @@ test("progress: top tier is full", function()
 	expect.near(Tiers.progress(9, tiers), 1, 1e-9)
 end)
 
+test("isCulled: objects at least delta tiers below the player are culled", function()
+	local cases = {
+		{ 1, 3, 2, true },
+		{ 2, 3, 2, false },
+		{ 2, 4, 2, true },
+		{ 3, 4, 2, false },
+		{ 3, 5, 2, true },
+		{ 4, 5, 2, false },
+		{ 1, 1, 2, false },
+		{ 1, 2, 2, false },
+	}
+	for _, case in cases do
+		expect.equal(
+			Tiers.isCulled(case[1] :: number, case[2] :: number, case[3] :: number),
+			case[4] :: boolean
+		)
+	end
+end)
+
 return {}

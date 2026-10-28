@@ -18,6 +18,9 @@ jobs:
           echo "$HOME/.rokit/bin" >> "$GITHUB_PATH"
 
       - name: Install tools from rokit.toml
+        env:
+          # Rokit looks tools up through the GitHub API; unauthenticated calls from shared runners get 403.
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           "$HOME/.rokit-bin/rokit" install --no-trust-check
 

@@ -34,16 +34,16 @@ local function ballRadius(session: Session): number
 	return session.physicalDiameter / 2
 end
 
-local function inRange(session: Session, cube: WorldSpawner.RoomCube): boolean
-	local distance = (session.part.Position - cube.part.Position).Magnitude
-	return distance <= ballRadius(session) + cube.size / 2 + Config.absorbDistanceTolerance
+local function inRange(session: Session, pooled: WorldSpawner.PooledWorldObject): boolean
+	local distance = (session.part.Position - pooled.part.Position).Magnitude
+	return distance <= ballRadius(session) + pooled.size / 2 + Config.absorbDistanceTolerance
 end
 
 local function directionTo(
 	session: Session,
-	cube: WorldSpawner.RoomCube
+	pooled: WorldSpawner.PooledWorldObject
 ): { x: number, y: number, z: number }
-	local offset = session.part.CFrame:PointToObjectSpace(cube.part.Position)
+	local offset = session.part.CFrame:PointToObjectSpace(pooled.part.Position)
 	local unit = if offset.Magnitude > 0 then offset.Unit else Vector3.yAxis
 	return { x = round2(unit.X), y = round2(unit.Y), z = round2(unit.Z) }
 end
@@ -63,39 +63,39 @@ function AbsorbService.tryAbsorb(session: Session, objectId: unknown, now: numbe
 		return "RateLimited"
 	end
 
-	local cube = WorldSpawner.getCube(objectId)
-	if not cube then
+	local pooled = WorldSpawner.getObject(objectId)
+	if not pooled then
 		return "UnknownObject"
 	end
-	if cube.state ~= "Available" or (cube.availableAt ~= nil and now < cube.availableAt) then
+	if pooled.state ~= "Available" or (pooled.availableAt ~= nil and now < pooled.availableAt) then
 		return "AlreadyTaken"
 	end
-	if not inRange(session, cube) then
+	if not inRange(session, pooled) then
 		return "OutOfRange"
 	end
-	if not Absorb.canAbsorb(session.authoritativeDiameter, cube.size, Config.absorbRatio) then
+	if not Absorb.canAbsorb(session.authoritativeDiameter, pooled.size, Config.absorbRatio) then
 		return "TooBig"
 	end
 
 	pickupCount += 1
-	local key = `{cube.id}#{pickupCount}`
-	WorldSpawner.markTaken(cube, now, key)
+	local key = `{pooled.id}#{pickupCount}`
+	WorldSpawner.markTaken(pooled, now, key)
 	local entry: StuckEntry = {
 		key = key,
-		id = cube.id,
-		size = cube.size,
-		tier = cube.tier,
-		dir = directionTo(session, cube),
+		id = pooled.id,
+		size = pooled.size,
+		tier = pooled.tier,
+		dir = directionTo(session, pooled),
 	}
 	session.stuckStack = StuckStack.push(session.stuckStack, entry, Config.maxTrackedStuck)
 	BallService.setDiameter(
 		session,
-		Growth.growDiameter(session.authoritativeDiameter, cube.size, Config.growthK)
+		Growth.growDiameter(session.authoritativeDiameter, pooled.size, Worlds.growthK)
 	)
 	BallService.publishStuck(session)
-	local object = Worlds.objectByTier[cube.tier]
-	if object then
-		RunManager.onPickup(session.ownerUserId, object, now)
+	local def = Worlds.objectById[pooled.objectId]
+	if def then
+		RunManager.onPickup(session.ownerUserId, def, now)
 	end
 	return "Ok"
 end
@@ -115,14 +115,14 @@ function AbsorbService.tryBump(session: Session, objectId: unknown, now: number)
 		return "RateLimited"
 	end
 
-	local cube = WorldSpawner.getCube(objectId)
-	if not cube then
+	local pooled = WorldSpawner.getObject(objectId)
+	if not pooled then
 		return "UnknownObject"
 	end
-	if cube.state ~= "Available" then
+	if pooled.state ~= "Available" then
 		return "AlreadyTaken"
 	end
-	if not inRange(session, cube) then
+	if not inRange(session, pooled) then
 		return "OutOfRange"
 	end
 	if now - session.lastBumpAt < Config.bumpCooldown then
@@ -132,7 +132,7 @@ function AbsorbService.tryBump(session: Session, objectId: unknown, now: number)
 	if
 		not Absorb.isKnockOff(
 			session.authoritativeDiameter,
-			cube.size,
+			pooled.size,
 			peak,
 			Config.absorbRatio,
 			Config.bumpSpeedThreshold
@@ -156,22 +156,22 @@ function AbsorbService.tryBump(session: Session, objectId: unknown, now: number)
 		Growth.shrinkDiameter(
 			session.authoritativeDiameter,
 			sizes,
-			Config.growthK,
+			Worlds.growthK,
 			Config.startDiameter
 		)
 	)
 
-	-- Only cubes still waiting to respawn from these pickups land on the floor; the others are
+	-- Only objects still waiting to respawn from these pickups land on the floor; the others are
 	-- already back in the room, so their records just leave the ball.
-	local released = BallService.releasableCubes(popped)
+	local released = BallService.releasableObjects(popped)
 	local spots = WorldSpawner.scatterSpots(
 		session.part.Position,
 		math.max(#released, 1),
 		Config.scatterDistance + ballRadius(session),
 		random:NextNumber(0, math.pi * 2)
 	)
-	for index, popCube in released do
-		WorldSpawner.scatter(popCube, spots[index], now + Config.scatterGrace)
+	for index, releasedObject in released do
+		WorldSpawner.scatter(releasedObject, spots[index], now + Config.scatterGrace)
 	end
 
 	session.lastBumpAt = now

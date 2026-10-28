@@ -1,0 +1,28 @@
+<!-- @dsCard group="World" height=360 subtitle="The 32 shared palette roles. Switch theme to reskin." -->
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../tokens.css">
+<script>(function(){var t=new URLSearchParams(location.search).get('theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Montserrat:wght@500&display=swap">
+<style>
+  body { margin:0; background:var(--ui-panel); color:var(--ui-text); font-family:var(--font-body); }
+  .wrap { padding:var(--space-3); }
+  .rows { display:grid; gap:var(--space-2); }
+  .row { display:grid; grid-template-columns:72px repeat(8, 1fr); gap:var(--space-2); align-items:start; }
+  .rowname { font-size:12px; line-height:16px; color:var(--ui-unknown); padding-top:14px; }
+  .cell { display:flex; flex-direction:column; gap:var(--space-1); min-width:0; }
+  .sw { height:44px; border-radius:6px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18); }
+  .lbl { font-size:11px; line-height:14px; color:var(--ui-text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .light { display:flex; gap:var(--space-2); margin-top:var(--space-3); }
+  .light .sw { height:28px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rows" id="rows"><div class="row"><div class="rowname">Row 0 ground</div><div class="cell"><div class="sw" style="background:var(--w-asphalt)"></div><div class="lbl">asphalt</div></div><div class="cell"><div class="sw" style="background:var(--w-road-line)"></div><div class="lbl">road-line</div></div><div class="cell"><div class="sw" style="background:var(--w-sidewalk)"></div><div class="lbl">sidewalk</div></div><div class="cell"><div class="sw" style="background:var(--w-kerb)"></div><div class="lbl">kerb</div></div><div class="cell"><div class="sw" style="background:var(--w-grass)"></div><div class="lbl">grass</div></div><div class="cell"><div class="sw" style="background:var(--w-soil)"></div><div class="lbl">soil</div></div><div class="cell"><div class="sw" style="background:var(--w-water)"></div><div class="lbl">water</div></div><div class="cell"><div class="sw" style="background:var(--w-sand)"></div><div class="lbl">sand</div></div></div><div class="row"><div class="rowname">Row 1 build</div><div class="cell"><div class="sw" style="background:var(--w-wall-a)"></div><div class="lbl">wall-a</div></div><div class="cell"><div class="sw" style="background:var(--w-wall-b)"></div><div class="lbl">wall-b</div></div><div class="cell"><div class="sw" style="background:var(--w-wall-c)"></div><div class="lbl">wall-c</div></div><div class="cell"><div class="sw" style="background:var(--w-roof-a)"></div><div class="lbl">roof-a</div></div><div class="cell"><div class="sw" style="background:var(--w-roof-b)"></div><div class="lbl">roof-b</div></div><div class="cell"><div class="sw" style="background:var(--w-glass)"></div><div class="lbl">glass</div></div><div class="cell"><div class="sw" style="background:var(--w-trim)"></div><div class="lbl">trim</div></div><div class="cell"><div class="sw" style="background:var(--w-door)"></div><div class="lbl">door</div></div></div><div class="row"><div class="rowname">Row 2 material</div><div class="cell"><div class="sw" style="background:var(--w-metal)"></div><div class="lbl">metal</div></div><div class="cell"><div class="sw" style="background:var(--w-metal-dark)"></div><div class="lbl">metal-dark</div></div><div class="cell"><div class="sw" style="background:var(--w-rubber)"></div><div class="lbl">rubber</div></div><div class="cell"><div class="sw" style="background:var(--w-wood)"></div><div class="lbl">wood</div></div><div class="cell"><div class="sw" style="background:var(--w-leaf)"></div><div class="lbl">leaf</div></div><div class="cell"><div class="sw" style="background:var(--w-leaf-dark)"></div><div class="lbl">leaf-dark</div></div><div class="cell"><div class="sw" style="background:var(--w-bark)"></div><div class="lbl">bark</div></div><div class="cell"><div class="sw" style="background:var(--w-white)"></div><div class="lbl">white</div></div></div><div class="row"><div class="rowname">Row 3 accent</div><div class="cell"><div class="sw" style="background:var(--w-accent-red)"></div><div class="lbl">accent-red</div></div><div class="cell"><div class="sw" style="background:var(--w-accent-yellow)"></div><div class="lbl">accent-yellow</div></div><div class="cell"><div class="sw" style="background:var(--w-accent-blue)"></div><div class="lbl">accent-blue</div></div><div class="cell"><div class="sw" style="background:var(--w-accent-pink)"></div><div class="lbl">accent-pink</div></div><div class="cell"><div class="sw" style="background:var(--w-accent-orange)"></div><div class="lbl">accent-orange</div></div><div class="cell"><div class="sw" style="background:var(--w-accent-teal)"></div><div class="lbl">accent-teal</div></div><div class="cell"><div class="sw" style="background:var(--w-glow)"></div><div class="lbl">glow</div></div><div class="cell"><div class="sw" style="background:var(--w-season)"></div><div class="lbl">season</div></div></div></div>
+<div class="light" id="light"><div class="cell" style="flex:1"><div class="sw" style="background:var(--light-sky)"></div><div class="lbl">light-sky</div></div><div class="cell" style="flex:1"><div class="sw" style="background:var(--light-fog)"></div><div class="lbl">light-fog</div></div><div class="cell" style="flex:1"><div class="sw" style="background:var(--light-ambient)"></div><div class="lbl">light-ambient</div></div></div>
+</div>
+</body>
+</html>

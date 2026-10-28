@@ -1,0 +1,15 @@
+{
+  "source": "clarify",
+  "questions": [
+    {
+      "id": "SC-003-balance-path",
+      "question": "SC-003 (balls reach Tier 4 in a 240 s, 12-ball run without any tier zone running dry, and Tier 2 within 60 s) is still not met: the latest 12-bot run records everyTierKeptShare false, with Tier 2 at 0.08 at 60 s and Tier 4 at 0.05 at 240 s. The owner deferred the balance work on 2026-10-28, so growthK = 1.5 and the Tier 3/Tier 4 placement counts are unchanged. Which path do you want for this PR: (a) keep SC-003 open and merge with the deferral recorded, (b) tune the world data, (c) raise the part budget, or (d) change the SC-003 wording? Note that (b) alone has been tried and does not reach the 20% floor, so it needs (c) or (d).",
+      "context": "specs/004-snow-village/playtest.md 'Round 1 SC-003 run' (placement raise to 1,840 parts, reverted: T4 0.051 at 240 s), 'Owner phone check and sign-off' (SC-003 skipped by owner). src/shared/Content/Worlds/SnowVillage.luau growthK = 1.5 (lowering it to 0.6 gives a 96 s Tier 2 in tests/unit/Pace.test.luau, which breaks the 60 s clause of SC-003). src/shared/Config.luau Budgets.maxActivePartsPerServer = 2000. Review findings F3 and F7 on PR #5."
+    },
+    {
+      "id": "tier5-absorb-intent",
+      "question": "Should the four Tier 5 landmarks become absorbable from the same ball diameter (70 studs, the Tier 5 entry point in the spec), or is the staggered 70 to 120 spread intended? Current sizes are cottage 28, town_house 34, skating_rink 40, clock_tower 48, so they become absorbable at 70, 85, 100 and 120. Making all four absorbable at 70 needs sizes of 28 or less, which is inside the 25 to 60 stud range but changes the meshes: the Blender models, the art manifest size check and the Roblox MeshIds would all need redoing.",
+      "context": "specs/004-snow-village/spec.md line 22 (owner-approved Tier 5 absorbability: 'absorbable once ball diameter reaches 70+ studs') and line 35 (Tier 5 'becoming absorbable once a ball reaches Tier 5 (diameter >= 70 studs)'). The spec's validation rule (line 62, data-model.md line 55) uses the tier ceiling of 150 studs, so sizes up to 60 pass it, which is why the current sizes pass the Lune tests. src/shared/Rules/Absorb.luau canAbsorb needs size <= 0.4 * diameter. Review finding F9 on PR #5."
+    }
+  ]
+}

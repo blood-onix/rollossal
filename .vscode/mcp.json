@@ -4,6 +4,11 @@
       "type": "stdio",
       "command": "/Applications/RobloxStudio.app/Contents/MacOS/StudioMCP",
       "args": []
+    },
+    "blender": {
+      "type": "stdio",
+      "command": "/opt/homebrew/bin/uvx",
+      "args": ["mcp-for-blender==2.2.4"]
     }
   }
 }
