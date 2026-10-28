@@ -127,7 +127,7 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 - [X] T043 [P] Update `art/README.md`: new atlas layout (1024 px, 8×8 cells 128×64, 8 strips 1024×64), `palette.json` schema, split-normal rules, budget table, UV inset rule; reference `contracts/art-pipeline.md`
 - [X] T044 [P] Update `tests/unit/run` / `scripts/check.sh` final validation: all 8 suites (`Themes`, `ThemeResolve`, `Atlas`, `Book`, `SnowVillage`, `Config`, `ArtManifest`, `Strings`) pass; `check.sh` exits 0
 - [ ] T045 [P] Owner hand-off (ask first): upload `art/atlases/*.png` (6) + `art/export/*.fbx` (65) + `manifest.json`; single commit: `Assets.palettes.*` filled, `Assets.meshUv = "atlas"`, delete `Assets.palette`; run `REQUIRE_ASSET_IDS=1 lune run tests/unit/run`; confirm mesh recolour between `winter`/`city` in Studio; record in PR; set `LoadStringEnabled` off in published place (`AGENTS.md`)
-- [ ] T046 [P] Commit `tasks.md` generation; verify all tasks follow `- [ ] T### [P?] [US?] Description with file path`; none missing ID, checkbox, or file reference
+- [X] T046 [P] Commit `tasks.md` generation; verify all tasks follow `- [ ] T### [P?] [US?] Description with file path`; none missing ID, checkbox, or file reference
 
 ---
 
