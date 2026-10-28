@@ -253,6 +253,11 @@ Task T016: Update Content/GreyBoxRoom.luau types
 
 ## Phase 17: Convergence
 
-- [ ] T061 Replace the dynamic `Enum.CollisionFidelity[Tiers.collisionClass(tier)]` index in `buildMesh` (`src/shared/ObjectVisual.luau` line 100) with an explicit `Box`/`Hull` branch so luau-lsp strict analysis passes, then re-run `scripts/check.sh` until it exits 0 per SC-001 (partial)
-- [ ] T062 Add a repeatable negative test for `art/scripts/export_all.py` failure paths (UV crossing a cell or strip edge, a second material, triangles over `Config.Budgets.meshTriangles[tier]`), each exiting non-zero with a descriptive error, run through the Blender MCP per US2/AC2 and T020 (partial)
-- [ ] T063 [Studio] Check that the `Icons.retry` glyph used by the returning-page label (`src/shared/Content/Icons.luau` line 13, drawn in `src/client/BookUi.luau`) renders in both `FredokaOne` and `GothamMedium` in the 640 × 360 capture per FR-006 and AGENTS.md Glyphs; use a text-only label if either font shows it blank or as a box (partial)
+- [X] T061 Replace the dynamic `Enum.CollisionFidelity[Tiers.collisionClass(tier)]` index in `buildMesh` (`src/shared/ObjectVisual.luau` line 100) with an explicit `Box`/`Hull` branch so luau-lsp strict analysis passes, then re-run `scripts/check.sh` until it exits 0 per SC-001 (partial)
+- [X] T062 Add a repeatable negative test for `art/scripts/export_all.py` failure paths (UV crossing a cell or strip edge, a second material, triangles over `Config.Budgets.meshTriangles[tier]`), each exiting non-zero with a descriptive error, run through the Blender MCP per US2/AC2 and T020 (partial)
+- [X] T063 [Studio] Check that the `Icons.retry` glyph used by the returning-page label (`src/shared/Content/Icons.luau` line 13, drawn in `src/client/BookUi.luau`) renders in both `FredokaOne` and `GothamMedium` in the 640 × 360 capture per FR-006 and AGENTS.md Glyphs; use a text-only label if either font shows it blank or as a box (partial)
+
+## Phase 18: Convergence
+
+- [ ] T064 [Blender] Run `art/scripts/test_export_negative.py` (`python3 -I art/scripts/test_export_negative.py --blender <path>`, or through `execute_blender_code` if the shell run is blocked; do not bypass a sandbox block) and confirm all three cases (UV across a cell edge, second material, over-budget triangles) exit non-zero with their named rule, per US2/AC2 and T062 (partial)
+- [ ] T065 [Owner] Confirm that `Assets.meshUv` replaces the FR-004 fallback to `Assets.palette` (the flag is the R-07 choice in plan Complexity Tracking) and record it as a deviation in `spec.md` FR-004; the owner decides, the agent does not edit spec text (contradicts)

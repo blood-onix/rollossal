@@ -72,3 +72,12 @@ Quality gates: not met yet. Open: T037 overlay/hero identity, T039 collision cla
 - T041: not run. Needs Studio in front for an unthrottled window (owner); out of scope for the agent.
 - Open for the next round: T040 needs either a longer run with an owner-approved test diameter, or a test-only way to grow the ball to 5.5 that the owner approves.
 - Quality gates: not met. Open: T040 Book proof, T041 fps and 640×360 capture.
+
+## Round 9, 2026-10-28 (commit 42bfd32 plus uncommitted working tree)
+
+- Studio: one instance (Rollossal, placeId 112788738500883, id 7a58188e). Sync probe on Edit: 69 checked, `mismatches = {}`.
+- T061: `ObjectVisual.buildMesh` picks `Enum.CollisionFidelity.Hull` or `.Box` with an explicit `if`, not a dynamic index. `scripts/check.sh` exits 0: StyLua, Selene, luau-lsp strict analysis, token and atlas sync, Lune unit suites (343 passed, 0 failed), and the GreyBoxRoom and purity guards.
+- T063 (glyph check, Play on Client): a temporary 640×360 frame holds two labels, `Icons.retry` plus text, in FredokaOne and in GothamMedium. The 🔁 glyph renders in both labels (screen capture `ScreenCapture_T063_glyph`), and `TextFits` is true for both at 18 px. Caveat: the Studio viewport is not 640×360, so the frame was drawn at scale 1 inside the viewport and not captured at true 640×360 pixels. The temporary GUI was removed when Play stopped.
+- Console during the T063 Play session: only pre-existing noise (DataStore `StudioAccessToApisNotAllowed`, profilestore, `ContentId rbxassetid://203785492`). The id appears in no repo source, so the failure is not from game code.
+- T062 (export negative test): `art/scripts/test_export_negative.py` is written. It builds fixtures for UV across a cell edge, a second material, and over-budget triangles, then checks that `art/scripts/export_all.py --source` exits non-zero with the rule named. It has NOT been run: the Blender binary is under `/Applications`, and the sandbox hook blocked the run from the shell. Open until someone runs it.
+- Quality gates: still not met (T040 Book proof, T041 fps and 640×360 capture, T045 owner hand-off, T054 music track). T042 stays open until those are resolved.

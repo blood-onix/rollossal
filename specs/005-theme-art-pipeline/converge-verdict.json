@@ -1,19 +1,20 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T042 Record round observations in specs/005-theme-art-pipeline/playtest.md (date and commit) after the Studio checks run",
-    "T061 Replace the dynamic Enum.CollisionFidelity index in src/shared/ObjectVisual.luau line 100 so luau-lsp strict analysis passes, then get scripts/check.sh to exit 0",
-    "T062 Add a repeatable negative test for art/scripts/export_all.py failure paths (UV across a cell or strip edge, second material, over-budget triangles)",
-    "T063 [Studio] Check the Icons.retry glyph in the returning-page label renders in FredokaOne and GothamMedium in the 640x360 capture"
+    "T064 [Blender] Run art/scripts/test_export_negative.py and confirm the cell-edge UV, second-material and over-budget cases each exit non-zero with their named rule"
   ],
   "human": [
     {
       "item": "T040 [Studio] Book proof: absorb winter_lights in winter, then confirm the winter page in city",
-      "reason": "winter_lights needs a ball diameter of at least 5.5; rounds 5 to 8 showed the client driver reaches about 2.6 in one 240 s run, so reaching it needs either an owner-approved test-only growth route or a longer approved run"
+      "reason": "winter_lights needs a ball diameter of at least 5.5; the client driver reaches about 2.6 in one 240 s run, so it needs an owner-approved test-only growth route or a longer approved run"
     },
     {
       "item": "T041 [Studio] 640x360 capture and 60 s unthrottled fps run",
-      "reason": "Studio must stay in front for an unthrottled window; AGENTS.md forbids the agent from focusing or activating Studio, and the round 3 run was throttled to 15 fps in 59 of 60 seconds"
+      "reason": "AGENTS.md forbids the agent from focusing Studio; the round 3 run was throttled to 15 fps in 59 of 60 seconds, and the required owner request to keep Studio in front cannot be made in this non-interactive session"
+    },
+    {
+      "item": "T042 [Studio] Record observations in playtest.md and confirm the quality gates are met",
+      "reason": "Gate sign-off depends on T040, T041, T045 and T054, which are blocked as listed here; the agent cannot mark the gates met"
     },
     {
       "item": "T045 Owner hand-off: upload atlases and 65 FBX, flip Assets.meshUv to atlas, delete Assets.palette",
@@ -25,12 +26,16 @@
     },
     {
       "item": "T059 Confirm plan deviations D1 and D2 and record them in spec.md FR-001 to FR-003",
-      "reason": "The plan asks the owner to confirm these design deviations before the owner-approved spec text changes; the agent does not edit spec text on its own"
+      "reason": "The owner must confirm these deviations before spec text changes; the agent does not edit spec text on its own"
     },
     {
       "item": "T060 Decide whether SnowVillage declares gate and shortcut keep-out areas",
-      "reason": "Snow Village has no ring gates or small-only shortcut corridors to protect, so the owner must choose between adding those zones to the layout or amending FR-010 in spec.md; the agent does not edit spec text"
+      "reason": "The owner must choose between adding those zones to the layout or amending FR-010 in spec.md; the agent does not edit spec text"
+    },
+    {
+      "item": "T065 [Owner] Confirm Assets.meshUv replaces the FR-004 Assets.palette fallback and record it in spec.md FR-004",
+      "reason": "The R-07 flag is a deliberate deviation from the spec text, and spec text is owner-owned"
     }
   ],
-  "summary": "The 343 Lune tests, palette check and Studio sync pass, but scripts/check.sh fails on a luau-lsp strict error (T061), and the Book proof, fps capture, glyph check, playtest record, negative export test and owner items remain open."
+  "summary": "Round 9 appended Phase 18 (T064 negative export test, not yet run; T065 FR-004 fallback wording), and the feature stays incomplete because the Studio book, fps and capture checks, the owner hand-off, and the owner spec decisions remain open."
 }
