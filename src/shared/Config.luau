@@ -79,6 +79,7 @@ local Config = {
 	settingsSendDelay = 0.3,
 	minUtilityTouchTarget = 64,
 	noticeSeconds = 2,
+	debugFpsWarmupSeconds = 5,
 	Settings = {
 		musicVolume = { default = 0.4, min = 0, max = 1 },
 		effectsVolume = { default = 0.8, min = 0, max = 1 },
@@ -96,6 +97,8 @@ local Config = {
 		RewardedAds = false,
 		RunLoop = true,
 		Saving = true,
+		-- Owner-only FPS overlay (FpsReadout); shown to the experience creator only. Turn off before a public launch.
+		DebugFps = true,
 		Shop = false,
 		SnowVillage = true,
 	},

@@ -10,6 +10,7 @@ local Hud = require(script.Parent.Hud)
 local ResultsUi = require(script.Parent.ResultsUi)
 local HubUi = require(script.Parent.HubUi)
 local Feedback = require(script.Parent.Feedback)
+local FpsReadout = require(script.Parent.FpsReadout)
 
 local Shared = game:GetService("ReplicatedStorage"):WaitForChild("Shared")
 local Config = require(Shared.Config)
@@ -23,6 +24,7 @@ Hud.start()
 ResultsUi.start()
 HubUi.start()
 Feedback.start()
+FpsReadout.start()
 
 if Config.Flags.Saving then
 	local ProfileClient = require(script.Parent.ProfileClient)
