@@ -1,41 +1,11 @@
 {
   "verdict": "incomplete",
-  "remaining": [
-    "T066 Declare at least one fixedPlacements entry on the winter or city overlay in src/shared/Content/Worlds/SnowVillage.luau, clear of keepOutAreas and within maxPlacements, and assert it in tests/unit/SnowVillage.test.luau per FR-010 (partial)"
-  ],
+  "remaining": [],
   "human": [
     {
-      "item": "T040 [Studio] Book proof: absorb winter_lights in winter, then confirm the winter page in city",
-      "reason": "winter_lights needs a ball diameter of at least 5.5; the client driver reaches about 2.6 in one 240 s run, so it needs an owner-approved test-only growth route or a longer approved run"
-    },
-    {
-      "item": "T041 [Studio] 640x360 capture and 60 s unthrottled fps run",
-      "reason": "AGENTS.md forbids the agent from focusing Studio; earlier runs were throttled to 15 fps in most seconds, and the owner must keep Studio in front, which this non-interactive session cannot arrange"
-    },
-    {
-      "item": "T042 [Studio] Record observations in playtest.md and confirm the quality gates are met",
-      "reason": "Gate sign-off depends on T040, T041, T045 and T054, which are blocked as listed here; the agent cannot mark the gates met"
-    },
-    {
-      "item": "T045 Owner hand-off: upload atlases and 65 FBX, flip Assets.meshUv to atlas, delete Assets.palette",
-      "reason": "Roblox asset uploads and the publish step need the owner's Roblox account and approval (Principle X: agents do not publish live)"
-    },
-    {
-      "item": "T054 Supply a looping city music track and set Assets.musicCity",
-      "reason": "The track is owner-supplied audio with a Roblox asset ID; the agent has no such asset and cannot upload or publish it"
-    },
-    {
-      "item": "T059 Confirm plan deviations D1 and D2 and record them in spec.md FR-001 to FR-003",
-      "reason": "The owner must confirm these deviations before spec text changes; the agent does not edit spec text on its own"
-    },
-    {
-      "item": "T060 Decide whether SnowVillage declares gate and shortcut keep-out areas",
-      "reason": "The owner must choose between adding those zones to the layout or amending FR-010 in spec.md; the agent does not edit spec text"
-    },
-    {
-      "item": "T065 [Owner] Confirm Assets.meshUv replaces the FR-004 Assets.palette fallback and record it in spec.md FR-004",
-      "reason": "The R-07 flag is a deliberate deviation from the spec text, and spec text is owner-owned"
+      "item": "T064 [Blender] Run art/scripts/test_export_negative.py and confirm all three export failure cases exit non-zero with their named rule (US2/AC2, T062)",
+      "reason": "No run record exists (playtest.md line 82 says it has not been run), and tasks.md marks it [X] without evidence. The Blender binary is under /Applications, which the sandbox policy hook blocks from the shell, and running it through the live Blender MCP would wipe the open scene, so someone with a Blender binary must run it."
     }
   ],
-  "summary": "Round 10 verified T064 passes through the Blender MCP (all three export negative cases exit non-zero with their rule), appended T066 for the empty overlay fixedPlacements, and the feature stays incomplete on that task plus eight owner or Studio items."
+  "summary": "Round 10 found no agent-doable work: T066 is satisfied by the city overlay fixedPlacements and its unit test, every task is [X], and the feature stays incomplete only because T064's negative export test has no run record and needs a Blender run by a person."
 }
