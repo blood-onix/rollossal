@@ -7,6 +7,7 @@ local harness = require("./harness")
 local Config = require("../../src/shared/Config")
 local Layout = require("../../src/shared/Rules/Layout")
 local ThemeResolve = require("../../src/shared/Rules/ThemeResolve")
+local Tiers = require("../../src/shared/Rules/Tiers")
 
 local test, expect = harness.test, harness.expect
 
@@ -124,7 +125,7 @@ local function resolve(
 	world: ThemeResolve.WorldLike,
 	theme: ThemeResolve.ThemeLike
 ): ThemeResolve.Resolved
-	return ThemeResolve.resolve(world, theme, Layout.expand)
+	return ThemeResolve.resolve(world, theme, Layout.expand, Config.Budgets.defaultMaxPlacements)
 end
 
 local function expectError(fn: () -> (), needle: string)
@@ -362,7 +363,7 @@ test("expand is called once, with the sizes of the resolved object list", functi
 		end
 		seenZoneIds = ids
 		return {}
-	end)
+	end, Config.Budgets.defaultMaxPlacements)
 	expect.equal(calls, 1)
 	expect.equal(seenSizes.thorn, 7) -- the city-only slot object sizes its slot zone
 	expect.equal(seenSizes.small_a, 2) -- the winter object is still there
@@ -437,4 +438,52 @@ test("environment palette: base colours stay, theme colours win", function()
 	expect.equal(table.concat(city.environmentPalette["w-grass"], ","), "11,22,33") -- not a theme cell
 	expect.equal(table.concat(city.environmentPalette["w-wood"], ","), "1,2,3") -- the theme palette wins
 	expect.equal(city.environmentPalette["w-asphalt"][1], 86) -- a theme-only cell is present
+end)
+
+-- ---------------------------------------------------- placement budget: base plus overlays
+
+local function resolveWithBudget(
+	world: ThemeResolve.WorldLike,
+	theme: ThemeResolve.ThemeLike,
+	defaultCap: number
+)
+	return ThemeResolve.resolve(world, theme, Layout.expand, defaultCap)
+end
+
+test("placement budget: base plus overlay placements count against world.maxPlacements", function()
+	local world = makeWorld()
+	world.maxPlacements = 31 -- the city resolution has 31 placements: 28 base + 3 overlay
+	expect.equal(#resolveWithBudget(world, CITY, 1400).placements, 31)
+	world.maxPlacements = 30
+	expectError(function()
+		resolveWithBudget(world, CITY, 1400)
+	end, "31 placements exceed the budget of 30")
+end)
+
+test("placement budget: a nil maxPlacements falls back to the default cap", function()
+	local world = makeWorld()
+	world.maxPlacements = nil
+	expect.equal(#resolveWithBudget(world, WINTER, 28).placements, 28)
+	expectError(function()
+		resolveWithBudget(world, WINTER, 27)
+	end, "28 placements exceed the budget of 27")
+end)
+
+-- ------------------------------------------------ collision class: hero variants keep the base
+
+test("hero variants keep their base hero's collision class", function()
+	local world = makeWorld()
+	local city = resolve(world, CITY)
+	local bindings = world.themeBindings :: any
+	for baseId in bindings.city.heroVariants do
+		local base = nil
+		for _, object in world.objects do
+			if object.id == baseId then
+				base = object
+			end
+		end
+		expect.truthy(base ~= nil)
+		local variant = objectById(city, baseId)
+		expect.equal(Tiers.collisionClass(variant.tier), Tiers.collisionClass(base.tier))
+	end
 end)

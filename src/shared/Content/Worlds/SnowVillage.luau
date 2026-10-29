@@ -466,6 +466,7 @@ end
 
 -- Ground, the landmark ring boundary and the Tier 5 landmarks.
 block("sv_ground", "Block", 0, -0.5, 0, 0, 800, 1, 800, "snow")
+block("sv_sidewalk", "Block", 0, 0.05, -380, 0, 800, 0.1, 24, "w-sidewalk")
 block("sv_wall_n", "Block", 0, 20, -402, 0, 808, 40, 4, "stone")
 block("sv_wall_s", "Block", 0, 20, 402, 0, 808, 40, 4, "stone")
 block("sv_wall_e", "Block", 402, 20, 0, 0, 4, 40, 808, "stone")
@@ -769,6 +770,10 @@ local overlayZonesCity: {
 local heroFountain =
 	{ assetKey = "fountain", nameKey = "object.snow_village.big_snowman_fountain", size = 13 }
 
+-- 005 (T066): one fixed beach towel in the free band north of the town square, clear of every keep-out.
+local cityTowelFixed =
+	{ id = "sv_ol_beach_towel_fixed", objectId = "beach_towel", x = -30, y = 0, z = -100, yaw = 0 }
+
 -- Typed once so the winter and city entries share one type instead of a union (see ThemeResolve).
 local themeBindings: {
 	[string]: {
@@ -841,7 +846,7 @@ local themeBindings: {
 		},
 		city = {
 			slots = slotsCity,
-			overlays = { zones = overlayZonesCity, fixedPlacements = {} },
+			overlays = { zones = overlayZonesCity, fixedPlacements = { cityTowelFixed } },
 			heroVariants = { big_snowman = heroFountain },
 			objects = { cityKit[1], cityKit[2], cityKit[3], cityKit[4], cityKit[5], beachTowel },
 			bookPage = {
@@ -862,7 +867,8 @@ local themeBindings: {
 	}
 
 -- Keep-out rectangles for the 005 overlay validation (research R-10): four 12-stud sightline
--- corridors on the axes, and one 10 x 10 rectangle around every marker spot.
+-- corridors on the axes, and one 10 x 10 rectangle around every marker spot. Gates and shortcuts
+-- (T060) are added below.
 local keepOutAreas: {
 	{
 		id: string,
@@ -887,6 +893,42 @@ for _, marker in markers do
 		z = marker.z,
 		w = 10,
 		d = 10,
+	})
+end
+
+-- 005 (T060): gate and shortcut keep-outs, so nothing spawns on a route. A gate is a porch ramp, the only
+-- way up onto a spawn porch: one on each side of every spawn, 18 studs out. A shortcut is a 4-stud alley
+-- between two spawn clusters (docs/design/03-city-level.md: tier 1-2 balls fit, bigger ones stop). Six
+-- alleys: two north-south at x = ±150, and four east-west at z = ±60, west and east of the town square.
+for _, spawnPoint in spawnPoints do
+	for _, side in { -18, 18 } do
+		table.insert(keepOutAreas, {
+			id = `ko_gate_{#keepOutAreas + 1}`,
+			kind = "gate",
+			x = spawnPoint.x + side,
+			z = spawnPoint.z,
+			w = 14,
+			d = 10,
+		})
+	end
+end
+for _, alley in
+	{
+		{ x = -150, z = 0, w = 4, d = 356 },
+		{ x = 150, z = 0, w = 4, d = 356 },
+		{ x = -150, z = -60, w = 196, d = 4 },
+		{ x = 150, z = -60, w = 196, d = 4 },
+		{ x = -150, z = 60, w = 196, d = 4 },
+		{ x = 150, z = 60, w = 196, d = 4 },
+	}
+do
+	table.insert(keepOutAreas, {
+		id = `ko_shortcut_{#keepOutAreas + 1}`,
+		kind = "shortcut",
+		x = alley.x,
+		z = alley.z,
+		w = alley.w,
+		d = alley.d,
 	})
 end
 

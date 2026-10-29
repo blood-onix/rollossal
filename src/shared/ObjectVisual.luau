@@ -9,6 +9,7 @@ local AssetService = game:GetService("AssetService")
 
 local Assets = require(script.Parent.Assets)
 local Worlds = require(script.Parent.Worlds)
+local Tiers = require(script.Parent.Rules.Tiers)
 
 type ObjectDef = Worlds.ObjectDef
 
@@ -38,13 +39,13 @@ end
 local function textureId(): string
 	local theme = Worlds.activeTheme
 	if
-		Assets.meshUv == "atlas"
+		Assets.renderingMode == "atlas"
 		and theme ~= nil
 		and Assets.palettes[theme.paletteAssetKey] ~= ""
 	then
 		return Assets.palettes[theme.paletteAssetKey]
-	elseif Assets.meshUv == "legacy" and Assets.palette ~= "" then
-		return Assets.palette
+	elseif Assets.renderingMode == "legacy" and Assets.meshUv ~= "" then
+		return Assets.meshUv
 	end
 	return ""
 end
@@ -81,17 +82,9 @@ local function standIn(def: ObjectDef): Part
 	return part
 end
 
--- Fidelity rules (contracts/theme-content.md §6): automatic rendering, hull collision for the big
--- tiers, box for the rest. Never a SurfaceAppearance, a light, or a Transparency above 0.
-local function fidelity(mesh: MeshPart, tier: number?)
-	mesh.RenderFidelity = Enum.RenderFidelity.Automatic
-	mesh.CollisionFidelity = if tier ~= nil and tier >= 4
-		then Enum.CollisionFidelity.Hull
-		else Enum.CollisionFidelity.Box
-end
-
 -- The imported mesh scaled so its longest side is `longestSide`, or nil with a one-time warning.
--- `tier` (1-5) selects the collision fidelity; nil (the hub) keeps Box.
+-- `tier` (1-5) selects the collision fidelity: hull for tiers 4-5, box otherwise and for the hub (nil).
+-- Fidelity is passed at creation: CollisionFidelity is not settable on a live MeshPart (FR-004).
 function ObjectVisual.buildMesh(
 	assetKey: string?,
 	label: string,
@@ -102,8 +95,14 @@ function ObjectVisual.buildMesh(
 	if contentId == nil or contentId == "" then
 		return nil
 	end
+	local collision = if Tiers.collisionClass(tier) == "Hull"
+		then Enum.CollisionFidelity.Hull
+		else Enum.CollisionFidelity.Box
 	local ok, result = pcall(function()
-		return AssetService:CreateMeshPartAsync(contentId :: any)
+		return AssetService:CreateMeshPartAsync(contentId :: any, {
+			CollisionFidelity = collision,
+			RenderFidelity = Enum.RenderFidelity.Automatic,
+		})
 	end)
 	if not ok then
 		warnOnce(label, tostring(result))
@@ -118,7 +117,6 @@ function ObjectVisual.buildMesh(
 	if id ~= "" then
 		mesh.TextureID = id
 	end
-	fidelity(mesh, tier)
 	return mesh
 end
 

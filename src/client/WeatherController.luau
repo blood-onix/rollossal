@@ -11,6 +11,7 @@ local RunService = game:GetService("RunService")
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
 local Worlds = require(Shared.Worlds)
+local Weather = require(Shared.Rules.Weather)
 
 local WeatherController = {}
 
@@ -30,7 +31,7 @@ local function applyEnabled()
 	end
 	local reduceMotion = Players.LocalPlayer:GetAttribute("ReduceMotion") == true
 	local data = weather()
-	local enabled = not reduceMotion and data ~= nil and data.kind ~= "none"
+	local enabled = Weather.emitting(reduceMotion, if data ~= nil then data.kind else nil)
 	if enabled and data ~= nil then
 		current.Color =
 			ColorSequence.new(Color3.fromRGB(data.color[1], data.color[2], data.color[3]))

@@ -11,6 +11,7 @@ local Icons = require("../../src/shared/Content/Icons")
 local Layout = require("../../src/shared/Rules/Layout")
 local SnowVillage = require("../../src/shared/Content/Worlds/SnowVillage")
 local Strings = require("../../src/shared/Localization/Strings")
+local Themes = require("../../src/shared/Content/Themes")
 local ThemeResolve = require("../../src/shared/Rules/ThemeResolve")
 
 local test, expect = harness.test, harness.expect
@@ -58,7 +59,8 @@ for _, themeId in SnowVillage.supportedThemes do
 	resolved[themeId] = ThemeResolve.resolve(
 		SnowVillage,
 		{ id = themeId, palette = {}, lighting = {} },
-		Layout.expand
+		Layout.expand,
+		Config.Budgets.defaultMaxPlacements
 	)
 end
 
@@ -486,20 +488,22 @@ test("SnowVillage: winter keeps every non-slot placement today's world has (005,
 	expect.truthy(compared >= 1578, `expected at least 1578 kept placements, got {compared}`)
 end)
 
-test("SnowVillage: overlays sit clear of the keep-out areas (005, R-10)", function()
-	local sightlines = 0
+test("SnowVillage: overlays sit clear of the keep-out areas (005, R-10, T066)", function()
+	local counts: { [string]: number } = { sightline = 0, marker = 0, gate = 0, shortcut = 0 }
 	for _, keepOut in SnowVillage.keepOutAreas do
-		expect.truthy(keepOut.kind == "sightline" or keepOut.kind == "marker")
+		counts[keepOut.kind] += 1
 		expect.truthy(keepOut.w > 0 and keepOut.d > 0)
 		if keepOut.kind == "sightline" then
-			sightlines += 1
 			expect.truthy(keepOut.w <= 12 or keepOut.d <= 12)
-		else
+		elseif keepOut.kind == "marker" then
 			expect.equal(keepOut.w, 10)
 			expect.equal(keepOut.d, 10)
 		end
 	end
-	expect.equal(sightlines, 4)
+	expect.equal(counts.sightline, 4)
+	expect.equal(counts.marker, #SnowVillage.environment.markers)
+	expect.equal(counts.gate, 24)
+	expect.equal(counts.shortcut, 6)
 	for _, themeId in SnowVillage.supportedThemes do
 		for _, zone in SnowVillage.themeBindings[themeId].overlays.zones do
 			local x0, x1 = zone.x - zone.w / 2, zone.x + zone.w / 2
@@ -511,7 +515,78 @@ test("SnowVillage: overlays sit clear of the keep-out areas (005, R-10)", functi
 				expect.falsy(intersects, `{zone.id} intersects keep-out {keepOut.id}`)
 			end
 		end
+		for _, fixed in SnowVillage.themeBindings[themeId].overlays.fixedPlacements do
+			local half = resolvedSizes[themeId][fixed.objectId] / 2
+			for _, keepOut in SnowVillage.keepOutAreas do
+				local hit = math.abs(fixed.x - keepOut.x) < half + keepOut.w / 2
+					and math.abs(fixed.z - keepOut.z) < half + keepOut.d / 2
+				expect.falsy(
+					hit,
+					`{themeId}: fixed placement {fixed.id} sits in keep-out {keepOut.id}`
+				)
+			end
+		end
 	end
+end)
+
+test(
+	"SnowVillage: no placement lands on a gate or in a shortcut alley in any theme (005, T060)",
+	function()
+		for _, themeId in SnowVillage.supportedThemes do
+			local themeSize = resolvedSizes[themeId]
+			for _, placement in resolved[themeId].placements do
+				local half = themeSize[placement.objectId] / 2
+				for _, keepOut in SnowVillage.keepOutAreas do
+					if keepOut.kind == "gate" or keepOut.kind == "shortcut" then
+						local hit = math.abs(placement.x - keepOut.x) < half + keepOut.w / 2
+							and math.abs(placement.z - keepOut.z) < half + keepOut.d / 2
+						expect.falsy(
+							hit,
+							`{themeId}: {placement.id} sits in {keepOut.kind} {keepOut.id}`
+						)
+					end
+				end
+			end
+		end
+	end
+)
+
+test(
+	"SnowVillage: each gate is a porch ramp and each shortcut alley is 4 studs across (005, T060)",
+	function()
+		for _, keepOut in SnowVillage.keepOutAreas do
+			if keepOut.kind == "gate" then
+				expect.equal(keepOut.w, 14)
+				expect.equal(keepOut.d, 10)
+				local porches = 0
+				for _, point in SnowVillage.spawnPoints do
+					if math.abs(keepOut.x - point.x) == 18 and keepOut.z == point.z then
+						porches += 1
+					end
+				end
+				expect.equal(porches, 1, `gate {keepOut.id} is not a porch ramp`)
+			elseif keepOut.kind == "shortcut" then
+				expect.equal(math.min(keepOut.w, keepOut.d), 4)
+			end
+		end
+	end
+)
+
+test("SnowVillage: the city overlay's fixed beach towel is inside the level (005, T066)", function()
+	local fixed = SnowVillage.themeBindings.city.overlays.fixedPlacements
+	expect.equal(#fixed, 1)
+	local placement = fixed[1]
+	expect.equal(placement.objectId, "beach_towel")
+	expect.truthy(math.abs(placement.x) <= SnowVillage.halfExtent)
+	expect.truthy(math.abs(placement.z) <= SnowVillage.halfExtent)
+	local owned = false
+	for _, object in SnowVillage.themeBindings.city.objects or {} do
+		owned = owned or object.id == placement.objectId
+	end
+	expect.truthy(
+		owned,
+		`{placement.id} names {placement.objectId}, which the city binding does not define`
+	)
 end)
 
 test(
@@ -597,9 +672,11 @@ test("SnowVillage: theme-only stand-ins stay inside their tier ranges (005)", fu
 end)
 
 test("SnowVillage: resolving every supported theme succeeds and keeps its shape (005)", function()
+	-- The city overlay adds one fixed beach towel (T066) on top of the 1616 winter placements.
+	local expectedPlacements: { [string]: number } = { winter = 1616, city = 1617 }
 	for _, themeId in SnowVillage.supportedThemes do
 		local themeResolved = resolved[themeId]
-		expect.equal(#themeResolved.placements, 1616)
+		expect.equal(#themeResolved.placements, expectedPlacements[themeId])
 		local slotCount = 0
 		for _ in themeResolved.slotPlacementIds do
 			slotCount += 1
@@ -628,10 +705,22 @@ test("SnowVillage: resolving every supported theme succeeds and keeps its shape 
 	expect.equal(overlayPlacements.winter_lights, 6)
 end)
 
+test("SnowVillage: every theme stays inside the 1700 placement budget (005, FR-002)", function()
+	expect.equal(SnowVillage.maxPlacements, 1700)
+	for _, themeId in SnowVillage.supportedThemes do
+		local count = #resolved[themeId].placements
+		expect.truthy(count <= 1700, `{themeId} resolves {count} placements, over 1700`)
+	end
+end)
+
 test("SnowVillage: every block swatch exists and every marker kind has at least 6 spots", function()
 	local environment = SnowVillage.environment
 	for _, block in environment.blocks do
-		expect.truthy(environment.palette[block.swatch] ~= nil)
+		for _, themeId in SnowVillage.supportedThemes do
+			local inBase = environment.palette[block.swatch] ~= nil
+			local inTheme = Themes[themeId].palette[block.swatch] ~= nil
+			expect.truthy(inBase or inTheme)
+		end
 		expect.truthy(block.kind == "Block" or block.kind == "Wedge" or block.kind == "Cylinder")
 	end
 	local booster, trap = 0, 0

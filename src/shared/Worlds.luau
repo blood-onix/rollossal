@@ -46,7 +46,12 @@ local activeTheme = if activeThemeId ~= nil then (Themes :: any)[activeThemeId :
 local resolved: WorldDef = active
 local worldPlacements: { Layout.Placement }
 if activeTheme ~= nil then
-	local result = ThemeResolve.resolve(active :: any, activeTheme :: any, Layout.expand)
+	local result = ThemeResolve.resolve(
+		active :: any,
+		activeTheme :: any,
+		Layout.expand,
+		Config.Budgets.defaultMaxPlacements
+	)
 	local themed = table.clone(active)
 	themed.objects = result.objects :: any
 	themed.zones = result.zones :: any
@@ -144,7 +149,12 @@ local Worlds = {
 		if theme == nil then
 			error(`Worlds: unknown theme {themeId}`, 2)
 		end
-		return ThemeResolve.resolve(active :: any, theme :: any, Layout.expand)
+		return ThemeResolve.resolve(
+			active :: any,
+			theme :: any,
+			Layout.expand,
+			Config.Budgets.defaultMaxPlacements
+		)
 	end,
 	baseObjects = active.objects,
 	themeBookPages = themeBookPages,

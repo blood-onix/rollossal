@@ -3,7 +3,9 @@
 -- meshes through their manifest, the asset keys, the budgets file and the hard-coded id scan. With no
 -- manifest yet the mesh checks run in fallback mode and only the id scan, key coverage and budgets file apply.
 -- REQUIRE_ASSET_IDS=1 also demands the manifest and every imported asset id (the final gate).
-
+--
+-- Local vars and test helpers:
+--
 local fs = require("@lune/fs")
 local process = require("@lune/process")
 local serde = require("@lune/serde")
@@ -142,7 +144,7 @@ test("Art: with REQUIRE_ASSET_IDS=1 every mesh and the palette have an imported 
 		return
 	end
 	expect.truthy(hasManifest)
-	expect.truthy(Assets.palette ~= "")
+	expect.truthy(Assets.meshUv ~= "")
 	for key, id in Assets.meshes do
 		expect.truthy(id ~= "", `{key} has no asset id`)
 	end

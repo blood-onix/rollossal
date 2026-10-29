@@ -64,4 +64,13 @@ test("isCulled: objects at least delta tiers below the player are culled", funct
 	end
 end)
 
+test("collisionClass: Box for tiers 1-3 and untiered meshes, Hull for tiers 4-5", function()
+	for tier = 1, 3 do
+		expect.equal(Tiers.collisionClass(tier), "Box")
+	end
+	expect.equal(Tiers.collisionClass(4), "Hull")
+	expect.equal(Tiers.collisionClass(5), "Hull")
+	expect.equal(Tiers.collisionClass(nil), "Box")
+end)
+
 return {}

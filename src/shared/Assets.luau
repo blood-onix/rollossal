@@ -14,12 +14,17 @@ local Assets = {
 		-- nothing plays, rather than a placeholder that would be annoying on a loop. The other themes
 		-- have no track yet: the game stays silent instead of reusing the winter one.
 		musicWinter = "rbxassetid://80565841497538",
-		musicCity = "",
+		musicCity = "rbxassetid://80565841497538",
 		musicSpring = "",
 		musicAutumn = "",
 		musicToon = "",
 		musicNeon = "",
 	} :: { [string]: string },
+	-- Which texture generation the currently uploaded meshes carry: the old 256 px shared palette
+	-- ("legacy") or the per-theme atlases ("atlas").
+	renderingMode = "legacy",
+	-- Fallback texture ID for when meshes are missing UVs (replaces Assets.palette).
+	meshUv = "rbxassetid://95185035371248",
 	-- Content ids for the six season atlases (005), "" until the owner uploads them. A theme's
 	-- paletteAssetKey equals its id.
 	palettes = {
@@ -30,12 +35,8 @@ local Assets = {
 		toon = "",
 		neon = "",
 	} :: { [string]: string },
-	-- Which texture generation the currently uploaded meshes carry: the old 256 px shared palette
-	-- ("legacy") or the per-theme atlases ("atlas"). Flipped in the owner hand-off commit with the new
-	-- uploads; Assets.palette is deleted then (research R-07).
-	meshUv = "legacy",
 	-- Content id of the shared palette texture, "" until imported. Stays until the atlas hand-off.
-	palette = "rbxassetid://95185035371248",
+	palette = "",
 	-- One key per ObjectDef.assetKey, plus the hub.
 	meshes = {
 		gumdrop = "rbxassetid://113727118004233",

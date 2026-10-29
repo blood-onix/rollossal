@@ -114,7 +114,7 @@ local function preloadSounds()
 		-- type"; ObjectVisual loads them with CreateMeshPartAsync.
 		local theme = Worlds.activeTheme
 		local atlas = if theme ~= nil then Assets.palettes[theme.paletteAssetKey] else ""
-		local paletteId = if atlas ~= "" and atlas ~= nil then atlas else Assets.palette
+		local paletteId = if atlas ~= "" and atlas ~= nil then atlas else Assets.meshUv
 		if paletteId ~= nil and paletteId ~= "" then
 			table.insert(ids, paletteId)
 		end

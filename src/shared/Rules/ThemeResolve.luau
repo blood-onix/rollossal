@@ -63,6 +63,7 @@ export type WorldLike = {
 	fixedPlacements: { Placement },
 	environment: { palette: { [string]: { number } } },
 	themeBindings: { [string]: BindingLike }?,
+	maxPlacements: number?,
 }
 
 export type Resolved = {
@@ -182,7 +183,8 @@ end
 function ThemeResolve.resolve(
 	world: WorldLike,
 	theme: ThemeLike,
-	expand: (zones: { Zone }, sizes: { [string]: number }) -> { Placement }
+	expand: (zones: { Zone }, sizes: { [string]: number }) -> { Placement },
+	defaultMaxPlacements: number
 ): Resolved
 	local binding = if world.themeBindings ~= nil then world.themeBindings[theme.id] else nil
 	if binding == nil then
@@ -339,6 +341,11 @@ function ThemeResolve.resolve(
 		for _, placement in section do
 			table.insert(placements, placement)
 		end
+	end
+
+	local cap = world.maxPlacements or defaultMaxPlacements
+	if #placements > cap then
+		errorAt(world, theme, `{#placements} placements exceed the budget of {cap}`)
 	end
 
 	-- Which placements came from slots: placements of slot-only zones plus slot fixed placements.

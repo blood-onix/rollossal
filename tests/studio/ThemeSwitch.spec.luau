@@ -181,8 +181,8 @@ describe("Worlds.forTheme: winter to city (data-only switch)", function()
 	end)
 end)
 
-describe("WeatherController (reduce-motion contract)", function()
-	it("reports not emitting before anything starts in this datamodel", function()
+describe("WeatherController (unstarted state only)", function()
+	it("checks only the unstarted state (no LocalPlayer here)", function()
 		-- No LocalPlayer has started the client controller in the datamodel jest runs in, so the
 		-- emitter is unstarted and off — the server-side face of "false under ReduceMotion". The
 		-- live toggle (attribute on, off within one frame, emitter cleared and restored) is the

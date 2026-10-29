@@ -173,6 +173,8 @@ def run() -> None:
     if "--out" in argv:
         out_abs = os.path.normpath(os.path.join(art, "..", argv[argv.index("--out") + 1].strip()))
     source_dir = os.path.join(art, "source")
+    if "--source" in argv:
+        source_dir = os.path.abspath(argv[argv.index("--source") + 1])
     os.makedirs(out_abs, exist_ok=True)
 
     budgets = load_json(os.path.join(art, "scripts", "budgets.json"))

@@ -36,4 +36,12 @@ function Tiers.isCulled(objectTier: number, playerTier: number, delta: number): 
 	return objectTier <= playerTier - delta
 end
 
+-- Collision class of a mesh by tier: Hull for tiers 4-5, Box otherwise and for untiered meshes (hub).
+function Tiers.collisionClass(tier: number?): "Box" | "Hull"
+	if tier ~= nil and tier >= 4 then
+		return "Hull"
+	end
+	return "Box"
+end
+
 return Tiers

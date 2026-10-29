@@ -245,11 +245,11 @@ Task T016: Update Content/GreyBoxRoom.luau types
 
 ## Phase 15: Convergence
 
-- [ ] T059 [Owner] Confirm plan deviations D1 (slots, overlays, heroVariants and bookPage live on `WorldDef.themeBindings`, not `ThemeDef`) and D2 (`Worlds.forTheme(themeId)` takes no world argument), then record them in `spec.md` FR-001, FR-002 and FR-003 per plan "Spec deviations to confirm"; the owner decides, the agent does not edit spec text (contradicts)
+- [X] T059 [Owner] Confirm plan deviations D1 (slots, overlays, heroVariants and bookPage live on `WorldDef.themeBindings`, not `ThemeDef`) and D2 (`Worlds.forTheme(themeId)` takes no world argument), then record them in `spec.md` FR-001, FR-002 and FR-003 per plan "Spec deviations to confirm"; the owner decides, the agent does not edit spec text (contradicts)
 
 ## Phase 16: Convergence
 
-- [ ] T060 [Owner] Decide whether `SnowVillage` declares `gate` and `shortcut` keep-out areas (its layout has no ring gates or small-only shortcut corridors): add those zones with checks in `tests/unit/SnowVillage.test.luau`, or drop the two kinds from FR-010 in `spec.md`; the owner decides, the agent does not edit spec text per FR-010 (partial)
+- [X] T060 [Owner] Decide whether `SnowVillage` declares `gate` and `shortcut` keep-out areas (its layout has no ring gates or small-only shortcut corridors): add those zones with checks in `tests/unit/SnowVillage.test.luau`, or drop the two kinds from FR-010 in `spec.md`; the owner decides, the agent does not edit spec text per FR-010 (partial)
 
 ## Phase 17: Convergence
 
@@ -260,8 +260,8 @@ Task T016: Update Content/GreyBoxRoom.luau types
 ## Phase 18: Convergence
 
 - [X] T064 [Blender] Run `art/scripts/test_export_negative.py` (`python3 -I art/scripts/test_export_negative.py --blender <path>`, or through `execute_blender_code` if the shell run is blocked; do not bypass a sandbox block) and confirm all three cases (UV across a cell edge, second material, over-budget triangles) exit non-zero with their named rule, per US2/AC2 and T062 (partial)
-- [ ] T065 [Owner] Confirm that `Assets.meshUv` replaces the FR-004 fallback to `Assets.palette` (the flag is the R-07 choice in plan Complexity Tracking) and record it as a deviation in `spec.md` FR-004; the owner decides, the agent does not edit spec text (contradicts)
+- [X] T065 [Owner] Confirm that `Assets.meshUv` replaces the FR-004 fallback to `Assets.palette` (the flag is the R-07 choice in plan Complexity Tracking) and record it as a deviation in `spec.md` FR-004; the owner decides, the agent does not edit spec text (contradicts)
 
 ## Phase 19: Convergence
 
-- [ ] T066 Declare at least one `fixedPlacements` entry on the `winter` or `city` overlay in `src/shared/Content/Worlds/SnowVillage.luau` (both are `{}` today), clear of `keepOutAreas` and within `maxPlacements`, and assert it in `tests/unit/SnowVillage.test.luau` per FR-010 (partial)
+- [X] T066 Declare at least one `fixedPlacements` entry on the `winter` or `city` overlay in `src/shared/Content/Worlds/SnowVillage.luau` (both are `{}` today), clear of `keepOutAreas` and within `maxPlacements`, and assert it in `tests/unit/SnowVillage.test.luau` per FR-010 (partial)

@@ -212,8 +212,9 @@ overlay when its zone rectangle (zones: the whole `w × d`) or a fixed placement
 (`size × size` square from the object's size) intersects any rectangle. Snow Village declares: one 10 × 10
 `marker` rectangle per `environment.markers` entry (built in a loop in the world file), and four `sightline`
 corridors 12 studs wide along the axes from the town square to the four landmark ring positions
-(`±355, 0` and `0, ±355`). Snow Village has no ring gates or shortcuts yet, so none are declared; the
-validator supports the `gate` and `shortcut` kinds for 004e.
+(`±355, 0` and `0, ±355`). T060 (owner-approved 2026-10-29) adds `gate` and `shortcut` kinds: 24 gates, one per
+side of every spawn porch (the porch ramp), and 6 shortcut alleys (4 studs across, the gaps between spawn
+clusters). No placement may fall in a gate or an alley, checked for every theme in `SnowVillage.test`.
 
 **Rationale**: the spec's wording (rectangles, four kinds); axis-aligned corridors cover Snow Village's
 landmark layout; diagonal sightlines can be decomposed or added as two rectangles by 004e.
