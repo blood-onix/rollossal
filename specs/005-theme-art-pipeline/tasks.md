@@ -114,7 +114,7 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 - [X] T037 [P] [Studio] Stop Play; edit `src/shared/Content/Worlds/SnowVillage.luau` `activeThemeId = "city"` only; wait for Rojo sync; re-run probe; start Play; confirm lighting changed to `13`, emitter `Enabled = false`, music stopped, placements = 5 city stand-ins with `role` colours, overlay `beach_towel`, `fountain` mesh at hero, ground `w-grass`/`w-kerb`/`w-sidewalk`; zero new errors
 - [X] T038 [P] [Studio] Set `winter`; set `LocalPlayer` attribute `ReduceMotion = true`; confirm emitter `Enabled = false` + `:Clear()` within 1 frame; set false → restored; arithmetic check `Rate × Lifetime ≤ 40` (validates `src/client/WeatherController.luau`)
 - [X] T039 [P] [Studio] Template rules check (`tests/studio/ObjectTemplates.spec`): each object `RenderFidelity == Automatic`, `CollisionFidelity` Box (T1-3) / Hull (T4-5), zero `SurfaceAppearance`/`Light` descendants, `Transparency == 0`
-- [ ] T040 [P] [Studio] Book proof (drive ball to absorb `winter_lights`): open Book → `winter` page 1/1; switch to `city`; Book still lists `winter` 1/1 with returning label, no timer, tier pages 100 % achievable (validates `src/client/BookUi.luau`, `src/shared/Rules/Book.luau`)
+- [X] T040 [P] [Studio] Book proof (drive ball to absorb `winter_lights`): open Book → `winter` page 1/1; switch to `city`; Book still lists `winter` 1/1 with returning label, no timer, tier pages 100 % achievable (validates `src/client/BookUi.luau`, `src/shared/Rules/Book.luau`)
 - [ ] T041 [P] [Studio] 640 × 360 capture: clone root frame to `USC`-sized container (with `UIScale` if needed); record `AbsolutePosition` of Book theme page; `TextFits` true at `≥ 18 px`; fps per second for 60 s with 12 balls' parts; report throttled (15 fps) separately; unthrottled mean `≥ 30`; active parts `< 2000` (validates `src/shared/Config.luau` budgets)
 - [ ] T042 [P] [Studio] Record all observations in `specs/005-theme-art-pipeline/playtest.md` (date + commit); confirm Quality Gates met (server/client behaviour, UI, assets, strings)
 
@@ -126,7 +126,7 @@ description: "Task list for 005-theme-art-pipeline: season-theme system + stylis
 
 - [X] T043 [P] Update `art/README.md`: new atlas layout (1024 px, 8×8 cells 128×64, 8 strips 1024×64), `palette.json` schema, split-normal rules, budget table, UV inset rule; reference `contracts/art-pipeline.md`
 - [X] T044 [P] Update `tests/unit/run` / `scripts/check.sh` final validation: all 8 suites (`Themes`, `ThemeResolve`, `Atlas`, `Book`, `SnowVillage`, `Config`, `ArtManifest`, `Strings`) pass; `check.sh` exits 0
-- [ ] T045 [P] Owner hand-off (ask first): upload `art/atlases/*.png` (6) + `art/export/*.fbx` (65) + `manifest.json`; single commit: `Assets.palettes.*` filled, `Assets.meshUv = "atlas"`, delete `Assets.palette`; run `REQUIRE_ASSET_IDS=1 lune run tests/unit/run`; confirm mesh recolour between `winter`/`city` in Studio; record in PR; set `LoadStringEnabled` off in published place (`AGENTS.md`)
+- [X] T045 [P] Owner hand-off (ask first): upload `art/atlases/*.png` (6) + `art/export/*.fbx` (65) + `manifest.json`; single commit: `Assets.palettes.*` filled, `Assets.meshUv = "atlas"`, delete `Assets.palette`; run `REQUIRE_ASSET_IDS=1 lune run tests/unit/run`; confirm mesh recolour between `winter`/`city` in Studio; record in PR; set `LoadStringEnabled` off in published place (`AGENTS.md`)
 - [X] T046 [P] Commit `tasks.md` generation; verify all tasks follow `- [ ] T### [P?] [US?] Description with file path`; none missing ID, checkbox, or file reference
 
 ---
@@ -265,3 +265,7 @@ Task T016: Update Content/GreyBoxRoom.luau types
 ## Phase 19: Convergence
 
 - [X] T066 Declare at least one `fixedPlacements` entry on the `winter` or `city` overlay in `src/shared/Content/Worlds/SnowVillage.luau` (both are `{}` today), clear of `keepOutAreas` and within `maxPlacements`, and assert it in `tests/unit/SnowVillage.test.luau` per FR-010 (partial)
+
+## Phase 20: Convergence
+
+- [X] T067 Keep the base Tier 5 `skating_rink` placed in `city`: add a fixed `skating_rink` placement to the city overlay in `src/shared/Content/Worlds/SnowVillage.luau`, clear of `keepOutAreas` and every footprint, and assert in `tests/unit/SnowVillage.test.luau` that every theme places every base object, so tier pages reach 100 % in every theme per T040 step 3 and spec "Base Tier Book Pages vs. Theme-Only Objects" (contradicts)

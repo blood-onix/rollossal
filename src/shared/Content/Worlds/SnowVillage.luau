@@ -774,6 +774,19 @@ local heroFountain =
 local cityTowelFixed =
 	{ id = "sv_ol_beach_towel_fixed", objectId = "beach_towel", x = -30, y = 0, z = -100, yaw = 0 }
 
+-- 005 (T040 step 3): both slot.landmark placements become giant_duck in city, which leaves the base
+-- Tier 5 skating_rink unplaced and its tier page short of 100%. One fixed rink keeps that page
+-- completable (spec: base tier pages stay completable in every season). The spot is clear of every
+-- keep-out area and of every footprint (about 30 studs of margin).
+local cityRinkFixed = {
+	id = "sv_ol_skating_rink_fixed",
+	objectId = "skating_rink",
+	x = -30,
+	y = 0,
+	z = -280,
+	yaw = 0,
+}
+
 -- Typed once so the winter and city entries share one type instead of a union (see ThemeResolve).
 local themeBindings: {
 	[string]: {
@@ -846,7 +859,10 @@ local themeBindings: {
 		},
 		city = {
 			slots = slotsCity,
-			overlays = { zones = overlayZonesCity, fixedPlacements = { cityTowelFixed } },
+			overlays = {
+				zones = overlayZonesCity,
+				fixedPlacements = { cityTowelFixed, cityRinkFixed },
+			},
 			heroVariants = { big_snowman = heroFountain },
 			objects = { cityKit[1], cityKit[2], cityKit[3], cityKit[4], cityKit[5], beachTowel },
 			bookPage = {

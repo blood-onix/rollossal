@@ -574,7 +574,7 @@ test(
 
 test("SnowVillage: the city overlay's fixed beach towel is inside the level (005, T066)", function()
 	local fixed = SnowVillage.themeBindings.city.overlays.fixedPlacements
-	expect.equal(#fixed, 1)
+	expect.equal(#fixed, 2)
 	local placement = fixed[1]
 	expect.equal(placement.objectId, "beach_towel")
 	expect.truthy(math.abs(placement.x) <= SnowVillage.halfExtent)
@@ -672,8 +672,9 @@ test("SnowVillage: theme-only stand-ins stay inside their tier ranges (005)", fu
 end)
 
 test("SnowVillage: resolving every supported theme succeeds and keeps its shape (005)", function()
-	-- The city overlay adds one fixed beach towel (T066) on top of the 1616 winter placements.
-	local expectedPlacements: { [string]: number } = { winter = 1616, city = 1617 }
+	-- The city overlay adds a fixed beach towel (T066) and a fixed skating rink (T040) on top of the
+	-- 1616 winter placements.
+	local expectedPlacements: { [string]: number } = { winter = 1616, city = 1618 }
 	for _, themeId in SnowVillage.supportedThemes do
 		local themeResolved = resolved[themeId]
 		expect.equal(#themeResolved.placements, expectedPlacements[themeId])
@@ -704,6 +705,21 @@ test("SnowVillage: resolving every supported theme succeeds and keeps its shape 
 	end
 	expect.equal(overlayPlacements.winter_lights, 6)
 end)
+
+test(
+	"SnowVillage: every theme places every base object, so tier pages reach 100% (005, T040)",
+	function()
+		for _, themeId in SnowVillage.supportedThemes do
+			local placed: { [string]: boolean } = {}
+			for _, placement in resolved[themeId].placements do
+				placed[placement.objectId] = true
+			end
+			for _, object in SnowVillage.objects do
+				expect.truthy(placed[object.id], `{themeId} never places base object {object.id}`)
+			end
+		end
+	end
+)
 
 test("SnowVillage: every theme stays inside the 1700 placement budget (005, FR-002)", function()
 	expect.equal(SnowVillage.maxPlacements, 1700)
