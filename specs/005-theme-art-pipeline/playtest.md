@@ -104,3 +104,90 @@ Quality gates: not met yet. Open: T037 overlay/hero identity, T039 collision cla
 - T040 Book proof: not reached. Two driven 240 s runs (client-side Heartbeat driver, nearest-eligible cube scoring as in `tests/studio/BotRun.server.luau`) absorbed 37 cubes by the count of diameter steps, but the ball kept returning to diameter 2.0 (maximum 2.63). The shrink lines up with bumps into larger props, which take the server's knock-off path (`AbsorbService.tryBump`, `Growth.shrinkDiameter`). This is inferred from the code and the timing, not confirmed by logging bump events. The driver also re-picked unreachable porch cubes (`sv_01_porch_029`, `sv_01_porch_002`) and its stuck handling did not move the ball. `winter_lights` stayed un-taken, and the Book stayed `0 / 1 Holiday charm`.
 - Console: not checked this round.
 - Quality gates: not met. Open: T040 Book proof (needs a driver that avoids props, or a test-only growth path, owner's call), T041 fps (needs Studio in front) and the 12-ball load, T042 sign-off, T045 owner hand-off, T054 music track.
+
+## Round 12, 2026-10-29 (T040 avoiding driver)
+
+- Owner chose the avoiding driver route. Sync probe: 69 checked; the one mismatch (`Assets` at 4850 bytes) was a stale expected count in a scratch copy of the probe; the regenerated probe and a direct read both give 4837, which matches the repo file. Studio matches the repo.
+- Driver: client-side Heartbeat loop, source at `scratchpad/avoid_driver.luau` (not in the repo). It steers toward the best eatable cube (`Size <= 0.4 x diameter`) with a clear straight line, and keeps 1.0 stud clear of every untaken prop too big to absorb. Speed is capped at 12 near props, under the 15 knock-off threshold. Surfaces whose top is under 0.7 ball radii above the ball's bottom count as steps, not walls (porch edges are 0.6 high). `winter_lights` goes first once absorbable, anywhere on the map.
+- Four runs, each 220 to 240 s of Active run time, Studio not touched (MCP only), each stopped by the run ending:
+  - Run A (step rule, no winter priority): 255 absorbs, diameter 43.2 at the end, 0 shrinks, `stuck` 2. Diameter 5.5 reached about 118 s in. `winter_lights` not taken: the ball was never within 90 studs of (30, 74) for long, and the target filter excluded anything further.
+  - Run B (plus winter priority): 129 absorbs, 7.62, 0 shrinks. Stuck in the west spawn yard at diameter 3.1 from about 140 s to 195 s, with no reachable target on 234 frames. `winter_lights` not taken.
+  - Run C (CLEAR 0.6 plus fallback to the best unclear target): 103 absorbs, 8.68, 0 shrinks. Fallback fired 323 frames, `stuck` 10. Yard pocket from about 80 s to 190 s. `winter_lights` not taken.
+  - Run D (as B): 39 absorbs, 3.16, 0 shrinks. Wandered to about x -388, z -256 with no reachable target on 417 frames; diameter 2.67 from about 60 s to 180 s. `winter_lights` not taken.
+- Findings:
+  - The avoiding route did not produce a knock-off in any run (0 shrinks in 4 runs, 39 to 255 absorbs). The earlier shrink was consistent with bumps into props; the new driver never produced a shrink, which supports that reading but does not confirm it, since bump events are not logged.
+  - The early game is the bottleneck: from the west spawn yard at diameter 2 to 3, the ball often cannot find a reachable eatable cube and wanders. Run A escaped quickly and the other runs did not, so this depends on the random wander. Diameter 5.5 came at about 118 s in run A and about 210 s in run C; `winter_lights` needs the ball near (30, 74), so the detour there does not fit a 240 s run from this start.
+  - Open question for the owner: is a diameter-2 ball meant to be able to leave the west spawn yard without a prop-free path? If not, the level needs a clear exit or the proof needs a test-only start.
+- T040: not done. Options, owner's call: (a) a path planner for the driver (grid search over the world with raycasts), which is a larger job; (b) a test-only growth path, e.g. starting the proof at diameter 5.5 on the server; (c) a level fix if the yard exit is meant to be clear.
+- Console: not checked this round. Studio left in Edit after the last run.
+
+## Round 13, 2026-10-29 (T040 path planner, T041 12-ball load)
+
+- Studio dropped out and reconnected at the start of this round. The repo code is unchanged since Round 12, so the sync check from Round 12 still holds.
+- Planner, source at `scratchpad/avoid_driver.luau` (not in the repo). A 2-stud grid over x -320..320, z -260..200. A cell is blocked when a ball of the current diameter would touch an untaken non-absorbable prop (centre distance minus `Size/2` under radius + 0.3 + 1.42 inflation) or non-step scenery. The grid is rebuilt at each 10 % diameter bucket and at least every 5 s (about 0.15 s each). A breadth-first search from the ball picks the best eatable object: `winter_lights` first once absorbable, then size³ per path distance. It replans every 0.6 s and on each absorb, and follows the path with pure pursuit.
+- Edit-mode checks on the real map. Diameter 2.0 from the spawn (-200, -120): 161 eatable cubes reachable; the nearest one more than 12 studs away is 16 studs off the path, with a prop margin of 2.7 and no blocked samples. Diameter 5.6: path to `winter_lights` is 282 studs (141 cells), no blocked samples, minimum prop margin 1.74 (bump margin 0.3). The spawn yard is not enclosed; the earlier driver failed because its straight-line test rejected routes a grid search finds.
+- Finding: 1,553 of 1,616 tagged objects are MeshParts whose physical `part.Size` differs from the `Size` attribute (for example `sv_04_lawn_s_001`: attribute 5, part 5 × 3.4 × 1.3). The client's bump test uses the attribute as a sphere, so a box test misses the bump range. Tagged objects now use the client's metric.
+- Runs, Client datamodel, MCP only, Studio not touched:
+  - P1 (box test): `winter_lights` absorbed at 66.1 s, 101 absorbs, 2 shrinks (2.76 → 2.65 at 17.6 s, 5.62 → 5.57 at 64.7 s), 0 stuck, 0 no-path.
+  - P2 (client metric): `winter_lights` absorbed at 69.8 s, 85 absorbs, 1 shrink (5.67 → 5.66 at 68.3 s), 1 stuck, 0 no-path. The 6.74 → 2 entry at t 0 is the new run's reset, not a knock-off.
+  - P3 (client metric, contact log, run allowed to finish): 134 absorbs to diameter 31.8, 0 shrinks, 0 stuck, 0 no-path, 1 contact (`sv_03_lane_s_004`, size 6.5, gap 0.01, speed 29.5) with no shrink recorded.
+- T040 steps 1–2 met: after P1 ended, the Book's winter page read `1 / 1 Holiday charm`.
+- T040 step 3 not done: switching to city needs `activeThemeId` changed in the content file and a profile that survives a Play restart. `Config.useMockDataStoreInStudio` is true and the console reports ProfileStore has no API access, so the profile does not survive a restart. Owner decision: enable Studio API access for the dev place, or agree a test-only override.
+- T041 12-ball load (quickstart §3, playerless BotRun, 240 s): 1,709 BaseParts (under 2,000, now measured). `everyTierKeptShare` false: tier 3 fell to 0.11 to 0.23 and tier 4 to 0.11 by 240 s, under the 0.2 floor. The bot eater is naive and is not the avoiding planner, so this is a load result, not a verdict on the route.
+- T041 fps: not run, needs Studio in front (owner).
+- Quality gates: T040 steps 1–2 met, step 3 blocked; T041 tier share fails under the bot load; fps not measured; T042 not signed off; T045 and T054 are owner tasks.
+
+## Round 14, 2026-10-29 (T040 speed cap, step 3 attempt, T041 fps)
+
+- Planner, same grid and search as Round 13, with one addition: when an untaken non-absorbable prop is within 8 studs, the speed is capped at 12 studs/s. The knock-off check uses the peak horizontal speed over 0.35 s, so the cap keeps the peak under 15 before a contact. Source at `scratchpad/avoid_driver.luau`.
+- Run P4 (fresh session, MCP only, Studio not touched): `winter_lights` absorbed at 105.7 s, 83 absorbs, max diameter 6.72, 0 shrinks, 1 stuck, 5,276 frames under the speed cap. The 60 contacts logged are all with `sv_square_003` (size 25), at speed about 10 studs/s and gaps from -0.64 to 0.36. At that speed no knock-off is expected, and none was recorded. The ball overlapping a size-25 tagged object is a planner gap: the grid is 2D and does not model a ball resting on top of an object.
+- Book after the run ended: winter page `1 / 1 Holiday charm`, the same check as Round 13.
+- T040 step 3, attempted two ways, neither completed:
+  - A Client-side runtime override (`Worlds.activeThemeId = "city"`) did not reach `BookUi`. The winter page stayed active, so `BookUi` holds its own copy of `Worlds`. The value was reset to `winter` afterwards.
+  - Restarting Play with the same profile reset the winter book to `0 / 1`. `Config.useMockDataStoreInStudio` is true, so the mock store does not keep the profile across Play sessions. Step 3 needs Studio API access on the dev place (owner setting), or a test-only server hook.
+- T041 fps, Client, 60 s, Studio not touched: render rate 14 to 16 fps every second (median 15), 40 seconds at exactly 15 fps (throttled), 0 seconds at 30 fps or more. Heartbeat mean 60. This is the background throttle Round 11 recorded, so it cannot judge the 30 fps gate. An unthrottled sample needs Studio in front (owner).
+- Quality gates: T040 steps 1–2 met (confirmed again in P4), step 3 blocked on the Studio profile setting; T041 12-bot tier share fails (Round 13); T041 fps throttled, not judged; T042 not signed off; T045 and T054 are owner tasks.
+
+## Round 15, 2026-10-29 (T040 knock-off rate with the speed cap, T042 gate check)
+
+- Step 3's rule is covered by `tests/unit/Book.test.luau` ("progress preserved when the active theme moves away"): with city active, the winter page keeps its 1 / 1 progress, reports `isActive` false, and carries a returning key. `lune run tests/unit/run` passes: 346 passed, 0 failed. The Studio half of step 3 is still blocked (Round 14).
+- Run P5 (speed cap, same driver, fresh session, MCP only, Studio not touched): `winter_lights` absorbed at 92.2 s, 72 absorbs, max diameter 6.68, 0 shrinks, 0 stuck, 4,607 frames under the cap. The 60 logged contacts are with large props (`sv_06_lane_s_006`, size 9, plus the size-25 square in Round 14), at speed about 10 studs/s and gaps from 0.16 to 0.38. Those are most likely the ball resting on top of tall props, which the 2D grid does not model.
+- Across the capped runs: P4 and P5 had 0 shrinks each. Before the cap, Round 13's runs had 2, 1 and 0. The cap keeps the peak speed near contacts under 15, and that appears to be what prevents the knock-offs. Two runs are too few to call the rate settled.
+- Book after P5 ended: winter page `1 / 1 Holiday charm` again, with the reward line hidden, which is correct for an active reward-less theme page.
+- T042 gate check (not signed off):
+  - Met: parts under 2,000 (1,709 with 12 bots); T040 winter absorb and Book 1 / 1; the planner gives 0 shrinks in its last two runs; the Lune suite is green.
+  - Not met: the tier floor under the 12-bot load. Two runs: run 1 (Round 13) had tiers 3 and 4 below 20% by 240 s; run 2 (this round, 1,398 pickups) had tier 4 at 0.03 at 180 s and 0.11 at 240 s, with tier 3 back at 0.79. Tier 4 failed both times. Parts stayed at 1,709. No unthrottled fps sample (needs Studio in front).
+  - Open: T040 step 3 (Studio API access, owner setting); T045 hand-off and T054 music track (owner tasks).
+
+## Round 16, 2026-10-29 (T040 step 3 under a test-only setup)
+
+- Approval taken as: run the steps that are reversible and test-only; no Studio settings changed; no balance or spec decisions made; no uploads. T045 (asset upload and commit that publishes content) and T054 (music track) were not done.
+- Setup, all temporary and reverted:
+  - `src/shared/Content/Worlds/SnowVillage.luau`: `activeThemeId` changed from `"winter"` to `"city"`, synced to Studio by Rojo, Play started, then reverted. After the revert, Studio's copy is back to 26,905 bytes with `"winter"`.
+  - A session-only `Script` (`BookGrantTest`) created in `ServerScriptService` in the Server datamodel. It called `DataService.applyRunResult` for the test player with `newBookIds = { "snow_village.winter_lights" }`, the same path a real run result takes. The outcome was `applied`. The script disappears when Play stops.
+- Result, with `activeThemeId` = `city` on both client and server (confirmed on the Client):
+  - Winter page: `1 / 1 Holiday charm`, reward line `🔁 Back when the snow falls again` (the winter returning label; no timer), progress text white (inactive style).
+- Not verified: "tier pages 100 % achievable" in T040 step 3. Not checked this round.
+- What this does not prove: the win was granted, not earned in a city-theme run. A real city-session run would show the same page logic; the grant only exercises the book update and the Book UI under city.
+- Lune suite: 346 passed, 0 failed, after the revert.
+- T040: steps 1 and 2 met (planner runs P4 and P5), step 3 met under this test setup except the tier-page check. Not ticked; the owner decides.
+
+## Round 17, 2026-10-29 (T045 upload attempt, blocked)
+
+- Approval: the owner answered "Yes, upload" to the T045 uploads (six atlases and the 65 re-UV'd FBX files).
+- Preflight: Studio `Rollossal (placeId: 112788738500883)` listed; Rojo up on localhost:34872; `python3 art/scripts/palette.py --check` reports atlases in sync; `lune run tests/unit/run` 346 passed, 0 failed.
+- Atlas upload: `upload_image` accepts only http or https URLs. All six local PNGs (`art/atlases/{city,winter,spring,autumn,toon,neon}.png`) returned `Error Upload: Only http/https URLs are supported`. Nothing was uploaded and no id was created.
+- No other route from here: no Open Cloud API key in the environment or the repo, and no Studio tool uploads a local file as an asset. The 004 contract's import path is the owner's Asset Manager, Bulk Import (not scriptable). The agent then reads `MeshId` and `TextureID` back by file name through `execute_luau`, as `specs/004-snow-village/contracts/art-pipeline.md` describes.
+- Not changed: `src/shared/Assets.luau`, the commit history, and `Assets.palette`. Nothing is committed.
+- Spec discrepancy to settle before the hand-off: T045 says `Assets.meshUv = "atlas"`. The owner-approved FR-004 (T065, `specs/005-theme-art-pipeline/spec.md`) makes `Assets.renderingMode` the switch (`"atlas"`), keeps `Assets.meshUv` as the legacy fallback texture, and removes only `Assets.palette`. `Assets.luau` already follows FR-004 (`renderingMode = "legacy"`, `meshUv` set to the legacy id).
+- Ordering for the hand-off: the 65 `Assets.meshes` ids must be replaced in the same commit as `renderingMode = "atlas"`. The current ids point at the legacy-UV meshes, which would sample the atlas wrongly.
+- T045 stays open. Steps 4 to 6 of the hand-off wait on the ids.
+
+## Round 18, 2026-10-29 (T045 owner import read back, code hand-off applied)
+
+- Owner ran Asset Manager → Bulk Import. The six atlas images are account-level inventory (not in the place), so their ids were read from Asset Manager. The 65 FBX files came in as 65 Models in Workspace, each with one MeshPart; their MeshIds were read by file name.
+- `src/shared/Assets.luau` now: `renderingMode = "atlas"`; `palettes` filled (city 135771669927883, winter 80845524655584, spring 130785517655515, autumn 77294706934568, toon 119324797322203, neon 88161628123428); all 65 `meshes` ids replaced; `palette` field removed; `meshUv` kept as the legacy fallback (FR-004).
+- Checks: `REQUIRE_ASSET_IDS=1 lune run tests/unit/run`: 346 passed, 0 failed. `palette.py --check`: atlases in sync. Studio's ReplicatedStorage copy of Assets matches the file (4,888 bytes, atlas mode). All 65 Studio MeshIds match the file. All six atlas ids resolve through MarketplaceService to assets named after their theme (type 1).
+- Mesh recolour between winter and city: NOT confirmed. Two Edit-mode captures of one mesh with each atlas looked the same, and the wide shot was too far to judge. Not a pass. Needs a check in Play (or an owner look) on a themed prop.
+- Cleanup: the 65 imported Models were removed from Workspace (the 004 contract requires imported parts not to ship). Assets stay in the account.
+- Not done: no commit. `LoadStringEnabled` must be off before any publish (AGENTS.md). T045 stays open until the recolour check and the owner's commit decision.
