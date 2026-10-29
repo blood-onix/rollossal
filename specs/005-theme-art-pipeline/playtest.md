@@ -191,3 +191,10 @@ Quality gates: not met yet. Open: T037 overlay/hero identity, T039 collision cla
 - Mesh recolour between winter and city: NOT confirmed. Two Edit-mode captures of one mesh with each atlas looked the same, and the wide shot was too far to judge. Not a pass. Needs a check in Play (or an owner look) on a themed prop.
 - Cleanup: the 65 imported Models were removed from Workspace (the 004 contract requires imported parts not to ship). Assets stay in the account.
 - Not done: no commit. `LoadStringEnabled` must be off before any publish (AGENTS.md). T045 stays open until the recolour check and the owner's commit decision.
+
+## Round 19, 2026-10-29 (mesh recolour, winter vs city, in Play)
+
+- Method: Play started, then on the Client two anchored clones of one world mesh (`Workspace.World.Objects.sv_edge_w_014`, MeshId `rbxassetid://107596323435241`), sized 10 studs, placed side by side at y = 400. The left clone had `TextureID` = winter atlas (`rbxassetid://80845524655584`), the right clone city atlas (`rbxassetid://135771669927883`). One frame was captured with `screen_capture`. Clones were destroyed and Play stopped afterwards.
+- Result, judged by eye on the capture: the two clones are clearly different. Left: darker, redder wood and blue-white runners. Right: lighter, tan wood and grey-white runners. The mesh recolours with the atlas, so the atlas mode works in Play.
+- Limits: one mesh, one frame, judged by eye, not pixel-measured. The in-game theme switch was not exercised (the game's own winter and city props were not compared). Edit-mode captures in Round 18 were inconclusive; this Play check is the one that counts.
+- T045 recolour check: met for this one mesh. A full check across theme props is still open.
