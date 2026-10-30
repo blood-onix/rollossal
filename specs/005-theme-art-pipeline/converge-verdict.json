@@ -1,23 +1,17 @@
 {
-  "verdict": "incomplete",
+  "verdict": "complete",
   "remaining": [],
-  "human": [
-    {
-      "item": "T041 [Studio]: unthrottled 30 fps gate at 640 x 360 with the 12-ball load",
-      "reason": "Measuring unthrottled fps needs Studio in front on the owner's desktop; AGENTS.md forbids the agent from focusing or activating Studio, and the last three runs were throttled at 15 fps"
-    },
-    {
-      "item": "T041 [Studio]: Book thumb zone overlaps the first card's name label at 640 x 360",
-      "reason": "Deciding whether the Book panel or the 120 px thumb zone moves is a layout decision for the owner (playtest.md Rounds 11 and 20)"
-    },
-    {
-      "item": "T042 [Studio]: confirm all Quality Gates, including the 30 fps gate",
-      "reason": "The fps gate depends on the T041 unthrottled measurement; the Round 21 sign-off relied on an earlier unthrottled sample, and T042 is unchecked in the working tree"
-    },
-    {
-      "item": "T064 [Blender]: run art/scripts/test_export_negative.py for the uncommitted cases unapplied_modifier and non_identity_transform",
-      "reason": "The shell hook blocked the Blender binary path as outside the project folder; the block was not bypassed, so the two new cases are unverified in this session"
-    }
-  ],
-  "summary": "No agent-doable work remains: check.sh exits 0 with 351 Lune tests passing and tasks.md is unchanged, but four human items stay open (unthrottled fps and Book layout for T041/T042, and an unverified Blender negative-test case)."
+  "summary": "No agent-doable work remains: check.sh exits 0 with 351 Lune tests passing and tasks.md is unchanged, but four human items stay open (unthrottled fps and Book layout for T041/T042, and an unverified Blender negative-test case).",
+  "completion": {
+    "source": "manual",
+    "at": "2026-10-30T10:34:09.152Z",
+    "by": "Roman_Tikhonov <bloodonix@gmail.com>",
+    "review": "pending",
+    "signedOff": [
+      "T041 [Studio]: unthrottled 30 fps gate at 640 x 360 with the 12-ball load",
+      "T041 [Studio]: Book thumb zone overlaps the first card's name label at 640 x 360",
+      "T042 [Studio]: confirm all Quality Gates, including the 30 fps gate",
+      "T064 [Blender]: run art/scripts/test_export_negative.py for the uncommitted cases unapplied_modifier and non_identity_transform"
+    ]
+  }
 }
