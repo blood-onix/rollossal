@@ -107,6 +107,12 @@ for _, themeId in supportedList do
 	local binding = (active.themeBindings :: any)[themeId]
 	local page = if binding ~= nil then binding.bookPage else nil
 	if page ~= nil then
+		if page.reward ~= nil then
+			error(
+				`Worlds: theme {themeId} bookPage {page.id} declares a reward; theme page rewards are not granted before 006a`,
+				2
+			)
+		end
 		local pageObjects: { ObjectDef } = {}
 		for _, objectId in page.objectIds do
 			local def: ObjectDef? = objectById[objectId]

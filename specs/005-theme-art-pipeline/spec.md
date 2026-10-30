@@ -198,3 +198,10 @@ Each theme that introduces theme-only objects (seasonal dressing slot objects an
 - **Provisional Triangle Budgets Until 004e**: The per-tier mesh triangle limits `{ 500, 700, 1500, 3500, 5000 }` are set in `Config.Budgets.meshTriangles` in this feature so stylised-real meshes can be exported and validated, and will be locked after Feature 004e's full-density 12-ball Holiday City phone capture.
 - **Rows 4–7 Hero Palette Cells**: While rows 0–3 of every theme's 64-cell atlas are fixed to the 32 shared `w-*` tokens in `docs/design/tokens.json`, rows 4–7 (cells 32–63) are reserved for level-specific hero swatches (plus backward-compatible aliases for existing Snow Village swatches `snow`, `snow_light`, `stone`, `wood`, `brick`, `ice`) and are populated in all six themes so every theme always has all 64 cells defined.
 - **Theme Proof Reuses Existing Snow Village Assets**: Because Downtown and Holiday City meshes are built in Feature 004e, the proof in this feature re-themes Snow Village between `winter` and `city` using existing Snow Village object definitions and meshes (plus stand-in/atlas recolouring), verifying every mechanism of the theme system without duplicating 004e content work.
+
+## Clarifications
+
+### Session 2026-10-30
+
+- Q: How should a reward declared on a theme's `bookPage` behave in 005? (PR #6 review F4)
+  A: Reject it. A non-nil `bookPage.reward` is an error when the world data loads, so a theme page never declares a reward the runtime ignores. The `reward: RewardDef?` field stays in the type for 006a. Until then theme page summaries keep `rewardEarned = false` and theme pages stay out of `completedRewardIds`. No FR-* or SC-* changed.
