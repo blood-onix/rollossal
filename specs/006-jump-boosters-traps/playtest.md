@@ -49,7 +49,7 @@ carried that diameter. Rise of the ball's bottom, tap and held (button down 0.4 
 - Ball-to-ball bumps and the 3 s immunity: one MCP-driven player cannot make a second ball, so they were checked in
   Studio by `tests/studio/HazardService.spec.luau`, which runs the live `HazardService.step` on two sessions (size
   ratio, closing speed, immunity window, re-collection by a third ball; rerun 2026-10-30 after a probe-confirmed
-  sync, 139 of 139 pass). The sweeper's server-side knock-off is covered there too. A two-player feel check is part
+  sync, 139 of 139 pass at the time; the full suite is 149 of 149 after the T061 rerun). The sweeper's server-side knock-off is covered there too. A two-player feel check is part
   of the owner's SC-004 sign-off. T049 done.
 
 ## Markers and themes (T055)
@@ -96,5 +96,10 @@ The owner's keep-Studio-in-front request is met, and the owner's SC-004 sign-off
 
 ## Jest (T059)
 
-`tests/studio/runner`: 139 of 139 tests pass in 11 suites (new: `BoosterService`, `HazardService`, `Remotes`).
+`tests/studio/runner`: 149 of 149 tests pass in 11 suites (new: `BoosterService`, `HazardService`, `Remotes`).
+
+T061 rerun (2026-10-30): Studio was in Play, so Play was stopped. The sync probe for the changed files
+(`BoosterService`, `Rules/Jump`, `BallController`, `BoosterService.spec`) showed no mismatches. The Jest run then
+gave 149 of 149 in 11 suites (the task's 139 -> 140 estimate was low). `lune run tests/unit/run`: 429 passed,
+0 failed, which covers the changed `Rules/Jump.holdActive`.
 `ThemeSwitch.spec` already expected 6 beach towels in city; the fixed towel makes 7, so the spec now says so.
