@@ -53,6 +53,8 @@ local function staticPart(name: string, size: Vector3, cframe: CFrame, tint: Col
 	part.Size = size
 	part.CFrame = cframe
 	part.Color = tint
+	part.Material = Enum.Material.SmoothPlastic
+	part.Transparency = 0
 	part.TopSurface = Enum.SurfaceType.Smooth
 	part.BottomSurface = Enum.SurfaceType.Smooth
 	return part
@@ -77,6 +79,8 @@ local function buildGeometry(world: WorldDef, parent: Folder): number
 			wedge.Size = size
 			wedge.CFrame = cframe
 			wedge.Color = colour(swatch)
+			wedge.Material = Enum.Material.SmoothPlastic
+			wedge.Transparency = 0
 			wedge.TopSurface = Enum.SurfaceType.Smooth
 			wedge.BottomSurface = Enum.SurfaceType.Smooth
 			part = wedge

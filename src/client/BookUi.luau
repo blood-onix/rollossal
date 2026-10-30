@@ -28,6 +28,8 @@ local PROGRESS_TEXT_SIZE = 20
 local ICON_TEXT_SIZE = 28
 local CARD_COLOUR = Color3.fromRGB(58, 63, 74)
 local UNKNOWN_COLOUR = Color3.fromRGB(185, 189, 199)
+-- Theme pages (005): the active page's name glows, the others show their returning label here.
+local ACTIVE_COLOUR = Color3.fromRGB(255, 217, 88)
 
 local BookUi = {}
 
@@ -36,18 +38,54 @@ local currentPage = 1
 local openCallbacks: { () -> () } = {}
 local refresh: () -> () = function() end
 
+-- Worlds.themeBookPages names objects by object id; the Book rule talks in bookIds and needs one flat
+-- object list. Each page's `objects` are already resolved in objectIds order, so the conversion is a
+-- straight walk.
+local function themeSummaries(): { Book.PageSummary }
+	local themePages: { Book.ThemePageDef } = {}
+	local themeObjects: { Book.BookObject } = {}
+	for _, themePage in Worlds.themeBookPages :: any do
+		local bookIds: { string } = {}
+		for _, object in themePage.objects :: any do
+			table.insert(bookIds, object.bookId)
+			table.insert(themeObjects, object)
+		end
+		table.insert(themePages, {
+			id = themePage.id,
+			nameKey = themePage.nameKey,
+			returningKey = themePage.returningKey,
+			themeId = themePage.themeId,
+			objectIds = bookIds,
+		})
+	end
+	return Book.themePages(themePages, themeObjects, ProfileClient.book(), Worlds.activeThemeId)
+end
+
 local function summaries(): { Book.PageSummary }
-	return Book.pages(
+	-- Tier pages count the base kit only (Worlds.baseObjects), so they stay completable in every
+	-- theme; the theme pages follow in supportedThemes order (005, contracts/theme-content.md §6).
+	local pages = Book.pages(
 		Worlds.sizeTiers :: any,
-		Worlds.active.objects :: any,
+		Worlds.baseObjects :: any,
 		ProfileClient.book(),
 		ProfileClient.skinsOwned()
 	)
+	for _, themePage in themeSummaries() do
+		table.insert(pages, themePage)
+	end
+	return pages
 end
 
--- First page that is not complete, else the last one.
+-- First page that is not complete, else the last one. Theme pages never take the preferred spot
+-- while a tier page is still open: they are appended after them, so the scan skips them until the
+-- base kit is done (contracts/theme-content.md §6).
 local function defaultPage(): number
 	local pages = summaries()
+	for index, page in pages do
+		if page.tier ~= 0 and not page.isComplete then
+			return index
+		end
+	end
 	for index, page in pages do
 		if not page.isComplete then
 			return index
@@ -244,7 +282,13 @@ function BookUi.start()
 			"ui.book.page_progress",
 			{ collected = page.collectedCount, total = page.totalCount }
 		)} {tierName(page)}`
-		if page.rewardNameKey ~= nil then
+		-- Theme pages (005): the active one is highlighted, an inactive one shows its returning
+		-- label in the reward slot (an icon that is not a clock — no timer, no hourglass).
+		progress.TextColor3 = if page.isActive then ACTIVE_COLOUR else Color3.new(1, 1, 1)
+		if page.returningKey ~= nil then
+			rewardLine.Text = `{Icons.retry} {Localizer.t(page.returningKey :: string)}`
+			rewardLine.Visible = true
+		elseif page.rewardNameKey ~= nil then
 			local glyph = if page.rewardEarned then Icons.check else Icons.lock
 			local status = Localizer.t(
 				if page.rewardEarned then "ui.book.reward_earned" else "ui.book.reward_locked"

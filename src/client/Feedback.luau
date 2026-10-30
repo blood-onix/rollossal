@@ -28,16 +28,23 @@ effectsGroup.Name = "Effects"
 effectsGroup.Parent = SoundService
 
 -- The one looping background track, in the Music group so settings.musicVolume controls it. Nil while
--- Assets.sounds.music is empty.
+-- the active theme's Assets.sounds key is empty.
 local musicTrack: Sound? = nil
 
 local function createMusic()
-	local soundId = Assets.sounds.music
-	if soundId == "" then
+	-- The active theme picks its own track (contract theme-content.md §6). With ThemeSystem off no
+	-- track plays. "" means no track: nothing plays and no warning.
+	if not Config.Flags.ThemeSystem then
+		return
+	end
+	local theme = Worlds.activeTheme
+	local key = if theme ~= nil then theme.musicAssetKey else "musicWinter"
+	local soundId = Assets.sounds[key]
+	if soundId == "" or soundId == nil then
 		return
 	end
 	local track = Instance.new("Sound")
-	track.Name = "WinterMusic"
+	track.Name = "ThemeMusic"
 	track.SoundId = soundId
 	track.Looped = true
 	track.Volume = 1
@@ -98,16 +105,21 @@ local function preloadSounds()
 	task.spawn(function()
 		local ids = {}
 		-- Music is preloaded as its Sound instance below; a bare string id here fails as a type mismatch.
+		-- (Contract theme-content.md §6: the preload list skips every music* key.)
 		for key, soundId in Assets.sounds do
-			if key ~= "music" and soundId ~= "" then
+			if string.sub(key, 1, 5) ~= "music" and soundId ~= "" then
 				table.insert(ids, soundId)
 			end
 		end
-		-- The palette texture loads here too ("" means not imported yet). Meshes are not preloaded: PreloadAsync
-		-- on a bare mesh id logs "Asset type does not match requested type"; ObjectVisual loads them with
-		-- CreateMeshPartAsync.
-		if Assets.palette ~= "" then
-			table.insert(ids, Assets.palette)
+		-- The palette texture loads here too. The active theme's atlas when the meshes are atlas-era
+		-- ("" means not imported yet); else the legacy shared palette. "" skips the preload. Meshes
+		-- are not preloaded: PreloadAsync on a bare mesh id logs "Asset type does not match requested
+		-- type"; ObjectVisual loads them with CreateMeshPartAsync.
+		local theme = Worlds.activeTheme
+		local atlas = if theme ~= nil then Assets.palettes[theme.paletteAssetKey] else ""
+		local paletteId = if atlas ~= "" and atlas ~= nil then atlas else Assets.meshUv
+		if paletteId ~= nil and paletteId ~= "" then
+			table.insert(ids, paletteId)
 		end
 		pcall(ContentProvider.PreloadAsync, ContentProvider, ids)
 		-- The music starts only once it is loaded, so it never begins late or stutters.

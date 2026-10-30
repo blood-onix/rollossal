@@ -2,11 +2,14 @@
 -- Builds the template part for one object type: a MeshPart when its asset id is imported, otherwise a plain
 -- stand-in part of the same size. Used by the server (pooled world objects) and the client (stuck visuals).
 -- Layout, gameplay and tests never wait for art.
+-- 005: the texture comes from the active theme's atlas (contracts/theme-content.md §6); stand-ins take
+-- their Colour from the theme palette at the object's w-* role, else the tier Colour.
 
 local AssetService = game:GetService("AssetService")
 
 local Assets = require(script.Parent.Assets)
 local Worlds = require(script.Parent.Worlds)
+local Tiers = require(script.Parent.Rules.Tiers)
 
 type ObjectDef = Worlds.ObjectDef
 
@@ -31,7 +34,31 @@ local function warnOnce(objectId: string, reason: string)
 	end
 end
 
+-- The mesh texture: the active theme's atlas when the meshes are atlas-era, else the legacy shared
+-- palette. Never both. "" means no TextureID at all (contracts/theme-content.md §6).
+local function textureId(): string
+	local theme = Worlds.activeTheme
+	if
+		Assets.renderingMode == "atlas"
+		and theme ~= nil
+		and Assets.palettes[theme.paletteAssetKey] ~= ""
+	then
+		return Assets.palettes[theme.paletteAssetKey]
+	elseif Assets.renderingMode == "legacy" and Assets.meshUv ~= "" then
+		return Assets.meshUv
+	end
+	return ""
+end
+
 local function colourFor(def: ObjectDef): Color3
+	local theme = Worlds.activeTheme
+	local role = def.role
+	if theme ~= nil and role ~= nil then
+		local cell = theme.palette[role]
+		if cell ~= nil then
+			return Color3.fromRGB(cell[1], cell[2], cell[3])
+		end
+	end
 	local shade = def.shade
 	if shade then
 		return Color3.fromRGB(shade, shade, shade)
@@ -48,19 +75,34 @@ local function standIn(def: ObjectDef): Part
 		else Enum.PartType.Block
 	part.Size = Vector3.one * def.size
 	part.Color = colourFor(def)
+	part.Material = Enum.Material.SmoothPlastic
+	part.Transparency = 0
 	part.TopSurface = Enum.SurfaceType.Smooth
 	part.BottomSurface = Enum.SurfaceType.Smooth
 	return part
 end
 
 -- The imported mesh scaled so its longest side is `longestSide`, or nil with a one-time warning.
-function ObjectVisual.buildMesh(assetKey: string?, label: string, longestSide: number): MeshPart?
+-- `tier` (1-5) selects the collision fidelity: hull for tiers 4-5, box otherwise and for the hub (nil).
+-- Fidelity is passed at creation: CollisionFidelity is not settable on a live MeshPart (FR-004).
+function ObjectVisual.buildMesh(
+	assetKey: string?,
+	label: string,
+	longestSide: number,
+	tier: number?
+): MeshPart?
 	local contentId = if assetKey then Assets.meshes[assetKey] else nil
 	if contentId == nil or contentId == "" then
 		return nil
 	end
+	local collision = if Tiers.collisionClass(tier) == "Hull"
+		then Enum.CollisionFidelity.Hull
+		else Enum.CollisionFidelity.Box
 	local ok, result = pcall(function()
-		return AssetService:CreateMeshPartAsync(contentId :: any)
+		return AssetService:CreateMeshPartAsync(contentId :: any, {
+			CollisionFidelity = collision,
+			RenderFidelity = Enum.RenderFidelity.Automatic,
+		})
 	end)
 	if not ok then
 		warnOnce(label, tostring(result))
@@ -71,15 +113,16 @@ function ObjectVisual.buildMesh(assetKey: string?, label: string, longestSide: n
 	if longest > 0 and math.abs(longest - longestSide) > longestSide * SIZE_TOLERANCE then
 		mesh.Size = mesh.Size * (longestSide / longest)
 	end
-	if Assets.palette ~= "" then
-		mesh.TextureID = Assets.palette
+	local id = textureId()
+	if id ~= "" then
+		mesh.TextureID = id
 	end
 	return mesh
 end
 
 -- A fresh, unparented template. May yield when a mesh id is set; callers cache the result per object id.
 function ObjectVisual.build(def: ObjectDef): BasePart
-	return ObjectVisual.buildMesh(def.assetKey, def.id, def.size) or standIn(def)
+	return ObjectVisual.buildMesh(def.assetKey, def.id, def.size, def.tier) or standIn(def)
 end
 
 return ObjectVisual

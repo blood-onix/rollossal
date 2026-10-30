@@ -66,7 +66,9 @@ function WorldSpawner.start()
 		return
 	end
 	started = true
-	local built = WorldBuilder.start(Worlds.active, Worlds.placements)
+	-- 005: the resolved world carries the active theme's palette, lighting, slot objects, hero
+	-- variants and overlay placements, so the builder needs no theme-aware code of its own.
+	local built = WorldBuilder.start(Worlds.resolved, Worlds.placements)
 	local world = Workspace:WaitForChild("World")
 	groundParams.FilterType = Enum.RaycastFilterType.Include
 	groundParams.FilterDescendantsInstances = { world:WaitForChild("Geometry") }

@@ -1,0 +1,24 @@
+{
+  "size": 1024,
+  "themes": {
+    "autumn": {
+      "pixelSha256": "95adf92d8cd6584ee84a4f621300ac4c146a9795b9d34d5025e96b4a0b87e2d1"
+    },
+    "city": {
+      "pixelSha256": "1cff75948ebeaf7a41fd7ea083c98f75b3b2cdc3dd80dc1f747c90ae44b49865"
+    },
+    "neon": {
+      "pixelSha256": "adf677bd22b53b7956427dda9f176c382a4df3a1fec132816e4ae2d5405a4e00"
+    },
+    "spring": {
+      "pixelSha256": "85d970196d6968c78fecea7e010eddb682db7cb2b98a1e05381a6f8140a34f24"
+    },
+    "toon": {
+      "pixelSha256": "ce7a19d72c9f20aa637ea4c3327c0f0334271be01e3e738b658f6e8f9995fd5e"
+    },
+    "winter": {
+      "pixelSha256": "4cc7cc6c03e651e9f7e81974c94889a75cb66576fe0afbbddaae4222ed190b27"
+    }
+  },
+  "version": 2
+}

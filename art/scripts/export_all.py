@@ -1,7 +1,12 @@
 # Exports every Snow Village collection to art/export/<id>.fbx and writes art/export/manifest.json.
 # Validates the modelling rules and exits non-zero on any violation, so a broken model can never reach
-# the manifest (contract art-pipeline.md "Modelling rules"); tests/unit/ArtManifest.test.luau re-checks
-# the manifest offline against the FBX files (bytes, sha256, budgets, hard-coded id scan).
+# the manifest (contract specs/005-theme-art-pipeline/contracts/art-pipeline.md §5; replaces rules 3 and
+# 4 of the 004 contract): UVs inside the inner rect of one palette cell or one trim strip
+# (art/palette.json schema v2), custom normals / smooth shading allowed (the FBX is exported with
+# mesh_smooth_type "FACE" so split normals survive), one material named Palette, identity world matrix,
+# origin at the footprint's bottom centre, longest side within +-5% of size, triangles inside the tier
+# budget. tests/unit/ArtManifest.test.luau re-checks the manifest offline against the FBX files
+# (bytes, sha256, budgets, hard-coded id scan).
 # Run: blender --background --python art/scripts/export_all.py -- --out art/export
 
 import datetime
@@ -10,10 +15,12 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 import bmesh
+import build_shared as shared
 import bpy
 
-CELLS = 8      # the palette texture is an 8 x 8 grid of one-colour swatch cells (build_shared.py)
 EPS = 1e-4
 
 REQUIRED_MATERIAL = "Palette"
@@ -41,25 +48,34 @@ def fbx_op():
     raise RuntimeError("no FBX export operator found in this Blender build")
 
 
+def rects_from_palette(palette) -> dict:
+    """Map every cell and strip name to its inner rect (u0, v0, u1, v1) from palette.json schema v2."""
+    if "cells" not in palette or "strips" not in palette:
+        raise RuntimeError("palette.json is schema v1 (run python3 art/scripts/palette.py)")
+    rects = {}
+    for group in ("cells", "strips"):
+        for name, rect in palette[group].items():
+            rects[name] = (rect["u0"], rect["v0"], rect["u1"], rect["v1"])
+    return rects
+
+
 def face_failures(obj, rects):
-    """Every polygon's UVs must lie inside one palette swatch cell; returns the failing faces."""
-    rects_area = {}
-    for name, (u, v) in rects.items():
-        half = (1.0 / CELLS) / 2.0
-        rects_area[name] = (u - half, v - half, u + half, v + half)
+    """Every polygon's UVs must lie inside the inner rect of one cell or one strip; returns failures."""
     layer = obj.data.uv_layers.active
     if layer is None:
         return ["%s: no UV layer" % obj.name]
     failures = []
+    tolerance = shared.UV_TOLERANCE
     for polygon in obj.data.polygons:
         ok = False
-        for u0, v0, u1, v1 in rects_area.values():
-            if all(u0 <= layer.data[loop].uv.x <= u1 and v0 <= layer.data[loop].uv.y <= v1
+        for u0, v0, u1, v1 in rects.values():
+            if all(u0 - tolerance <= layer.data[loop].uv.x <= u1 + tolerance
+                   and v0 - tolerance <= layer.data[loop].uv.y <= v1 + tolerance
                    for loop in polygon.loop_indices):
                 ok = True
                 break
         if not ok:
-            failures.append(f"{obj.name}: face {polygon.index} UVs span outside every swatch")
+            failures.append(f"{obj.name}: face {polygon.index} UVs span outside every cell and strip")
     return failures
 
 
@@ -75,10 +91,8 @@ def check_collection(coll, object_id, budgets, rects):
     for obj in meshes:
         if obj.modifiers:
             errors.append(f"{obj.name}: unapplied modifiers {[m.name for m in obj.modifiers]}")
-        if any(p.use_smooth for p in obj.data.polygons):
-            errors.append(f"{obj.name}: has smooth-shaded faces")
-        if getattr(obj.data, "has_custom_normals", False):
-            errors.append(f"{obj.name}: has custom normals")
+        # Contract §5 rule 2: smooth-shaded polygons and custom split normals are allowed; the FBX
+        # export preserves them with mesh_smooth_type FACE (build_shared.py). No shading errors here.
         identity = obj.matrix_world.Identity(4)
         if obj.matrix_world != identity:
             errors.append(f"{obj.name}: world matrix not identity ({obj.matrix_world!r})")
@@ -141,7 +155,7 @@ def export_to_fbx(meshes, out_path) -> None:
         "add_leaf_bones": False,
         "bake_anim": False,
         "bake_space_transform": False,
-        "mesh_smooth_type": "OFF",
+        "mesh_smooth_type": shared.FBX_MESH_SMOOTH_TYPE,
         "path_mode": "STRIP",
     }
     try:
@@ -159,11 +173,12 @@ def run() -> None:
     if "--out" in argv:
         out_abs = os.path.normpath(os.path.join(art, "..", argv[argv.index("--out") + 1].strip()))
     source_dir = os.path.join(art, "source")
+    if "--source" in argv:
+        source_dir = os.path.abspath(argv[argv.index("--source") + 1])
     os.makedirs(out_abs, exist_ok=True)
 
     budgets = load_json(os.path.join(art, "scripts", "budgets.json"))
-    rects = {name: (centre["u"], centre["v"])
-             for name, centre in load_json(os.path.join(art, "palette.json")).items()}
+    rects = rects_from_palette(load_json(os.path.join(art, "palette.json")))
 
     entries = []
     for name in sorted(os.listdir(source_dir)):
@@ -197,6 +212,7 @@ def run() -> None:
     manifest = {
         "generated": datetime.date.today().isoformat(),
         "blender": bpy.app.version_string,
+        "atlas": "art/atlases",
         "palette": "palette.png",
         "meshes": sorted(entries, key=lambda entry: entry["id"]),
     }
