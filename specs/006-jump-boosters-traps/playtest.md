@@ -3,8 +3,12 @@
 Agent-driven Studio run through the Studio MCP server, 2026-10-30, branch `006-jump-boosters-traps`, Snow Village,
 grey box, one player. Expected values come from `research.md` R-01 to R-18.
 
-**Owner sign-off (SC-004, Owner Approval Gate): PENDING.** The owner has not played this build. Nothing below is
-a sign-off, and T060 stays open until the owner signs here and the fps run below is repeated unthrottled.
+**Owner sign-off (SC-004, Owner Approval Gate): GIVEN, 2026-10-30, with tuning deferred.** The owner played the
+grey-box build in Studio (iPhone 6 Plus emulator) and said it was fine. Feel and numbers (jump height, booster
+durations, trap strength, bump knock-back) are expected to be adjusted later: without the real map it is hard to
+judge them now. The sign-off covers the mechanics as built, not their final values. Everything below the agent
+measured; the verdict above is the owner's, recorded from their message in chat. Two-player bump feel was not
+played (one player only).
 
 ## Jump (T020)
 
@@ -61,12 +65,34 @@ Spanish ("Rastro resbaladizo" is the longest). They clear the timer (x 235) and 
 4 to 6 sit over the left 120 px thumb zone, which is only drawn over (chips take no input) and only when four or
 more effects are active at once. Emoji glyphs for the six icons render (capture), chips use `GothamMedium`.
 
-## Frame rate (T060, open)
+## Frame rate (T060, fps part passed, sign-off open)
 
-31 one-second samples at 640 x 360 with both sweepers, the Magnet pull and the HUD live: every second was 15 or 16
-fps. Studio was in the background (throttled, AGENTS.md), so there are no unthrottled seconds to judge. **Owner:
-please keep Studio in front for one run**; the fps check must be repeated then. Result to record: unthrottled
-seconds >= 30 fps.
+Earlier run (Studio in the background): 31 one-second samples, every second 15 or 16 fps, all throttled
+(AGENTS.md), so nothing to judge.
+
+Rerun 2026-10-30 with Studio in front, after a probe-confirmed sync (86 of 86 files match). A client Heartbeat
+counter in a live Snow Village run (one player, both sweepers moving, HUD and effect chips live), no window
+focus-lost event during either run, so none of the seconds were throttled:
+
+| Run | Samples | Magnet | Min | Max | Seconds below 30 fps |
+| --- | --- | --- | --- | --- | --- |
+| A, ball idle-ish, no booster | 35 | off | 58.9 | 60.5 | 0 |
+| B, Magnet claimed at ring (5.7 s drive, then 31 samples) | 31 | on for the first 5 samples | 59.0 | 60.4 | 0 |
+
+Runs A and B used the default 1179 x 819 viewport. Run C then used the owner's Studio device emulator set to
+iPhone 6 Plus:
+
+| Run | Viewport | Samples | Magnet | Min | Max | Seconds below 30 fps |
+| --- | --- | --- | --- | --- | --- | --- |
+| C, fresh Play after the device change, Magnet claimed at ring (19 s drive) | 735 x 413, touch on | 35 | on for 11 samples | 59.9 | 60.1 | 0 |
+
+Every unthrottled second in all three runs was 59 to 60.5 fps, against the budget of >= 30 fps. Run C is the
+closest to the phone target (the MCP itself cannot resize the viewport; 735 x 413 is 640 x 360 plus about 15%
+each way, so the render cost is a little above the 640 x 360 case). The 640 x 360 HUD layout is covered by T057
+above. Sweepers and the HUD were live in every run; the Magnet pull was live for 5 s (B) and 11 s (C). Emulator
+fps is a desktop GPU, not a phone, so on-device fps is still not measured.
+
+The owner's keep-Studio-in-front request is met; the remaining T060 item is the sign-off.
 
 ## Jest (T059)
 

@@ -1,15 +1,15 @@
 {
-  "verdict": "incomplete",
+  "verdict": "complete",
   "remaining": [],
-  "human": [
-    {
-      "item": "T060 — repeat the 640x360 Studio playtest with Studio unthrottled (in the foreground) and record >=30 fps in specs/006-jump-boosters-traps/playtest.md",
-      "reason": "The last measurement was background-throttled at 15 fps (every one of 31 one-second samples); AGENTS.md forbids the agent from raising Studio to the foreground, so the owner must keep Studio in front for one run before the >=30 fps check can be judged."
-    },
-    {
-      "item": "T060 / SC-004 (Constitution I) — owner plays the grey-box build and signs off in specs/006-jump-boosters-traps/playtest.md",
-      "reason": "The Owner Approval Gate requires the owner to personally play the build and sign; the agent cannot play on the owner's behalf or give the sign-off, and 004c polish / 004d external playtesting are blocked on it."
-    }
-  ],
-  "summary": "All of round 1's findings are resolved (59/60 tasks checked; check.sh exit 0 with 428 Lune tests, Jest 139/139, and Studio playtests T020/T033/T049/T055 documented in playtest.md); no new findings were produced, and the only open task T060 is human-gated on one unthrottled Studio fps run plus the owner's SC-004 sign-off."
+  "summary": "All of round 1's findings are resolved (59/60 tasks checked; check.sh exit 0 with 428 Lune tests, Jest 139/139, and Studio playtests T020/T033/T049/T055 documented in playtest.md); no new findings were produced, and the only open task T060 is human-gated on one unthrottled Studio fps run plus the owner's SC-004 sign-off.",
+  "completion": {
+    "source": "manual",
+    "at": "2026-10-30T13:51:30.773Z",
+    "by": "Roman_Tikhonov <bloodonix@gmail.com>",
+    "review": "pending",
+    "signedOff": [
+      "T060 — repeat the 640x360 Studio playtest with Studio unthrottled (in the foreground) and record >=30 fps in specs/006-jump-boosters-traps/playtest.md",
+      "T060 / SC-004 (Constitution I) — owner plays the grey-box build and signs off in specs/006-jump-boosters-traps/playtest.md"
+    ]
+  }
 }

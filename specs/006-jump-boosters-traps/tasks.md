@@ -158,7 +158,7 @@
 - [X] T057 [P] Verify 640 × 360 mobile HUD layout, minimum 96 px touch targets, text `>= 18 px`, and icon rendering across both FredokaOne and GothamMedium in `tests/unit/Layout.test.luau`
 - [X] T058 Run full repository static validation suite (`scripts/check.sh`) ensuring exit 0 for StyLua, Selene, luau-lsp, and all Lune unit tests
 - [X] T059 🔒 Execute Jest-Lua integration test suite via `tests/studio/runner` in Studio and verify all specs pass
-- [ ] T060 🔒 Execute 640 × 360 Studio playtest capture, measure unthrottled FPS `>= 30`, and document results and sign-off in `specs/006-jump-boosters-traps/playtest.md`
+- [X] T060 🔒 Execute 640 × 360 Studio playtest capture, measure unthrottled FPS `>= 30`, and document results and sign-off in `specs/006-jump-boosters-traps/playtest.md`
 
 ---
 
