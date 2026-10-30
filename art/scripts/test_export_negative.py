@@ -19,9 +19,11 @@ EDGE_UV = ((0.05, 0.9), (0.2, 0.9))  # spans cell 0 and cell 1, outside both inn
 OBJECT_ID = "acorn"  # tier 1, size 0.5, budget 500 triangles (budgets.json)
 
 CASES = {
-    "uv_across_cell_edge": ("UVs span outside every cell and strip", "cube", ["Palette"], "edge"),
-    "second_material": ("expected exactly one material 'Palette'", "cube", ["Palette", "Extra"], "cell"),
-    "over_budget_triangles": ("over budget 500", "sphere", ["Palette"], "cell"),
+    "uv_across_cell_edge": ("UVs span outside every cell and strip", "cube", ["Palette"], "edge", "none"),
+    "second_material": ("expected exactly one material 'Palette'", "cube", ["Palette", "Extra"], "cell", "none"),
+    "over_budget_triangles": ("over budget 500", "sphere", ["Palette"], "cell", "none"),
+    "unapplied_modifier": ("unapplied modifiers", "cube", ["Palette"], "cell", "modifier"),
+    "non_identity_transform": ("world matrix not identity", "cube", ["Palette"], "cell", "transform"),
 }
 
 
@@ -29,7 +31,7 @@ def build_fixtures(root: str) -> None:
     import bmesh
     import bpy
 
-    for case, (_, kind, materials, uv_kind) in CASES.items():
+    for case, (_, kind, materials, uv_kind, prep) in CASES.items():
         bpy.ops.wm.read_factory_settings(use_empty=True)
         collection = bpy.data.collections.new(OBJECT_ID)
         bpy.context.scene.collection.children.link(collection)
@@ -56,6 +58,11 @@ def build_fixtures(root: str) -> None:
         bm.free()
         obj = bpy.data.objects.new(OBJECT_ID, mesh)
         collection.objects.link(obj)
+        if prep == "modifier":
+            obj.modifiers.new("Bevel", "BEVEL")
+        elif prep == "transform":
+            obj.location = (1.0, 0.0, 0.0)
+            bpy.context.view_layer.update()
 
         source = os.path.join(root, case, "source")
         os.makedirs(source, exist_ok=True)

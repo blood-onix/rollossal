@@ -57,7 +57,7 @@ Behaviour (each line has a fixed-value test in `ThemeResolve.test.luau`):
 | Name | Type | Meaning |
 | --- | --- | --- |
 | `Worlds.active` | `WorldDef` | the **base** world (unchanged meaning) |
-| `Worlds.activeThemeId` | `string?` | `active.activeThemeId` when `Config.Flags.ThemeSystem`, else nil |
+| `Worlds.activeThemeId` | `string?` | `active.activeThemeId` (regardless of `Config.Flags.ThemeSystem`; the flag gates lighting, weather and music) |
 | `Worlds.activeTheme` | `ThemeDef?` | `Themes[activeThemeId]` |
 | `Worlds.resolved` | `WorldDef` | base world with resolved `objects`, `environment.palette`, `lighting` |
 | `Worlds.forTheme(themeId)` | `(string) -> Resolved` | resolves any supported theme (Studio specs, QA); wraps `ThemeResolve.resolve` |

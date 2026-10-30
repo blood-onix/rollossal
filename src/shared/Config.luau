@@ -101,7 +101,8 @@ local Config = {
 		DebugFps = true,
 		Shop = false,
 		SnowVillage = true,
-		-- Theme system (005): worlds resolve their active theme's palette, lighting, weather and slots.
+		-- Theme system (005). On: the active theme's lighting, weather and music apply. Off: the theme's
+		-- palette, slots and textures still apply (the base zones need them), with no lighting, weather or music.
 		ThemeSystem = true,
 	},
 

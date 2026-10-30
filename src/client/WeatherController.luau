@@ -18,7 +18,7 @@ local WeatherController = {}
 local anchor: BasePart? = nil
 local emitter: ParticleEmitter? = nil
 
--- The active theme's weather; nil with the ThemeSystem flag off (the pre-005 rollback).
+-- The active theme's weather. start() does nothing with the ThemeSystem flag off, so this is never read then.
 local function weather(): any
 	local theme = Worlds.activeTheme
 	return if theme ~= nil then theme.weather else nil

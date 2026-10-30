@@ -1,10 +1,11 @@
 --!strict
 -- The active world and indexes over its content. Table building only, done once at require time.
 -- Config.Flags.SnowVillage picks the world; with it off the game is the grey-box room (rollback).
--- 005: the active theme resolves once, here. Worlds.resolved carries the themed palette, lighting,
--- slot objects and overlays; Worlds.active stays the base world (specs/005-theme-art-pipeline/
--- data-model.md §6). With Config.Flags.ThemeSystem off the resolved world IS the base world, which
--- is the rollback for the whole feature.
+-- 005: the active theme resolves once, here. Worlds.resolved carries the themed palette, slot objects
+-- and overlays; Worlds.active stays the base world (specs/005-theme-art-pipeline/data-model.md §6).
+-- With Config.Flags.ThemeSystem off the theme still resolves (the base zones name slots and cannot be
+-- placed without it); only the theme's lighting, weather and music are withheld. The base world's
+-- own lighting then applies.
 
 local Config = require(script.Parent.Config)
 local Content = script.Parent.Content
@@ -36,13 +37,11 @@ local function sizeMap(objects: { ObjectDef }): { [string]: number }
 	return sizes
 end
 
--- The active theme (contract theme-content.md §3): active.activeThemeId when the flag is on.
-local themeOn = Config.Flags.ThemeSystem ~= false and active.activeThemeId ~= nil
-local activeThemeId: string? = if themeOn then active.activeThemeId :: string else nil
+-- The active theme (contract theme-content.md §3): active.activeThemeId, whatever the flag says.
+local activeThemeId: string? = active.activeThemeId
 local activeTheme = if activeThemeId ~= nil then (Themes :: any)[activeThemeId :: string] else nil
 
--- Resolve the active theme once. Without a theme the base world is used exactly as it is, so the
--- pre-005 behaviour (and the rollback flag) needs no resolution at all.
+-- Resolve the active theme once. Worlds without a theme keep their base zones, objects and lighting.
 local resolved: WorldDef = active
 local worldPlacements: { Layout.Placement }
 if activeTheme ~= nil then
@@ -56,7 +55,9 @@ if activeTheme ~= nil then
 	themed.objects = result.objects :: any
 	themed.zones = result.zones :: any
 	themed.fixedPlacements = result.fixedPlacements :: any
-	themed.lighting = (activeTheme :: any).lighting :: any
+	if Config.Flags.ThemeSystem then
+		themed.lighting = (activeTheme :: any).lighting :: any
+	end
 	local environment = table.clone(active.environment)
 	environment.palette = result.environmentPalette :: any
 	themed.environment = environment

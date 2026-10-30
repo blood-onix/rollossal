@@ -32,8 +32,11 @@ effectsGroup.Parent = SoundService
 local musicTrack: Sound? = nil
 
 local function createMusic()
-	-- The active theme picks its own track (contract theme-content.md §6); with no theme the winter
-	-- track is today's behaviour (the rollback). "" means no track: nothing plays and no warning.
+	-- The active theme picks its own track (contract theme-content.md §6). With ThemeSystem off no
+	-- track plays. "" means no track: nothing plays and no warning.
+	if not Config.Flags.ThemeSystem then
+		return
+	end
 	local theme = Worlds.activeTheme
 	local key = if theme ~= nil then theme.musicAssetKey else "musicWinter"
 	local soundId = Assets.sounds[key]

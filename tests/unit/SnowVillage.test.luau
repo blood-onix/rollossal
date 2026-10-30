@@ -671,6 +671,17 @@ test("SnowVillage: theme-only stand-ins stay inside their tier ranges (005)", fu
 	end
 end)
 
+test("SnowVillage: no theme book page declares a reward before 006a (005 F4)", function()
+	for _, themeId in SnowVillage.supportedThemes do
+		local page = SnowVillage.themeBindings[themeId].bookPage
+		expect.equal(
+			page ~= nil and page.reward ~= nil,
+			false,
+			`{themeId} bookPage declares a reward`
+		)
+	end
+end)
+
 test("SnowVillage: resolving every supported theme succeeds and keeps its shape (005)", function()
 	-- The city overlay adds a fixed beach towel (T066) and a fixed skating rink (T040) on top of the
 	-- 1616 winter placements.

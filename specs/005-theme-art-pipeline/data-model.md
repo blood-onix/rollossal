@@ -151,8 +151,9 @@ Assets.sounds.musicWinter = <today's id>; musicCity/musicSpring/musicAutumn/musi
 
 - **Theme choice** is static per server: `Worlds` resolves `activeThemeId` once at require time. A "switch" is
   a content edit plus a release. There is no remote, no live toggle, no date check.
-- **Flag**: `Config.Flags.ThemeSystem == false` ⇒ `Worlds.resolved == Worlds.active` (no slots, no overlays,
-  no theme palette, world's own lighting, no weather) and the old palette texture. This is the rollback.
+- **Flag**: `Config.Flags.ThemeSystem == false` still resolves the active theme (the base zones name `slot.*`
+  and cannot place without it), so slots, the theme palette and atlas textures stay. Withheld: the theme's
+  lighting (the world's own lighting applies), weather and music. It is not a full rollback to the pre-005 look.
 - **Atlas migration** (R-07): `meshUv = "legacy"` → (owner uploads, one commit) → `meshUv = "atlas"`; the
   `Assets.palette` field is then deleted.
 - **Per player**: only `profile.book` changes (existing path). A theme page is "active" when its `themeId`
