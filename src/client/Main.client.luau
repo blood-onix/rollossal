@@ -12,6 +12,7 @@ local HubUi = require(script.Parent.HubUi)
 local Feedback = require(script.Parent.Feedback)
 local WeatherController = require(script.Parent.WeatherController)
 local FpsReadout = require(script.Parent.FpsReadout)
+local HazardClient = require(script.Parent.HazardClient)
 
 local Shared = game:GetService("ReplicatedStorage"):WaitForChild("Shared")
 local Config = require(Shared.Config)
@@ -29,6 +30,7 @@ Feedback.start()
 -- the LocalPlayer), so the emitter obeys the saved setting and the engine's reduced-motion setting.
 WeatherController.start()
 FpsReadout.start()
+HazardClient.start()
 
 if Config.Flags.Saving then
 	local ProfileClient = require(script.Parent.ProfileClient)

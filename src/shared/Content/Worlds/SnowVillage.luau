@@ -193,7 +193,18 @@ local porchHeight = 0.6
 local spawnPoints = {}
 local zones = {}
 local blocks = {}
-local markers = {}
+-- Same shape as MarkerDef in Content/GreyBoxRoom.luau (this file has no requires).
+type Marker = {
+	id: string,
+	kind: string,
+	subKind: string,
+	x: number,
+	y: number,
+	z: number,
+	yaw: number,
+	waypoints: { { x: number, z: number } }?,
+}
+local markers: { Marker } = {}
 
 local function zone(
 	id: string,
@@ -243,8 +254,8 @@ local function block(
 end
 
 local slot = 0
-for rowIndex, rowZ in spawnRows do
-	for columnIndex, columnX in spawnColumns do
+for _, rowZ in spawnRows do
+	for _, columnX in spawnColumns do
 		slot += 1
 		local name = string.format("sv_%02d", slot)
 		table.insert(spawnPoints, { slot = slot, x = columnX, y = porchHeight, z = rowZ, yaw = 0 })
@@ -390,14 +401,6 @@ for rowIndex, rowZ in spawnRows do
 			2,
 			"stone"
 		)
-		if rowIndex ~= 2 or columnIndex % 2 == 1 then
-			table.insert(markers, {
-				kind = if slot % 2 == 0 then "BoosterSpot" else "TrapSpot",
-				x = columnX + inward * 40,
-				y = 0,
-				z = rowZ - 16,
-			})
-		end
 	end
 end
 
@@ -484,15 +487,59 @@ local fixedPlacements: { { id: string, objectId: string, x: number, y: number, z
 		{ id = "sv_landmark_08", objectId = "clock_tower", x = 355, y = 0, z = 0, yaw = 0 },
 	}
 
--- Extra marker spots (Feature 004b) in the streets, so there are at least 6 of each kind.
-for index, spot in { { -60, 0 }, { 60, 0 }, { 0, -60 }, { 0, 60 }, { -150, -180 }, { 150, 180 } } do
+-- Booster and trap spots (006, research R-14): 8 BoosterSpot (dash 2, magnet 2, spring 2, shield 1, slick_trail 1)
+-- and 8 TrapSpot (slick 2, bumper 2, slow 2, sweeper 2). yaw is in degrees and local +Z is the facing, so a spring
+-- pad at (0, -126) with yaw 0 launches towards the Y = 11 roof at z = -100 (R-05), and its twin at (0, 126) with
+-- yaw 180 towards the roof at z = 100. Sweeper loops run on open ground in the town square, clear of every block,
+-- gate and shortcut; the marker sits on the loop's first waypoint.
+local function spot(id: string, kind: string, subKind: string, x: number, z: number, yaw: number?)
 	table.insert(markers, {
-		kind = if index % 2 == 0 then "BoosterSpot" else "TrapSpot",
-		x = spot[1],
+		id = id,
+		kind = kind,
+		subKind = subKind,
+		x = x,
 		y = 0,
-		z = spot[2],
+		z = z,
+		yaw = yaw or 0,
+		waypoints = nil,
 	})
 end
+
+local function sweeperLoop(id: string, corners: { { x: number, z: number } })
+	table.insert(markers, {
+		id = id,
+		kind = "TrapSpot",
+		subKind = "sweeper",
+		x = corners[1].x,
+		y = 0,
+		z = corners[1].z,
+		yaw = 0,
+		waypoints = corners,
+	})
+end
+
+spot("booster-dash-1", "BoosterSpot", "dash", -60, -136)
+spot("booster-dash-2", "BoosterSpot", "dash", 60, 104)
+spot("booster-magnet-1", "BoosterSpot", "magnet", 60, -136)
+spot("booster-magnet-2", "BoosterSpot", "magnet", -60, 104)
+spot("booster-spring-1", "BoosterSpot", "spring", 0, -126, 0)
+spot("booster-spring-2", "BoosterSpot", "spring", 0, 126, 180)
+spot("booster-shield-1", "BoosterSpot", "shield", -160, -16)
+spot("booster-slick_trail-1", "BoosterSpot", "slick_trail", 160, 104)
+spot("trap-slick-1", "TrapSpot", "slick", -160, -136)
+spot("trap-slick-2", "TrapSpot", "slick", 160, -136)
+spot("trap-bumper-1", "TrapSpot", "bumper", 60, -16)
+spot("trap-bumper-2", "TrapSpot", "bumper", -160, 104)
+spot("trap-slow-1", "TrapSpot", "slow", -150, -190)
+spot("trap-slow-2", "TrapSpot", "slow", 150, 190)
+sweeperLoop(
+	"trap-sweeper-1",
+	{ { x = -40, z = -50 }, { x = -14, z = -50 }, { x = -14, z = -20 }, { x = -40, z = -20 } }
+)
+sweeperLoop(
+	"trap-sweeper-2",
+	{ { x = 14, z = 20 }, { x = 40, z = 20 }, { x = 40, z = 50 }, { x = 14, z = 50 } }
+)
 
 -- 005: theme scaffolding (specs/005-theme-art-pipeline, research R-11). The spawn loop and the street
 -- bands above lost 32 counts in total; the slot zones below put them back as dressing slots that
@@ -901,15 +948,46 @@ local keepOutAreas: {
 		{ id = "ko_sightline_e", kind = "sightline", x = 212.5, z = 0, w = 325, d = 12 },
 		{ id = "ko_sightline_w", kind = "sightline", x = -212.5, z = 0, w = 325, d = 12 },
 	}
+-- One keep-out per marker, sized to its footprint (Content/Hazards.luau; SnowVillage.test checks this table
+-- against it), and one per sweeper path segment, each grown by half the sweeper's long side so the machine can
+-- swing round a corner (Rules/Markers.segmentRect).
+local footprints: { [string]: { w: number, d: number } } = {
+	dash = { w = 5, d = 5 },
+	magnet = { w = 5, d = 5 },
+	spring = { w = 8, d = 8 },
+	shield = { w = 5, d = 5 },
+	slick_trail = { w = 5, d = 5 },
+	slick = { w = 14, d = 14 },
+	bumper = { w = 4, d = 4 },
+	slow = { w = 14, d = 14 },
+	sweeper = { w = 10, d = 6 },
+}
 for _, marker in markers do
-	table.insert(keepOutAreas, {
-		id = `ko_marker_{#keepOutAreas + 1}`,
-		kind = "marker",
-		x = marker.x,
-		z = marker.z,
-		w = 10,
-		d = 10,
-	})
+	local footprint = footprints[marker.subKind]
+	local waypoints = marker.waypoints
+	if waypoints then
+		for index, from in waypoints do
+			local to = waypoints[index % #waypoints + 1]
+			table.insert(keepOutAreas, {
+				id = `ko_marker_{#keepOutAreas + 1}`,
+				kind = "marker",
+				x = (from.x + to.x) / 2,
+				z = (from.z + to.z) / 2,
+				w = math.abs(to.x - from.x) + footprint.w,
+				d = math.abs(to.z - from.z) + footprint.w,
+			})
+		end
+	else
+		-- A pad rotated by 90 or 270 degrees swaps its sides; every pad here is square or yaw 0 or 180.
+		table.insert(keepOutAreas, {
+			id = `ko_marker_{#keepOutAreas + 1}`,
+			kind = "marker",
+			x = marker.x,
+			z = marker.z,
+			w = footprint.w,
+			d = footprint.d,
+		})
+	end
 end
 
 -- 005 (T060): gate and shortcut keep-outs, so nothing spawns on a route. A gate is a porch ramp, the only

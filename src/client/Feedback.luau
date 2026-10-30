@@ -7,6 +7,7 @@ local HapticService = game:GetService("HapticService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local SoundService = game:GetService("SoundService")
+local TweenService = game:GetService("TweenService")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Assets = require(Shared.Assets)
@@ -84,6 +85,39 @@ local function play(soundId: string, speed: number?)
 		sound:Destroy()
 	end)
 	sound:Play()
+end
+
+-- Landing thump plus a short squash of the ball's look (006). The squash is a client-only SpecialMesh scale, so
+-- the physics size the server owns never changes. It is skipped under Reduce motion; the thump still plays.
+local squashTween: Tween? = nil
+
+function Feedback.landed(ball: BasePart, impactSpeed: number)
+	play(Assets.sounds.land, math.clamp(1.2 - impactSpeed / 200, 0.8, 1.2))
+	if Players.LocalPlayer:GetAttribute("ReduceMotion") == true then
+		return
+	end
+	local mesh = ball:FindFirstChild("SquashMesh")
+	if mesh == nil then
+		local created = Instance.new("SpecialMesh")
+		created.Name = "SquashMesh"
+		created.MeshType = Enum.MeshType.Sphere
+		created.Parent = ball
+		mesh = created
+	end
+	local squashMesh = mesh :: SpecialMesh
+	if squashTween then
+		squashTween:Cancel()
+	end
+	local half = Config.landingSquashDuration / 2
+	local scale = Config.landingSquashScale
+	squashMesh.Scale = Vector3.new(1 / math.sqrt(scale), scale, 1 / math.sqrt(scale))
+	local back = TweenService:Create(
+		squashMesh,
+		TweenInfo.new(half, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+		{ Scale = Vector3.one }
+	)
+	squashTween = back
+	back:Play()
 end
 
 -- Unsupported devices skip silently; nothing here may raise.

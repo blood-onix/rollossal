@@ -55,6 +55,62 @@ local Config = {
 	stuckVisualMode = "Weld",
 	stuckEmbed = 0.35,
 
+	-- Mechanics pass (specs/006-jump-boosters-traps/research.md R-18). All values are provisional playtest inputs.
+	-- Jump
+	jumpClearRatio = 0.6,
+	jumpHoldClearRatio = 0.85,
+	minJumpClearHeight = 1.6,
+	jumpHoldMaxSeconds = 0.25,
+	jumpCooldown = 0.3,
+	landingMinSpeed = 12,
+	landingSquashScale = 0.8,
+	landingSquashDuration = 0.15,
+	-- Vertical guard
+	verticalSlack = 1.25,
+	airEnergyAllowance = 1.0,
+	maxSlopeRatio = 0.5,
+	-- Speed
+	dashSpeedMultiplier = 2.0,
+	boostSpeedCap = 80,
+	boostDecayGrace = 0.5,
+	-- Claiming
+	boosterRadius = 2.5,
+	boosterRespawnDelay = 20,
+	boosterClaimRateLimit = 4,
+	springCooldown = 2,
+	-- Durations (seconds)
+	dashDuration = 3,
+	magnetDuration = 6,
+	shieldDuration = 15,
+	slickTrailDuration = 8,
+	-- Magnet
+	magnetRadiusFactor = 3.0,
+	magnetPullSpeed = 14,
+	magnetMaxPulled = 24,
+	magnetScanInterval = 0.1,
+	-- Spring
+	springVerticalSpeed = 70,
+	springForwardSpeed = 40,
+	springFlightDuration = 1.5,
+	-- Slick trail
+	slickTrailSpacing = 4,
+	slickTrailMaxPatches = 8,
+	slickTrailPatchLifetime = 5,
+	slickTrailPoolSize = 48,
+	-- Traps
+	slickTurnMultiplier = 0.25,
+	slickLingerSeconds = 0.6,
+	slowSpeedMultiplier = 0.5,
+	slowLingerSeconds = 0.5,
+	bumperBounceSpeed = 28,
+	sweeperSpeed = 10,
+	sweeperBounceSpeed = 34,
+	hazardContactMargin = 0.5,
+	-- Ball-to-ball bumps
+	ballBumpSizeRatio = 1.25,
+	ballBumpImmunitySeconds = 3.0,
+	ballBumpContactMargin = 0.5,
+
 	-- Run loop (specs/002-run-loop/data-model.md §1)
 	runDurationSeconds = 240,
 	rollAgainDelaySeconds = 3,
@@ -104,6 +160,21 @@ local Config = {
 		-- Theme system (005). On: the active theme's lighting, weather and music apply. Off: the theme's
 		-- palette, slots and textures still apply (the base zones need them), with no lighting, weather or music.
 		ThemeSystem = true,
+		-- Mechanics pass (006). Each mechanic is live only when its master flag and its own flag are true.
+		-- ScaledJump off restores the 001 hop (jumpImpulse).
+		ScaledJump = true,
+		Boosters = true,
+		BoosterDash = true,
+		BoosterMagnet = true,
+		BoosterSpring = true,
+		BoosterShield = true,
+		BoosterSlickTrail = true,
+		Traps = true,
+		TrapSlick = true,
+		TrapBumper = true,
+		TrapSlow = true,
+		TrapSweeper = true,
+		BallToBallBumps = true,
 	},
 
 	-- Budgets. meshTriangles is indexed by tier. Theme budgets: weather particles, dressing slot share

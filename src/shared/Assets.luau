@@ -10,6 +10,8 @@ local Assets = {
 		tierUnlock = "rbxasset://sounds/button.wav",
 		bump = "rbxasset://sounds/snap.mp3",
 		bell = "rbxasset://sounds/bass.wav",
+		-- Landing thump (006). Stock clip; IsLoaded and TimeLength are checked in Play (T020).
+		land = "rbxasset://sounds/action_get_up.mp3",
 		-- The looping theme music (musicWinter used to be named music). "" means no track is picked:
 		-- nothing plays, rather than a placeholder that would be annoying on a loop. Winter and city
 		-- each have their own track; the other themes have none yet and stay silent instead of

@@ -8,7 +8,9 @@ local harness = require("./harness")
 local Assets = require("../../src/shared/Assets")
 local Config = require("../../src/shared/Config")
 local Icons = require("../../src/shared/Content/Icons")
+local Hazards = require("../../src/shared/Content/Hazards")
 local Layout = require("../../src/shared/Rules/Layout")
+local Markers = require("../../src/shared/Rules/Markers")
 local SnowVillage = require("../../src/shared/Content/Worlds/SnowVillage")
 local Strings = require("../../src/shared/Localization/Strings")
 local Themes = require("../../src/shared/Content/Themes")
@@ -495,13 +497,11 @@ test("SnowVillage: overlays sit clear of the keep-out areas (005, R-10, T066)", 
 		expect.truthy(keepOut.w > 0 and keepOut.d > 0)
 		if keepOut.kind == "sightline" then
 			expect.truthy(keepOut.w <= 12 or keepOut.d <= 12)
-		elseif keepOut.kind == "marker" then
-			expect.equal(keepOut.w, 10)
-			expect.equal(keepOut.d, 10)
 		end
 	end
 	expect.equal(counts.sightline, 4)
-	expect.equal(counts.marker, #SnowVillage.environment.markers)
+	-- One per marker, plus one per sweeper path segment in place of the sweeper's own (006, D3): 16 + 2 * 4 - 2.
+	expect.equal(counts.marker, 22)
 	expect.equal(counts.gate, 24)
 	expect.equal(counts.shortcut, 6)
 	for _, themeId in SnowVillage.supportedThemes do
@@ -803,6 +803,155 @@ test("SnowVillage: lighting values are sane", function()
 	for _, colour in { lighting.ambient, lighting.outdoorAmbient, lighting.fogColor } do
 		expect.equal(#colour, 3)
 	end
+end)
+
+-- 006 markers (spec FR-009, research R-05 and R-14).
+local GRAVITY = 196.2
+local ROOF_TOP = 11
+local ROOF_HALF = 12
+local TRAIL_PATCHES = 48
+local SWEEPER_PARTS = 2
+local BUMPER_PARTS = 2
+
+local function markerDefs(): Markers.Defs
+	return Hazards :: any
+end
+
+test("SnowVillage: the 16 markers pass Markers.validate for the world and both themes", function()
+	local environment = SnowVillage.environment
+	for _, themeId in SnowVillage.supportedThemes do
+		expect.truthy(SnowVillage.themeBindings[themeId] ~= nil)
+		local errors = Markers.validate(
+			environment.markers,
+			environment.blocks,
+			SnowVillage.keepOutAreas,
+			SnowVillage.halfExtent,
+			markerDefs()
+		)
+		expect.equal(#errors, 0, table.concat(errors, " | "))
+	end
+end)
+
+test("SnowVillage: 8 BoosterSpot and 8 TrapSpot cover all nine sub-kinds", function()
+	local kinds: { [string]: number } = {}
+	local subKinds: { [string]: number } = {}
+	for _, marker in SnowVillage.environment.markers do
+		kinds[marker.kind] = (kinds[marker.kind] or 0) + 1
+		subKinds[marker.subKind] = (subKinds[marker.subKind] or 0) + 1
+	end
+	expect.equal(kinds.BoosterSpot, 8)
+	expect.equal(kinds.TrapSpot, 8)
+	local expected: { [string]: number } = {
+		dash = 2,
+		magnet = 2,
+		spring = 2,
+		shield = 1,
+		slick_trail = 1,
+		slick = 2,
+		bumper = 2,
+		slow = 2,
+		sweeper = 2,
+	}
+	for subKind, count in expected do
+		expect.equal(subKinds[subKind], count, subKind)
+	end
+end)
+
+test("SnowVillage: the keep-out footprints match the Hazards rows", function()
+	local footprints: { [string]: { w: number, d: number } } = {}
+	for _, row in Hazards.boosters do
+		footprints[row.subKind] = row.footprint
+	end
+	for _, row in Hazards.traps do
+		footprints[row.subKind] = row.footprint
+	end
+	-- A single-marker keep-out has its row's footprint exactly.
+	for _, marker in SnowVillage.environment.markers do
+		if marker.waypoints == nil then
+			local found = false
+			for _, keepOut in SnowVillage.keepOutAreas do
+				if keepOut.kind == "marker" and keepOut.x == marker.x and keepOut.z == marker.z then
+					expect.equal(keepOut.w, footprints[marker.subKind].w, marker.id)
+					expect.equal(keepOut.d, footprints[marker.subKind].d, marker.id)
+					found = true
+				end
+			end
+			expect.truthy(found)
+		end
+	end
+	-- Sweeper segments are grown by half the sweeper's long side: 5 studs each way.
+	expect.equal(footprints.sweeper.w, 10)
+end)
+
+test("SnowVillage: markers and sweeper loops stay off every gate and shortcut", function()
+	local function overlap(a: Markers.Rect, b: Markers.Rect): boolean
+		return math.abs(a.x - b.x) < a.hx + b.hx and math.abs(a.z - b.z) < a.hz + b.hz
+	end
+	local routes: { Markers.Rect } = {}
+	for _, keepOut in SnowVillage.keepOutAreas do
+		if keepOut.kind == "gate" or keepOut.kind == "shortcut" then
+			table.insert(
+				routes,
+				{ x = keepOut.x, z = keepOut.z, hx = keepOut.w / 2, hz = keepOut.d / 2 }
+			)
+		end
+	end
+	for _, keepOut in SnowVillage.keepOutAreas do
+		if keepOut.kind == "marker" then
+			local rect = { x = keepOut.x, z = keepOut.z, hx = keepOut.w / 2, hz = keepOut.d / 2 }
+			for _, route in routes do
+				expect.falsy(overlap(rect, route), keepOut.id)
+			end
+		end
+	end
+end)
+
+test(
+	"SnowVillage: the part budget holds with 16 markers, 48 trail patches and the hazard parts",
+	function()
+		for _, themeId in SnowVillage.supportedThemes do
+			local total = #resolved[themeId].placements
+				+ #SnowVillage.environment.blocks
+				+ #SnowVillage.environment.markers
+				+ TRAIL_PATCHES
+				+ SWEEPER_PARTS
+				+ BUMPER_PARTS
+				+ HUB_PARTS
+				+ 12
+			expect.truthy(total < 2000, `{themeId}: {total} parts`)
+			expect.truthy(total <= Config.Budgets.maxActivePartsPerServer)
+		end
+	end
+)
+
+test("SnowVillage: each spring pad faces a roof and a launch lands on it", function()
+	local roofs = { -100, 100 }
+	local pads = 0
+	for _, marker in SnowVillage.environment.markers do
+		if marker.subKind ~= "spring" then
+			continue
+		end
+		pads += 1
+		-- Facing is local +Z: (sin yaw, cos yaw).
+		local facingZ = math.cos(math.rad(marker.yaw))
+		local roofZ = if marker.z < 0 then roofs[1] else roofs[2]
+		expect.truthy(facingZ * (roofZ - marker.z) > 0, marker.id)
+		expect.near(marker.x, 0, 1e-9)
+		-- Hand-computed (R-05): apex 70^2 / (2 * 196.2) = 12.49 studs.
+		local apex = Config.springVerticalSpeed ^ 2 / (2 * GRAVITY)
+		expect.truthy(apex >= 12)
+		-- The ball's bottom comes back down through the roof top at the larger root of vy*t - g*t^2/2 = 11.
+		local vy = Config.springVerticalSpeed
+		local landing = (vy + math.sqrt(vy * vy - 2 * GRAVITY * ROOF_TOP)) / GRAVITY
+		local travelled = Config.springForwardSpeed * landing
+		local landZ = marker.z + facingZ * travelled
+		expect.truthy(math.abs(landZ - roofZ) < ROOF_HALF, `{marker.id} lands at z {landZ}`)
+		-- At the roof edge it is already above the roof top.
+		local edgeDistance = math.abs(roofZ - marker.z) - ROOF_HALF
+		local t = edgeDistance / Config.springForwardSpeed
+		expect.truthy(vy * t - GRAVITY * t * t / 2 > ROOF_TOP)
+	end
+	expect.equal(pads, 2)
 end)
 
 return {}

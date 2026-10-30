@@ -213,6 +213,26 @@ local Strings: { [string]: { en: string, es: string? } } = {
 		en = "Back when the sun shines again",
 		es = "Vuelve cuando brille el sol otra vez",
 	},
+	-- Feature 006 (contracts/content-and-config.md §Strings): effect chips and booster / trap names.
+	["ui.fx.dash"] = { en = "Dash", es = "Impulso" },
+	["ui.fx.magnet"] = { en = "Magnet", es = "Imán" },
+	["ui.fx.shield"] = { en = "Sticky coat", es = "Capa pegajosa" },
+	["ui.fx.slick_trail"] = { en = "Slick trail", es = "Rastro resbaladizo" },
+	["ui.fx.slick"] = { en = "Slippery!", es = "¡Resbaladizo!" },
+	["ui.fx.slow"] = { en = "Slowed", es = "Frenado" },
+	["world.booster.dash"] = { en = "Dash boost", es = "Impulso rápido" },
+	["world.booster.magnet"] = { en = "Magnet", es = "Imán" },
+	["world.booster.spring"] = { en = "Spring pad", es = "Trampolín" },
+	["world.booster.shield"] = { en = "Sticky coat", es = "Capa pegajosa" },
+	["world.booster.slick_trail"] = { en = "Slick trail", es = "Rastro resbaladizo" },
+	["world.trap.slick.winter"] = { en = "Ice patch", es = "Placa de hielo" },
+	["world.trap.slick.city"] = { en = "Puddle", es = "Charco" },
+	["world.trap.bumper.winter"] = { en = "Snowy bollard", es = "Bolardo nevado" },
+	["world.trap.bumper.city"] = { en = "Street bollard", es = "Bolardo de calle" },
+	["world.trap.slow.winter"] = { en = "Slush", es = "Aguanieve" },
+	["world.trap.slow.city"] = { en = "Wet sand", es = "Arena mojada" },
+	["world.trap.sweeper.winter"] = { en = "Salt sweeper", es = "Barredora de sal" },
+	["world.trap.sweeper.city"] = { en = "Street sweeper", es = "Barredora de calle" },
 }
 
 return Strings

@@ -15,6 +15,7 @@ local Worlds = require(Shared.Worlds)
 local Remotes = require(script.Parent.Remotes)
 local RunManager = require(script.Parent.RunManager)
 local BallService = require(script.Parent.BallService)
+local KnockOff = require(script.Parent.KnockOff)
 local WorldSpawner = require(script.Parent.WorldSpawner)
 
 type Session = BallService.Session
@@ -22,7 +23,6 @@ type StuckEntry = BallService.StuckEntry
 
 local AbsorbService = {}
 
-local random = Random.new()
 -- Server-wide pickup counter; makes every StuckEntry key unique across balls and respawns.
 local pickupCount = 0
 
@@ -141,42 +141,10 @@ function AbsorbService.tryBump(session: Session, objectId: unknown, now: number)
 		return "NotAKnockOff"
 	end
 
-	if #session.stuckStack == 0 then
-		return "Ok"
+	local decision = KnockOff.apply(session, "obstacle", now)
+	if decision == "Immune" or decision == "Cooldown" then
+		return decision
 	end
-
-	local remaining, popped = StuckStack.popRecent(session.stuckStack, Config.knockOffCount)
-	session.stuckStack = remaining
-	local sizes: { number } = {}
-	for _, entry in popped do
-		table.insert(sizes, entry.size)
-	end
-	BallService.setDiameter(
-		session,
-		Growth.shrinkDiameter(
-			session.authoritativeDiameter,
-			sizes,
-			Worlds.growthK,
-			Config.startDiameter
-		)
-	)
-
-	-- Only objects still waiting to respawn from these pickups land on the floor; the others are
-	-- already back in the room, so their records just leave the ball.
-	local released = BallService.releasableObjects(popped)
-	local spots = WorldSpawner.scatterSpots(
-		session.part.Position,
-		math.max(#released, 1),
-		Config.scatterDistance + ballRadius(session),
-		random:NextNumber(0, math.pi * 2)
-	)
-	for index, releasedObject in released do
-		WorldSpawner.scatter(releasedObject, spots[index], now + Config.scatterGrace)
-	end
-
-	session.lastBumpAt = now
-	BallService.publishStuck(session)
-	RunManager.onKnockOff(session.ownerUserId)
 	return "Ok"
 end
 
