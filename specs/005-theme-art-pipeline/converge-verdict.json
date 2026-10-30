@@ -3,15 +3,9 @@
   "remaining": [],
   "summary": "No agent-doable work remains: check.sh exits 0 with 351 Lune tests passing and tasks.md is unchanged, but four human items stay open (unthrottled fps and Book layout for T041/T042, and an unverified Blender negative-test case).",
   "completion": {
-    "source": "manual",
-    "at": "2026-10-30T10:34:09.152Z",
+    "source": "merge",
+    "at": "2026-10-30T11:15:13.561Z",
     "by": "Roman_Tikhonov <bloodonix@gmail.com>",
-    "review": "pending",
-    "signedOff": [
-      "T041 [Studio]: unthrottled 30 fps gate at 640 x 360 with the 12-ball load",
-      "T041 [Studio]: Book thumb zone overlaps the first card's name label at 640 x 360",
-      "T042 [Studio]: confirm all Quality Gates, including the 30 fps gate",
-      "T064 [Blender]: run art/scripts/test_export_negative.py for the uncommitted cases unapplied_modifier and non_identity_transform"
-    ]
+    "rounds": 4
   }
 }
