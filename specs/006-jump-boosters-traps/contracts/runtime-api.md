@@ -19,7 +19,10 @@ returns; no reply, as `Absorb`):
 4. `RateLimit.allow(session.claimWindow, now, Config.boosterClaimRateLimit, Config.rateLimitWindow)`;
 5. marker exists and is a `BoosterSpot`;
 6. available (`state == "Available"`, or for spring `now ≥ springCooldownUntil`);
-7. `distance ≤ ballRadius + boosterRadius + absorbDistanceTolerance`.
+7. `Boosters.inClaimReach`: the flat distance combined with the gap under the ball (centre height minus the radius,
+   minus the marker's ground y, at least 0) is at most `ballRadius + boosterRadius + absorbDistanceTolerance`. The
+   client triggers on the same rule with `clientContactMargin`, so a ball rolling on the ground has the same flat
+   reach at every size.
 
 Result codes (returned from `BoosterService.tryClaim`, for tests; never sent): `Ok`, `BadArgs`, `NotActive`,
 `Disabled`, `RateLimited`, `UnknownMarker`, `Unavailable`, `OutOfRange`.

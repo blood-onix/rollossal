@@ -75,3 +75,35 @@ test("dashTarget: doubles the base speed up to the cap", function()
 	expect.near(Boosters.dashTarget(18, 2.0, 80), 36, 1e-9)
 	expect.near(Boosters.dashTarget(45, 2.0, 80), 80, 1e-9)
 end)
+
+test(
+	"inClaimReach: a ball on the ground reaches D/2 + radius + margin flat at every size",
+	function()
+		local marker = { x = 0, y = 0, z = 0 }
+		for _, d in { 12, 30, 70 } do
+			local reach = d / 2 + 2.5 + 6
+			expect.truthy(
+				Boosters.inClaimReach({ x = reach - 0.1, y = d / 2, z = 0 }, d, marker, 2.5, 6)
+			)
+			expect.falsy(
+				Boosters.inClaimReach({ x = reach + 0.1, y = d / 2, z = 0 }, d, marker, 2.5, 6)
+			)
+			-- the client's smaller margin is always inside the server's
+			expect.truthy(
+				Boosters.inClaimReach(
+					{ x = d / 2 + 2.5 + 0.3, y = d / 2, z = 0 },
+					d,
+					marker,
+					2.5,
+					6
+				)
+			)
+		end
+	end
+)
+
+test("inClaimReach: the gap under the ball counts, a ball far above is out of reach", function()
+	local marker = { x = 0, y = 0, z = 0 }
+	expect.falsy(Boosters.inClaimReach({ x = 0, y = 12 / 2 + 40, z = 0 }, 12, marker, 2.5, 6))
+	expect.truthy(Boosters.inClaimReach({ x = 0, y = 12 / 2 + 5, z = 0 }, 12, marker, 2.5, 6))
+end)
