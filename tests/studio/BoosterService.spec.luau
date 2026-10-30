@@ -78,6 +78,27 @@ describe("BoosterService claims", function()
 		expect(BoosterService.tryClaim(session, marker.markerId, NOW + 1)).toBe("OutOfRange")
 	end)
 
+	it("refuses a claim from a ball well above the marker", function()
+		local session = newSession()
+		local marker = markerOf("dash")
+		session.part.Position = marker.position + Vector3.new(0, 40, 0)
+		expect(BoosterService.tryClaim(session, marker.markerId, NOW + 1)).toBe("OutOfRange")
+	end)
+
+	it("accepts a big ball rolling on the ground at the client's trigger distance", function()
+		for _, diameter in { 30, 70 } do
+			local session = newSession()
+			session.physicalDiameter = diameter
+			local marker = markerOf("dash")
+			-- The client fires at D/2 + boosterRadius + clientContactMargin flat, centre D/2 above the ground.
+			local flat = diameter / 2 + Config.boosterRadius + Config.clientContactMargin
+			session.part.Anchored = true
+			session.part.Position = marker.position + Vector3.new(flat, diameter / 2, 0)
+			expect(BoosterService.tryClaim(session, marker.markerId, NOW + 1)).toBe("Ok")
+			BoosterService.reset()
+		end
+	end)
+
 	it("rate limits claims: the fifth in a window is RateLimited", function()
 		local session = newSession()
 		for _ = 1, Config.boosterClaimRateLimit do

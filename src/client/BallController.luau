@@ -425,12 +425,10 @@ function BallController.start()
 
 		-- Hold extension: extra upward acceleration (g - q) while the button is held and the ball still rises.
 		local velocity = ball.AssemblyLinearVelocity
-		if now < holdUntil then
-			if velocity.Y > 0 then
-				ball:ApplyImpulse(Vector3.yAxis * mass * holdExtraAccel * dt)
-			else
-				holdUntil = -math.huge
-			end
+		if Jump.holdActive(now, holdUntil, velocity.Y) then
+			ball:ApplyImpulse(Vector3.yAxis * mass * holdExtraAccel * dt)
+		else
+			holdUntil = -math.huge
 		end
 
 		-- Landing feedback: the step that touches ground after a fall of at least landingMinSpeed.
@@ -449,12 +447,16 @@ function BallController.start()
 				if typeof(markerId) ~= "string" or part:GetAttribute("Taken") == true then
 					continue
 				end
-				local flat = Vector3.new(
-					ballPosition.X - part.Position.X,
-					0,
-					ballPosition.Z - part.Position.Z
-				).Magnitude
-				if flat > radius + Config.boosterRadius + Config.clientContactMargin then
+				local partPosition = part.Position
+				if
+					not Boosters.inClaimReach(
+						{ x = ballPosition.X, y = ballPosition.Y, z = ballPosition.Z },
+						diameter,
+						{ x = partPosition.X, y = partPosition.Y, z = partPosition.Z },
+						Config.boosterRadius,
+						Config.clientContactMargin
+					)
+				then
 					continue
 				end
 				if (claimPendingUntil[markerId] or 0) > now or not budgetAllows(now) then

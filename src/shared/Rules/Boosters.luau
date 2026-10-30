@@ -86,6 +86,23 @@ function Boosters.trailExpire(now: number, droppedAt: number, lifetime: number):
 	return now - droppedAt >= lifetime
 end
 
+-- Whether a ball can claim a booster marker. Marker y is ground level and the ball centre sits D/2 above it, so
+-- the vertical term is the gap under the ball (not the centre height): a big ball rolling on the ground has gap 0
+-- and reaches the same flat distance at any size. Client and server share this and differ only in `margin`.
+function Boosters.inClaimReach(
+	ball: Vec3,
+	diameter: number,
+	marker: Vec3,
+	boosterRadius: number,
+	margin: number
+): boolean
+	local dx = ball.x - marker.x
+	local dz = ball.z - marker.z
+	local gap = math.max(0, ball.y - diameter / 2 - marker.y)
+	local reach = diameter / 2 + boosterRadius + margin
+	return dx * dx + dz * dz + gap * gap <= reach * reach
+end
+
 function Boosters.dashTarget(baseSpeed: number, multiplier: number, cap: number): number
 	return math.min(baseSpeed * multiplier, cap)
 end

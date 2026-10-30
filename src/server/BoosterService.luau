@@ -319,11 +319,15 @@ function BoosterService.tryClaim(session: Session, markerId: unknown, now: numbe
 	elseif marker.state ~= "Available" then
 		return "Unavailable"
 	end
-	local offset = session.part.Position - marker.position
-	local flat = math.sqrt(offset.X * offset.X + offset.Z * offset.Z)
+	local ball = session.part.Position
 	if
-		flat
-		> session.physicalDiameter / 2 + Config.boosterRadius + Config.absorbDistanceTolerance
+		not Boosters.inClaimReach(
+			{ x = ball.X, y = ball.Y, z = ball.Z },
+			session.physicalDiameter,
+			{ x = marker.position.X, y = marker.position.Y, z = marker.position.Z },
+			Config.boosterRadius,
+			Config.absorbDistanceTolerance
+		)
 	then
 		return "OutOfRange"
 	end

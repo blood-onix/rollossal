@@ -78,4 +78,10 @@ function Jump.canTakeOff(
 	return grounded and now - lastJumpAt >= cooldown and vy <= 2
 end
 
+-- The hold extension applies while the window is open (release or take-off sets holdUntil to the past) and the
+-- ball still rises; once vy is no longer positive the stretch is over.
+function Jump.holdActive(now: number, holdUntil: number, vy: number): boolean
+	return now < holdUntil and vy > 0
+end
+
 return Jump

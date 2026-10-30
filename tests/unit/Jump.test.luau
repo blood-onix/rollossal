@@ -88,4 +88,12 @@ test("canTakeOff: needs ground, a finished cooldown and no upward motion", funct
 	expect.equal(Jump.canTakeOff(true, 10, 9.7, 0, 0.3), true)
 end)
 
+test("holdActive: only inside the window, only while rising", function()
+	expect.equal(Jump.holdActive(10.1, 10.3, 5), true)
+	expect.equal(Jump.holdActive(10.3, 10.3, 5), false) -- window over (jumpHoldMaxSeconds)
+	expect.equal(Jump.holdActive(10.1, -math.huge, 5), false) -- released
+	expect.equal(Jump.holdActive(10.1, 10.3, 0), false) -- apex reached
+	expect.equal(Jump.holdActive(10.1, 10.3, -3), false) -- falling
+end)
+
 return {}
