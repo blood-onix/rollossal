@@ -1,0 +1,45 @@
+{
+  "verdict": "incomplete",
+  "remaining": [
+    "T020 Studio playtest verifying Tier 1 kerb clearance, 0.6x tap and 0.85x held jumps at Tiers 1-5, landing feedback, zero server violations",
+    "T022 Studio integration test for BoosterService.tryClaim result codes, rate limiting, respawn cooldown, Shield consumption, trail pool size",
+    "T023 Studio integration test verifying Remotes.ClaimBooster (13 total remotes) rejects non-string, missing, or extra arguments",
+    "T025 Register ClaimBooster RemoteEvent in src/server/Remotes.luau",
+    "T026 Implement WorldSpawner.restoreHome for returning magnet-drifted parts to spawnCFrame",
+    "T027 Implement BoosterService claim validation, session timers, magnet drift, spring launch, slick-trail pooling",
+    "T028 Integrate session booster cleanup on run end, reset, and fall respawn in RunManager",
+    "T029 Initialize and start BoosterService in Main.server.luau",
+    "T030 Update BallController for BoostDash target speed and server-published Launch attribute velocity",
+    "T031 Implement EffectChips component rendering active booster chips with icon and localized text",
+    "T032 Mount EffectChips inside HUD container in Hud.luau",
+    "T033 Studio playtest verifying Dash boost, Magnet pull, Spring launch, Shield protection, Slick Trail, HUD chips",
+    "T037 Studio integration test verifying bumper/sweeper knock-offs, Shield absorption, 3 s ball-bump immunity, shared re-collection",
+    "T041 Implement shared knock-off executor KnockOff.apply in src/server/KnockOff.luau",
+    "T042 Refactor AbsorbService.tryBump to delegate to KnockOff.apply",
+    "T043 Implement HazardService detecting bumper, sweeper, and ball-to-ball bump contacts and publishing Launch",
+    "T044 Initialize and start HazardService in Main.server.luau",
+    "T045 Implement deterministic RenderStepped sweeper movement along waypoints in HazardClient.luau",
+    "T046 Start HazardClient on client initialization in Main.client.luau",
+    "T047 Update BallController to detect TrapSurface patches and apply slick/slow multipliers with linger",
+    "T048 Extend EffectChips with surface hazard status chips (Slippery!, Slowed)",
+    "T049 Studio playtest verifying Slick/Slow patches, Bumper Post bounce, Sweeper patrol, ball-to-ball bumps with 3 s immunity",
+    "T050 Unit test marker validation rules in tests/unit/Markers.test.luau",
+    "T051 Unit test Snow Village markers asserting >=6 BoosterSpots, >=6 TrapSpots, all 9 sub-kinds, keep-outs, part budget, spring trajectory",
+    "T052 Implement pure marker validation rule Markers.validate in src/shared/Rules/Markers.luau",
+    "T053 Re-author 8 BoosterSpot and 8 TrapSpot markers with coordinates, sweeper loop waypoints, and keep-outs in SnowVillage.luau",
+    "T054 Implement booster and trap instance creation from world markers using theme dressing in WorldBuilder.luau",
+    "T055 Studio playtest verifying all 16 markers spawn, spring pad reaches Y=11 rooftop, and winter/city dressing switches",
+    "T056 Verify individual flag toggles cleanly disable each mechanic in tests/unit/Config.test.luau",
+    "T057 Verify 640x360 mobile HUD layout, 96 px touch targets, >=18 px text, icon rendering in tests/unit/Layout.test.luau",
+    "T058 Run full repository static validation suite scripts/check.sh ensuring exit 0",
+    "T059 Execute Jest-Lua integration test suite via tests/studio/runner in Studio and verify all specs pass",
+    "T060 Execute 640x360 Studio playtest capture, measure unthrottled FPS >= 30, and document results in playtest.md"
+  ],
+  "human": [
+    {
+      "item": "T060 / SC-004 owner playtest sign-off",
+      "reason": "SC-004 and the Owner Approval Gate require the owner to personally play the grey-box build and sign off in specs/006-jump-boosters-traps/playtest.md; the agent can prepare the capture and document results but cannot play on the owner's behalf or give the sign-off."
+    }
+  ],
+  "summary": "Phases 1-3 are implemented and green (397 Lune tests, check.sh exit 0), but US2 boosters, US3 traps/ball bumps, US4 marker data, and Phase 7 polish remain unimplemented and are already fully traced by 33 unchecked tasks T020-T060, so no new tasks were appended."
+}
