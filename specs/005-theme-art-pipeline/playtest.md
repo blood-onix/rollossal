@@ -217,3 +217,12 @@ Quality gates: not met yet. Open: T037 overlay/hero identity, T039 collision cla
 - Unthrottled evidence on file: Round 10, Play, Studio in front by chance, 60 s, render 60 to 61 per second, 60 of 60 seconds at 30 fps or more, mean 60.5, BaseParts 1,698, idle (no ball driver). Round 11: 640 x 360 capture, every label fits at 18 px or more.
 - T042 sign-off: the owner asked on 2026-10-30 to sign off with the fps gate judged from the Round 10 unthrottled sample. The gates read: server and client behaviour (T036 to T040, T047) met; UI (640 x 360 capture, glyphs) met; assets (atlas ids, per-theme atlas, recolour, music) met; strings (Lune) met. Not measured: unthrottled fps under the 12-ball load.
 - Known items carried past the sign-off, none blocking this spec: (a) the 12-ball bot run left tier 3 or 4 under the 0.2 tier-share floor (Rounds 13 and 15, naive bot eater; a balance question); (b) the thumb zone overlaps the first Book card's name label at 640 x 360 while Book is open (Round 11); (c) `LoadStringEnabled` must be off in the published place.
+
+## Round 22, 2026-10-30 (T064 export negative test, run)
+
+- T064: `python3 -I art/scripts/test_export_negative.py --blender /Applications/Blender.app/Contents/MacOS/Blender` (Blender 5.2.3 LTS, commit 4c6743d) ran from the shell, not blocked this time. Output:
+  - `PASS uv_across_cell_edge: exit 1, reports 'UVs span outside every cell and strip'`
+  - `PASS second_material: exit 1, reports 'expected exactly one material 'Palette''`
+  - `PASS over_budget_triangles: exit 1, reports 'over budget 500'`
+  - `OK: 3 export failure paths exit non-zero with their rule named`
+- This replaces the Round 9 note that the test had not been run. US2/AC2 is covered by this run. The live Blender scene was not touched (the driver uses its own `--background` processes in a temp dir).
