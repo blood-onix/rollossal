@@ -1,14 +1,11 @@
 {
-  "verdict": "complete",
+  "verdict": "incomplete",
   "remaining": [],
-  "human": [],
-  "summary": "All tasks T001-T067 are checked, the 347 Lune unit tests pass, the atlases are in sync, and the code matches spec, plan and tasks; the owner's sign-off accepted the Round 10 fps evidence, and the Book thumb-zone overlap awaits an owner layout decision that is not a spec requirement.",
-  "completion": {
-    "source": "converge",
-    "at": "2026-10-30T07:59:53.157Z",
-    "runner": "claude",
-    "model": "claude-haiku-5-5",
-    "rounds": 1,
-    "review": "pending"
-  }
+  "human": [
+    {
+      "item": "F4 (PR #6 review, questions.json id F4-theme-page-reward): decide how a reward declared on a theme bookPage behaves in 005",
+      "reason": "Option A, B, C or D changes the bookPage contract (FR-002, data-model.md section 5, contracts/theme-content.md section 4), and the owner has not chosen one; Book.themePages currently drops bookPage.reward silently, and no shipped theme page declares a reward"
+    }
+  ],
+  "summary": "All tasks T001-T067 are checked, 351 Lune tests and the palette determinism check pass, and the code matches spec, plan and tasks; the only open item is the owner's pending decision on the F4 theme-page reward finding."
 }
