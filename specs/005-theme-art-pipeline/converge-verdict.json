@@ -1,11 +1,14 @@
 {
-  "verdict": "incomplete",
+  "verdict": "complete",
   "remaining": [],
-  "human": [
-    {
-      "item": "T064 [Blender] Run art/scripts/test_export_negative.py and confirm all three export failure cases exit non-zero with their named rule (US2/AC2, T062)",
-      "reason": "No run record exists (playtest.md line 82 says it has not been run), and tasks.md marks it [X] without evidence. The Blender binary is under /Applications, which the sandbox policy hook blocks from the shell, and running it through the live Blender MCP would wipe the open scene, so someone with a Blender binary must run it."
-    }
-  ],
-  "summary": "Round 10 found no agent-doable work: T066 is satisfied by the city overlay fixedPlacements and its unit test, every task is [X], and the feature stays incomplete only because T064's negative export test has no run record and needs a Blender run by a person."
+  "summary": "Round 10 found no agent-doable work: T066 is satisfied by the city overlay fixedPlacements and its unit test, every task is [X], and the feature stays incomplete only because T064's negative export test has no run record and needs a Blender run by a person.",
+  "completion": {
+    "source": "manual",
+    "at": "2026-10-30T07:58:04.970Z",
+    "by": "Roman_Tikhonov <bloodonix@gmail.com>",
+    "review": "pending",
+    "signedOff": [
+      "T064 [Blender] Run art/scripts/test_export_negative.py and confirm all three export failure cases exit non-zero with their named rule (US2/AC2, T062)"
+    ]
+  }
 }
