@@ -31,14 +31,25 @@ local function applyEnabled()
 	end
 	local reduceMotion = Players.LocalPlayer:GetAttribute("ReduceMotion") == true
 	local data = weather()
-	local enabled = Weather.emitting(reduceMotion, if data ~= nil then data.kind else nil)
-	if enabled and data ~= nil then
+	local kind = if data ~= nil then data.kind else nil
+	local motion = Weather.motion(kind)
+	local enabled = Weather.emitting(reduceMotion, kind)
+	if enabled and data ~= nil and motion ~= nil then
 		current.Color =
 			ColorSequence.new(Color3.fromRGB(data.color[1], data.color[2], data.color[3]))
-		current.Rate = data.rate
+		current.Rate = Weather.cappedRate(
+			data.rate,
+			data.lifetime,
+			data.maxParticles,
+			Config.Budgets.maxWeatherParticles
+		)
 		current.Lifetime = NumberRange.new(data.lifetime * 0.8, data.lifetime)
 		current.Speed = NumberRange.new(data.speed)
 		current.Size = NumberSequence.new(data.size)
+		current.EmissionDirection = if motion.falls then Enum.NormalId.Bottom else Enum.NormalId.Top
+		current.Acceleration = Vector3.new(motion.accelerationX, motion.accelerationY, 0)
+		current.Rotation = NumberRange.new(0, 360)
+		current.RotSpeed = NumberRange.new(-motion.spin, motion.spin)
 	end
 	-- Clear on every transition to disabled, so a re-enable never replays old particles.
 	if not enabled and current.Enabled then
@@ -51,6 +62,15 @@ end
 function WeatherController.isEmitting(): boolean
 	local current = emitter
 	return current ~= nil and current.Enabled
+end
+
+-- For the Studio specs: the direction the particles travel, nil before the controller starts.
+function WeatherController.emitterDirection(): Enum.NormalId?
+	local current = emitter
+	if current == nil then
+		return nil
+	end
+	return current.EmissionDirection
 end
 
 function WeatherController.start()
@@ -92,7 +112,8 @@ function WeatherController.start()
 		if camera == nil then
 			return
 		end
-		current.CFrame = camera.CFrame * CFrame.new(0, Config.weatherEmitterHeight, 0)
+		current.CFrame =
+			CFrame.new(camera.CFrame.Position + Vector3.new(0, Config.weatherEmitterHeight, 0))
 	end)
 end
 

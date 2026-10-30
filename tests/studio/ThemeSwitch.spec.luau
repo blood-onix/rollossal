@@ -17,6 +17,7 @@ local expect = JestGlobals.expect
 
 local Worlds = require(ReplicatedStorage.Shared.Worlds)
 local Themes = require(ReplicatedStorage.Shared.Content.Themes)
+local Weather = require(ReplicatedStorage.Shared.Rules.Weather)
 local WeatherController = require(StarterPlayer.StarterPlayerScripts.WeatherController)
 
 local SLOT_OBJECT_IDS_WINTER = { "bauble", "gift_box", "snowman", "sleigh", "skating_rink" }
@@ -190,5 +191,15 @@ describe("WeatherController (unstarted state only)", function()
 		expect(WeatherController.start ~= nil).toBe(true)
 		expect(typeof(WeatherController.isEmitting)).toBe("function")
 		expect(WeatherController.isEmitting()).toBe(false)
+		expect(WeatherController.emitterDirection()).toBe(nil)
+	end)
+
+	it("moves snow down and neon sparkle up", function()
+		-- The emitter's EmissionDirection is set from this motion in applyEnabled. Snow falls
+		-- (Bottom), sparkle rises (Top). The live direction is read on Client under Play.
+		local snow = Weather.motion(Themes.winter.weather.kind)
+		local sparkle = Weather.motion(Themes.neon.weather.kind)
+		expect(snow ~= nil and snow.falls).toBe(true)
+		expect(sparkle ~= nil and sparkle.falls).toBe(false)
 	end)
 end)
