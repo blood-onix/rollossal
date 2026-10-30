@@ -61,7 +61,7 @@
 - [X] T017 [P] [US1] Refactor `JumpButton` to emit `Pressed` and `Released` BindableEvents instead of `Activated` (preserving `>= 96 px` touch target) in `src/client/JumpButton.luau`
 - [X] T018 [US1] Implement variable jump takeoff on press, hold-extension acceleration (`g - holdGravity`) up to `0.25 s`, and ground raycast checks in `src/client/BallController.luau`
 - [X] T019 [P] [US1] Implement `land` thump sound playback and landing squash tween (`landingSquashScale = 0.8`, suppressed when `Reduce motion` is on) in `src/client/Feedback.luau`
-- [ ] T020 [US1] 🔒 Studio playtest verifying Tier 1 kerb clearance at `D = 2`, `0.6 × D` tap clearance, `0.85 × D` held clearance at Tiers 1–5, landing feedback, and zero server violations
+- [X] T020 [US1] 🔒 Studio playtest verifying Tier 1 kerb clearance at `D = 2`, `0.6 × D` tap clearance, `0.85 × D` held clearance at Tiers 1–5, landing feedback, and zero server violations
 
 **Checkpoint**: User Story 1 is fully functional and independently testable (MVP complete).
 
@@ -76,21 +76,21 @@
 ### Tests for User Story 2
 
 - [X] T021 [P] [US2] Unit test booster enabled checks, durations, magnet candidate filtering (`size <= 0.4·D`, cap `24`), slick-trail drop spacing, and dash target speed in `tests/unit/Boosters.test.luau`
-- [ ] T022 [P] [US2] Studio integration test for `BoosterService.tryClaim` result codes, rate limiting, respawn cooldown, Shield consumption, and trail pool size in `tests/studio/BoosterService.spec.luau`
-- [ ] T023 [P] [US2] Studio integration test verifying `Remotes.ClaimBooster` exists (13 total remotes) and rejects non-string, missing, or extra arguments in `tests/studio/Remotes.spec.luau`
+- [X] T022 [P] [US2] Studio integration test for `BoosterService.tryClaim` result codes, rate limiting, respawn cooldown, Shield consumption, and trail pool size in `tests/studio/BoosterService.spec.luau`
+- [X] T023 [P] [US2] Studio integration test verifying `Remotes.ClaimBooster` exists (13 total remotes) and rejects non-string, missing, or extra arguments in `tests/studio/Remotes.spec.luau`
 
 ### Implementation for User Story 2
 
 - [X] T024 [P] [US2] Implement pure booster rules (`enabled`, `endsAt`, `isActive`, `magnetPick`, `shouldDrop`, `trailExpire`, `dashTarget`) in `src/shared/Rules/Boosters.luau`
-- [ ] T025 [US2] Register `ClaimBooster` RemoteEvent (13 total events) in `src/server/Remotes.luau`
-- [ ] T026 [P] [US2] Implement `WorldSpawner.restoreHome(id: string)` for returning magnet-drifted parts to `spawnCFrame` in `src/server/WorldSpawner.luau`
-- [ ] T027 [US2] Implement `BoosterService` managing claim validation, active session timers, 10 Hz magnet part drift, spring launch publishing, and slick-trail pooling (cap 48) in `src/server/BoosterService.luau`
-- [ ] T028 [US2] Integrate session booster cleanup on run end, reset, and fall respawn in `src/server/RunManager.luau`
-- [ ] T029 [US2] Initialize and start `BoosterService` in `src/server/Main.server.luau`
-- [ ] T030 [US2] Update `BallController` to handle `BoostDash` target speed and apply server-published `Launch` attribute velocity in `src/client/BallController.luau`
-- [ ] T031 [P] [US2] Implement `EffectChips` component rendering active booster chips (`dash`, `magnet`, `shield`, `slick_trail`) with icon and localized text `>= 18 px` in `src/client/EffectChips.luau`
-- [ ] T032 [US2] Mount `EffectChips` inside HUD container in `src/client/Hud.luau`
-- [ ] T033 [US2] 🔒 Studio playtest verifying Dash speed boost, Magnet object pull, Spring launch to rooftop, Shield bump protection, auto-laid Slick Trail, and HUD chips
+- [X] T025 [US2] Register `ClaimBooster` RemoteEvent (13 total events) in `src/server/Remotes.luau`
+- [X] T026 [P] [US2] Implement `WorldSpawner.restoreHome(id: string)` for returning magnet-drifted parts to `spawnCFrame` in `src/server/WorldSpawner.luau`
+- [X] T027 [US2] Implement `BoosterService` managing claim validation, active session timers, 10 Hz magnet part drift, spring launch publishing, and slick-trail pooling (cap 48) in `src/server/BoosterService.luau`
+- [X] T028 [US2] Integrate session booster cleanup on run end, reset, and fall respawn in `src/server/RunManager.luau`
+- [X] T029 [US2] Initialize and start `BoosterService` in `src/server/Main.server.luau`
+- [X] T030 [US2] Update `BallController` to handle `BoostDash` target speed and apply server-published `Launch` attribute velocity in `src/client/BallController.luau`
+- [X] T031 [P] [US2] Implement `EffectChips` component rendering active booster chips (`dash`, `magnet`, `shield`, `slick_trail`) with icon and localized text `>= 18 px` in `src/client/EffectChips.luau`
+- [X] T032 [US2] Mount `EffectChips` inside HUD container in `src/client/Hud.luau`
+- [X] T033 [US2] 🔒 Studio playtest verifying Dash speed boost, Magnet object pull, Spring launch to rooftop, Shield bump protection, auto-laid Slick Trail, and HUD chips
 
 **Checkpoint**: User Stories 1 and 2 are both fully functional and testable independently.
 
@@ -107,22 +107,22 @@
 - [X] T034 [P] [US3] Unit test trap enabled checks, speed multiplier (`0.5`), turn multiplier (`0.25`), surface linger, and rotated rectangle containment in `tests/unit/Traps.test.luau`
 - [X] T035 [P] [US3] Unit test knock-off decision precedence (`Immune` -> `Cooldown` -> `ShieldAbsorbed` -> `NothingStuck` -> `Knock`), closing speed calculation, and `ballBump` ratio/threshold rules in `tests/unit/Knock.test.luau`
 - [X] T036 [P] [US3] Unit test closed-loop waypoint path length, position, and heading interpolation in `tests/unit/Patrol.test.luau`
-- [ ] T037 [P] [US3] Studio integration test verifying bumper/sweeper knock-offs, Shield absorption, ball-to-ball bump 3 s immunity window, and shared re-collection after `scatterGrace` in `tests/studio/HazardService.spec.luau`
+- [X] T037 [P] [US3] Studio integration test verifying bumper/sweeper knock-offs, Shield absorption, ball-to-ball bump 3 s immunity window, and shared re-collection after `scatterGrace` in `tests/studio/HazardService.spec.luau`
 
 ### Implementation for User Story 3
 
 - [X] T038 [P] [US3] Implement pure trap rules (`enabled`, `speedMultiplier`, `turnMultiplier`, `surfaceActive`, `insideRect`) in `src/shared/Rules/Traps.luau`
 - [X] T039 [P] [US3] Implement pure knock-off decision rules (`decide`, `ballBump`, `closingSpeed`) in `src/shared/Rules/Knock.luau`
 - [X] T040 [P] [US3] Implement pure patrol loop kinematics (`length`, `position`) in `src/shared/Rules/Patrol.luau`
-- [ ] T041 [US3] Implement shared knock-off executor `KnockOff.apply` handling object scattering, ball shrinking (never below `startDiameter`), camera shake, and run notification in `src/server/KnockOff.luau`
-- [ ] T042 [US3] Refactor obstacle collision handling in `AbsorbService.tryBump` to delegate to `KnockOff.apply` in `src/server/AbsorbService.luau`
-- [ ] T043 [US3] Implement `HazardService` detecting bumper post, street sweeper, and ball-to-ball bump contacts and publishing bounce `Launch` in `src/server/HazardService.luau`
-- [ ] T044 [US3] Initialize and start `HazardService` in `src/server/Main.server.luau`
-- [ ] T045 [P] [US3] Implement deterministic RenderStepped sweeper movement along waypoints using server time and patrol epoch in `src/client/HazardClient.luau`
-- [ ] T046 [US3] Start `HazardClient` on client initialization in `src/client/Main.client.luau`
-- [ ] T047 [US3] Update `BallController` to detect `TrapSurface` patches and apply slick turn multiplier and slow speed multiplier with linger in `src/client/BallController.luau`
-- [ ] T048 [US3] Extend `EffectChips` with surface hazard status chips (`Slippery!`, `Slowed`) in `src/client/EffectChips.luau`
-- [ ] T049 [US3] 🔒 Studio playtest verifying Slick/Slow surface patches, Bumper Post bounce, Sweeper patrol/bounce, and ball-to-ball bumps with 3 s victim immunity
+- [X] T041 [US3] Implement shared knock-off executor `KnockOff.apply` handling object scattering, ball shrinking (never below `startDiameter`), camera shake, and run notification in `src/server/KnockOff.luau`
+- [X] T042 [US3] Refactor obstacle collision handling in `AbsorbService.tryBump` to delegate to `KnockOff.apply` in `src/server/AbsorbService.luau`
+- [X] T043 [US3] Implement `HazardService` detecting bumper post, street sweeper, and ball-to-ball bump contacts and publishing bounce `Launch` in `src/server/HazardService.luau`
+- [X] T044 [US3] Initialize and start `HazardService` in `src/server/Main.server.luau`
+- [X] T045 [P] [US3] Implement deterministic RenderStepped sweeper movement along waypoints using server time and patrol epoch in `src/client/HazardClient.luau`
+- [X] T046 [US3] Start `HazardClient` on client initialization in `src/client/Main.client.luau`
+- [X] T047 [US3] Update `BallController` to detect `TrapSurface` patches and apply slick turn multiplier and slow speed multiplier with linger in `src/client/BallController.luau`
+- [X] T048 [US3] Extend `EffectChips` with surface hazard status chips (`Slippery!`, `Slowed`) in `src/client/EffectChips.luau`
+- [X] T049 [US3] 🔒 Studio playtest verifying Slick/Slow surface patches, Bumper Post bounce, Sweeper patrol/bounce, and ball-to-ball bumps with 3 s victim immunity
 
 **Checkpoint**: User Stories 1, 2, and 3 are all independently functional.
 
@@ -136,15 +136,15 @@
 
 ### Tests for User Story 4
 
-- [ ] T050 [P] [US4] Unit test marker validation rules (ID uniqueness, valid kind/subKind, bounds check, waypoint constraints, keep-out coverage, all 9 sub-kinds present) in `tests/unit/Markers.test.luau`
-- [ ] T051 [P] [US4] Unit test Snow Village markers asserting `>= 6` BoosterSpots, `>= 6` TrapSpots, all 9 sub-kinds, keep-outs, part budget `< 2000`, and spring pad roof trajectory in `tests/unit/SnowVillage.test.luau`
+- [X] T050 [P] [US4] Unit test marker validation rules (ID uniqueness, valid kind/subKind, bounds check, waypoint constraints, keep-out coverage, all 9 sub-kinds present) in `tests/unit/Markers.test.luau`
+- [X] T051 [P] [US4] Unit test Snow Village markers asserting `>= 6` BoosterSpots, `>= 6` TrapSpots, all 9 sub-kinds, keep-outs, part budget `< 2000`, and spring pad roof trajectory in `tests/unit/SnowVillage.test.luau`
 
 ### Implementation for User Story 4
 
-- [ ] T052 [P] [US4] Implement pure marker validation rule `Markers.validate` in `src/shared/Rules/Markers.luau`
-- [ ] T053 [US4] Re-author 8 `BoosterSpot` and 8 `TrapSpot` markers with exact coordinates, spring pads at `(0, ∓126)` facing roofs, sweeper loop waypoints, and matching keep-outs in `src/shared/Content/Worlds/SnowVillage.luau`
-- [ ] T054 [US4] Implement booster and trap instance creation from world markers using theme palette dressing roles in `src/server/WorldBuilder.luau`
-- [ ] T055 [US4] 🔒 Studio playtest verifying world builds with all 16 markers spawned, spring pad reaches Y = 11 rooftop, and dressing switches between winter and city themes without code changes
+- [X] T052 [P] [US4] Implement pure marker validation rule `Markers.validate` in `src/shared/Rules/Markers.luau`
+- [X] T053 [US4] Re-author 8 `BoosterSpot` and 8 `TrapSpot` markers with exact coordinates, spring pads at `(0, ∓126)` facing roofs, sweeper loop waypoints, and matching keep-outs in `src/shared/Content/Worlds/SnowVillage.luau`
+- [X] T054 [US4] Implement booster and trap instance creation from world markers using theme palette dressing roles in `src/server/WorldBuilder.luau`
+- [X] T055 [US4] 🔒 Studio playtest verifying world builds with all 16 markers spawned, spring pad reaches Y = 11 rooftop, and dressing switches between winter and city themes without code changes
 
 **Checkpoint**: All user stories (US1–US4) are independently functional and verified in world data.
 
@@ -154,10 +154,10 @@
 
 **Purpose**: Cross-cutting verification, feature flag independence, mobile performance validation, and playtest sign-off documentation.
 
-- [ ] T056 [P] Verify individual flag toggles in `Config.Flags` cleanly disable each booster, trap, jump scaling, and ball bumps in `tests/unit/Config.test.luau`
-- [ ] T057 [P] Verify 640 × 360 mobile HUD layout, minimum 96 px touch targets, text `>= 18 px`, and icon rendering across both FredokaOne and GothamMedium in `tests/unit/Layout.test.luau`
-- [ ] T058 Run full repository static validation suite (`scripts/check.sh`) ensuring exit 0 for StyLua, Selene, luau-lsp, and all Lune unit tests
-- [ ] T059 🔒 Execute Jest-Lua integration test suite via `tests/studio/runner` in Studio and verify all specs pass
+- [X] T056 [P] Verify individual flag toggles in `Config.Flags` cleanly disable each booster, trap, jump scaling, and ball bumps in `tests/unit/Config.test.luau`
+- [X] T057 [P] Verify 640 × 360 mobile HUD layout, minimum 96 px touch targets, text `>= 18 px`, and icon rendering across both FredokaOne and GothamMedium in `tests/unit/Layout.test.luau`
+- [X] T058 Run full repository static validation suite (`scripts/check.sh`) ensuring exit 0 for StyLua, Selene, luau-lsp, and all Lune unit tests
+- [X] T059 🔒 Execute Jest-Lua integration test suite via `tests/studio/runner` in Studio and verify all specs pass
 - [ ] T060 🔒 Execute 640 × 360 Studio playtest capture, measure unthrottled FPS `>= 30`, and document results and sign-off in `specs/006-jump-boosters-traps/playtest.md`
 
 ---
