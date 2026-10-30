@@ -10,10 +10,11 @@ local Assets = {
 		tierUnlock = "rbxasset://sounds/button.wav",
 		bump = "rbxasset://sounds/snap.mp3",
 		bell = "rbxasset://sounds/bass.wav",
-		-- The looping winter music (musicWinter used to be named music). "" means no track is picked:
-		-- nothing plays, rather than a placeholder that would be annoying on a loop. The other themes
-		-- have no track yet: the game stays silent instead of reusing the winter one.
-		musicWinter = "rbxassetid://80565841497538",
+		-- The looping theme music (musicWinter used to be named music). "" means no track is picked:
+		-- nothing plays, rather than a placeholder that would be annoying on a loop. Winter and city
+		-- each have their own track; the other themes have none yet and stay silent instead of
+		-- reusing one.
+		musicWinter = "rbxassetid://114423108310478",
 		musicCity = "rbxassetid://80565841497538",
 		musicSpring = "",
 		musicAutumn = "",
