@@ -10,6 +10,7 @@ local Hud = require(script.Parent.Hud)
 local ResultsUi = require(script.Parent.ResultsUi)
 local HubUi = require(script.Parent.HubUi)
 local Feedback = require(script.Parent.Feedback)
+local WeatherController = require(script.Parent.WeatherController)
 local FpsReadout = require(script.Parent.FpsReadout)
 
 local Shared = game:GetService("ReplicatedStorage"):WaitForChild("Shared")
@@ -24,6 +25,9 @@ Hud.start()
 ResultsUi.start()
 HubUi.start()
 Feedback.start()
+-- 005: the ReduceMotion attribute is followed inside WeatherController (GetAttributeChangedSignal on
+-- the LocalPlayer), so the emitter obeys the saved setting and the engine's reduced-motion setting.
+WeatherController.start()
 FpsReadout.start()
 
 if Config.Flags.Saving then

@@ -18,6 +18,21 @@ export type PageSummary = {
 	rewardNameKey: string?,
 	rewardEarned: boolean,
 	entries: { BookEntry },
+	-- Theme pages only (005, contracts/theme-content.md §4): nil on tier pages.
+	themeId: string?,
+	isActive: boolean?,
+	returningKey: string?,
+}
+
+-- A theme page as it travels into the Book: metadata plus the bookIds the page lists, in display
+-- order. Callers that hold object ids convert them to bookIds first (BookUi reads
+-- Worlds.themeBookPages, whose `objects` are already resolved in objectIds order).
+export type ThemePageDef = {
+	id: string,
+	nameKey: string,
+	returningKey: string,
+	themeId: string,
+	objectIds: { string },
 }
 
 local Book = {}
@@ -83,6 +98,80 @@ function Book.pages(
 		table.insert(pages, summarize(tier, objects, book, skinsOwned))
 	end
 	return pages
+end
+
+-- A returning label must never create FOMO (data-model.md §5, Principle V): no countdown wording in
+-- the key it names. Localized text is checked in tests/unit/Strings.test (both languages).
+local returningForbidden = { "limited", "left", "ends", "hurry" }
+
+local function validateReturningKey(key: string, pageId: string): string
+	if string.match(key, "%d+:%d+") ~= nil then
+		error(`Book: theme page {pageId} returningKey {key} looks like a timer`, 2)
+	end
+	local lowered = string.lower(key)
+	for _, word in returningForbidden do
+		if string.find(lowered, word, 1, true) ~= nil then
+			error(`Book: theme page {pageId} returningKey {key} says {word}`, 2)
+		end
+	end
+	return key
+end
+
+function Book.themePages(
+	pages: { ThemePageDef },
+	objects: { BookObject },
+	book: { [string]: boolean },
+	activeThemeId: string?
+): { PageSummary }
+	-- bookId -> object; theme pages pick their entries in objectIds order.
+	local byBookId: { [string]: BookObject } = {}
+	for _, object in objects do
+		byBookId[object.bookId] = object
+	end
+	local themePages: { PageSummary } = {}
+	for _, page in pages do
+		local entries: { BookEntry } = {}
+		local collected = 0
+		for _, bookId in page.objectIds do
+			local object = byBookId[bookId]
+			if object == nil then
+				error(`Book: theme page {page.id} lists unknown bookId {bookId}`, 2)
+			end
+			local isDiscovered = book[object.bookId] == true
+			if isDiscovered then
+				collected += 1
+			end
+			table.insert(entries, {
+				bookId = object.bookId,
+				nameKey = object.nameKey,
+				icon = object.icon,
+				isDiscovered = isDiscovered,
+			})
+		end
+		local total = #entries
+		local isActive = page.themeId == activeThemeId
+		table.insert(
+			themePages,
+			{
+				tier = 0,
+				nameKey = page.nameKey,
+				collectedCount = collected,
+				totalCount = total,
+				isComplete = total > 0 and collected == total,
+				rewardId = nil,
+				rewardType = nil,
+				rewardNameKey = nil,
+				rewardEarned = false,
+				entries = entries,
+				themeId = page.themeId,
+				isActive = isActive,
+				returningKey = if not isActive
+					then validateReturningKey(page.returningKey, page.id)
+					else nil,
+			} :: any
+		)
+	end
+	return themePages
 end
 
 function Book.completedRewardIds(

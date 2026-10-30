@@ -31,6 +31,9 @@ export type ObjectDef = {
 	fallback: string?,
 	-- Grey level 0..255 of the stand-in. Absent means the colour comes from the tier.
 	shade: number?,
+	-- Palette cell name (a w-* role): the stand-in part takes its Color from theme.palette[role]
+	-- (005). Absent means the tier colour.
+	role: string?,
 }
 export type HubDef = {
 	center: { x: number, z: number },
@@ -88,6 +91,48 @@ export type LightingDef = {
 	atmosphereColor: { number },
 	atmosphereDecay: { number },
 }
+
+-- Theme additions (005, specs/005-theme-art-pipeline/data-model.md §3).
+
+-- A hero variant copies one base object: only the mesh (assetKey), shown name and — for art only — the
+-- declared size change. Gameplay always keeps the base size, tier, coins and bookId.
+export type HeroVariantDef = { assetKey: string, nameKey: string?, size: number? }
+
+-- A book page for one theme the world supports. The page lists the binding's theme-only objects in
+-- `objects` order; progress reuses the existing profile.book map (no schema change).
+export type ThemeBookPage = {
+	id: string,
+	nameKey: string,
+	returningKey: string,
+	-- RewardDef for 006a; unused and never granted in 005.
+	reward: RewardDef?,
+	objectIds: { string },
+}
+
+-- The per-world binding of one theme: where that theme's objects stand (slots), which extra objects it
+-- adds (overlays, theme-only objects), which base objects change (heroVariants) and its book page.
+export type ThemeBinding = {
+	-- slot id ("slot.small" … "slot.landmark") -> object id; every slot id the world's zones and fixed
+	-- placements use must be mapped here, and the object's tier must equal the slot's tier.
+	slots: { [string]: string },
+	overlays: { zones: { ZoneDef }, fixedPlacements: { PlacementSeed } },
+	heroVariants: { [string]: HeroVariantDef },
+	-- Theme-only ObjectDefs (slot and overlay objects not in the base kit); optional when every mapped
+	-- object is a base kit object.
+	objects: { ObjectDef }?,
+	bookPage: ThemeBookPage?,
+}
+
+-- Axis-aligned keep-out rectangle: centre x, z with full extents w, d. Overlays may not overlap one.
+export type KeepOutDef = {
+	id: string,
+	kind: "gate" | "shortcut" | "sightline" | "marker",
+	x: number,
+	z: number,
+	w: number,
+	d: number,
+}
+
 export type WorldDef = {
 	worldId: string,
 	starThresholds: { number }?,
@@ -102,6 +147,13 @@ export type WorldDef = {
 	environment: EnvironmentDef,
 	hub: HubDef,
 	lighting: LightingDef?,
+	-- Theme additions. activeThemeId nil (or absent) keeps the pre-005 behaviour: no slots, no overlays,
+	-- no theme palette or lighting.
+	activeThemeId: string?,
+	supportedThemes: { string }?,
+	themeBindings: { [string]: ThemeBinding }?,
+	keepOutAreas: { KeepOutDef }?,
+	maxPlacements: number?,
 }
 -- The room's own fields plus every WorldDef field (spelled out: an intersection would stop the data table
 -- below from being checked against its type while it is written).
@@ -125,6 +177,11 @@ export type Room = {
 	spawnSlots: number,
 	tiers: { TierDef },
 	cubes: { CubeSpawn },
+	activeThemeId: string?,
+	supportedThemes: { string }?,
+	themeBindings: { [string]: ThemeBinding }?,
+	keepOutAreas: { KeepOutDef }?,
+	maxPlacements: number?,
 }
 
 local GreyBoxRoom: Room = {

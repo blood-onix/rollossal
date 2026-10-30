@@ -1,0 +1,11 @@
+{
+  "verdict": "complete",
+  "remaining": [],
+  "summary": "No agent-doable work remains: check.sh exits 0 with 351 Lune tests passing and tasks.md is unchanged, but four human items stay open (unthrottled fps and Book layout for T041/T042, and an unverified Blender negative-test case).",
+  "completion": {
+    "source": "merge",
+    "at": "2026-10-30T11:15:13.561Z",
+    "by": "Roman_Tikhonov <bloodonix@gmail.com>",
+    "rounds": 4
+  }
+}

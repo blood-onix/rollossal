@@ -35,6 +35,12 @@ luau-lsp analyze \
   --ignore="**/Packages/**" --ignore="**/ServerPackages/**" --ignore="**/DevPackages/**" \
   src tests/studio
 
+step "Design tokens in sync"
+python3 scripts/design-tokens.py --check
+
+step "Atlas determinism"
+python3 art/scripts/palette.py --check
+
 step "Lune unit tests"
 lune run tests/unit/run
 
