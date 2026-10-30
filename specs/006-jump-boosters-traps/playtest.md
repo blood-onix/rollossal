@@ -92,7 +92,7 @@ each way, so the render cost is a little above the 640 x 360 case). The 640 x 36
 above. Sweepers and the HUD were live in every run; the Magnet pull was live for 5 s (B) and 11 s (C). Emulator
 fps is a desktop GPU, not a phone, so on-device fps is still not measured.
 
-The owner's keep-Studio-in-front request is met; the remaining T060 item is the sign-off.
+The owner's keep-Studio-in-front request is met, and the owner's SC-004 sign-off is recorded (2026-10-30, T060).
 
 ## Jest (T059)
 
