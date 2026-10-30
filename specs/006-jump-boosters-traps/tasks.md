@@ -162,6 +162,12 @@
 
 ---
 
+## Phase 8: Convergence
+
+- [ ] T061 🔒 Re-sync Studio with the 5 uncommitted files (Rojo connect; restart Play so a running playtest keeps old code), re-run the Jest-Lua suite to cover the updated `BoosterService` 3D claim range, `Rules/Jump.holdActive`, and `BallController` (139 → 140 tests), and update the Jest/Lune test counts and post-change notes in `specs/006-jump-boosters-traps/playtest.md` (T059 rerun, partial)
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
