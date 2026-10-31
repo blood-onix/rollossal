@@ -1,45 +1,31 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T001 Regenerate art/scripts/budgets.json including the Downtown objects so ArtManifest.test passes",
-    "T012 Fix Downtown zone and placement data: zone dt_z_door_01_b names slot.small, placement coordinates mismatch zone math, one core object is not placed in both themes",
-    "T013 Fix Downtown marker data: golden spot 5 sits on a block or another marker; gates must have no base placement standing in them",
-    "T014 Tune growthK and zone placement counts in Downtown.luau until Pace.test passes in both winter and city",
-    "T019 Fix winter theme binding: heroVariant bookId must stay the base hero's bookId, overlays must clear keepOutAreas and not overlap base zones, slot dressing counts must hit 148",
-    "T015 Run Studio grey-box playtest across 12 spawn slots, capture screens, and draft playtest.md",
-    "T023 Run Studio theme playtest proving winter dressing and the data-only switch to city and back",
-    "T024 Add --world downtown mode to art/scripts/build_objects.py",
-    "T025 Model and export blender wave A, 18 Tier 1 core meshes with a triangle budget of 500",
-    "T026 Model and export blender wave B, 15 Tier 2 core meshes with a triangle budget of 700",
-    "T027 Model and export blender wave C, 16 Tier 3 core meshes with a triangle budget of 1500",
-    "T028 Model and export blender wave D, 16 Tier 4 core meshes with a triangle budget of 3500",
-    "T029 Model and export blender wave E, 9 Tier 5 core meshes with a triangle budget of 5000",
-    "T030 Model and export blender wave F, 20 Holiday City meshes including the wire-frame reindeer and bowed tower",
-    "T031 Model and export blender wave G, 5 Sunny City slot meshes",
-    "T034 Run the 12-ball 640x360 performance playtest in Holiday City via Studio MCP and sample fps for 60 s",
-    "T035 Lock the per-tier triangle budgets in Config.luau and draft the final metrics in playtest.md",
-    "T036 Validate the Downtown=false rollback to Snow Village and GreyBoxRoom",
-    "T037 Audit all unit and studio test suites for a 100% pass rate",
-    "T038 Run scripts/check.sh end to end and fix whatever blocks exit code 0",
-    "T039 Run the quickstart.md validation steps end to end"
+    "T014 Fix the one failing Downtown winter pace window (slots 2/3 reach D 30 at ~137 s vs 145-185 s): implement the decisive lever (theme-scoped growthK override) and re-tune until Pace.test passes in both themes",
+    "T015 Run the Studio grey-box playtest: quadrant bot runs with D 5/12/30/80 times, sightline/shortcut/kerb/Car-Park-ramp checks, screen captures into specs/007-downtown-holiday-city/captures/, and finalize playtest.md",
+    "T023 Run the Studio theme playtest: winter dressing (tree, stalls, rink, snowfall, music, book page) and the data-only switch to city and back with a clean console",
+    "T034 Run the 12-ball Holiday City performance capture at 640x360 via Studio MCP: sample fps for 60 s, judge unthrottled seconds, verify parts < 2,000",
+    "T037 Audit all unit and studio test suites for a 100% pass rate after the pace fix (Jest-Lua needs LoadStringEnabled on in the dev place)",
+    "T038 Run scripts/check.sh end to end and confirm exit code 0",
+    "T039 Run the quickstart.md validation steps end to end and finalize the agent-run sections of specs/007-downtown-holiday-city/playtest.md"
   ],
   "human": [
     {
-      "item": "T016 Owner plays the grey-box build and signs off in specs/007-downtown-holiday-city/playtest.md",
-      "reason": "Requires the owner to play the game on Roblox and record a personal sign-off; an agent cannot play as the owner or approve on their behalf"
+      "item": "T016 Owner plays the grey-box build and signs off on layout, pacing and sightlines in playtest.md",
+      "reason": "An owner-only personal playtest and sign-off; the agent cannot play as the owner or approve on their behalf"
     },
     {
-      "item": "T032 Owner imports exported FBX meshes into Studio via the 3D Importer and supplies numeric asset IDs",
-      "reason": "Studio's 3D Importer is a GUI-only flow that requires a person to operate Studio, and the resulting asset IDs are owner-supplied"
+      "item": "T032 Owner imports the 99 exported FBX meshes into Studio via the 3D Importer and supplies numeric asset IDs",
+      "reason": "Studio's 3D Importer is a GUI-only flow and the asset IDs are owner-supplied; the FBX files themselves are ready in art/export/"
     },
     {
       "item": "T033 Record uploaded mesh asset IDs in src/shared/Assets.luau",
-      "reason": "Blocked until the owner completes the T032 FBX upload and provides the asset IDs to record"
+      "reason": "Blocked until the owner completes T032 and provides the asset IDs"
     },
     {
-      "item": "T035 Owner approval of the final 30 fps lock",
-      "reason": "The agent can capture and lock budgets, but the final performance sign-off recorded in playtest.md is an owner-only approval"
+      "item": "T035 Record final performance metrics and the owner approval of the 30 fps lock in playtest.md",
+      "reason": "Triangle budgets are already locked in Config.luau and the capture is T034, but the recorded owner approval of the lock can only come from the owner"
     }
   ],
-  "summary": "All spec scope has owning tasks already present in tasks.md, but 12 unit tests fail, no Downtown art exists, and no playtest evidence was recorded, so the feature is incomplete with 21 agent-doable tasks remaining and only owner-only items deferred."
+  "summary": "All 99 meshes, both theme bindings, the data layout and the triangle lock verified done since round 1, but the single failing winter D 30 pace window blocks check.sh exit 0 and every Studio playtest, capture and owner sign-off is still pending, leaving 7 agent-doable and 4 owner-only tasks."
 }
