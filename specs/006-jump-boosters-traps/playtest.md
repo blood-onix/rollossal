@@ -103,3 +103,21 @@ T061 rerun (2026-10-30): Studio was in Play, so Play was stopped. The sync probe
 gave 149 of 149 in 11 suites (the task's 139 -> 140 estimate was low). `lune run tests/unit/run`: 429 passed,
 0 failed, which covers the changed `Rules/Jump.holdActive`.
 `ThemeSwitch.spec` already expected 6 beach towels in city; the fixed towel makes 7, so the spec now says so.
+
+## Big-ball booster claim (2026-10-31)
+
+Studio probe: 86 files, no mismatches. Jest: 150 of 150 in 11 suites (`BoosterService.spec` 16 of 16, including
+"accepts a big ball rolling on the ground at the client's trigger distance").
+
+Play, one real run, ball resized on the server (`BallService.setDiameter` plus `physicalDiameter` and `Size`, from a
+throwaway Script that was removed afterwards) and driven on the client at the speed cap toward a marker. Each claim
+went through `Boosters.inClaimReach` on the client and the server, and the server hid the pickup (`Taken` true):
+
+| D  | marker           | closest flat distance | claimed |
+|----|------------------|-----------------------|---------|
+| 30 | booster-dash-1   | 14.8                  | yes     |
+| 50 | booster-dash-2   | 25.1                  | yes     |
+| 70 | booster-magnet-1 | 35.3                  | yes     |
+
+No `OutOfRange` or other claim error reached the console. The one `Vertical violation` line came from the resize
+itself popping the ball upward, not from the claim.
