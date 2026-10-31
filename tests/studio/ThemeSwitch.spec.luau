@@ -135,7 +135,8 @@ describe("Worlds.forTheme: winter to city (data-only switch)", function()
 	it("swaps the overlay: winter lights in winter, beach towels in city, never both", function()
 		expect(overlayCount(winter, "winter_lights")).toBe(OVERLAY_COUNT)
 		expect(overlayCount(winter, "beach_towel")).toBe(0)
-		expect(overlayCount(city, "beach_towel")).toBe(OVERLAY_COUNT)
+		-- Six from the overlay zone, plus the one fixed towel the city theme places by hand.
+		expect(overlayCount(city, "beach_towel")).toBe(OVERLAY_COUNT + 1)
 		expect(overlayCount(city, "winter_lights")).toBe(0)
 	end)
 

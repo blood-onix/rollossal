@@ -292,4 +292,46 @@ test(
 	end
 )
 
+-- Feature 006 keys (contracts/content-and-config.md §Strings), written out by hand.
+local mechanicsKeys = {
+	"ui.fx.dash",
+	"ui.fx.magnet",
+	"ui.fx.shield",
+	"ui.fx.slick_trail",
+	"ui.fx.slick",
+	"ui.fx.slow",
+	"world.booster.dash",
+	"world.booster.magnet",
+	"world.booster.spring",
+	"world.booster.shield",
+	"world.booster.slick_trail",
+	"world.trap.slick.winter",
+	"world.trap.slick.city",
+	"world.trap.bumper.winter",
+	"world.trap.bumper.city",
+	"world.trap.slow.winter",
+	"world.trap.slow.city",
+	"world.trap.sweeper.winter",
+	"world.trap.sweeper.city",
+}
+
+test("Strings: every 006 booster, trap and chip key has English and Spanish text", function()
+	expect.equal(#mechanicsKeys, 19)
+	local restricted = { "buy", "limited", "robux", "price", "comprar", "limitad" }
+	for _, key in mechanicsKeys do
+		local entry = (Strings :: { [string]: { en: string, es: string? } })[key]
+		if entry == nil then
+			error(`missing key {key}`)
+		end
+		expect.truthy(#entry.en > 0)
+		if entry.es == nil or #entry.es == 0 then
+			error(`missing Spanish text for {key}`)
+		end
+		for _, word in restricted do
+			expect.falsy(string.find(string.lower(entry.en), word, 1, true))
+			expect.falsy(string.find(string.lower(entry.es), word, 1, true))
+		end
+	end
+end)
+
 return {}

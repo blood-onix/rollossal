@@ -23,6 +23,15 @@ local Icons: { [string]: string } = {
 	-- "✕" is blank in FredokaOne and a box in GothamMedium; "✔" renders dark grey on the dark panels.
 	close = "❌",
 	check = "✅",
+	-- Feature 006 placeholder glyphs; emoji render in both fonts. Checked in a Studio capture (T060).
+	dash = "⚡",
+	magnet = "🧲",
+	spring = "🦘",
+	shield = "🛡",
+	slick = "🧊",
+	slow = "🐌",
+	bumper = "🔴",
+	sweeper = "🧹",
 }
 
 return Icons

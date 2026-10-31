@@ -73,7 +73,16 @@ export type BlockDef = {
 	size: { x: number, y: number, z: number },
 	swatch: string,
 }
-export type MarkerDef = { kind: string, x: number, y: number, z: number }
+export type MarkerDef = {
+	id: string,
+	kind: string,
+	subKind: string,
+	x: number,
+	y: number,
+	z: number,
+	yaw: number,
+	waypoints: { { x: number, z: number } }?,
+}
 export type EnvironmentDef = {
 	palette: { [string]: { number } },
 	blocks: { BlockDef },

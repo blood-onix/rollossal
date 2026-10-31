@@ -1,6 +1,6 @@
 --!strict
--- Creates ReplicatedStorage.Remotes with the twelve RemoteEvents from the contracts/remotes.md files of 001 (three),
--- 002 (six) and 003 (three).
+-- Creates ReplicatedStorage.Remotes with the thirteen RemoteEvents from the contracts/remotes.md files of 001 (three),
+-- 002 (six), 003 (three) and 006 (one).
 -- Required by Main.server before any player joins; idempotent if the folder already exists.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -44,6 +44,8 @@ local Remotes = {
 	UpdateSettings = getOrCreateEvent(folder, "UpdateSettings"),
 	RequestProfile = getOrCreateEvent(folder, "RequestProfile"),
 	ProfileSync = getOrCreateEvent(folder, "ProfileSync"),
+	-- Mechanics pass (specs/006-jump-boosters-traps/contracts/runtime-api.md): one intent, a marker id string.
+	ClaimBooster = getOrCreateEvent(folder, "ClaimBooster"),
 }
 
 return Remotes

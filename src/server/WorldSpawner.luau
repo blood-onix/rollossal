@@ -178,6 +178,43 @@ function WorldSpawner.returnToSpawn(object: PooledWorldObject)
 	object.part.CFrame = object.spawnCFrame
 end
 
+-- Puts a pooled part back at its spawn point and touches no state (the Magnet release, 006 R-08). An object that
+-- is not Available (taken, or scattered elsewhere on purpose) stays where it is.
+function WorldSpawner.restoreHome(id: string)
+	local object = registry[id]
+	if object and object.state == "Available" then
+		object.part.CFrame = object.spawnCFrame
+	end
+end
+
+export type Candidate = {
+	id: string,
+	pos: { x: number, y: number, z: number },
+	size: number,
+	available: boolean,
+}
+
+-- Objects within `radius` studs (flat) of a point, for the Magnet scan. `available` is true when the object
+-- can be absorbed right now: Available and past its scatter grace.
+function WorldSpawner.candidatesNear(position: Vector3, radius: number, now: number): { Candidate }
+	local found: { Candidate } = {}
+	local limit = radius * radius
+	for _, object in objectList do
+		local at = object.part.Position
+		local dx, dz = at.X - position.X, at.Z - position.Z
+		if dx * dx + dz * dz <= limit then
+			table.insert(found, {
+				id = object.id,
+				pos = { x = at.X, y = at.Y, z = at.Z },
+				size = object.size,
+				available = object.state == "Available"
+					and (object.availableAt == nil or now >= object.availableAt),
+			})
+		end
+	end
+	return found
+end
+
 -- Ring of evenly spaced points around centre, clamped inside the town. y is left at 0.
 function WorldSpawner.scatterSpots(
 	centre: Vector3,

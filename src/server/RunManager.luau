@@ -301,6 +301,8 @@ local function endRun(run: RunSession, now: number)
 	local finalDiameter = Config.startDiameter
 	if session then
 		BallService.setFrozen(session, true)
+		-- Boosters, shield and bump immunity end with the run (006 data-model "State summary").
+		BallService.clearEffects(session)
 		finalDiameter = session.authoritativeDiameter
 	end
 	writeAttributes(run, now)

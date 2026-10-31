@@ -15,6 +15,7 @@ local Localizer = require(Shared.Localization.Localizer)
 local RunClock = require(Shared.Rules.RunClock)
 local Tiers = require(Shared.Rules.Tiers)
 local Worlds = require(Shared.Worlds)
+local EffectChips = require(script.Parent.EffectChips)
 local RunClient = require(script.Parent.RunClient)
 local UiKit = require(script.Parent.UiKit)
 
@@ -47,6 +48,9 @@ local POP_TOP = BANNER_TOP + BANNER_HEIGHT + 8
 local BUMP_WIDTH = 140
 local BUMP_HEIGHT = 32
 local BUMP_Y = 0.78
+-- Effect chips stack on the left, below the size meter (which ends at y 112).
+local CHIPS_LEFT = METER_MARGIN
+local CHIPS_TOP = 120
 
 local Hud = {}
 
@@ -187,6 +191,14 @@ function Hud.start()
 	local bump =
 		message("BumpFlash", BUMP_WIDTH, BUMP_HEIGHT, UDim2.fromScale(0.5, BUMP_Y), 0.5, nil)
 
+	local chipHost = Instance.new("Frame")
+	chipHost.Name = "EffectChips"
+	chipHost.BackgroundTransparency = 1
+	chipHost.Position = UDim2.fromOffset(CHIPS_LEFT, 0)
+	chipHost.Size = UDim2.fromScale(0.4, 1)
+	chipHost.Parent = root
+	local chips = EffectChips.create(chipHost, CHIPS_TOP)
+
 	local function diameter(): number
 		local value = ball:GetAttribute("Diameter")
 		return if typeof(value) == "number" then value else 0
@@ -307,6 +319,7 @@ function Hud.start()
 	RunService.RenderStepped:Connect(function()
 		if root.Visible then
 			renderTimer()
+			chips.update()
 		end
 	end)
 	refresh()

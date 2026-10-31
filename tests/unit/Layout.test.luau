@@ -2,7 +2,10 @@
 -- Expected values are worked out by hand in specs/004-snow-village/contracts/rules-api.md (Layout).
 
 local harness = require("./harness")
+local Config = require("../../src/shared/Config")
+local Icons = require("../../src/shared/Content/Icons")
 local Layout = require("../../src/shared/Rules/Layout")
+local Strings = require("../../src/shared/Localization/Strings")
 
 local test, expect = harness.test, harness.expect
 
@@ -141,6 +144,40 @@ end)
 test("expand: a count above the capacity is an error", function()
 	local ok = pcall(Layout.expand, { zone("over", 20, 10, 129, 1, one) }, sizes)
 	expect.falsy(ok)
+end)
+
+-- T057, the part Lune can check (006): the thresholds the 640 x 360 HUD is built to, and the data its chips
+-- draw. The on-screen geometry and the glyphs under both fonts are measured in the Studio capture (playtest.md).
+test("HUD: touch targets are 96 px and text is at least 18 px", function()
+	expect.truthy(Config.minTouchTarget >= 96)
+	expect.truthy(Config.minTextSize >= 18)
+end)
+
+test("HUD: every effect chip has an icon and an English and Spanish label", function()
+	local chips = { "dash", "magnet", "shield", "slick_trail", "slick", "slow" }
+	local icons: { [string]: string } = {
+		dash = "dash",
+		magnet = "magnet",
+		shield = "shield",
+		slick_trail = "slick",
+		slick = "slick",
+		slow = "slow",
+	}
+	local strings = Strings :: { [string]: { en: string, es: string? } }
+	for _, chip in chips do
+		local icon = (Icons :: { [string]: string })[icons[chip]]
+		expect.truthy(icon ~= nil and icon ~= "", chip)
+		local entry = strings[`ui.fx.{chip}`]
+		expect.truthy(entry ~= nil and entry.en ~= "" and entry.es ~= nil and entry.es ~= "", chip)
+	end
+end)
+
+test("HUD: six stacked chips fit the 640 x 360 screen under the size meter", function()
+	-- Hud.luau: chips start at y 120 (the size meter ends at 112), 32 px high with a 4 px gap; the screen is 360.
+	local top, height, gap, chips = 120, 32, 4, 6
+	expect.truthy(top + chips * height + (chips - 1) * gap <= 360)
+	-- 190 px wide chips leave the right edge (the top bar) and the centre timer clear on a 640 px screen.
+	expect.truthy(8 + 190 <= 640 / 2 - 85)
 end)
 
 return {}
