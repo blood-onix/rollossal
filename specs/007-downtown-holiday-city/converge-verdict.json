@@ -22,5 +22,5 @@
       "reason": "Final captures and sign-off need the owner and the uploaded meshes from T032; the MCP cannot save capture files or resize the viewport to 640x360"
     }
   ],
-  "summary": "Round 8 finds no new gaps — scripts/check.sh exits 0 with 481 unit tests passing and no code-side violations of the spec, plan, or constitution — so tasks.md is unchanged and only the two agent-runnable Studio tasks (T015, T039) plus the four owner-gated tasks (T016, T032, T033, T035) remain."
+  "summary": "Round 8 re-verified the converged state — scripts/check.sh exits 0 with 481 unit tests passing and the Studio sync probe matches all 88 repo scripts, with no code-side gaps beyond the already-tracked open tasks T015/T039 (agent) and T016/T032/T033/T035 (owner-gated) — so tasks.md is unchanged."
 }
