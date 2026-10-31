@@ -82,6 +82,18 @@ Studio synced (8 key scripts match), Play, `winter`. The ball started at a doors
 - Not done: the full driven run with jump input to D 5/12/30/80 (needs a steering loop plus timed Space presses over a 240 s run),
   shortcut traversal, Car Park climb in play, and capture files. T015 and T039 stay open.
 
+## Round 6: velocity-steered bot with real Space presses (T015, still open)
+Studio synced (8 key scripts match), Play, `winter`, spawn slot at about (-250, -135). Client Heartbeat bot steers horizontally only (Y velocity
+left to the game) toward the nearest absorbable cube; jumps are real `user_keyboard_input` Space presses every 1.1 s (`VirtualInputManager`
+is not callable from `execute_luau`: lacks RobloxScript capability).
+- First pickup at 0.08 s. D 2.2 at 11 s, then D 2.0 and the ball at the same spot (-249.9, 2.8, -135.9) at 58 s: it hops in place at the
+  doorstep. The nearest small cubes (`dt_z_door_01_a_008`, 2.3 studs; `_003`, 3.3 studs) are not reachable in a straight line, so the
+  straight-line steering never leaves the doorstep. D 5/12/30/80 times not measured; no 240 s run completed.
+- The bot, not the build, is the limit: it has no path-finding. T015 needs a driver with obstacle avoidance (or `character_navigation`),
+  plus a way to save captures. Shortcut traversal and captures not done.
+- T035: the budgets `{ 500, 700, 1500, 3500, 5000 }` are in `src/shared/Config.luau` (`Budgets.meshTriangles`). Its other part (owner sign-off,
+  final captures) needs the owner and the uploaded meshes (T032/T033). T039 depends on T015 and the owner. All three stay open.
+
 ## Not yet done
 - T015 bot run with jumping, sightline and shortcut checks, captures; T039 follows it.
 - Owner items: T016, T032, T033, T035.

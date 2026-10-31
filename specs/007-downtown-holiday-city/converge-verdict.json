@@ -1,9 +1,9 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T015: Studio grey-box playtest via MCP - 240 s driven bot run with real jump input across a spawn per side, measure D 5/12/30/80 times, shortcut and Car Park climb checks, captures, and draft results in playtest.md",
-    "T035: lock per-tier triangle budgets in Config.luau (already { 500, 700, 1500, 3500, 5000 }) and record final performance metrics and captures in playtest.md",
-    "T039: run quickstart.md validation steps end-to-end and finalize all sections in playtest.md"
+    "T015: Studio grey-box playtest via MCP - driven bot run with real jump input across spawn slots, measure D 5/12/30/80 times, shortcut and Car Park climb checks, captures, and finalize results in playtest.md (bot needs obstacle avoidance; previous rounds stalled at the doorstep)",
+    "T035: triangle budgets { 500, 700, 1500, 3500, 5000 } already locked in src/shared/Config.luau; agent records final performance metrics in playtest.md (captures and owner approval parts are human)",
+    "T039: run quickstart.md validation steps end-to-end and finalize all sections in specs/007-downtown-holiday-city/playtest.md"
   ],
   "human": [
     {
@@ -11,13 +11,13 @@
       "reason": "Requires the human owner to play the game and approve; cannot be done by the agent"
     },
     {
-      "item": "T032 human owner hand-off: import exported FBX meshes into Studio via 3D Importer and supply numeric asset IDs",
-      "reason": "Studio 3D Importer upload is a manual owner step; the agent has no upload path for FBX meshes"
+      "item": "T032 owner hand-off: import exported FBX meshes into Studio via 3D Importer and supply numeric asset IDs",
+      "reason": "Studio 3D Importer upload is a manual owner step; the agent has no FBX upload path"
     },
     {
       "item": "T033 record uploaded mesh asset IDs in src/shared/Assets.luau",
       "reason": "Blocked until T032 supplies the owner-uploaded asset IDs"
     }
   ],
-  "summary": "All code-related tasks are implemented and scripts/check.sh exits 0 with 481 unit tests; what remains is one agent-run Studio playtest (T015) plus follow-up recording tasks (T035, T039) and three owner-only steps (T016, T032, T033), so no new convergence tasks were appended to tasks.md."
+  "summary": "No new findings: scripts/check.sh exits 0 with all unit tests passing, spot checks confirm pure-data Downtown, theme bindings, fog/snowfall/clockTime 16.5, pigeons wired, and 99 exported meshes, so round 6 appends nothing to tasks.md and only the six open tasks remain (three agent-run via Studio MCP, three owner-only)."
 }
