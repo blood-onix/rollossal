@@ -75,6 +75,13 @@ Studio synced (Downtown 48,855 bytes), Play, `winter`, client bot (velocity stee
 - T015 and T039 stay open. Needs a better driver (use the game's own jump input via `user_keyboard_input` Space, not velocity writes) and a way to
   save captures (`screen_capture` returns the image only).
 
+## Round 5: real jump input (T015, still open)
+Studio synced (8 key scripts match), Play, `winter`. The ball started at a doorstep (y 1.63, stuck behind a kerb).
+- `user_keyboard_input` Space held 300 ms: ball apex y 3.96 (rise of about 2.3 studs), so the game's own jump input works and clears a
+  1.2-stud kerb. This replaces the velocity-write bot of round 4 as the driver.
+- Not done: the full driven run with jump input to D 5/12/30/80 (needs a steering loop plus timed Space presses over a 240 s run),
+  shortcut traversal, Car Park climb in play, and capture files. T015 and T039 stay open.
+
 ## Not yet done
 - T015 bot run with jumping, sightline and shortcut checks, captures; T039 follows it.
 - Owner items: T016, T032, T033, T035.

@@ -1,26 +1,23 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T015 Finish the Studio grey-box playtest: driven bot with jump input (D 5/12/30/80 per spawn), alley and storm-drain shortcut traversal, Car Park ramp climb, and finalize the agent sections of specs/007-downtown-holiday-city/playtest.md",
-    "T039 Run the quickstart.md validation steps end-to-end and finalize all agent-run sections of specs/007-downtown-holiday-city/playtest.md"
+    "T015: Studio grey-box playtest via MCP - 240 s driven bot run with real jump input across a spawn per side, measure D 5/12/30/80 times, shortcut and Car Park climb checks, captures, and draft results in playtest.md",
+    "T035: lock per-tier triangle budgets in Config.luau (already { 500, 700, 1500, 3500, 5000 }) and record final performance metrics and captures in playtest.md",
+    "T039: run quickstart.md validation steps end-to-end and finalize all sections in playtest.md"
   ],
   "human": [
     {
-      "item": "T016 Owner plays the grey-box build and signs off on layout, pacing and sightlines in playtest.md",
-      "reason": "An owner-only personal playtest and sign-off; the agent cannot play as the owner or approve on their behalf"
+      "item": "T016 owner plays grey-box build and signs off on layout, pacing, and sightlines in playtest.md",
+      "reason": "Requires the human owner to play the game and approve; cannot be done by the agent"
     },
     {
-      "item": "T032 Owner imports the 99 exported FBX meshes into Studio via 3D Importer and supplies numeric asset IDs",
-      "reason": "Studio's 3D Importer is a GUI-only owner flow and the asset IDs are owner-supplied; the FBX files are ready in art/export/"
+      "item": "T032 human owner hand-off: import exported FBX meshes into Studio via 3D Importer and supply numeric asset IDs",
+      "reason": "Studio 3D Importer upload is a manual owner step; the agent has no upload path for FBX meshes"
     },
     {
-      "item": "T033 Record uploaded mesh asset IDs in src/shared/Assets.luau and verify atlas UVs",
-      "reason": "Blocked until the owner completes T032 and provides the asset IDs (no dt_ entries exist yet)"
-    },
-    {
-      "item": "T035 Record the owner approval of the 30 fps / triangle lock in playtest.md",
-      "reason": "Triangle budgets are locked in Config.luau and the T034 metrics are recorded, but the approval line can only come from the owner; capture files also cannot be saved to captures/ by the Studio MCP"
+      "item": "T033 record uploaded mesh asset IDs in src/shared/Assets.luau",
+      "reason": "Blocked until T032 supplies the owner-uploaded asset IDs"
     }
   ],
-  "summary": "Round 4 found no new gaps: T040 (storm-drain tunnel) is verified fixed with check.sh exiting 0 at 481 tests, tasks.md needs no new tasks, and the feature is incomplete only through agent work T015/T039 and owner-only items T016/T032/T033/T035."
+  "summary": "All code-related tasks are implemented and scripts/check.sh exits 0 with 481 unit tests; what remains is one agent-run Studio playtest (T015) plus follow-up recording tasks (T035, T039) and three owner-only steps (T016, T032, T033), so no new convergence tasks were appended to tasks.md."
 }
