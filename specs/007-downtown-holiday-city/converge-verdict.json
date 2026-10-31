@@ -1,8 +1,8 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T015: Studio grey-box playtest — agent-side items still open after rounds 4-8: a bot with path memory reaching D 12/30/80 across the 12 spawn slots and shortcut/Car Park climb traversal in Play (runnable through Studio MCP; screen_capture can return images but cannot save files into captures/, so that sub-item is limited)",
-    "T039: run quickstart.md validation steps end-to-end and finalize all sections in specs/007-downtown-holiday-city/playtest.md (agent-side steps largely done in rounds 2-8; finalization depends on T015)"
+    "T015: Studio grey-box playtest — agent-side items still open after rounds 4-9: a bot with obstacle routing reaching D 12/30/80 across the 12 spawn slots and shortcut/Car Park climb traversal in Play (runnable through Studio MCP; screen_capture cannot save files into captures/, so captures are limited to returned images)",
+    "T039: run quickstart.md validation steps end-to-end and finalize all sections in specs/007-downtown-holiday-city/playtest.md (agent-side steps largely done in rounds 2-9; finalization depends on T015)"
   ],
   "human": [
     {
@@ -22,5 +22,5 @@
       "reason": "Final captures and sign-off need the owner and the uploaded meshes from T032; the MCP cannot save capture files or resize the viewport to 640x360"
     }
   ],
-  "summary": "Round 8 re-verified the converged state — scripts/check.sh exits 0 with 481 unit tests passing and the Studio sync probe matches all 88 repo scripts, with no code-side gaps beyond the already-tracked open tasks T015/T039 (agent) and T016/T032/T033/T035 (owner-gated) — so tasks.md is unchanged."
+  "summary": "Round 9 re-verified the converged state — scripts/check.sh exits 0 (481 unit tests), the Studio sync probe matches all 88 repo scripts, and no new code-side gaps were found — so tasks.md is unchanged and the open items remain T015/T039 (agent) and the owner-gated T016/T032/T033/T035."
 }

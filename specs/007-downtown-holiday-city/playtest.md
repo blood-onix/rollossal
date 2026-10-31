@@ -117,6 +117,14 @@ Recorded geometry (kerbs, Car Park ramps, tunnel sphere cast), sightlines, part 
 - T015 and T039 stay unchecked: a bot with path memory (D 12/30/80 timings across 12 spawns, shortcut and ramp traversal in Play) and capture
   files are still missing. Owner items unchanged: T016, T032, T033, T035.
 
+## Round 9: path-memory bot (T015, T039 still open)
+Studio synced (8 key scripts match), Play, spawn at about (-250, -134). Client Heartbeat bot with a visited-cell penalty (6-stud cells), a 20 s
+block list for targets it could not reach, 13 raycast headings and a random wander after 2.5 s without movement. No Space presses.
+- D 2.7 at 10 s, 4.8 at 30 s, 5.6 at 60 s (best), 5.1 at 90 s, 5.0 at 120 s, 4.4 at 150 s, 4.3 at 160 s (run stopped there). D fell after 60 s,
+  so something shrank or reset the ball (not diagnosed: hazards or knock-off are the likely cause, no console check this round).
+- D 12, 30 and 80 were not reached; only one of the 12 spawn slots was driven. Parts under `World`: 1,508 (under 1,890).
+- Result: a bot with path memory still stalls near D 5, and the MCP cannot save captures. T015 and T039 stay unchecked.
+
 ## Open items
 - T015: a bot that reaches D 12/30/80 (path memory or `character_navigation`-style routing), shortcut and Car Park play checks, captures.
 - T039 depends on T015. Owner items: T016, T032, T033, T035 (captures, sign-off).
