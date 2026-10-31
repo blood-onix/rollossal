@@ -94,6 +94,22 @@ is not callable from `execute_luau`: lacks RobloxScript capability).
 - T035: the budgets `{ 500, 700, 1500, 3500, 5000 }` are in `src/shared/Config.luau` (`Budgets.meshTriangles`). Its other part (owner sign-off,
   final captures) needs the owner and the uploaded meshes (T032/T033). T039 depends on T015 and the owner. All three stay open.
 
-## Not yet done
-- T015 bot run with jumping, sightline and shortcut checks, captures; T039 follows it.
-- Owner items: T016, T032, T033, T035.
+## Round 7: obstacle-avoiding bot with real Space press (T015, still open)
+Studio synced (Downtown, Config, Themes, WorldBuilder, RunManager, Jump match), Play, `winter`, spawn at about (-250, -135). Client Heartbeat bot:
+horizontal velocity toward the nearest absorbable cube within 60 studs, 13 raycast headings (15 degree steps) for obstacle avoidance, a random
+wander after 3 s without 1.5 studs of movement; one real `user_keyboard_input` Space press at the start.
+- The bot left the doorstep (the earlier rounds stalled there): first growth past D 2.5 at 1.5 s, D 4.3 at 8 s, D 4.9 at about 70 s.
+- D 5 at 87.2 s; D 5.6 at about 250 s (240 s run ended, Play was still running the bot). D 12, 30 and 80 were **not reached**. The bot
+  shuttles between nearby cubes and walls (nearest-cube choice has no memory of blocked targets), so this is a bot limit, not evidence
+  about the pace windows, which the `Pace` model covers for all 12 spawns in both themes.
+- Parts under `World`: 1,508 (under 1,890). Console: only the known DataStore/ProfileStore and `rbxassetid://203785492` lines; no
+  `Displacement` or `Vertical violation` lines.
+- Not done: D 12/30/80 times, spawns other than slot at (-250, -135), shortcut traversal and Car Park climb in play, capture files
+  (`screen_capture` cannot save into `captures/`). Geometry for kerbs, Car Park and tunnel is recorded above from the built place.
+- T035 final metrics: the budgets `500 / 700 / 1,500 / 3,500 / 5,000` are locked in `Config.luau`; performance numbers are in Round 3
+  (59 to 60 fps, 1,566 parts at start). Captures, meshes (T032/T033) and owner sign-off remain with the owner.
+- T015, T035 and T039 stay open.
+
+## Open items
+- T015: a bot that reaches D 12/30/80 (path memory or `character_navigation`-style routing), shortcut and Car Park play checks, captures.
+- T039 depends on T015. Owner items: T016, T032, T033, T035 (captures, sign-off).

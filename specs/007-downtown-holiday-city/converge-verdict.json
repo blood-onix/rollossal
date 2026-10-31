@@ -1,23 +1,26 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T015: Studio grey-box playtest via MCP - driven bot run with real jump input across spawn slots, measure D 5/12/30/80 times, shortcut and Car Park climb checks, captures, and finalize results in playtest.md (bot needs obstacle avoidance; previous rounds stalled at the doorstep)",
-    "T035: triangle budgets { 500, 700, 1500, 3500, 5000 } already locked in src/shared/Config.luau; agent records final performance metrics in playtest.md (captures and owner approval parts are human)",
-    "T039: run quickstart.md validation steps end-to-end and finalize all sections in specs/007-downtown-holiday-city/playtest.md"
+    "T015: Studio grey-box playtest via MCP - driven bot run with real Space-jump input measuring D 5/12/30/80 across the 12 spawn slots, shortcut (alley/tunnel) traversal and Car Park ramp climb checks in Play; capture-file sub-item is limited (screen_capture returns the image only and cannot save into captures/)",
+    "T039: run quickstart.md validation steps end-to-end and finalize all sections in specs/007-downtown-holiday-city/playtest.md (agent-side steps largely done across rounds 2-7; finalization depends on T015)"
   ],
   "human": [
     {
-      "item": "T016 owner plays grey-box build and signs off on layout, pacing, and sightlines in playtest.md",
+      "item": "T016 owner plays the grey-box build and signs off on layout, pacing, and sightlines in playtest.md",
       "reason": "Requires the human owner to play the game and approve; cannot be done by the agent"
     },
     {
-      "item": "T032 owner hand-off: import exported FBX meshes into Studio via 3D Importer and supply numeric asset IDs",
-      "reason": "Studio 3D Importer upload is a manual owner step; the agent has no FBX upload path"
+      "item": "T035 record final performance captures and owner approval in playtest.md (budgets 500/700/1500/3500/5000 already locked in Config.luau and metrics recorded in rounds 3 and 7)",
+      "reason": "Final captures and sign-off need the owner and the uploaded meshes from T032; the MCP cannot save capture files or resize the viewport to 640x360"
+    },
+    {
+      "item": "T032 owner hand-off: import the 99 exported FBX meshes into Studio via 3D Importer and supply numeric asset IDs",
+      "reason": "Studio 3D Importer is a GUI-only owner step; the agent has no FBX upload path"
     },
     {
       "item": "T033 record uploaded mesh asset IDs in src/shared/Assets.luau",
       "reason": "Blocked until T032 supplies the owner-uploaded asset IDs"
     }
   ],
-  "summary": "No new findings: scripts/check.sh exits 0 with all unit tests passing, spot checks confirm pure-data Downtown, theme bindings, fog/snowfall/clockTime 16.5, pigeons wired, and 99 exported meshes, so round 6 appends nothing to tasks.md and only the six open tasks remain (three agent-run via Studio MCP, three owner-only)."
+  "summary": "Round 7 finds no new gaps: scripts/check.sh exits 0 with 481 unit tests passing, triangle budgets locked in Config.luau, the tunnel fix and both theme bindings verified, and 99 dt_ FBX exports present, so tasks.md is unchanged and only the two agent-runnable Studio tasks (T015, T039) plus four owner-gated tasks remain."
 }
