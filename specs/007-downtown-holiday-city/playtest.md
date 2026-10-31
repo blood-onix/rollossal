@@ -125,6 +125,20 @@ block list for targets it could not reach, 13 raycast headings and a random wand
 - D 12, 30 and 80 were not reached; only one of the 12 spawn slots was driven. Parts under `World`: 1,508 (under 1,890).
 - Result: a bot with path memory still stalls near D 5, and the MCP cannot save captures. T015 and T039 stay unchecked.
 
+## Round 10: final reconciliation (T015, T039 still open)
+`scripts/check.sh` passes. No new Studio run: rounds 4 to 9 showed that velocity-steered bots (with raycast avoidance, visited-cell memory and
+block lists) stall near D 5 on the winter spawn, and the MCP has no ball-routing driver or capture-to-file path. Nothing new was measured.
+- T015 stays open: D 12/30/80 across the 12 spawns, shortcut and Car Park climb in Play, capture files. T039 depends on it.
+- Needs the owner (T016, T032, T033, T035), or a human-played run to cover the D 12/30/80 timings.
+
+## Converge round 10: waypoint-spine bot and tunnel attempt (T015, T039 still open)
+`scripts/check.sh` passes (481 unit tests, all guards). Studio synced (88 scripts, `mismatches = {}`). Play, `winter`, spawn slot 1, fresh run.
+- **Run A (waypoint spine)**: a 34-waypoint route (doorstep → crumbs → fill_d → Park east → fill_a → Plaza west gate → Plaza → east gate → fill units → Market centre → Car Park climb), cube targeting filtered to absorbable sizes only (`Size <= 0.4 * Diameter`), fragments of shrink/teleport logging, real `Space` presses every ~1 s.
+  The ball left the doorstep, grew D 2.33 → 2.75 by t 13 s, then the sweeper knocked it twice (D shrank to 2.54 — `KnockOff` loses eaten stuck objects), and it drove the route to waypoint 11 of 34 (Park west edge, about (-137, -47)) with zero respawns, staying under D 2.75. Parts under `Workspace`: 1,598 with 1,374 cubes; console clean apart from the known DataStore/ProfileStore and `rbxassetid://203785492` Studio lines. D 5/12/30/80 were not reached: the physical bot eats at a fraction of the greedy-eater model the `Pace` ladder is solved with, confirming rounds 4-9.
+- **Run B (tunnel)**: pure-waypoint, no cube pull, 13-heading raycast dodging toward the storm-drain tunnel entry (-100, -30). The bot reached waypoint 7 (-112, -50) in 9.5 s — past the doorstep bands and the fill_e lane — then jammed against unmapped solid geometry at (-134, -81) for the rest of the run (velocity writes zeroed by contact; no tunnel entry).
+- After the 240 s run ends the ball anchors in place (matches earlier rounds) — reads after that measure the finished run, not live play.
+- Conclusion after nine bot attempts across rounds 4-10 plus these two: the Studio MCP has no ball routing (`character_navigation` drives characters, not balls), and `screen_capture` returns images only and cannot save into `captures/`. The D 12/30/80 timings, live shortcut and Car Park traversals, and capture files therefore need a human-played session; geometry (kerbs 1.2, ramps 2.0 rise, tunnel gap 4.6, sphere casts), sightlines (12/12), parts (< 1,890), console and the world-build checks all stand from rounds 3-10.
+
 ## Open items
-- T015: a bot that reaches D 12/30/80 (path memory or `character_navigation`-style routing), shortcut and Car Park play checks, captures.
+- T015: a human-played (or owner-supplied) run for the D 5/12/30/80 timings across the 12 spawns, live shortcut and Car Park climb, and capture files; all static geometry already verified in rounds 3-10.
 - T039 depends on T015. Owner items: T016, T032, T033, T035 (captures, sign-off).

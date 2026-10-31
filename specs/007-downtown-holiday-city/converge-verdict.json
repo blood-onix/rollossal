@@ -1,26 +1,31 @@
 {
   "verdict": "incomplete",
-  "remaining": [
-    "T015: Studio grey-box playtest — agent-side items still open after rounds 4-9: a bot with obstacle routing reaching D 12/30/80 across the 12 spawn slots and shortcut/Car Park climb traversal in Play (runnable through Studio MCP; screen_capture cannot save files into captures/, so captures are limited to returned images)",
-    "T039: run quickstart.md validation steps end-to-end and finalize all sections in specs/007-downtown-holiday-city/playtest.md (agent-side steps largely done in rounds 2-9; finalization depends on T015)"
-  ],
+  "remaining": [],
   "human": [
     {
-      "item": "T016 owner plays the grey-box build and signs off on layout, pacing, and sightlines in playtest.md",
-      "reason": "Requires the human owner to play the game and approve; cannot be done by the agent"
+      "item": "T015 Studio grey-box playtest final items: D 5/12/30/80 timings across the 12 spawns, live storm-drain/alley shortcut and Car Park ramp traversals, and capture files in captures/",
+      "reason": "Nine bot attempts across rounds 4-10 exhaustively tried velocity steering, raycast dodging, visited-cell memory, block lists, waypoint spines and real jump input; the best physical result stalled near D 2.5-5.6 (sweeper knock-offs shrink the ball) and the Studio MCP has no ball-routing driver (character_navigation drives characters, not balls) while screen_capture cannot save files, so the remaining runs need a human-played session. All static geometry (kerbs 1.2, ramps 2.0 rise, tunnel gap 4.6, sphere casts), sightlines 12/12, parts < 1,890 and console cleanliness are already verified and recorded in playtest.md"
+    },
+    {
+      "item": "T039 finalize all sections of specs/007-downtown-holiday-city/playtest.md after quickstart validation",
+      "reason": "Agent-side quickstart steps were run (check.sh, Studio probes, playtest attempts now logged through converge round 10), but finalization needs the T015 human-played timings and the owner's captures; nothing further can be written here"
+    },
+    {
+      "item": "T016 owner plays the grey-box build and signs off on layout, pacing and sightlines in playtest.md",
+      "reason": "Requires the human owner to play and approve; sign-off cannot be produced by the agent"
     },
     {
       "item": "T032 owner hand-off: import the 99 exported FBX meshes into Studio via 3D Importer and supply numeric asset IDs",
-      "reason": "Studio's 3D Importer is a GUI-only owner step; the agent has no FBX upload path"
+      "reason": "Studio's 3D Importer is a GUI-only owner step; the agent has no FBX upload path to Roblox"
     },
     {
       "item": "T033 record uploaded mesh asset IDs in src/shared/Assets.luau",
-      "reason": "Blocked until T032 supplies the owner-uploaded asset IDs; nothing to record yet"
+      "reason": "Blocked until T032 supplies owner-uploaded asset IDs; there is nothing to record yet"
     },
     {
-      "item": "T035 record final performance captures and owner approval in playtest.md (budgets 500/700/1500/3500/5000 already locked in Config.luau; metrics from rounds 3-7 stand)",
-      "reason": "Final captures and sign-off need the owner and the uploaded meshes from T032; the MCP cannot save capture files or resize the viewport to 640x360"
+      "item": "T035 record final performance captures, screen captures and owner approval in playtest.md (budgets 500/700/1500/3500/5000 already locked in Config.luau)",
+      "reason": "Needs the owner's approval, the uploaded meshes from T032/T033 and capture files the MCP cannot save; measured metrics (59-60 fps, < 2,000 parts) from rounds 3-7 stand"
     }
   ],
-  "summary": "Round 9 re-verified the converged state — scripts/check.sh exits 0 (481 unit tests), the Studio sync probe matches all 88 repo scripts, and no new code-side gaps were found — so tasks.md is unchanged and the open items remain T015/T039 (agent) and the owner-gated T016/T032/T033/T035."
+  "summary": "Round 10 re-verified the converged code state (check.sh exit 0 with 481 unit tests, sync probe 88/88 scripts, world plays at 1,598 parts with a clean console) and made the ninth and tenth documented bot attempts (waypoint spine reached waypoint 11 of 34 with sweeper knock-off shrinks; tunnel run jammed), so tasks.md is unchanged and the feature is incomplete only through human-gated items T015/T039 (plus owner-gated T016/T032/T033/T035)."
 }
