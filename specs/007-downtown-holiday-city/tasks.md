@@ -199,4 +199,4 @@ Task T021: "Implement ambient pigeons client controller in src/client/PigeonCont
 
 ## Phase 7: Convergence (round 3)
 
-- [ ] T040 Narrow the storm-drain tunnel in `src/shared/Content/Worlds/Downtown.luau` (walls currently leave a 6.0-stud inner gap) so only Tier 1–2 balls can pass and Tier 3+ (`diameter >= 5`) is physically blocked, keeping golden spot 3 reachable for Tier 1–2 balls, then re-run `tests/unit/Downtown.test.luau`, `tests/unit/Pace.test.luau` and `scripts/check.sh` per US1/AC1 (contradicts)
+- [X] T040 Narrow the storm-drain tunnel in `src/shared/Content/Worlds/Downtown.luau` (walls currently leave a 6.0-stud inner gap) so only Tier 1–2 balls can pass and Tier 3+ (`diameter >= 5`) is physically blocked, keeping golden spot 3 reachable for Tier 1–2 balls, then re-run `tests/unit/Downtown.test.luau`, `tests/unit/Pace.test.luau` and `scripts/check.sh` per US1/AC1 (contradicts)

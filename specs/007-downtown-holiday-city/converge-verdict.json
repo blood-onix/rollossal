@@ -1,8 +1,7 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T040 Narrow the storm-drain tunnel gap in src/shared/Content/Worlds/Downtown.luau to under 5 studs so Tier 3+ balls are physically blocked (US1/AC1), keeping golden spot 3 reachable, and re-run Downtown/Pace tests plus scripts/check.sh",
-    "T015 Finish the Studio grey-box playtest: driven bot with jumping (D 5/12/30/80 per spawn), shortcut traversal checks, what captures the MCP can produce, and finalize the agent sections of specs/007-downtown-holiday-city/playtest.md",
+    "T015 Finish the Studio grey-box playtest: driven bot with jump input (D 5/12/30/80 per spawn), alley and storm-drain shortcut traversal, Car Park ramp climb, and finalize the agent sections of specs/007-downtown-holiday-city/playtest.md",
     "T039 Run the quickstart.md validation steps end-to-end and finalize all agent-run sections of specs/007-downtown-holiday-city/playtest.md"
   ],
   "human": [
@@ -16,12 +15,12 @@
     },
     {
       "item": "T033 Record uploaded mesh asset IDs in src/shared/Assets.luau and verify atlas UVs",
-      "reason": "Blocked until the owner completes T032 and provides the asset IDs"
+      "reason": "Blocked until the owner completes T032 and provides the asset IDs (no dt_ entries exist yet)"
     },
     {
       "item": "T035 Record the owner approval of the 30 fps / triangle lock in playtest.md",
-      "reason": "Triangle budgets are locked in Config.luau and the T034 metrics are recorded, but the approval line can only come from the owner"
+      "reason": "Triangle budgets are locked in Config.luau and the T034 metrics are recorded, but the approval line can only come from the owner; capture files also cannot be saved to captures/ by the Studio MCP"
     }
   ],
-  "summary": "Round 3 verified check.sh exits 0 (T038), the Jest suites, the pace fix, the theme playtest and the 12-ball performance capture all confirm done, but a new contradicts finding (the 6.0-stud storm-drain gap lets Tier 3 balls through shortcuts) was appended as T040, and T015/T039 remain agent work while T016/T032/T033/T035 stay owner-only."
+  "summary": "Round 4 found no new gaps: T040 (storm-drain tunnel) is verified fixed with check.sh exiting 0 at 481 tests, tasks.md needs no new tasks, and the feature is incomplete only through agent work T015/T039 and owner-only items T016/T032/T033/T035."
 }

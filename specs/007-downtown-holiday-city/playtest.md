@@ -57,10 +57,23 @@ Studio synced (Downtown, Config, Themes, WorldBuilder byte sizes match), Play, `
   the earlier bot found.
 - **Car Park**: ramp slabs 2 studs thick at y 0 to 2, 2 to 4, 4 to 6 (decks 1 to 3); each rise is 2 studs. Held apex at D 2 is
   `max(0.85*2, 1.6*0.85/0.6)` = 2.27 studs (clears 2.0); a tap clears it from D 3.4. The ramps are stepped slabs, not inclined planes.
-- **Storm-drain tunnel**: walls at x -103.5 and -96.5, 1 stud thick, so the inner gap is 6.0 studs (a D 6 ball just fits or touches; the
-  spec wants D 6 kept out, so this is marginal; not changed).
+- **Storm-drain tunnel** (T040, fixed): the 6-stud chamber (z -8 to 8, walls at x -103.5 and -96.5) keeps golden spot 3's 6 x 6
+  footprint clear; each 6-stud mouth has walls at x -102.8 and -97.2, so the entrance gap is 4.6 studs. A D 5 or larger ball cannot enter;
+  Tier 1-2 (D < 5) can. `scripts/check.sh`: 481 passed, 0 failed.
+- **Tunnel sphere cast in Play (Server, 2026-10-31)**: a sphere swept along x = -100 from z -30 to 30 at ground level: D 4.5 clear
+  (passes the whole tunnel, so golden spot 3 is reachable); D 4.9, 5 and 6 hit a mouth wall at z -14 (blocked). Studio matched the repo
+  (sync probe: Downtown 48,855 bytes).
 - Not done: a driven bot with jumping (D 5/12/30/80 times), shortcut traversal, and capture files (`screen_capture` returns the image only
   and cannot save into `captures/`). T015 and T039 stay open.
+
+## Round 4: jumping bot attempt (T015, still open)
+Studio synced (Downtown 48,855 bytes), Play, `winter`, client bot (velocity steering toward the nearest absorbable cube, vertical kick when blocked).
+- First bot (kick whenever slow): first pickup at 0.9 s, D 4.6 by about 60 s, then no growth for 60 s. The ball hovered at y 5.5 to 6.2 over a
+  cube 0.08 studs away, with `AssemblyLinearVelocity.Y` about -8 but no change in position (bot artefact: it re-kicked every frame over the target).
+- Second bot (kick only when blocked and the target is farther than D): no growth in 60 s, ball still frozen mid-air at y about 5.5 to 6.2 with Heartbeat
+  running at 60 Hz. Not diagnosed; no `Displacement` or `Vertical violation` console lines. D 12/30/80 times were not measured.
+- T015 and T039 stay open. Needs a better driver (use the game's own jump input via `user_keyboard_input` Space, not velocity writes) and a way to
+  save captures (`screen_capture` returns the image only).
 
 ## Not yet done
 - T015 bot run with jumping, sightline and shortcut checks, captures; T039 follows it.
