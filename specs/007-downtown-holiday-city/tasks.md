@@ -47,7 +47,7 @@
 ### Tests for User Story 1
 
 - [X] T008 [P] [US1] Create unit test suite in `tests/unit/Downtown.test.luau` asserting invariants C1-C9, C14-C16, C18 (74 core objects, tier split 18/15/16/16/9, 14 heroes, object sizes `<= 0.4 * tier ceiling`, ascending coins, 12 spawns with `>= 40` Tier 1 placements within 10 studs, keep-outs, sightlines, and part budget `< 1,890`)
-- [ ] T009 [P] [US1] Extend `tests/unit/Pace.test.luau` to run deterministic greedy-eater simulations for Downtown across all 12 spawns asserting first pickup `<= 5 s`, Tier 2 at `30 ± 20 s`, Tier 3 at `90 ± 20 s`, Tier 4 at `165 ± 20 s`, and Tier 5 D `>= 80` by `240 s`
+- [X] T009 [P] [US1] Extend `tests/unit/Pace.test.luau` to run deterministic greedy-eater simulations for Downtown across all 12 spawns asserting first pickup `<= 5 s`, Tier 2 at `30 ± 20 s`, Tier 3 at `90 ± 20 s`, Tier 4 at `165 ± 20 s`, and Tier 5 D `>= 80` by `240 s`
 
 ### Implementation for User Story 1
 
@@ -55,7 +55,7 @@
 - [X] T011 [US1] Author static `environment.blocks` (`SmoothPlastic`, palette swatch roles, `<= 400` blocks) for ground, roads, kerbs (1.0–1.5 studs), Car Park spiral ramp and deck, Construction Site scaffold ramps, storm-drain tunnel, alley walls, Plaza fountain basin, and Waterfront promenade in `src/shared/Content/Worlds/Downtown.luau`
 - [X] T012 [US1] Author 12 doorstep `SpawnPoint`s, doorstep spawn zones (32 core T1 + 8 `slot.small` per doorstep), side-street sidewalk zones, and district placement zones totaling 1,245 base placements in `src/shared/Content/Worlds/Downtown.luau`
 - [X] T013 [US1] Author `environment.markers` (9-12 hazard markers, 5 seeded golden spots on static geometry) and `keepOutAreas` (6 gates, 5 shortcuts, 12 sightline corridors to Glass Tower and Ferris Wheel, marker footprints) in `src/shared/Content/Worlds/Downtown.luau`
-- [ ] T014 [US1] Tune `growthK` (starting at 1.5) and zone placement counts in `src/shared/Content/Worlds/Downtown.luau` until `tests/unit/Downtown.test.luau` and `tests/unit/Pace.test.luau` pass with exit code 0
+- [X] T014 [US1] Tune `growthK` (starting at 1.5) and zone placement counts in `src/shared/Content/Worlds/Downtown.luau` until `tests/unit/Downtown.test.luau` and `tests/unit/Pace.test.luau` pass with exit code 0
 - [ ] T015 [US1] 🔒 Run Studio grey-box playtest via MCP (claim: Studio) verifying 12-spawn bot runs, sightlines, shortcuts, jumping kerbs, Car Park ramp, part count `< 1,890`, capture screenshots in `specs/007-downtown-holiday-city/captures/`, and draft results in `specs/007-downtown-holiday-city/playtest.md`
 - [ ] T016 [US1] Human owner approval gate: Owner plays grey-box build and signs off on layout, pacing, and sightlines in `specs/007-downtown-holiday-city/playtest.md`
 
@@ -80,7 +80,7 @@
 - [X] T020 [P] [US2] Add complete English and Spanish translations for all 99 Downtown objects, 10 tier names and headlines, and 4 book page names and returning labels in `src/shared/Localization/Strings.luau`
 - [X] T021 [P] [US2] Implement ambient pigeons client controller in `src/client/PigeonController.luau` (`<= 8` per district, unabsorbable, fly-away on ball proximity `< 12` studs, respects `Reduce motion`), configure `ambient.pigeons` in `src/shared/Content/Worlds/Downtown.luau`, and wire controller into `src/client/Main.client.luau`
 - [X] T022 [US2] Update `tests/studio/ThemeSwitch.spec.luau` and `tests/studio/RunManager.spec.luau` to validate Downtown theme switching and run lifecycle in Studio
-- [ ] T023 [US2] 🔒 Run Studio theme playtest via MCP (claim: Studio) capturing Holiday City dressing (tree, stalls, rink, snowfall, music, book page) and proving data-only switch to `city` and back, recording findings in `specs/007-downtown-holiday-city/playtest.md`
+- [X] T023 [US2] 🔒 Run Studio theme playtest via MCP (claim: Studio) capturing Holiday City dressing (tree, stalls, rink, snowfall, music, book page) and proving data-only switch to `city` and back, recording findings in `specs/007-downtown-holiday-city/playtest.md`
 
 **Checkpoint**: At this point, User Stories 1 AND 2 work independently and seamlessly across both themes.
 
@@ -110,7 +110,7 @@
 
 ### Performance Validation & Budget Lock
 
-- [ ] T034 [US3] 🔒 Run 12-ball concurrent performance playtest in Holiday City at `640 × 360` via Studio MCP (claim: Studio), sample fps for 60 s, verify `>= 30 fps` unthrottled and parts `< 2,000`
+- [X] T034 [US3] 🔒 Run 12-ball concurrent performance playtest in Holiday City at `640 × 360` via Studio MCP (claim: Studio), sample fps for 60 s, verify `>= 30 fps` unthrottled and parts `< 2,000`
 - [ ] T035 [US3] Lock per-tier triangle budgets (`500 / 700 / 1,500 / 3,500 / 5,000`) in `src/shared/Config.luau` and record final performance metrics, screen captures, and owner approval in `specs/007-downtown-holiday-city/playtest.md`
 
 **Checkpoint**: All 3 user stories complete, asset catalogue integrated, and 30 fps mobile performance locked.
@@ -122,8 +122,8 @@
 **Purpose**: Improvements and safety validations that affect multiple user stories.
 
 - [X] T036 [P] Verify rollback safety by toggling `Config.Flags.Downtown = false` and validating Snow Village and GreyBoxRoom fallbacks in `tests/unit/Config.test.luau` and Studio
-- [ ] T037 [P] Audit all updated and new test suites under `tests/unit/` and `tests/studio/` ensuring 100% pass rate
-- [ ] T038 Execute full repository validation via `scripts/check.sh` ensuring formatting, linting, type-checking, and unit tests exit with code 0
+- [X] T037 [P] Audit all updated and new test suites under `tests/unit/` and `tests/studio/` ensuring 100% pass rate
+- [X] T038 Execute full repository validation via `scripts/check.sh` ensuring formatting, linting, type-checking, and unit tests exit with code 0
 - [ ] T039 Run `quickstart.md` validation steps end-to-end and finalize all sections in `specs/007-downtown-holiday-city/playtest.md`
 
 ---
@@ -194,3 +194,9 @@ Task T021: "Implement ambient pigeons client controller in src/client/PigeonCont
 3. User Story 2 → Holiday City (`winter`) and Sunny City (`city`) data switch, full translations, and ambient pigeons.
 4. User Story 3 → Wave-by-wave 3D mesh modelling in Blender, upload hand-offs, and 30 fps mobile lock.
 5. Polish → Rollback validation and repository-wide checks passing with exit code 0.
+
+---
+
+## Phase 7: Convergence (round 3)
+
+- [ ] T040 Narrow the storm-drain tunnel in `src/shared/Content/Worlds/Downtown.luau` (walls currently leave a 6.0-stud inner gap) so only Tier 1–2 balls can pass and Tier 3+ (`diameter >= 5`) is physically blocked, keeping golden spot 3 reachable for Tier 1–2 balls, then re-run `tests/unit/Downtown.test.luau`, `tests/unit/Pace.test.luau` and `scripts/check.sh` per US1/AC1 (contradicts)

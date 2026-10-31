@@ -1,13 +1,9 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T014 Fix the one failing Downtown winter pace window (slots 2/3 reach D 30 at ~137 s vs 145-185 s): implement the decisive lever (theme-scoped growthK override) and re-tune until Pace.test passes in both themes",
-    "T015 Run the Studio grey-box playtest: quadrant bot runs with D 5/12/30/80 times, sightline/shortcut/kerb/Car-Park-ramp checks, screen captures into specs/007-downtown-holiday-city/captures/, and finalize playtest.md",
-    "T023 Run the Studio theme playtest: winter dressing (tree, stalls, rink, snowfall, music, book page) and the data-only switch to city and back with a clean console",
-    "T034 Run the 12-ball Holiday City performance capture at 640x360 via Studio MCP: sample fps for 60 s, judge unthrottled seconds, verify parts < 2,000",
-    "T037 Audit all unit and studio test suites for a 100% pass rate after the pace fix (Jest-Lua needs LoadStringEnabled on in the dev place)",
-    "T038 Run scripts/check.sh end to end and confirm exit code 0",
-    "T039 Run the quickstart.md validation steps end to end and finalize the agent-run sections of specs/007-downtown-holiday-city/playtest.md"
+    "T040 Narrow the storm-drain tunnel gap in src/shared/Content/Worlds/Downtown.luau to under 5 studs so Tier 3+ balls are physically blocked (US1/AC1), keeping golden spot 3 reachable, and re-run Downtown/Pace tests plus scripts/check.sh",
+    "T015 Finish the Studio grey-box playtest: driven bot with jumping (D 5/12/30/80 per spawn), shortcut traversal checks, what captures the MCP can produce, and finalize the agent sections of specs/007-downtown-holiday-city/playtest.md",
+    "T039 Run the quickstart.md validation steps end-to-end and finalize all agent-run sections of specs/007-downtown-holiday-city/playtest.md"
   ],
   "human": [
     {
@@ -15,17 +11,17 @@
       "reason": "An owner-only personal playtest and sign-off; the agent cannot play as the owner or approve on their behalf"
     },
     {
-      "item": "T032 Owner imports the 99 exported FBX meshes into Studio via the 3D Importer and supplies numeric asset IDs",
-      "reason": "Studio's 3D Importer is a GUI-only flow and the asset IDs are owner-supplied; the FBX files themselves are ready in art/export/"
+      "item": "T032 Owner imports the 99 exported FBX meshes into Studio via 3D Importer and supplies numeric asset IDs",
+      "reason": "Studio's 3D Importer is a GUI-only owner flow and the asset IDs are owner-supplied; the FBX files are ready in art/export/"
     },
     {
-      "item": "T033 Record uploaded mesh asset IDs in src/shared/Assets.luau",
+      "item": "T033 Record uploaded mesh asset IDs in src/shared/Assets.luau and verify atlas UVs",
       "reason": "Blocked until the owner completes T032 and provides the asset IDs"
     },
     {
-      "item": "T035 Record final performance metrics and the owner approval of the 30 fps lock in playtest.md",
-      "reason": "Triangle budgets are already locked in Config.luau and the capture is T034, but the recorded owner approval of the lock can only come from the owner"
+      "item": "T035 Record the owner approval of the 30 fps / triangle lock in playtest.md",
+      "reason": "Triangle budgets are locked in Config.luau and the T034 metrics are recorded, but the approval line can only come from the owner"
     }
   ],
-  "summary": "All 99 meshes, both theme bindings, the data layout and the triangle lock verified done since round 1, but the single failing winter D 30 pace window blocks check.sh exit 0 and every Studio playtest, capture and owner sign-off is still pending, leaving 7 agent-doable and 4 owner-only tasks."
+  "summary": "Round 3 verified check.sh exits 0 (T038), the Jest suites, the pace fix, the theme playtest and the 12-ball performance capture all confirm done, but a new contradicts finding (the 6.0-stud storm-drain gap lets Tier 3 balls through shortcuts) was appended as T040, and T015/T039 remain agent work while T016/T032/T033/T035 stay owner-only."
 }
