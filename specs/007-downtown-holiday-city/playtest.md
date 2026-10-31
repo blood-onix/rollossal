@@ -110,6 +110,13 @@ wander after 3 s without 1.5 studs of movement; one real `user_keyboard_input` S
   (59 to 60 fps, 1,566 parts at start). Captures, meshes (T032/T033) and owner sign-off remain with the owner.
 - T015, T035 and T039 stay open.
 
+## Round 8: reconciliation (T015, T039 still open)
+`scripts/check.sh` passes (all checks). No new Studio driver run this round: rounds 4 to 7 showed that a no-memory bot cannot reach D 12/30/80,
+and no new routing tool exists (the MCP `character_navigation` drives characters, not the ball; `screen_capture` cannot save into `captures/`).
+Recorded geometry (kerbs, Car Park ramps, tunnel sphere cast), sightlines, part count (1,508 under 1,890) and console cleanliness stand.
+- T015 and T039 stay unchecked: a bot with path memory (D 12/30/80 timings across 12 spawns, shortcut and ramp traversal in Play) and capture
+  files are still missing. Owner items unchanged: T016, T032, T033, T035.
+
 ## Open items
 - T015: a bot that reaches D 12/30/80 (path memory or `character_navigation`-style routing), shortcut and Car Park play checks, captures.
 - T039 depends on T015. Owner items: T016, T032, T033, T035 (captures, sign-off).
