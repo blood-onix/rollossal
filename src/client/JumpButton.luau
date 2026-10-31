@@ -1,17 +1,22 @@
 --!strict
 -- Touch-only jump button. Meaning is carried by the up-arrow shape and its bottom-right position.
+-- Emits Pressed when a finger lands on it and Released when that same finger lifts, wherever it is by then,
+-- so a hold keeps the jump stretched and a drag off the button still ends it.
 
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 
 local JumpButton = {}
 
-function JumpButton.create(): BindableEvent?
+export type Events = { Pressed: BindableEvent, Released: BindableEvent }
+
+function JumpButton.create(): Events?
 	if not UserInputService.TouchEnabled then
 		return nil
 	end
 
-	local tapped = Instance.new("BindableEvent")
+	local pressed = Instance.new("BindableEvent")
+	local released = Instance.new("BindableEvent")
 
 	local gui = Instance.new("ScreenGui")
 	gui.Name = "JumpButtonGui"
@@ -33,13 +38,29 @@ function JumpButton.create(): BindableEvent?
 	corner.CornerRadius = UDim.new(0.5, 0)
 	corner.Parent = button
 
-	button.Activated:Connect(function()
-		tapped:Fire()
+	local activeInput: InputObject? = nil
+	button.InputBegan:Connect(function(input: InputObject)
+		if
+			activeInput == nil
+			and (
+				input.UserInputType == Enum.UserInputType.Touch
+				or input.UserInputType == Enum.UserInputType.MouseButton1
+			)
+		then
+			activeInput = input
+			pressed:Fire()
+		end
+	end)
+	UserInputService.InputEnded:Connect(function(input: InputObject)
+		if input == activeInput then
+			activeInput = nil
+			released:Fire()
+		end
 	end)
 
 	button.Parent = gui
 	gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
-	return tapped
+	return { Pressed = pressed, Released = released }
 end
 
 return JumpButton

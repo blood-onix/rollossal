@@ -9,7 +9,11 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
+local Config = require(Shared.Config)
+local Hazards = require(Shared.Content.Hazards)
+local Boosters = require(Shared.Rules.Boosters)
 local Layout = require(Shared.Rules.Layout)
+local Traps = require(Shared.Rules.Traps)
 local ObjectVisual = require(Shared.ObjectVisual)
 local Worlds = require(Shared.Worlds)
 
@@ -21,7 +25,11 @@ export type BuiltObject = { placement: Layout.Placement, part: BasePart }
 export type BuiltWorld = { objects: { BuiltObject }, geometryCount: number }
 
 local OBJECT_TAG = "WorldObject"
-local MARKER_SIZE = Vector3.new(2, 0.2, 2)
+local RING_HEIGHT = 0.4
+local PATCH_HEIGHT = 0.2
+local BUMPER_HEIGHT = 3
+local SWEEPER_HEIGHT = 3
+local FALLBACK_GREY = Color3.fromRGB(150, 150, 150)
 local HUB_FLOOR_THICKNESS = 1
 local PAD_THICKNESS = 0.2
 local ATMOSPHERE_NAME = "WorldAtmosphere"
@@ -97,21 +105,139 @@ local function buildGeometry(world: WorldDef, parent: Folder): number
 	return count
 end
 
-local function buildMarkers(world: WorldDef, parent: Folder)
-	for index, marker in world.environment.markers do
-		local part = staticPart(
-			`{marker.kind}_{index}`,
-			MARKER_SIZE,
-			CFrame.new(marker.x, marker.y + MARKER_SIZE.Y / 2, marker.z),
-			Color3.new(1, 1, 1)
-		)
-		part.Transparency = 1
-		part.CanCollide = false
-		part.CanTouch = false
-		part.CanQuery = false
-		CollectionService:AddTag(part, marker.kind)
-		part.Parent = parent
+local function dressingColour(world: WorldDef, row: HazardRow, themeId: string): Color3
+	local dressing = row.dressing[themeId]
+	local rgb = if dressing then world.environment.palette[dressing.colourRole] else nil
+	return if rgb then colour(rgb) else FALLBACK_GREY
+end
+
+type HazardRow = {
+	subKind: string,
+	footprint: { w: number, d: number },
+	dressing: { [string]: Hazards.Dressing },
+}
+
+local function findRow(isBooster: boolean, subKind: string): HazardRow?
+	if isBooster then
+		for _, row in Hazards.boosters do
+			if row.subKind == subKind then
+				return row
+			end
+		end
+	else
+		for _, row in Hazards.traps do
+			if row.subKind == subKind then
+				return row
+			end
+		end
 	end
+	return nil
+end
+
+local function markerPart(
+	name: string,
+	size: Vector3,
+	cframe: CFrame,
+	tint: Color3,
+	solid: boolean
+): Part
+	local part = staticPart(name, size, cframe, tint)
+	part.CanCollide = solid
+	part.CanTouch = false
+	part.CanQuery = solid
+	return part
+end
+
+-- Grey-box visuals for the booster and trap markers (006, research R-15): primitive parts coloured from the
+-- active theme's palette roles. A booster or trap whose flags are off is not built at all.
+local function buildMarkers(world: WorldDef, parent: Folder, themeId: string): number
+	local count = 0
+	local builtPatrol = Workspace:GetServerTimeNow()
+	for _, marker in world.environment.markers do
+		local yaw = CFrame.Angles(0, math.rad(marker.yaw), 0)
+		local isBooster = marker.kind == "BoosterSpot"
+		local row = findRow(isBooster, marker.subKind)
+		if row == nil then
+			error(`WorldBuilder: marker {marker.id} has unknown sub-kind {marker.subKind}`)
+		end
+		local live = if isBooster
+			then Boosters.enabled(Config.Flags, marker.subKind)
+			else Traps.enabled(Config.Flags, marker.subKind)
+		if not live then
+			continue
+		end
+		local tint = dressingColour(world, row, themeId)
+		local footprint = row.footprint
+		local part: Part
+		if isBooster then
+			-- A flat ring: a cylinder lying on its side, its axis pointing up.
+			part = markerPart(
+				marker.id,
+				Vector3.new(RING_HEIGHT, footprint.w, footprint.d),
+				CFrame.new(marker.x, marker.y + RING_HEIGHT / 2, marker.z)
+					* yaw
+					* CFrame.Angles(0, 0, math.pi / 2),
+				tint,
+				false
+			)
+			part.Shape = Enum.PartType.Cylinder
+			part:SetAttribute("SubKind", marker.subKind)
+			part:SetAttribute("Taken", false)
+			CollectionService:AddTag(part, "BoosterSpot")
+		elseif marker.subKind == "slick" or marker.subKind == "slow" then
+			part = markerPart(
+				marker.id,
+				Vector3.new(footprint.w, PATCH_HEIGHT, footprint.d),
+				CFrame.new(marker.x, marker.y + PATCH_HEIGHT / 2, marker.z) * yaw,
+				tint,
+				false
+			)
+			part:SetAttribute("Kind", marker.subKind)
+			part:SetAttribute("HalfX", footprint.w / 2)
+			part:SetAttribute("HalfZ", footprint.d / 2)
+			part:SetAttribute("Yaw", marker.yaw)
+			part:SetAttribute("OwnerUserId", 0)
+			CollectionService:AddTag(part, "TrapSurface")
+		elseif marker.subKind == "bumper" then
+			-- A cylinder's long axis is X, so the post stands up when rotated; its diameter is Size.Y and Z.
+			part = markerPart(
+				marker.id,
+				Vector3.new(BUMPER_HEIGHT, footprint.w, footprint.d),
+				CFrame.new(marker.x, marker.y + BUMPER_HEIGHT / 2, marker.z)
+					* CFrame.Angles(0, 0, math.pi / 2),
+				tint,
+				true
+			)
+			part.Shape = Enum.PartType.Cylinder
+			part:SetAttribute("Kind", "bumper")
+			part:SetAttribute("Radius", footprint.w / 2)
+			part:SetAttribute("Height", BUMPER_HEIGHT)
+			CollectionService:AddTag(part, "TrapHazard")
+		else
+			-- The sweeper: long side along its travel (local Z). Only the clients move it.
+			part = markerPart(
+				marker.id,
+				Vector3.new(footprint.d, SWEEPER_HEIGHT, footprint.w),
+				CFrame.new(marker.x, marker.y + SWEEPER_HEIGHT / 2, marker.z) * yaw,
+				tint,
+				true
+			)
+			part:SetAttribute("Kind", "sweeper")
+			part:SetAttribute("PatrolEpoch", builtPatrol)
+			part:SetAttribute("Speed", Config.sweeperSpeed)
+			local waypoints: { { x: number, z: number } } = marker.waypoints or {}
+			part:SetAttribute("WpCount", #waypoints)
+			for index, point in waypoints do
+				part:SetAttribute(`Wp{index}X`, point.x)
+				part:SetAttribute(`Wp{index}Z`, point.z)
+			end
+			CollectionService:AddTag(part, "TrapHazard")
+		end
+		part:SetAttribute("MarkerId", marker.id)
+		part.Parent = parent
+		count += 1
+	end
+	return count
 end
 
 local function buildHub(world: WorldDef, parent: Folder)
@@ -187,7 +313,11 @@ end
 
 -- Idempotent: a previous Workspace.World is destroyed first. Yields while meshes load, so call it once,
 -- before any ball exists.
-function WorldBuilder.start(world: WorldDef, placements: { Layout.Placement }): BuiltWorld
+function WorldBuilder.start(
+	world: WorldDef,
+	placements: { Layout.Placement },
+	themeId: string?
+): BuiltWorld
 	local existing = Workspace:FindFirstChild("World")
 	if existing then
 		existing:Destroy()
@@ -203,7 +333,7 @@ function WorldBuilder.start(world: WorldDef, placements: { Layout.Placement }): 
 
 	local geometryCount = buildGeometry(world, geometry)
 	buildHub(world, hub)
-	buildMarkers(world, markers)
+	local markerCount = buildMarkers(world, markers, themeId or world.activeThemeId or "winter")
 
 	local defs: { [string]: ObjectDef } = {}
 	for _, def in world.objects do
@@ -276,7 +406,7 @@ function WorldBuilder.start(world: WorldDef, placements: { Layout.Placement }): 
 	if world.lighting and RunService:IsRunning() then
 		WorldBuilder.applyLighting(world.lighting)
 	end
-	builtParts = geometryCount + #objects
+	builtParts = geometryCount + #objects + markerCount
 	return { objects = objects, geometryCount = geometryCount }
 end
 

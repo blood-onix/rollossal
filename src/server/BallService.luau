@@ -9,6 +9,8 @@ local Workspace = game:GetService("Workspace")
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
 local BallGuard = require(Shared.Rules.BallGuard)
+local Jump = require(Shared.Rules.Jump)
+local JumpTuning = require(Shared.JumpTuning)
 local Layout = require(Shared.Rules.Layout)
 local Respawn = require(Shared.Rules.Respawn)
 local StuckStack = require(Shared.Rules.StuckStack)
@@ -29,7 +31,7 @@ export type Sample = { t: number, speed: number }
 
 export type Violation = {
 	userId: number,
-	kind: "Speed" | "Displacement",
+	kind: "Speed" | "Displacement" | "Vertical",
 	measured: number,
 	limit: number,
 	at: number,
@@ -58,12 +60,27 @@ export type Session = {
 	frozen: boolean,
 	-- True while the ball is held still until the world around its spawn has streamed in.
 	streamHold: boolean,
+	-- Vertical guard (006, research R-03): the energy y + vy^2/2g taken on the last grounded step.
+	airRefEnergy: number,
+	-- Boost windows set by BoosterService (R-04): the Dash horizontal ceiling, its decay grace, and the Spring
+	-- window with the vertical speed it launched at.
+	boostUntil: number,
+	boostGraceUntil: number,
+	springUntil: number,
+	springVy: number,
+	-- Shield (a Sticky coat) end time, and the end of the 3 s immunity after a ball-to-ball knock-off.
+	shieldUntil: number,
+	immuneUntil: number,
+	-- Counts the Launch facts published on this ball.
+	launchSeq: number,
 }
 
 local BallService = {}
 
 local sessions: { [number]: Session } = {}
 local random = Random.new()
+-- Services that keep per-ball effect state (BoosterService) register here; BallService cannot require them.
+local clearHooks: { (Session) -> () } = {}
 
 local function getBallsFolder(): Folder
 	local existing = Workspace:FindFirstChild("Balls")
@@ -113,6 +130,10 @@ end
 
 function BallService.getSession(player: Player): Session?
 	return sessions[player.UserId]
+end
+
+function BallService.allSessions(): { [number]: Session }
+	return sessions
 end
 
 function BallService.getSessionByUserId(userId: number): Session?
@@ -185,7 +206,20 @@ function BallService.newSession(userId: number, player: Player?): Session
 		zone = "Room",
 		frozen = false,
 		streamHold = false,
+		airRefEnergy = 0,
+		boostUntil = -math.huge,
+		boostGraceUntil = -math.huge,
+		springUntil = -math.huge,
+		springVy = 0,
+		shieldUntil = -math.huge,
+		immuneUntil = -math.huge,
+		launchSeq = 0,
 	}
+	part:SetAttribute("Launch", "")
+	part:SetAttribute("BoostDash", 0)
+	part:SetAttribute("BoostMagnet", 0)
+	part:SetAttribute("BoostShield", 0)
+	part:SetAttribute("BoostTrail", 0)
 	if player then
 		part:SetNetworkOwner(player)
 		-- No character, so streaming needs the ball as its focus or the client never receives it.
@@ -195,7 +229,41 @@ function BallService.newSession(userId: number, player: Player?): Session
 	return session
 end
 
+-- Registers a function called whenever a ball's effects are cleared (run end, reset, respawn, leaving).
+function BallService.onClear(hook: (Session) -> ())
+	table.insert(clearHooks, hook)
+end
+
+-- Ends every booster effect and the ball-bump immunity (data-model.md "State summary"): run end, Roll again, hub,
+-- reset, fall respawn and leaving all come through here.
+function BallService.clearEffects(session: Session)
+	session.boostUntil = -math.huge
+	session.boostGraceUntil = -math.huge
+	session.springUntil = -math.huge
+	session.springVy = 0
+	session.shieldUntil = -math.huge
+	session.immuneUntil = -math.huge
+	session.part:SetAttribute("BoostDash", 0)
+	session.part:SetAttribute("BoostMagnet", 0)
+	session.part:SetAttribute("BoostShield", 0)
+	session.part:SetAttribute("BoostTrail", 0)
+	for _, hook in clearHooks do
+		hook(session)
+	end
+end
+
+-- The Launch fact (R-07): the owner's client applies each new seq once, because a server write to a
+-- client-owned part's velocity is unreliable.
+function BallService.publishLaunch(session: Session, velocity: Vector3)
+	session.launchSeq += 1
+	session.part:SetAttribute(
+		"Launch",
+		string.format("%d;%.2f;%.2f;%.2f", session.launchSeq, velocity.X, velocity.Y, velocity.Z)
+	)
+end
+
 function BallService.removeSession(session: Session)
+	BallService.clearEffects(session)
 	for _, cube in BallService.releasableObjects(session.stuckStack) do
 		WorldSpawner.returnToSpawn(cube)
 	end
@@ -241,6 +309,7 @@ local function holdUntilStreamed(session: Session, position: Vector3)
 end
 
 local function placeAtSpawn(session: Session)
+	BallService.clearEffects(session)
 	local spawn = if session.zone == "Hub"
 		then WorldSpawner.getHubSpawn()
 		else WorldSpawner.getSpawnSlot(session.slot)
@@ -328,7 +397,7 @@ end
 
 local function recordViolation(
 	session: Session,
-	kind: "Speed" | "Displacement",
+	kind: "Speed" | "Displacement" | "Vertical",
 	measured: number,
 	limit: number,
 	now: number
@@ -344,6 +413,63 @@ local function recordViolation(
 	if now - session.lastWarnAt >= 0.5 then
 		session.lastWarnAt = now
 		warn(`[Rollossal] {kind} violation for user {session.ownerUserId}: {measured} > {limit}`)
+	end
+end
+
+local groundParams = RaycastParams.new()
+groundParams.FilterType = Enum.RaycastFilterType.Include
+
+-- Server-side ground probe, the same shape the client uses: a short ray below the ball against the world.
+local function isGrounded(part: BasePart, diameter: number): boolean
+	local world = Workspace:FindFirstChild("World")
+	if world == nil then
+		-- No world built yet, so there is no ground to stand on.
+		return false
+	end
+	groundParams.FilterDescendantsInstances = { world }
+	local probe = Vector3.new(0, -(diameter / 2 + Config.groundProbeExtra), 0)
+	return Workspace:Raycast(part.Position, probe, groundParams) ~= nil
+end
+
+-- Horizontal speed ceiling for this session now: raised by a Dash or Spring window and its short grace.
+local function ceilingFor(session: Session, now: number): number
+	local boosted = now < session.boostUntil or now < session.springUntil
+	local inGrace = now < session.boostGraceUntil
+	return BallGuard.speedCeiling(Config.maxServerBallSpeed, Config.boostSpeedCap, boosted, inGrace)
+end
+
+-- Vertical movement guard (R-03). Clamps an upward speed over the limit, zeroes the rise of a mid-air re-jump
+-- (energy over the ground reference), and resets a vertical teleport to the last valid position.
+local function guardVertical(session: Session, now: number, dt: number, ceiling: number)
+	local part = session.part
+	local velocity = part.AssemblyLinearVelocity
+	local diameter = math.max(session.authoritativeDiameter, session.physicalDiameter)
+	local gravity = Workspace.Gravity
+	local springVy = if now < session.springUntil then session.springVy else nil
+	local tuning = JumpTuning
+	local upLimit = Jump.upLimit(diameter, gravity, ceiling, springVy, tuning)
+	local position = part.Position
+	local rise = (position.Y - session.lastValidPosition.Y) / math.max(dt, 1e-3)
+	if rise > upLimit * Config.displacementSlack then
+		part.Position = session.lastValidPosition
+		part.AssemblyLinearVelocity = Vector3.new(velocity.X, math.min(velocity.Y, 0), velocity.Z)
+		recordViolation(session, "Vertical", rise, upLimit * Config.displacementSlack, now)
+		return
+	end
+	local verdict, reference = BallGuard.verticalVerdict({
+		y = position.Y,
+		vy = velocity.Y,
+		grounded = isGrounded(part, diameter),
+		g = gravity,
+		airRefEnergy = session.airRefEnergy,
+		upLimit = upLimit,
+		apexAllowance = Jump.apexAllowance(diameter, springVy, gravity, tuning),
+	})
+	session.airRefEnergy = reference
+	if verdict == "Vertical" then
+		local limit = math.min(upLimit, math.max(velocity.Y, 0))
+		part.AssemblyLinearVelocity = Vector3.new(velocity.X, math.min(velocity.Y, 0), velocity.Z)
+		recordViolation(session, "Vertical", velocity.Y, limit, now)
 	end
 end
 
@@ -377,19 +503,22 @@ function BallService.step(now: number, dt: number)
 		local position = part.Position
 		local last = session.lastValidPosition
 		local stepSpeed = BallGuard.stepSpeed(last.X, last.Z, position.X, position.Z, dt)
-		local displacementLimit = Config.maxServerBallSpeed * Config.displacementSlack
-		local verdict =
-			BallGuard.verdict(speed, stepSpeed, Config.maxServerBallSpeed, Config.displacementSlack)
+		local ceiling = ceilingFor(session, now)
+		local displacementLimit = ceiling * Config.displacementSlack
+		local verdict = BallGuard.verdict(speed, stepSpeed, ceiling, Config.displacementSlack)
 
 		if verdict == "Speed" then
-			local clamped = horizontal(velocity).Unit * Config.maxServerBallSpeed
+			local clamped = horizontal(velocity).Unit * ceiling
 			part.AssemblyLinearVelocity = Vector3.new(clamped.X, velocity.Y, clamped.Z)
 			session.lastValidPosition = part.Position
-			recordViolation(session, "Speed", speed, Config.maxServerBallSpeed, now)
+			recordViolation(session, "Speed", speed, ceiling, now)
 		elseif verdict == "Displacement" then
 			part.Position = session.lastValidPosition
 			recordViolation(session, "Displacement", stepSpeed, displacementLimit, now)
 		else
+			if Config.Flags.ScaledJump then
+				guardVertical(session, now, dt, ceiling)
+			end
 			session.lastValidPosition = part.Position
 			session.lastValidVelocity = velocity
 		end

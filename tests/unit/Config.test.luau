@@ -191,4 +191,160 @@ test("Config: Saving flag is on and Shop flag is off", function()
 	expect.equal(Config.Flags.Shop, false)
 end)
 
+test("Config: 006 mechanics tuning keys exist with the research R-18 values", function()
+	local expected: { [string]: number } = {
+		jumpClearRatio = 0.6,
+		jumpHoldClearRatio = 0.85,
+		minJumpClearHeight = 1.6,
+		jumpHoldMaxSeconds = 0.25,
+		jumpCooldown = 0.3,
+		landingMinSpeed = 12,
+		landingSquashScale = 0.8,
+		landingSquashDuration = 0.15,
+		verticalSlack = 1.25,
+		airEnergyAllowance = 1.0,
+		maxSlopeRatio = 0.5,
+		dashSpeedMultiplier = 2.0,
+		boostSpeedCap = 80,
+		boostDecayGrace = 0.5,
+		boosterRadius = 2.5,
+		boosterRespawnDelay = 20,
+		boosterClaimRateLimit = 4,
+		springCooldown = 2,
+		dashDuration = 3,
+		magnetDuration = 6,
+		shieldDuration = 15,
+		slickTrailDuration = 8,
+		magnetRadiusFactor = 3.0,
+		magnetPullSpeed = 14,
+		magnetMaxPulled = 24,
+		magnetScanInterval = 0.1,
+		springVerticalSpeed = 70,
+		springForwardSpeed = 40,
+		springFlightDuration = 1.5,
+		slickTrailSpacing = 4,
+		slickTrailMaxPatches = 8,
+		slickTrailPatchLifetime = 5,
+		slickTrailPoolSize = 48,
+		slickTurnMultiplier = 0.25,
+		slickLingerSeconds = 0.6,
+		slowSpeedMultiplier = 0.5,
+		slowLingerSeconds = 0.5,
+		bumperBounceSpeed = 28,
+		sweeperSpeed = 10,
+		sweeperBounceSpeed = 34,
+		hazardContactMargin = 0.5,
+		ballBumpSizeRatio = 1.25,
+		ballBumpImmunitySeconds = 3.0,
+		ballBumpContactMargin = 0.5,
+	}
+	local config = Config :: { [string]: unknown }
+	for key, value in expected do
+		expect.equal(config[key], value, key)
+	end
+end)
+
+test("Config: 006 tuning constraints hold", function()
+	expect.truthy(Config.jumpClearRatio > 0 and Config.jumpClearRatio <= 1)
+	expect.truthy(Config.jumpClearRatio < Config.jumpHoldClearRatio)
+	expect.truthy(Config.jumpHoldClearRatio <= 1)
+	-- A 1.5-stud Tier 1 kerb must be cleared at the start diameter.
+	expect.truthy(Config.minJumpClearHeight > 1.5)
+	expect.truthy(Config.slickTurnMultiplier > 0 and Config.slickTurnMultiplier <= 1.0)
+	expect.truthy(Config.slowSpeedMultiplier > 0 and Config.slowSpeedMultiplier <= 1.0)
+	expect.truthy(Config.boostSpeedCap > Config.maxServerBallSpeed)
+	-- The pool is shared by all balls and recycles oldest-first when full.
+	expect.truthy(Config.slickTrailMaxPatches <= Config.slickTrailPoolSize)
+	expect.truthy(Config.minTouchTarget >= 96)
+end)
+
+test("Config: 006 flags exist, are booleans and default on", function()
+	local names = {
+		"ScaledJump",
+		"Boosters",
+		"BoosterDash",
+		"BoosterMagnet",
+		"BoosterSpring",
+		"BoosterShield",
+		"BoosterSlickTrail",
+		"Traps",
+		"TrapSlick",
+		"TrapBumper",
+		"TrapSlow",
+		"TrapSweeper",
+		"BallToBallBumps",
+	}
+	expect.equal(#names, 13)
+	local flags = Config.Flags :: { [string]: boolean }
+	for _, name in names do
+		expect.equal(flags[name], true, name)
+	end
+end)
+
+-- T056: each flag, switched off alone, disables exactly its own mechanic and leaves the others live.
+test("Config: switching one 006 flag off disables only that mechanic", function()
+	local Boosters = require("../../src/shared/Rules/Boosters")
+	local Traps = require("../../src/shared/Rules/Traps")
+	local boosterKinds = {
+		BoosterDash = "dash",
+		BoosterMagnet = "magnet",
+		BoosterSpring = "spring",
+		BoosterShield = "shield",
+		BoosterSlickTrail = "slick_trail",
+	}
+	local trapKinds = {
+		TrapSlick = "slick",
+		TrapBumper = "bumper",
+		TrapSlow = "slow",
+		TrapSweeper = "sweeper",
+	}
+	for flag, kind in boosterKinds do
+		local flags = table.clone(Config.Flags) :: { [string]: boolean }
+		flags[flag] = false
+		expect.falsy(Boosters.enabled(flags, kind), flag)
+		for otherFlag, otherKind in boosterKinds do
+			if otherFlag ~= flag then
+				expect.truthy(Boosters.enabled(flags, otherKind), `{flag} off, {otherFlag}`)
+			end
+		end
+		-- A trap is untouched by a booster flag.
+		expect.truthy(Traps.enabled(flags, "slick"))
+	end
+	for flag, kind in trapKinds do
+		local flags = table.clone(Config.Flags) :: { [string]: boolean }
+		flags[flag] = false
+		expect.falsy(Traps.enabled(flags, kind), flag)
+		for otherFlag, otherKind in trapKinds do
+			if otherFlag ~= flag then
+				expect.truthy(Traps.enabled(flags, otherKind), `{flag} off, {otherFlag}`)
+			end
+		end
+		expect.truthy(Boosters.enabled(flags, "dash"))
+	end
+end)
+
+test("Config: the master flags switch off every booster and every trap", function()
+	local Boosters = require("../../src/shared/Rules/Boosters")
+	local Traps = require("../../src/shared/Rules/Traps")
+	local flags = table.clone(Config.Flags) :: { [string]: boolean }
+	flags.Boosters = false
+	flags.Traps = false
+	for _, kind in { "dash", "magnet", "spring", "shield", "slick_trail" } do
+		expect.falsy(Boosters.enabled(flags, kind), kind)
+	end
+	for _, kind in { "slick", "bumper", "slow", "sweeper" } do
+		expect.falsy(Traps.enabled(flags, kind), kind)
+	end
+end)
+
+test("Config: ScaledJump and BallToBallBumps are independent of the master flags", function()
+	local Boosters = require("../../src/shared/Rules/Boosters")
+	local flags = table.clone(Config.Flags) :: { [string]: boolean }
+	flags.Boosters = false
+	flags.Traps = false
+	expect.equal(flags.ScaledJump, true)
+	expect.equal(flags.BallToBallBumps, true)
+	expect.falsy(Boosters.enabled(flags, "dash"))
+end)
+
 return {}
