@@ -1,6 +1,7 @@
 --!strict
 -- Sanity checks on src/shared/Config.luau (data-model §1). Expected values are written out by hand.
 
+local fs = require("@lune/fs")
 local harness = require("./harness")
 local Config = require("../../src/shared/Config")
 
@@ -155,9 +156,14 @@ test(
 	end
 )
 
-test("Config: default unlocked worlds are greybox and snow_village", function()
+test("Config: default unlocked worlds are greybox, snow_village and downtown", function()
 	expect.equal(Config.DefaultWorldsUnlocked.greybox, true)
 	expect.equal(Config.DefaultWorldsUnlocked.snow_village, true)
+	expect.equal(Config.DefaultWorldsUnlocked.downtown, true)
+end)
+
+test("Config: the Downtown flag is on and is a boolean", function()
+	expect.equal(Config.Flags.Downtown, true)
 end)
 
 test("Config: Snow Village respawn, sight and culling values", function()
@@ -345,6 +351,26 @@ test("Config: ScaledJump and BallToBallBumps are independent of the master flags
 	expect.equal(flags.ScaledJump, true)
 	expect.equal(flags.BallToBallBumps, true)
 	expect.falsy(Boosters.enabled(flags, "dash"))
+end)
+
+test("Config: rolling Downtown back falls to Snow Village, then to the grey-box room", function()
+	-- Worlds reads the flags once at require time, so the fallback chain is checked on its source: Downtown
+	-- first, then Snow Village, then the grey box, and nothing else in src/shared branches on the Downtown flag.
+	local text = fs.readFile("src/shared/Worlds.luau")
+	local chain = string.match(text, "local active: WorldDef = (.-)\n\n")
+	expect.truthy(chain ~= nil)
+	local flat = string.gsub(chain :: string, "%s+", " ")
+	expect.equal(
+		flat,
+		"if Config.Flags.Downtown then Downtown :: any elseif Config.Flags.SnowVillage then SnowVillage :: any else GreyBoxRoom"
+	)
+	-- Both fallbacks stay unlocked and loadable with the Downtown flag off.
+	expect.equal(Config.Flags.SnowVillage, true)
+	expect.equal(Config.DefaultWorldsUnlocked.greybox, true)
+	expect.equal(Config.DefaultWorldsUnlocked.snow_village, true)
+	local SnowVillage = require("../../src/shared/Content/Worlds/SnowVillage")
+	local GreyBoxRoom = require("../../src/shared/Content/GreyBoxRoom")
+	expect.truthy(#SnowVillage.objects > 0 and #GreyBoxRoom.objects > 0)
 end)
 
 return {}

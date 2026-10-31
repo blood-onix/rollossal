@@ -44,6 +44,9 @@ local function rewardIdOf(tier: number): string
 	return reward.rewardId
 end
 
+-- Downtown launches without tier rewards (D6), so the reward cases only run for a world that has them.
+local itReward = if Worlds.sizeTiers[1].reward ~= nil then it else it.skip
+
 local FIRST_BOOK_ID = bookIdsOfTier(1)[1]
 
 local nextUserId = 900000
@@ -135,7 +138,7 @@ describe("DataService", function()
 		DataService.release(uid)
 	end)
 
-	it("completing all five pages grants every page reward into skinsOwned", function()
+	itReward("completing all five pages grants every page reward into skinsOwned", function()
 		local uid = newUserId()
 		local player = fakePlayer(uid)
 		DataService.load(uid, player)
@@ -158,7 +161,7 @@ describe("DataService", function()
 		DataService.release(uid)
 	end)
 
-	it("only a completed page grants its reward", function()
+	itReward("only a completed page grants its reward", function()
 		local uid = newUserId()
 		local player = fakePlayer(uid)
 		DataService.load(uid, player)
@@ -444,7 +447,7 @@ end)
 describe("DataService round trip", function()
 	setup()
 
-	it("coins, best size, book, rewards and settings survive leave and rejoin", function()
+	itReward("coins, best size, book, rewards and settings survive leave and rejoin", function()
 		local uid = newUserId()
 		local store = ProfileStore.New("test").Mock
 		DataService.setStore(store)

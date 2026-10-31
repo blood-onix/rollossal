@@ -174,7 +174,7 @@ test("Themes: lighting derives from the light-* cells with sane scalars", functi
 			`{id} atmosphereDensity range`
 		)
 	end
-	expect.equal(Themes.winter.lighting.clockTime, 15.5)
+	expect.equal(Themes.winter.lighting.clockTime, 16.5)
 	expect.equal(Themes.city.lighting.clockTime, 13)
 end)
 

@@ -154,6 +154,10 @@ local function buildMarkers(world: WorldDef, parent: Folder, themeId: string): n
 	local count = 0
 	local builtPatrol = Workspace:GetServerTimeNow()
 	for _, marker in world.environment.markers do
+		-- A golden spot is world data only (Feature 012 spawns an object there): no part, no tag, no count.
+		if marker.kind == "GoldenSpot" then
+			continue
+		end
 		local yaw = CFrame.Angles(0, math.rad(marker.yaw), 0)
 		local isBooster = marker.kind == "BoosterSpot"
 		local row = findRow(isBooster, marker.subKind)

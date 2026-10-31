@@ -254,3 +254,149 @@ test("segmentRect: grown by half the long side on every side", function()
 	expect.equal(rect.hx, 15)
 	expect.equal(rect.hz, 5)
 end)
+
+-- 007: GoldenSpot markers (R-04). Golden spots sit on a free corner of the 200-wide fixture, clear of the rest.
+local function golden(id: string, x: number, z: number): Marker
+	return marker(id, "GoldenSpot", "golden", x, z)
+end
+
+local function goldenKeepOuts(list: { Marker }): { Markers.KeepOut }
+	local keepOuts = keepOutsFor(validSet())
+	for _, item in list do
+		table.insert(keepOuts, {
+			id = `ko_marker_{#keepOuts + 1}`,
+			kind = "marker",
+			x = item.x,
+			z = item.z,
+			w = Markers.GOLDEN_FOOTPRINT.w,
+			d = Markers.GOLDEN_FOOTPRINT.d,
+		})
+	end
+	return keepOuts
+end
+
+local function withGolden(count: number): { Marker }
+	local list = validSet()
+	for index = 1, count do
+		table.insert(list, golden(`golden-{index}`, -80 + index * 20, -90))
+	end
+	return list
+end
+
+test("golden: the footprint constant is 6 x 6", function()
+	expect.equal(Markers.GOLDEN_FOOTPRINT.w, 6)
+	expect.equal(Markers.GOLDEN_FOOTPRINT.d, 6)
+end)
+
+test("golden: a valid golden spot with its keep-out has no errors", function()
+	local list = withGolden(1)
+	local errors = Markers.validate(list, {}, goldenKeepOuts({ list[#list] }), HALF_EXTENT, defs)
+	expect.equal(#errors, 0, table.concat(errors, " | "))
+end)
+
+test("golden: five spots satisfy requireGolden = 5 and four do not", function()
+	local five = withGolden(5)
+	local goldenOnly: { Marker } = {}
+	for index = #five - 4, #five do
+		table.insert(goldenOnly, five[index])
+	end
+	local keepOuts = goldenKeepOuts(goldenOnly)
+	local ok = Markers.validate(five, {}, keepOuts, HALF_EXTENT, defs, { requireGolden = 5 })
+	expect.equal(#ok, 0, table.concat(ok, " | "))
+
+	local four = withGolden(4)
+	local fourOnly: { Marker } = {}
+	for index = #four - 3, #four do
+		table.insert(fourOnly, four[index])
+	end
+	local errors = Markers.validate(
+		four,
+		{},
+		goldenKeepOuts(fourOnly),
+		HALF_EXTENT,
+		defs,
+		{ requireGolden = 5 }
+	)
+	expectOne(errors, "marker coverage GoldenSpot golden needs 5, has 4")
+end)
+
+test("golden: no requirement is asked when opts is absent", function()
+	local errors = Markers.validate(validSet(), {}, keepOutsFor(validSet()), HALF_EXTENT, defs)
+	expect.equal(#errors, 0)
+end)
+
+test("golden: another subKind is a subKind error", function()
+	local list = withGolden(1)
+	list[#list].subKind = "dash"
+	local errors = Markers.validate(list, {}, goldenKeepOuts({ list[#list] }), HALF_EXTENT, defs)
+	expect.equal(string.sub(errors[1], 1, 14), "marker subKind")
+end)
+
+test("golden: waypoints are not allowed", function()
+	local list = withGolden(1)
+	list[#list].waypoints = { { x = 0, z = 0 }, { x = 1, z = 0 }, { x = 1, z = 1 } }
+	local errors = Markers.validate(list, {}, goldenKeepOuts({ list[#list] }), HALF_EXTENT, defs)
+	expectOne(errors, "marker waypoints")
+end)
+
+test(
+	"golden: no covering keep-out, a solid block, or the world edge are the usual errors",
+	function()
+		local list = withGolden(1)
+		expectOne(
+			Markers.validate(list, {}, keepOutsFor(validSet()), HALF_EXTENT, defs),
+			"marker keepout"
+		)
+
+		local block: Markers.Block = {
+			id = "wall",
+			cframe = { x = list[#list].x, y = 2, z = list[#list].z, yaw = 0 },
+			size = { x = 4, y = 4, z = 4 },
+		}
+		expectOne(
+			Markers.validate(list, { block }, goldenKeepOuts({ list[#list] }), HALF_EXTENT, defs),
+			"marker overlap"
+		)
+
+		local edge = withGolden(1)
+		edge[#edge].x = HALF_EXTENT - 2
+		local errors =
+			Markers.validate(edge, {}, goldenKeepOuts({ edge[#edge] }), HALF_EXTENT, defs)
+		expect.equal(string.sub(errors[1], 1, 13), "marker bounds")
+	end
+)
+
+test(
+	"golden: a block whose top is at the spot's height supports it, a taller one blocks it",
+	function()
+		local list = withGolden(1)
+		list[#list].y = 3
+		local keepOuts = goldenKeepOuts({ list[#list] })
+		local roof: Markers.Block = {
+			id = "roof",
+			cframe = { x = list[#list].x, y = 2.5, z = list[#list].z, yaw = 0 },
+			size = { x = 12, y = 1, z = 12 },
+		}
+		local errors = Markers.validate(list, { roof }, keepOuts, HALF_EXTENT, defs)
+		expect.equal(#errors, 0, table.concat(errors, " | "))
+
+		local tall: Markers.Block = {
+			id = "tall",
+			cframe = { x = list[#list].x, y = 5, z = list[#list].z, yaw = 0 },
+			size = { x = 2, y = 10, z = 2 },
+		}
+		expectOne(
+			Markers.validate(list, { roof, tall }, keepOuts, HALF_EXTENT, defs),
+			"marker overlap"
+		)
+	end
+)
+
+test("golden: yaw is ignored", function()
+	local list = withGolden(1)
+	list[#list].yaw = 45
+	local errors = Markers.validate(list, {}, goldenKeepOuts({ list[#list] }), HALF_EXTENT, defs)
+	expect.equal(#errors, 0, table.concat(errors, " | "))
+end)
+
+return {}

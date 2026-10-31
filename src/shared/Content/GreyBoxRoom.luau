@@ -142,6 +142,10 @@ export type KeepOutDef = {
 	d: number,
 }
 
+-- Client-only decoration (007, R-14): ambient pigeons stand on the ground or on static geometry.
+export type PigeonSpot = { district: string, x: number, z: number }
+export type AmbientDef = { pigeons: { PigeonSpot }? }
+
 export type WorldDef = {
 	worldId: string,
 	starThresholds: { number }?,
@@ -163,6 +167,7 @@ export type WorldDef = {
 	themeBindings: { [string]: ThemeBinding }?,
 	keepOutAreas: { KeepOutDef }?,
 	maxPlacements: number?,
+	ambient: AmbientDef?,
 }
 -- The room's own fields plus every WorldDef field (spelled out: an intersection would stop the data table
 -- below from being checked against its type while it is written).
@@ -191,6 +196,7 @@ export type Room = {
 	themeBindings: { [string]: ThemeBinding }?,
 	keepOutAreas: { KeepOutDef }?,
 	maxPlacements: number?,
+	ambient: AmbientDef?,
 }
 
 local GreyBoxRoom: Room = {

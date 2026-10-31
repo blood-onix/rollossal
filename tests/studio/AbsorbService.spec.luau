@@ -21,10 +21,10 @@ local BallService = require(ServerScriptService.BallService)
 local WorldSpawner = require(ServerScriptService.WorldSpawner)
 local Fixtures = require(script.Parent.Fixtures)
 
--- Fixture placements picked by object type: acorns (0.5) are eatable from the start, a bauble (0.8) sits
--- exactly on the 0.4 * 2 limit, a duck (1.6) is too big for a ball of 2.
-local small = Fixtures.ids("acorn", 12)
-local bauble = Fixtures.ids("bauble", 1)[1]
+-- Fixture placements picked by object size: 0.5 studs is eatable from the start, 0.8 sits exactly on the
+-- 0.4 * 2 limit, and the first Tier 2 object is too big for a ball of 2. No spec names an object of one world.
+local small = Fixtures.idsOfSize(0.5, 12)
+local bauble = Fixtures.idsOfSize(0.8, 1)[1]
 local duck = Fixtures.ofTier(2)
 local ACORN = 0.5
 
@@ -152,11 +152,11 @@ describe("AbsorbService boundary and growth", function()
 		local session = newSession()
 		placeOn(session, small[1])
 		expect(AbsorbService.tryAbsorb(session, small[1], NOW)).toBe("Ok")
-		-- One acorn (0.5) at k = 1.5: D^3 = 8 + 1.5 * 0.125 = 8.1875, D = 2.0155.
+		-- One small object (0.5) at the world's k: D^3 = 8 + k * 0.125.
 		local grown = Growth.growDiameter(2, ACORN, Worlds.growthK)
-		expect(session.authoritativeDiameter).toBeCloseTo(2.0155, 3)
+		expect(session.authoritativeDiameter).toBeCloseTo(grown, 3)
 		expect(session.authoritativeDiameter).toBeCloseTo(grown, 6)
-		expect(session.part:GetAttribute("Diameter")).toBeCloseTo(2.0155, 3)
+		expect(session.part:GetAttribute("Diameter")).toBeCloseTo(grown, 3)
 		local stuck = session.part:GetAttribute("Stuck")
 		expect(typeof(stuck)).toBe("string")
 		local at = string.find(stuck :: string, small[1] .. "#", 1, true)
@@ -254,8 +254,11 @@ describe("AbsorbService knock-off", function()
 		expect(t102.state).toBe("Available")
 		expect(t102.part.CFrame == t102.spawnCFrame).toBe(true)
 		expect(t103.part.CFrame == t103.spawnCFrame).toBe(true)
-		-- One acorn (0.5) left, k = 1.5: D^3 = 8 + 1.5 * 0.125 = 8.1875, D = 2.0155.
-		expect(session.authoritativeDiameter).toBeCloseTo(2.0155, 3)
+		-- One small object (0.5) left at the world's k: D^3 = 8 + k * 0.125.
+		expect(session.authoritativeDiameter).toBeCloseTo(
+			Growth.growDiameter(2, ACORN, Worlds.growthK),
+			3
+		)
 	end)
 
 	it("is a no-op with an empty stack", function()
