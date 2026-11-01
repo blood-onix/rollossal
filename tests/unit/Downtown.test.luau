@@ -688,8 +688,8 @@ test(
 )
 
 test("Downtown C14: at most 400 blocks and the part budget holds in both themes", function()
-	local blocks = #Downtown.environment.blocks
-	expect.truthy(blocks <= 400, `{blocks} blocks`)
+	local baseBlocks = #Downtown.environment.blocks
+	expect.truthy(baseBlocks <= 400, `{baseBlocks} blocks`)
 	local built = 0
 	for _, marker in Downtown.environment.markers do
 		if marker.kind ~= "GoldenSpot" then
@@ -698,6 +698,8 @@ test("Downtown C14: at most 400 blocks and the part budget holds in both themes"
 	end
 	expect.truthy(built >= 9 and built <= 16, `{built} built markers`)
 	for _, themeId in Downtown.supportedThemes do
+		local themeBlocks = (Downtown.themeBindings :: any)[themeId].blocks
+		local blocks = baseBlocks + (if themeBlocks then #themeBlocks else 0)
 		local total = #resolved[themeId].placements + blocks + built + HUB_PARTS + BALLS
 		expect.truthy(
 			total + RUNTIME_PARTS <= Config.Budgets.maxActivePartsPerServer,
@@ -936,5 +938,34 @@ test("Downtown: the active world is picked in priority order and the flag is on"
 	)
 	expect.truthy(string.find(text, "else GreyBoxRoom", 1, true) ~= nil)
 end)
+
+test("Downtown F2: garlands and the sledding slope belong to the winter theme only", function()
+	local function ids(list: { { id: string } }): { [string]: boolean }
+		local set: { [string]: boolean } = {}
+		for _, block in list do
+			set[block.id] = true
+		end
+		return set
+	end
+	local base = ids(Downtown.environment.blocks)
+	local winter = ids((Downtown.themeBindings :: any).winter.blocks or {})
+	expect.truthy(winter.dt_park_slope and winter.dt_garland_1)
+	expect.falsy(base.dt_park_slope or base.dt_garland_1)
+	expect.falsy((Downtown.themeBindings :: any).city.blocks ~= nil)
+end)
+
+test(
+	"Downtown F5: the drain tunnel walls are 5 tall, so a Tier 3 ball cannot climb them",
+	function()
+		local walls = 0
+		for _, block in Downtown.environment.blocks do
+			if string.find(block.id, "^dt_tunnel_") then
+				walls += 1
+				expect.truthy(block.cframe.y + block.size.y / 2 >= 5, block.id)
+			end
+		end
+		expect.equal(walls, 6)
+	end
+)
 
 return {}

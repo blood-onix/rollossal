@@ -129,6 +129,8 @@ export type ThemeBinding = {
 	-- Theme-only ObjectDefs (slot and overlay objects not in the base kit); optional when every mapped
 	-- object is a base kit object.
 	objects: { ObjectDef }?,
+	-- Scenery blocks only this theme builds, on top of environment.blocks.
+	blocks: { BlockDef }?,
 	bookPage: ThemeBookPage?,
 }
 

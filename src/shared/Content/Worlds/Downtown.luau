@@ -749,6 +749,9 @@ local function fixed(id: string, objectId: string, x: number, z: number, yaw: nu
 	)
 end
 
+-- Scenery that only the Holiday City theme shows (garlands, sledding slope): themeBindings.winter.blocks.
+local winterBlocks: { Block } = {}
+
 local function block(
 	id: string,
 	kind: string,
@@ -759,9 +762,10 @@ local function block(
 	sx: number,
 	sy: number,
 	sz: number,
-	swatch: string
+	swatch: string,
+	into: { Block }?
 )
-	table.insert(blocks, {
+	table.insert(into or blocks, {
 		id = id,
 		kind = kind,
 		cframe = { x = x, y = y, z = z, yaw = yaw },
@@ -1233,7 +1237,7 @@ block("dt_park_lawn_e", "Block", -197, 0.02, -20, 0, 50, 0.08, 120, "w-grass")
 block("dt_park_path", "Block", -231, 0.02, 0, 0, 18, 0.08, 196, "w-sand")
 block("dt_park_pond", "Block", -268, 0.03, 71, 0, 56, 0.08, 54, "w-water")
 -- The slope rises towards +Z (yaw 0): sleds wait at its foot (the northern edge).
-block("dt_park_slope", "Wedge", -197, 2.5, 78, 0, 42, 5, 40, "w-season")
+block("dt_park_slope", "Wedge", -197, 2.5, 78, 0, 42, 5, 40, "w-season", winterBlocks)
 for index = 1, 8 do
 	box(
 		string.format("dt_park_rail_%02d", index),
@@ -1279,15 +1283,17 @@ block("dt_car_ramp_3", "Wedge", 194, 5, 50, 90, 16, 2, 12, "w-metal")
 box("dt_car_deck_3", 207, 50, 14, 16, 6, "dt-concrete")
 box("dt_car_parapet", 207, 41.5, 14, 0.6, 1, "dt-concrete", 6)
 
--- Storm-drain tunnel under Market Street: floor is the ground, two walls 3.8 tall, no roof (golden spot 3).
--- The chamber (z -8 to 8) keeps the 6-stud gap for the golden spot's 6 x 6 footprint; each 6-stud mouth narrows to 4.6 so a
--- Tier 3+ ball (diameter >= 5) cannot enter.
-box("dt_tunnel_wall_w", -103.5, 0, 1, 16, 3.8, "dt-concrete")
-box("dt_tunnel_wall_e", -96.5, 0, 1, 16, 3.8, "dt-concrete")
-box("dt_tunnel_mouth_wn", -102.8, 11, 1, 6, 3.8, "dt-concrete")
-box("dt_tunnel_mouth_en", -97.2, 11, 1, 6, 3.8, "dt-concrete")
-box("dt_tunnel_mouth_ws", -102.8, -11, 1, 6, 3.8, "dt-concrete")
-box("dt_tunnel_mouth_es", -97.2, -11, 1, 6, 3.8, "dt-concrete")
+-- Storm-drain tunnel under Market Street: floor is the ground, two walls 5 tall, no roof (golden spot 3).
+-- Walls are as tall as a Tier 3 ball (diameter >= 5) is wide, so it cannot climb them (a step needs to be below the
+-- ball's radius); a ball big enough to climb one (diameter > 10) is wider than the 6-stud chamber and bridges it.
+-- Tier 1 to 2 balls (diameter < 5) still fit. The chamber (z -8 to 8) keeps the 6-stud gap for the golden spot's
+-- 6 x 6 footprint; each 6-stud mouth narrows to 4.6 so a Tier 3+ ball cannot enter.
+box("dt_tunnel_wall_w", -103.5, 0, 1, 16, 5, "dt-concrete")
+box("dt_tunnel_wall_e", -96.5, 0, 1, 16, 5, "dt-concrete")
+box("dt_tunnel_mouth_wn", -102.8, 11, 1, 6, 5, "dt-concrete")
+box("dt_tunnel_mouth_en", -97.2, 11, 1, 6, 5, "dt-concrete")
+box("dt_tunnel_mouth_ws", -102.8, -11, 1, 6, 5, "dt-concrete")
+box("dt_tunnel_mouth_es", -97.2, -11, 1, 6, 5, "dt-concrete")
 
 -- Bus stop on Market Street: a roof slab on two posts (golden spot 1).
 box("dt_bus_post_w", 134, -22, 0.6, 0.6, 3, "w-metal-dark")
@@ -1311,9 +1317,21 @@ for index = 1, 10 do
 	)
 end
 
--- Garlands over Market Street (winter-neutral: w-trim reads as street cables in the city look).
+-- Garlands over Market Street: Holiday City only (FR-005).
 for index, x in { -130, -60, 60, 100, 200, 260 } do
-	block(string.format("dt_garland_%d", index), "Block", x, 11, 0, 0, 0.6, 0.4, 24, "w-trim")
+	block(
+		string.format("dt_garland_%d", index),
+		"Block",
+		x,
+		11,
+		0,
+		0,
+		0.6,
+		0.4,
+		24,
+		"w-trim",
+		winterBlocks
+	)
 end
 
 -- Planters round the Plaza basin and bus-stop bench.
@@ -1666,6 +1684,7 @@ local themeBindings: {
 		overlays: { zones: { Zone }, fixedPlacements: { Fixed } },
 		heroVariants: { [string]: { assetKey: string, nameKey: string?, size: number? } },
 		objects: { typeof(objects[1]) }?,
+		blocks: { Block }?,
 		bookPage: {
 			id: string,
 			nameKey: string,
@@ -1692,6 +1711,7 @@ local themeBindings: {
 				},
 			},
 			objects = winterObjects,
+			blocks = winterBlocks,
 			bookPage = {
 				id = "downtown.winter",
 				nameKey = "book.page.downtown.winter.name",

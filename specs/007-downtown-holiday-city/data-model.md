@@ -251,7 +251,7 @@ All `SmoothPlastic`, anchored, swatch roles from the active theme. Target ≈ 33
 | Construction Site (scaffold ramps as `Wedge`, container stack, hoardings) | ≈ 50 | crane ballast stack for golden spot 4 |
 | Car Park (three-level spiral of wedges, deck slabs, parapets, pillars) | ≈ 70 | top deck slab for golden spot 2 |
 | Plaza fountain (basin, water disc, pedestal), planters | ≈ 12 | R-11 |
-| Storm-drain tunnel (floor, two side walls, no roof under the road) | ≈ 8 | height 3.8: a Tier 3 ball cannot enter; floor holds golden spot 3 |
+| Storm-drain tunnel (floor, two side walls 5 tall, no roof under the road) | ≈ 8 | height 5: a Tier 3 ball cannot enter or climb a wall; floor holds golden spot 3 |
 | Alley walls (4-stud gaps between building blocks) | ≈ 40 | 4-stud clear width |
 | Waterfront (quay, railings, promenade, ticket hut platform) | ≈ 25 | platform for golden spot 5 |
 | Bus-stop slab roofs | ≈ 6 | one is golden spot 1 |

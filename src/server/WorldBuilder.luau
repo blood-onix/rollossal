@@ -68,10 +68,15 @@ local function staticPart(name: string, size: Vector3, cframe: CFrame, tint: Col
 	return part
 end
 
-local function buildGeometry(world: WorldDef, parent: Folder): number
+local function buildGeometry(world: WorldDef, parent: Folder, themeId: string): number
 	local palette = world.environment.palette
 	local count = 0
-	for _, block in world.environment.blocks do
+	local all = table.clone(world.environment.blocks)
+	local binding = if world.themeBindings then world.themeBindings[themeId] else nil
+	if binding ~= nil and binding.blocks ~= nil then
+		table.move(binding.blocks, 1, #binding.blocks, #all + 1, all)
+	end
+	for _, block in all do
 		local swatch = palette[block.swatch]
 		if swatch == nil then
 			error(`WorldBuilder: block {block.id} uses unknown swatch {block.swatch}`)
@@ -335,9 +340,10 @@ function WorldBuilder.start(
 	local hub = folder("Hub", root)
 	local markers = folder("Markers", root)
 
-	local geometryCount = buildGeometry(world, geometry)
+	local buildThemeId = themeId or world.activeThemeId or "winter"
+	local geometryCount = buildGeometry(world, geometry, buildThemeId)
 	buildHub(world, hub)
-	local markerCount = buildMarkers(world, markers, themeId or world.activeThemeId or "winter")
+	local markerCount = buildMarkers(world, markers, buildThemeId)
 
 	local defs: { [string]: ObjectDef } = {}
 	for _, def in world.objects do
