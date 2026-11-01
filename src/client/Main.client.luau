@@ -13,6 +13,7 @@ local Feedback = require(script.Parent.Feedback)
 local WeatherController = require(script.Parent.WeatherController)
 local FpsReadout = require(script.Parent.FpsReadout)
 local HazardClient = require(script.Parent.HazardClient)
+local PigeonController = require(script.Parent.PigeonController)
 
 local Shared = game:GetService("ReplicatedStorage"):WaitForChild("Shared")
 local Config = require(Shared.Config)
@@ -31,6 +32,11 @@ Feedback.start()
 WeatherController.start()
 FpsReadout.start()
 HazardClient.start()
+-- 007: ambient pigeons, client-only decoration read from the active world (Downtown). A world with no
+-- ambient list, and the Downtown flag being off, start nothing.
+if Config.Flags.Downtown then
+	PigeonController.start()
+end
 
 if Config.Flags.Saving then
 	local ProfileClient = require(script.Parent.ProfileClient)

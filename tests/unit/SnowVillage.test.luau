@@ -5,6 +5,7 @@
 local fs = require("@lune/fs")
 
 local harness = require("./harness")
+local ArtBudgets = require("../../scripts/art-budgets")
 local Assets = require("../../src/shared/Assets")
 local Config = require("../../src/shared/Config")
 local Icons = require("../../src/shared/Content/Icons")
@@ -165,8 +166,11 @@ test("SnowVillage: every asset key, the hub key and the music resolve in Assets"
 	local hubKey = SnowVillage.hub.assetKey :: string
 	expect.truthy(Assets.meshes[hubKey] ~= nil)
 	used[hubKey] = true
+	for _, mesh in ArtBudgets.meshes() do
+		used[mesh.key] = true
+	end
 	for key in Assets.meshes do
-		expect.truthy(used[key])
+		expect.truthy(used[key], `{key} is not an asset key of any world`)
 	end
 end)
 

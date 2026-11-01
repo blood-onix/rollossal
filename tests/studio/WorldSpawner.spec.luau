@@ -1,5 +1,5 @@
 --!strict
--- The pooled registry against the real Snow Village world (FR-013, FR-014, plan R4, R5). Expected values come
+-- The pooled registry against the real active world (Downtown; Snow Village is the rollback) (FR-013, FR-014, plan R4, R5). Expected values come
 -- from the spec and the Config numbers, never from the code under test.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -20,7 +20,7 @@ local WorldSpawner = require(ServerScriptService.WorldSpawner)
 local Fixtures = require(script.Parent.Fixtures)
 
 local NOW = 5000
-local acorns = Fixtures.ids("acorn", 4)
+local acorns = Fixtures.idsOfSize(0.5, 4)
 
 local function get(id: string): WorldSpawner.PooledWorldObject
 	local object = WorldSpawner.getObject(id)

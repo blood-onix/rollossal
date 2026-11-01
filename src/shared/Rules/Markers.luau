@@ -2,6 +2,8 @@
 -- Marker validation (006, data-model.md): checks the booster and trap spots of a world. Pure; the world's
 -- blocks, keep-outs, extent and the footprint rows (Content/Hazards) are arguments. Returns one error string per
 -- problem; an empty list means valid. Every error starts with "marker <rule>".
+-- 007 adds the GoldenSpot kind: a fixed 6 x 6 footprint, subKind "golden", no part built (R-04). A golden spot
+-- may stand on a block whose top is at its own height y (within the ground tolerance).
 
 export type Waypoint = { x: number, z: number }
 
@@ -27,6 +29,8 @@ export type KeepOut = { id: string, kind: string, x: number, z: number, w: numbe
 type Footprint = { w: number, d: number }
 type Row = { subKind: string, footprint: Footprint }
 export type Defs = { boosters: { Row }, traps: { Row } }
+-- requireGolden: the minimum number of GoldenSpot markers; nil asks for none.
+export type Options = { requireGolden: number? }
 
 -- An axis-aligned rectangle: centre and half extents.
 export type Rect = { x: number, z: number, hx: number, hz: number }
@@ -34,8 +38,11 @@ export type Rect = { x: number, z: number, hx: number, hz: number }
 local EPSILON = 1e-6
 -- A block whose top is at or under this height is ground: a marker may sit on it.
 local GROUND_TOP = 0.2
+local GOLDEN_CLEARANCE = 4
 
 local Markers = {
+	-- The fixed footprint of a golden spot (Feature 012 spawns an object there).
+	GOLDEN_FOOTPRINT = { w = 6, d = 6 },
 	-- Every sub-kind a world must carry, by marker kind.
 	SUBKINDS = {
 		BoosterSpot = { "dash", "magnet", "spring", "shield", "slick_trail" },
@@ -48,6 +55,11 @@ local function rotatedBox(x: number, z: number, w: number, d: number, yaw: numbe
 	local angle = math.rad(yaw)
 	local c, s = math.abs(math.cos(angle)), math.abs(math.sin(angle))
 	return { x = x, z = z, hx = (w / 2) * c + (d / 2) * s, hz = (w / 2) * s + (d / 2) * c }
+end
+
+-- A golden spot is square and ignores its yaw.
+local function yawOf(marker: Marker): number
+	return if marker.kind == "GoldenSpot" then 0 else marker.yaw
 end
 
 local function overlaps(a: Rect, b: Rect): boolean
@@ -73,6 +85,11 @@ function Markers.segmentRect(a: Waypoint, b: Waypoint, footprint: Footprint): Re
 end
 
 local function findRow(defs: Defs, kind: string, subKind: string): Row?
+	if kind == "GoldenSpot" then
+		return if subKind == "golden"
+			then { subKind = "golden", footprint = Markers.GOLDEN_FOOTPRINT }
+			else nil
+	end
 	local rows: { Row } = if kind == "BoosterSpot" then defs.boosters else defs.traps
 	for _, row in rows do
 		if row.subKind == subKind then
@@ -123,7 +140,7 @@ function Markers.footprints(marker: Marker, row: Row): { Rect }
 		return rects
 	end
 	return {
-		rotatedBox(marker.x, marker.z, row.footprint.w, row.footprint.d, marker.yaw),
+		rotatedBox(marker.x, marker.z, row.footprint.w, row.footprint.d, yawOf(marker)),
 	}
 end
 
@@ -175,7 +192,7 @@ function Markers.requiredKeepOuts(marker: Marker, row: Row): { Rect }
 	if marker.subKind == "sweeper" and waypoints and #waypoints >= 3 then
 		return Markers.footprints(marker, row)
 	end
-	return { rotatedBox(marker.x, marker.z, row.footprint.w, row.footprint.d, marker.yaw) }
+	return { rotatedBox(marker.x, marker.z, row.footprint.w, row.footprint.d, yawOf(marker)) }
 end
 
 function Markers.validate(
@@ -183,17 +200,25 @@ function Markers.validate(
 	blocks: { Block },
 	keepOutAreas: { KeepOut },
 	halfExtent: number,
-	defs: Defs
+	defs: Defs,
+	opts: Options?
 ): { string }
 	local errors: { string } = {}
 	local seen: { [string]: boolean } = {}
 	local present: { [string]: boolean } = {}
+	local goldenCount = 0
 	local placed: { { id: string, rects: { Rect } } } = {}
 	local keepOuts = keepOutRects(keepOutAreas)
 
+	-- Every block that stands above the ground, with its top height. A golden spot stands on the block whose top
+	-- is at its own height, so only the blocks taller than that one count against it.
 	local solid: { Rect } = {}
+	local solidTops: { number } = {}
+	local solidBottoms: { number } = {}
 	for _, block in blocks do
 		if block.cframe.y + block.size.y / 2 > GROUND_TOP then
+			table.insert(solidTops, block.cframe.y + block.size.y / 2)
+			table.insert(solidBottoms, block.cframe.y - block.size.y / 2)
 			table.insert(
 				solid,
 				rotatedBox(
@@ -214,7 +239,11 @@ function Markers.validate(
 		end
 		seen[marker.id] = true
 
-		if marker.kind ~= "BoosterSpot" and marker.kind ~= "TrapSpot" then
+		if
+			marker.kind ~= "BoosterSpot"
+			and marker.kind ~= "TrapSpot"
+			and marker.kind ~= "GoldenSpot"
+		then
 			table.insert(errors, `marker kind {label} is {marker.kind}`)
 			continue
 		end
@@ -224,6 +253,9 @@ function Markers.validate(
 			continue
 		end
 		present[marker.subKind] = true
+		if marker.kind == "GoldenSpot" then
+			goldenCount += 1
+		end
 
 		if waypointError(marker, halfExtent) then
 			table.insert(errors, `marker waypoints {label} has an invalid path`)
@@ -234,7 +266,18 @@ function Markers.validate(
 			table.insert(errors, `marker bounds {label} leaves the world`)
 		end
 
-		local blocked = anyOverlap(rects, solid)
+		local obstacles = solid
+		if marker.kind == "GoldenSpot" then
+			obstacles = {}
+			for index, rect in solid do
+				-- A slab whose underside is GOLDEN_CLEARANCE above the spot (a tunnel roof) is not in the way.
+				local above = solidBottoms[index] >= marker.y + GROUND_TOP + GOLDEN_CLEARANCE
+				if solidTops[index] > marker.y + GROUND_TOP and not above then
+					table.insert(obstacles, rect)
+				end
+			end
+		end
+		local blocked = anyOverlap(rects, obstacles)
 		if not blocked then
 			for _, other in placed do
 				if anyOverlap(rects, other.rects) then
@@ -262,6 +305,13 @@ function Markers.validate(
 				table.insert(errors, `marker coverage {kind} {subKind} is missing`)
 			end
 		end
+	end
+	local needGolden = if opts ~= nil then opts.requireGolden else nil
+	if needGolden ~= nil and goldenCount < needGolden then
+		table.insert(
+			errors,
+			`marker coverage GoldenSpot golden needs {needGolden}, has {goldenCount}`
+		)
 	end
 	return errors
 end

@@ -29,6 +29,9 @@ local TIMER_TEXT_SIZE = 28
 local METER_WIDTH = 160
 local METER_HEIGHT = 104
 local METER_MARGIN = 8
+-- Roblox's own top-bar buttons (logo, menu, chat, voice) cover the top-left 58 px, so the meter starts below them.
+local TOPBAR_CLEARANCE = 58
+local METER_TOP = TOPBAR_CLEARANCE + METER_MARGIN
 local METER_VALUE_SIZE = 32
 local METER_ROW_HEIGHT = 38
 local METER_BAR_TOP = 40
@@ -36,11 +39,11 @@ local METER_BAR_HEIGHT = 14
 local METER_NEXT_TOP = 58
 local METER_POP_SCALE = 1.25
 local METER_POP_SECONDS = 0.15
--- Banner and pop sit at fixed offsets below the size meter (which ends at y 112), so at 640x360 neither
+-- Banner and pop sit at fixed offsets below the size meter (which ends at y 170), so at 640x360 neither
 -- covers the star row or the meter. The banner is wide enough for the longest headline at 28 px (395).
 local BANNER_WIDTH = 480
 local BANNER_HEIGHT = 48
-local BANNER_TOP = 120
+local BANNER_TOP = METER_TOP + METER_HEIGHT + 8
 local BANNER_TEXT_SIZE = 28
 local POP_WIDTH = 260
 local POP_HEIGHT = 32
@@ -48,9 +51,9 @@ local POP_TOP = BANNER_TOP + BANNER_HEIGHT + 8
 local BUMP_WIDTH = 140
 local BUMP_HEIGHT = 32
 local BUMP_Y = 0.78
--- Effect chips stack on the left, below the size meter (which ends at y 112).
+-- Effect chips stack on the left, below the size meter (which ends at y 170).
 local CHIPS_LEFT = METER_MARGIN
-local CHIPS_TOP = 120
+local CHIPS_TOP = BANNER_TOP
 
 local Hud = {}
 
@@ -112,7 +115,7 @@ function Hud.start()
 	local meter = Instance.new("Frame")
 	meter.Name = "SizeMeter"
 	meter.BackgroundTransparency = 1
-	meter.Position = UDim2.fromOffset(METER_MARGIN, METER_MARGIN)
+	meter.Position = UDim2.fromOffset(METER_MARGIN, METER_TOP)
 	meter.Size = UDim2.fromOffset(METER_WIDTH, METER_HEIGHT)
 	meter.Parent = root
 	local sizeLabel = UiKit.label({

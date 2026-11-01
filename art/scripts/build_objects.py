@@ -9,6 +9,7 @@
 import json
 import math
 import os
+import sys
 
 import bmesh
 import bpy
@@ -26,6 +27,27 @@ TIER_FILES = {
     5: "tier5_town",
 }
 HUB_FILE = "hub"
+# Downtown (007): core tiers, then the theme kits and hero variants (Holiday City and Sunny City).
+DOWNTOWN_TIER_FILES = {
+    1: "dt_tier1",
+    2: "dt_tier2",
+    3: "dt_tier3",
+    4: "dt_tier4",
+    5: "dt_tier5",
+}
+DOWNTOWN_THEME_FILE = "dt_theme"
+DOWNTOWN_PREFIX = "dt_"
+
+
+def world_from_argv() -> str:
+    """--world snow_village (default) or --world downtown; arguments follow Blender's `--`."""
+    argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+    if "--world" not in argv:
+        return "snow_village"
+    world = argv[argv.index("--world") + 1]
+    if world not in ("snow_village", "downtown"):
+        raise RuntimeError(f"unknown --world {world}: use snow_village or downtown")
+    return world
 
 
 def art_dir() -> str:
@@ -846,8 +868,14 @@ def assign_uvs(bm, tags, swatch_rects) -> int:
     layer = bm.loops.layers.uv.new("UVMap")
     inner = CELL * (1.0 - 2.0 * UV_MARGIN)
     for face, swatch in tags:
-        u, v = swatch_rects[swatch]
-        u0, v0 = u - inner / 2.0, v - inner / 2.0
+        rect = swatch_rects[swatch]
+        if len(rect) == 4:
+            pad = 1e-4
+            u0, v0 = rect[0] + pad, rect[1] + pad
+            inner_u, inner_v = rect[2] - rect[0] - 2 * pad, rect[3] - rect[1] - 2 * pad
+        else:
+            u0, v0 = rect[0] - inner / 2.0, rect[1] - inner / 2.0
+            inner_u = inner_v = inner
         nx, ny, nz = abs(face.normal.x), abs(face.normal.y), abs(face.normal.z)
         if nx >= ny and nx >= nz:
             ax_u, ax_v = 1, 2
@@ -862,7 +890,7 @@ def assign_uvs(bm, tags, swatch_rects) -> int:
         for loop in face.loops:
             su = (loop.vert.co[ax_u] - min(us)) / span_u if span_u > EPS else 0.5
             sv = (loop.vert.co[ax_v] - min(vs)) / span_v if span_v > EPS else 0.5
-            loop[layer].uv = (u0 + su * inner, v0 + sv * inner)
+            loop[layer].uv = (u0 + su * inner_u, v0 + sv * inner_v)
     return sum(max(1, len(f.verts) - 2) for f in bm.faces)
 
 
@@ -933,18 +961,49 @@ def build_file(tier_file: str, object_ids: list, recipes: dict, sizes: dict,
     print(f"build: wrote {path}")
 
 
+def downtown_recipes() -> dict:
+    """Downtown recipes live in downtown_recipes.py next to this script (same DSL as all_recipes)."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import downtown_recipes
+    return downtown_recipes.all_recipes(sys.modules[__name__]), set(downtown_recipes.CORE_IDS)
+
+
 def main() -> None:
     os.makedirs(source_dir(), exist_ok=True)
-    budgets = load_json(os.path.join(art_dir(), "scripts", "budgets.json"))
+    world = world_from_argv()
+    all_budgets = load_json(os.path.join(art_dir(), "scripts", "budgets.json"))
     palette = load_json(os.path.join(art_dir(), "palette.json"))
-    rects = {
-        name: (centre["u"], centre["v"]) for name, centre in palette.items()
+    if "cells" in palette:
+        # Schema v2 (005): 128 x 64 px cells, so a swatch is its whole inner rect, not a centre point.
+        rects = {name: (c["u0"], c["v0"], c["u1"], c["v1"]) for name, c in palette["cells"].items()}
+    else:
+        rects = {name: (centre["u"], centre["v"]) for name, centre in palette.items()}
+    # budgets.json holds both worlds; each mode builds only its own keys.
+    keep = (lambda k: k.startswith(DOWNTOWN_PREFIX)) if world == "downtown" \
+        else (lambda k: not k.startswith(DOWNTOWN_PREFIX))
+    budgets = {
+        "meshTriangles": all_budgets["meshTriangles"],
+        "sizes": {k: v for k, v in all_budgets["sizes"].items() if keep(k)},
+        "tiers": {k: v for k, v in all_budgets["tiers"].items() if keep(k)},
     }
-    recipes = all_recipes()
+    core_ids = set()
+    if world == "downtown":
+        recipes, core_ids = downtown_recipes()
+        core_ids = {"dt_" + name for name in core_ids}
+    else:
+        recipes = all_recipes()
     missing = [obj_id for obj_id in budgets["sizes"] if obj_id not in recipes]
     extra = [obj_id for obj_id in recipes if obj_id != "hub" and obj_id not in budgets["sizes"]]
     if missing or extra:
         raise RuntimeError(f"recipe/data mismatch: missing={missing} extra={extra}")
+
+    if world == "downtown":
+        for tier, tier_file in sorted(DOWNTOWN_TIER_FILES.items()):
+            ids = sorted(k for k in budgets["sizes"] if k in core_ids and budgets["tiers"][k] == tier)
+            build_file(tier_file, ids, recipes, budgets["sizes"], rects, budgets)
+        theme_ids = sorted(k for k in budgets["sizes"] if k not in core_ids)
+        build_file(DOWNTOWN_THEME_FILE, theme_ids, recipes, budgets["sizes"], rects, budgets)
+        return
 
     grouped = {}
     for object_id in sorted(budgets["sizes"]):
