@@ -48,3 +48,4 @@ roblox.yml
 
 # Downloaded luau-lsp Roblox type definitions (scripts/check.sh)
 .cache/
+/.scratch/

@@ -15,6 +15,7 @@ local beforeEach = JestGlobals.beforeEach
 local afterEach = JestGlobals.afterEach
 
 local Config = require(ReplicatedStorage.Shared.Config)
+local Growth = require(ReplicatedStorage.Shared.Rules.Growth)
 local Worlds = require(ReplicatedStorage.Shared.Worlds)
 local AbsorbService = require(ServerScriptService.AbsorbService)
 local BallService = require(ServerScriptService.BallService)
@@ -22,10 +23,10 @@ local RunManager = require(ServerScriptService.RunManager)
 local WorldSpawner = require(ServerScriptService.WorldSpawner)
 local Fixtures = require(script.Parent.Fixtures)
 
--- Fixture placements picked by object type: acorns (0.5) are eatable from the start, baubles (0.8) are the
--- biggest object eatable at the start diameter, a duck and a yard object are too big for a ball of 2 to eat.
-local small = Fixtures.ids("acorn", 12)
-local baubles = Fixtures.ids("bauble", 4)
+-- Fixture placements picked by object size: 0.5 studs is eatable from the start, 0.8 is the biggest object
+-- eatable at the start diameter, a Tier 2 and a Tier 3 object are too big for a ball of 2 to eat.
+local small = Fixtures.idsOfSize(0.5, 12)
+local baubles = Fixtures.idsOfSize(0.8, 4)
 local duck = Fixtures.ofTier(2)
 local yardObject = Fixtures.ofTier(3)
 
@@ -132,12 +133,22 @@ describe("RunManager run clock", function()
 		local result = published[1].result
 		expect(published[1].userId).toBe(session.ownerUserId)
 		expect(result.runId).toBe(run.runId)
-		expect(result.worldId).toBe("snow_village")
-		-- Two acorns (0.5), k = 1.5: D^3 = 8 + 2 * 1.5 * 0.125 = 8.375, D = 8.375^(1/3) = 2.0308.
-		expect(result.finalDiameter).toBeCloseTo(2.0308, 3)
+		expect(result.worldId).toBe(Worlds.active.worldId)
+		-- Two small objects (0.5) at the world's k: D^3 = 8 + 2 * k * 0.125.
+		local expectedDiameter =
+			Growth.growDiameter(Growth.growDiameter(2, 0.5, Worlds.growthK), 0.5, Worlds.growthK)
+		expect(result.finalDiameter).toBeCloseTo(expectedDiameter, 3)
 		expect(result.stars).toBe(0)
-		expect(result.coins).toBe(2)
-		expect(result.newBookIds).toEqual({ "snow_village.acorn" })
+		local first, second = Fixtures.objectOf(small[1]), Fixtures.objectOf(small[2])
+		expect(result.coins).toBe(first.coins + second.coins)
+		local expectedBook = { first.bookId }
+		if second.bookId ~= first.bookId then
+			table.insert(expectedBook, second.bookId)
+		end
+		table.sort(expectedBook)
+		local gotBook = table.clone(result.newBookIds)
+		table.sort(gotBook)
+		expect(gotBook).toEqual(expectedBook)
 		expect(result.bestSelfSize).toBe(result.finalDiameter)
 		expect(result.bestFriendSize).toBe(nil)
 	end)
@@ -352,14 +363,14 @@ describe("RunManager events", function()
 		startRun(session, now)
 		expect(eat(session, small[1], now + 1)).toBe("Ok")
 		expect(names()).toEqual({ "PickupConfirmed" })
-		expect(events[1].payload).toBe("acorn")
+		expect(events[1].payload).toBe(Fixtures.objectOf(small[1]).id)
 	end)
 
 	it("emits TierUnlocked(2) once when growth crosses 5", function()
 		local now = os.clock()
 		local session = newSession()
 		startRun(session, now)
-		-- D = 4.99 plus one bauble (0.8), k = 1.5: (124.2515 + 0.768)^(1/3) = 5.0003, past 5.
+		-- D = 4.99 plus one 0.8 object at the world's k (at least 1.5): 4.99^3 + k * 0.512 is past 5^3.
 		BallService.setDiameter(session, 4.99)
 		expect(eat(session, baubles[1], now + 1)).toBe("Ok")
 		expect(names()).toEqual({ "PickupConfirmed", "TierUnlocked" })

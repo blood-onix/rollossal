@@ -6,6 +6,7 @@
 local fs = require("@lune/fs")
 local harness = require("./harness")
 local Strings = require("../../src/shared/Localization/Strings")
+local Downtown = require("../../src/shared/Content/Worlds/Downtown")
 
 local test, expect = harness.test, harness.expect
 
@@ -330,6 +331,110 @@ test("Strings: every 006 booster, trap and chip key has English and Spanish text
 		for _, word in restricted do
 			expect.falsy(string.find(string.lower(entry.en), word, 1, true))
 			expect.falsy(string.find(string.lower(entry.es), word, 1, true))
+		end
+	end
+end)
+
+-- Downtown (007, contracts/art-and-strings.md §Strings): 99 object keys, 10 tier keys and 4 book-page keys, in
+-- both languages. The keys are read from the world data so a new object without text fails here.
+local function downtownObjectKeys(): { string }
+	local keys: { [string]: boolean } = {}
+	for _, object in Downtown.objects do
+		keys[object.nameKey] = true
+	end
+	for _, binding in Downtown.themeBindings :: any do
+		for _, object in binding.objects or {} do
+			keys[object.nameKey] = true
+		end
+		for _, variant in binding.heroVariants do
+			if variant.nameKey ~= nil then
+				keys[variant.nameKey] = true
+			end
+		end
+	end
+	local list = {}
+	for key in keys do
+		table.insert(list, key)
+	end
+	table.sort(list)
+	return list
+end
+
+test(
+	"Strings: the 99 Downtown object, 10 tier and 4 book-page keys have English and Spanish",
+	function()
+		local objectKeys = downtownObjectKeys()
+		expect.equal(#objectKeys, 99)
+		local tierKeys = {}
+		for tier = 1, 5 do
+			table.insert(tierKeys, `tier.downtown.{tier}.name`)
+			table.insert(tierKeys, `tier.downtown.{tier}.headline`)
+		end
+		expect.equal(#tierKeys, 10)
+		local bookKeys = {
+			"book.page.downtown.winter.name",
+			"book.page.downtown.winter.returning",
+			"book.page.downtown.city.name",
+			"book.page.downtown.city.returning",
+		}
+		for _, group in { objectKeys, tierKeys, bookKeys } do
+			for _, key in group do
+				local entry = (Strings :: { [string]: { en: string, es: string? } })[key]
+				expect.truthy(entry ~= nil, `missing key {key}`)
+				if entry ~= nil then
+					expect.truthy(#entry.en > 0, key)
+					expect.truthy(entry.es ~= nil and #entry.es > 0, `{key} has no Spanish text`)
+				end
+			end
+		end
+		for _, def in Downtown.sizeTiers do
+			expect.truthy((Strings :: any)[def.nameKey] ~= nil, def.nameKey)
+			expect.truthy((Strings :: any)[def.headlineKey] ~= nil, def.headlineKey)
+		end
+	end
+)
+
+test("Strings: Downtown returning labels carry no limited, timer, date or digit wording", function()
+	local banned = {
+		"limited",
+		"ends",
+		"hurry",
+		"only",
+		"left",
+		"timer",
+		"countdown",
+		"limitad",
+		"termina",
+		"solo",
+		"sólo",
+		"quedan",
+		"date prisa",
+	}
+	for _, key in { "book.page.downtown.winter.returning", "book.page.downtown.city.returning" } do
+		local entry = (Strings :: { [string]: { en: string, es: string? } })[key]
+		expect.truthy(entry ~= nil)
+		if entry then
+			for _, text in { entry.en, entry.es :: string } do
+				local lowered = string.lower(text)
+				for _, word in banned do
+					expect.falsy(string.find(lowered, word, 1, true), `{key}: "{text}" says {word}`)
+				end
+				expect.falsy(string.find(text, "%d"), `{key}: "{text}" has a digit`)
+			end
+		end
+	end
+end)
+
+test("Strings: no Downtown text names a person, an animal to absorb, a brand or a price", function()
+	local banned = { "robux", "price", "buy", "gun", "knife", "coca", "nike", "ikea" }
+	for key, entry in Strings :: { [string]: { en: string, es: string? } } do
+		if string.find(key, "downtown", 1, true) then
+			for _, text in { entry.en, entry.es or "" } do
+				local lowered = string.lower(text)
+				for _, word in banned do
+					expect.falsy(string.find(lowered, word, 1, true), `{key} says {word}`)
+				end
+			end
 		end
 	end
 end)

@@ -2,7 +2,9 @@
 -- The art gate that runs without Blender (specs/004-snow-village/contracts/art-pipeline.md): the exported
 -- meshes through their manifest, the asset keys, the budgets file and the hard-coded id scan. With no
 -- manifest yet the mesh checks run in fallback mode and only the id scan, key coverage and budgets file apply.
--- REQUIRE_ASSET_IDS=1 also demands the manifest and every imported asset id (the final gate).
+-- 007 generalises it to both worlds: Snow Village keys are the object ids, Downtown keys are dt_<id> (theme-only
+-- objects and hero variants included). Downtown meshes arrive wave by wave, so they are optional in the manifest
+-- and in Assets.meshes until REQUIRE_ASSET_IDS=1, which demands the manifest and every imported asset id.
 --
 -- Local vars and test helpers:
 --
@@ -16,6 +18,7 @@ local Fbx = require("../../scripts/fbx-geometry")
 local Assets = require("../../src/shared/Assets")
 local Config = require("../../src/shared/Config")
 local SnowVillage = require("../../src/shared/Content/Worlds/SnowVillage")
+local Downtown = require("../../src/shared/Content/Worlds/Downtown")
 
 local test, expect = harness.test, harness.expect
 
@@ -63,11 +66,25 @@ local function walk(directory: string, found: { string })
 	end
 end
 
-test("Art: the committed budgets file matches Config and the Snow Village data", function()
-	expect.truthy(fs.isFile(BUDGETS))
-	local committed = serde.decode("json", fs.readFile(BUDGETS))
-	expect.truthy(sameValue(committed, ArtBudgets.build()))
-end)
+-- The mesh keys the two worlds ask for, by world.
+local snowKeys: { [string]: boolean } = {}
+local downtownKeys: { [string]: boolean } = {}
+for _, entry in ArtBudgets.meshes() do
+	if entry.world == "snow_village" then
+		snowKeys[entry.key] = true
+	else
+		downtownKeys[entry.key] = true
+	end
+end
+
+test(
+	"Art: the committed budgets file matches Config and the Snow Village and Downtown data",
+	function()
+		expect.truthy(fs.isFile(BUDGETS))
+		local committed = serde.decode("json", fs.readFile(BUDGETS))
+		expect.truthy(sameValue(committed, ArtBudgets.build()))
+	end
+)
 
 test("Art: no mesh, texture or sound id is hard-coded outside Assets.luau", function()
 	local files: { string } = {}
@@ -86,39 +103,82 @@ test("Art: no mesh, texture or sound id is hard-coded outside Assets.luau", func
 	end
 end)
 
-test("Art: Assets.meshes has one key per object asset key plus the hub, and no other", function()
-	local wanted: { [string]: boolean } = { hub = true }
-	for _, object in SnowVillage.objects do
-		wanted[object.assetKey :: string] = true
+test(
+	"Art: Assets.meshes holds every Snow Village key and the hub, and no key the worlds do not ask for",
+	function()
+		local wanted: { [string]: boolean } = { hub = true }
+		for _, object in SnowVillage.objects do
+			wanted[object.assetKey :: string] = true
+		end
+		for key in wanted do
+			expect.truthy(Assets.meshes[key] ~= nil)
+		end
+		for key in Assets.meshes do
+			expect.truthy(
+				wanted[key] or downtownKeys[key],
+				`{key} is not an asset key of any world`
+			)
+		end
+		expect.equal(SnowVillage.hub.assetKey, "hub")
+		expect.equal(Downtown.hub.assetKey, "hub")
 	end
-	for key in wanted do
-		expect.truthy(Assets.meshes[key] ~= nil)
+)
+
+test("Art: Downtown asks for 99 meshes, all keyed dt_ and disjoint from Snow Village", function()
+	local count = 0
+	for key in downtownKeys do
+		count += 1
+		expect.truthy(string.sub(key, 1, 3) == "dt_", key)
+		expect.falsy(snowKeys[key], key)
 	end
-	for key in Assets.meshes do
-		expect.truthy(wanted[key])
-	end
-	expect.equal(SnowVillage.hub.assetKey, "hub")
+	expect.equal(count, 99)
+	expect.equal(#ArtBudgets.meshes(), #SnowVillage.objects + 99)
 end)
 
-test("Art: the manifest has one entry per object plus the hub, with the object tiers", function()
-	if not hasManifest then
-		expect.falsy(requireIds)
+test("Art: with REQUIRE_ASSET_IDS=1 every Downtown key is in Assets.meshes", function()
+	if not requireIds then
 		return
 	end
-	local manifest = readManifest()
-	local byId: { [string]: ManifestEntry } = {}
-	for _, entry in manifest.meshes do
-		expect.falsy(byId[entry.id])
-		byId[entry.id] = entry
+	for key in downtownKeys do
+		expect.truthy(Assets.meshes[key] ~= nil, `{key} is missing from Assets.meshes`)
 	end
-	expect.equal(#manifest.meshes, #SnowVillage.objects + 1)
-	for _, object in SnowVillage.objects do
-		local entry = byId[object.id]
-		expect.truthy(entry ~= nil)
-		expect.equal(entry.tier, object.tier)
-	end
-	expect.truthy(byId.hub ~= nil)
 end)
+
+test(
+	"Art: the manifest has an entry per Snow Village object and the hub, plus the Downtown meshes built",
+	function()
+		if not hasManifest then
+			expect.falsy(requireIds)
+			return
+		end
+		local manifest = readManifest()
+		local byId: { [string]: ManifestEntry } = {}
+		for _, entry in manifest.meshes do
+			expect.falsy(byId[entry.id])
+			byId[entry.id] = entry
+		end
+		local budgets = ArtBudgets.build()
+		for _, object in SnowVillage.objects do
+			local entry = byId[object.id]
+			expect.truthy(entry ~= nil, object.id)
+			expect.equal(entry.tier, object.tier)
+		end
+		expect.truthy(byId.hub ~= nil)
+		local downtownBuilt = 0
+		for id, entry in byId do
+			if downtownKeys[id] then
+				downtownBuilt += 1
+				expect.equal(entry.tier, budgets.tiers[id], id)
+			else
+				expect.truthy(snowKeys[id] or id == "hub", `{id} is not a mesh of any world`)
+			end
+		end
+		expect.equal(#manifest.meshes, #SnowVillage.objects + 1 + downtownBuilt)
+		if requireIds then
+			expect.equal(downtownBuilt, 99)
+		end
+	end
+)
 
 test(
 	"Art: every exported FBX matches its manifest entry and its triangle budget, counted from the file",

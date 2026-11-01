@@ -150,6 +150,18 @@ test("reconcile fills: missing keys come from the defaults", function()
 	expect.equal(data.worldsUnlocked.greybox, true)
 end)
 
+test("reconcile merges: an old profile gains the default worlds", function()
+	local data: any = { version = 1, worldsUnlocked = { snow_village = true, greybox = false } }
+	local defaults: any = {
+		worldsUnlocked = { greybox = true, downtown = true },
+		settings = D.settings,
+	}
+	Profile.reconcile(data, defaults)
+	expect.equal(data.worldsUnlocked.downtown, true)
+	expect.equal(data.worldsUnlocked.snow_village, true)
+	expect.equal(data.worldsUnlocked.greybox, false)
+end)
+
 test("reconcile keeps: valid saved values are not changed", function()
 	local data: any = {
 		version = 1,

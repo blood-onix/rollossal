@@ -104,6 +104,12 @@ function Profile.reconcile(data: { [string]: any }, defaults: Defaults)
 			data[key] = (fresh :: any)[key]
 		end
 	end
+	-- A profile saved before a world became a default keeps its choices and gains the new default worlds.
+	for worldId, unlocked in fresh.worldsUnlocked do
+		if data.worldsUnlocked[worldId] == nil then
+			data.worldsUnlocked[worldId] = unlocked
+		end
+	end
 	if type(data.settings) ~= "table" then
 		data.settings = fresh.settings
 	else

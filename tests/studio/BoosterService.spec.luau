@@ -191,9 +191,10 @@ describe("BoosterService claims", function()
 
 	it("refreshes an active booster instead of stacking it", function()
 		local session = newSession()
+		-- Any booster kind with two markers in the active world will do; dash is in both worlds.
 		local first, second
 		for _, marker in BoosterService.markers() do
-			if marker.subKind == "magnet" then
+			if marker.subKind == "dash" then
 				if first == nil then
 					first = marker
 				else
@@ -206,11 +207,11 @@ describe("BoosterService claims", function()
 		stand(session, first)
 		expect(BoosterService.tryClaim(session, first.markerId, NOW)).toBe("Ok")
 		stand(session, second)
-		expect(BoosterService.tryClaim(session, second.markerId, NOW + 3)).toBe("Ok")
-		-- The second claim restarts the full duration: 6 s left at NOW + 3, not 3.
-		local remaining = BoosterService.activeFor(session, NOW + 3).magnet
+		expect(BoosterService.tryClaim(session, second.markerId, NOW + 1)).toBe("Ok")
+		-- The second claim restarts the full duration: 3 s left at NOW + 1, not 2.
+		local remaining = BoosterService.activeFor(session, NOW + 1).dash
 			- Workspace:GetServerTimeNow()
-		expect(math.abs(remaining - Config.magnetDuration) < 0.5).toBe(true)
+		expect(math.abs(remaining - Config.dashDuration) < 0.5).toBe(true)
 	end)
 
 	it("a Shield absorbs the next qualifying hit and is then spent", function()

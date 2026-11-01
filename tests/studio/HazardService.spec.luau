@@ -168,7 +168,7 @@ describe("HazardService", function()
 	end)
 
 	it("scattered objects are collectable by a third ball after scatterGrace", function()
-		local acorns = Fixtures.ids("acorn", 3)
+		local acorns = Fixtures.idsOfSize(0.5, 3)
 		local attacker = newSession()
 		local victim = newSession()
 		local third = newSession()

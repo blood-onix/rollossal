@@ -1,35 +1,71 @@
 <!--
 Sync Impact Report (temporary; remove before commit)
-Version change: 1.1.0 -> 2.0.0
-Bump reason: MAJOR. Principle XI's "flat-shaded, one shared palette texture" rule is redefined
-  incompatibly (smooth shading allowed on round parts, one gradient atlas per theme with UV and
-  material rules, PBR/transparency/per-prop lights banned). Assets built to the old rule do not
-  satisfy the new one. Principle IV also gains new MUST NOT rules.
+Version change: 2.0.0 -> 3.0.0
+Bump reason: MAJOR. Principle I is redefined incompatibly: the owner playing a mechanic was
+  required and MUST NOT be now; the outside round moves to the RC; a later mechanic no longer
+  gets its own round automatically. Gate 2 changes scope from task to feature, and two items
+  leave or narrow on the Human Approval list. A plan written to 2.0.0 (owner sign-off as an
+  acceptance gate, timed bot runs, capture files) now breaks the new rules, so this is not a
+  MINOR expansion, even though most of the changes relax rules.
 Modified principles:
-  - IV. Safe for Everyone (Target Rating: Minimal): added no absorbing people or real/live
-    animals (stand-ins fine, ambient animals non-absorbable); added no real brands, logos,
-    flags, memes or real faces, no words on textures; rationale now 16+ trial then 10-15.
-  - VII. Content Is Data: reskin example now "Holiday City to Sunny City"; added that a theme
-    is data (palette atlas, lighting, weather, music, dressing slots, overlays, hero variants,
-    book page), chosen by id, switched by release, never by code or a visible date check.
-  - XI. Asset Pipeline: flat-shaded/one-palette rule replaced by stylised-real rules (low-poly
-    real proportions, bevel, gradient atlas per theme, one material, no PBR/transparency/
-    prop lights, Neon glow, skins <= 512 px, toppers on world atlas); rationale updated.
-  - Preamble: added docs/design/ as the art and content direction, subordinate to this
-    constitution.
-Added sections: none
+  - I. Fun Is Proven in Grey Box First -> I. Grey Box First, Fun Judged on the Release Candidate:
+    rewritten. Title changed because agents now prove a mechanic works and fun is judged later.
+  - V. Ethical Monetization: "prices" means Robux prices; coin prices are data set by agents and
+    reviewed on the RC; stubbed products behind an off flag allowed; approval before any real
+    product or price.
+  - VI. Mobile First: targets kept and measured on the RC; agent Studio runs check budgets and
+    frame rate until then; real-phone check on the RC.
+  - VIII. Player Data and Privacy: schema, key name and migration changes pre-approved until the
+    first live publish, if they carry the version bump, migration and test.
+  - Preamble: defines the release candidate (RC).
+Modified sections:
+  - Quality Gates: Gate 2 now per feature, inspected capture instead of a saved file; Gate 3 lets
+    an owner hand-off ship with its stand-in (needed, or the hand-off rule could never be met);
+    added the agent-runnable, release-candidate list, hand-off, two-failure and default rules.
+    Gate 2's Studio playtest is exempt from the two-failure rule (owner decision, 2026-11-01).
+  - Human Approval Required: data changes apply from the first live publish on; "prices" narrowed
+    to real products and Robux prices. Live publish, questionnaire, new tools and real money stay.
+Added sections: none (docs/release-candidate.md is a new file outside this document)
 Removed sections: none
-Unchanged: I, II, III, V, VI, VIII, IX, X, XII, Quality Gates, Human Approval, Governance.
-Templates checked: .specify/templates/*, AGENTS.md, CLAUDE.md, .github/copilot-instructions.md
-  do not repeat the changed rules; no change needed.
+Unchanged: II, III, IV, VII, IX, X, XI, XII, Governance.
+Files updated: docs/release-candidate.md (new), AGENTS.md ("Studio tasks" section).
+Files checked, no change needed: .specify/templates/*, CLAUDE.md, .github/copilot-instructions.md,
+  .claude/skills/speckit-*: none repeats the changed rules.
+Not checked: Conveyor's own prompts live outside this repo and may still produce human items.
 Follow-up TODOs:
-  - Principle I still says outside playtests use "children aged 10-12"; left as is (outside
-    the approved amendment). Principle VI's mid-range phone and Principle I wording may need a
-    later look against the 16+ trial audience.
-  - Existing assets and art/scripts (build_shared.py, build_objects.py, export_all.py),
-    src/shared/Assets.luau, ObjectVisual.luau, specs/004-snow-village and docs/rollossal-gdd.md
-    still describe flat-shaded/one-palette art; migrate under stories 004a and 004e. The GDD
-    must be corrected to match (Governance), by its own editor.
+  - Not edited, by request. Backlog items that still repeat the old gates:
+    - 004f: owner approves the slice and the map as acceptance, owner reviews each ring, "Carried
+      over from 007" list (now on the release-candidate list). See the conflict below.
+    - 004c: capture set saved in the feature folder; owner signs off the look.
+    - 004d: cites constitution 1.1.0; "once it looks like a game" should become the RC.
+    - 005: owner checks on a real phone; grey-box check "plus the owner playing it".
+    - 006a: owner approval of the schema change; coin prices as an owner confirmation.
+    - 006b: owner runs the private-test-place purchases; no stubbed-product path yet.
+    - 007: owner approval of the onboarding schema change.
+    - 008: people round after 004d is automatic and the live publish waits for it (now the
+      owner's choice); budgets "locked from 004e's capture".
+    - 009, 010: grey-box check "plus the owner playing it"; 009 also needs the owner's sign-off.
+    - 011, 013: timed pacing bot runs (+/-20 s); 30 fps on the reference phone as acceptance.
+    - 012: "the pacing bot run still passes". Its schema approval stays right after launch.
+  - Not edited, by request. Existing specs that repeat the old gates (all finished, so history):
+    - 001: spec Story 1 and FR-025; tasks T059.
+    - 002 and 003: 👤 human tasks in tasks.md (003 T048); 003's schema gate was met as written.
+    - 004: spec Playtest Timing Gate, Deferred Balance, FR-012, SC-004, SC-005, Outside-Player
+      Deferral; tasks T032.
+    - 005: spec SC-004 and FR-009 (640 x 360 capture).
+    - 006: spec Grey-Box Gate, SC-004.
+    - 007: spec Grey-Box Gate, Locking Budgets, SC-005; tasks T015, T016, T035, T039. Its
+      playtest.md points the open items at 004f; they now live on the release-candidate list.
+  - docs/rollossal-gdd.md repeats the old order (section 11, item 5: 004d) and lists prices and the
+    DataStore key name as owner questions. Governance says the spec is corrected; not edited, by
+    request. docs/design/ not edited or checked for these rules.
+  - Conflict to settle in 004f: its acceptance is owner taste, which the new gates say MUST NOT
+    hold a feature, yet the RC needs the map in its "final layout". The owner can still review the
+    slice; it just cannot be a gate unless this is changed.
+  - Principle VI wording differs from the request: the MCP cannot resize Studio's viewport
+    (AGENTS.md, 007 playtest round 3), so a frame-rate run at another size records that size.
+  - Carried from 2.0.0, status not rechecked: flat-shaded/one-palette wording in older art scripts,
+    specs/004-snow-village and the GDD; Principle I's "children aged 10-12" against the 16+ trial.
 -->
 
 # Rollossal Constitution
@@ -47,30 +83,36 @@ or group it is published under). **Owner approval** means an approving review or
 "approved" comment from the owner on the pull request (or task) concerned. An agent's own
 statement never counts as owner approval.
 
+**The release candidate (RC)** means a build on the private test place with the launch world in
+its final layout and art, the juice pass and every feature in launch scope. The owner declares
+it.
+
 ## Core Principles
 
-### I. Fun Is Proven in Grey Box First
+### I. Grey Box First, Fun Judged on the Release Candidate
 
-- Art, monetization and live-ops work MUST NOT start until the owner has played a grey-box
-  build of ball control, absorption and growth and signed off. The sign-off MUST be recorded
-  in that feature's `playtest.md`.
-- Every new mechanic MUST get a grey-box check before any polish (art, VFX, audio, UI
-  styling) is applied to it. The check is an agent-driven Studio playtest through the Studio
-  MCP server (with simulated clients when the mechanic needs several players) plus the owner
-  playing it. Outside players are not required for this check.
-- A playtest with outside people (at least 3 adults and at least 3 children aged 10–12) MUST
-  take place once the game has its world art and animation, and MUST be recorded with the
-  owner's sign-off before the first publish to the live place. A mechanic that lands after
-  that round MUST get its own round with outside people before it ships to the live place.
-- Each playtest MUST be recorded in the feature's spec folder (`specs/<feature>/playtest.md`)
-  with the date, the build or commit, participant counts per age group (when people take
-  part), findings, and the owner's sign-off. Children are recorded by age group only, never
-  by name.
+- The grey-box gate for ball control, absorption and growth was met by the owner's sign-off on
+  2026-10-26 (`specs/004-snow-village/playtest.md`). Art, monetization and live-ops work MAY
+  proceed.
+- Every new mechanic MUST get an agent-driven grey-box check before any polish (art, VFX, audio,
+  UI styling) is applied to it. The check is a Studio playtest through the Studio MCP server,
+  with simulated clients when the mechanic needs several players. The owner playing it is
+  welcome and MUST NOT be required.
+- One playtest with outside people (at least 3 adults and at least 3 children aged 10–12) MUST
+  take place on the RC and MUST be recorded with the owner's sign-off before the first publish
+  to the live place. It covers every mechanic that landed before it. For a mechanic that lands
+  later, the owner decides whether it needs its own round.
+- Feel and tuning values (pace windows, `growthK`, star thresholds, jump, booster and trap
+  values) are judged on the RC. They MUST NOT block a feature before then.
+- Each agent run and the RC round MUST be recorded in the feature's spec folder
+  (`specs/<feature>/playtest.md`) with the date, the build or commit, participant counts per age
+  group (when people take part), findings, and, for the RC round, the owner's sign-off. Children
+  are recorded by age group only, never by name.
 
-Rationale: the genre is crowded and art is expensive. A mechanic that is not fun in grey
-boxes will not be saved by polish, so grey box still proves each mechanic before polish. But
-showing a grey-box room to children gives little signal: they judge what looks like a game.
-Outside people therefore test once the game reads as a game, and always before launch.
+Rationale: art is expensive, and a mechanic that does not work in grey boxes will not be saved
+by polish, so an agent still proves each mechanic before polish. Feel is different: tuning
+depends on the final map, and neither children nor the owner get useful signal from a build that
+does not yet read as a game. People therefore judge it once, on the RC, and always before launch.
 
 ### II. Server Authority
 
@@ -135,6 +177,8 @@ the same build works for both groups without a reskin.
 - Nothing paid MAY change the outcome of a competitive mode.
 - There MUST be exactly one soft currency, Coins, earned only through play and never sold
   for Robux (directly or bundled).
+- In this constitution, "prices" means Robux prices. Coin prices are tuning values in data that
+  agents set and the owner reviews on the RC.
 - Prices MUST be read from `MarketplaceService` and shown before purchase; prices MUST NOT
   be hard-coded in UI.
 - There MUST be no countdown pressure, no pop-up offers during a run, and no fake "limited"
@@ -142,7 +186,9 @@ the same build works for both groups without a reskin.
 - `ProcessReceipt` MUST be idempotent: processed receipt IDs are stored in the player
   profile, and a repeated receipt grants nothing. This MUST be covered by tests in
   `tests/studio`.
-- Adding or changing prices, game passes or developer products MUST have owner approval.
+- Robux features MAY be built and tested with stubbed products behind a flag that is off.
+- Creating or changing any real game pass, developer product or price MUST have owner approval
+  first.
 
 Rationale: "fair and kind" is a design pillar; the audience is children, and trust is the
 product.
@@ -155,8 +201,12 @@ product.
 - Information MUST NOT be conveyed by colour alone or by sound alone.
 - A new player MUST roll up their first object within 5 seconds of joining and reach the
   first growth tier within 60 seconds, with no menu in front of the first run.
-- Performance budgets MUST be defined in `src/shared/Config` and checked in playtests:
-  visible stuck objects per ball, active parts per server, and triangles per mesh.
+- Performance budgets MUST be defined in `src/shared/Config`: visible stuck objects per ball,
+  active parts per server, and triangles per mesh.
+- These targets are launch requirements, measured on the RC. Until then, budgets and frame rate
+  are checked in agent Studio runs at 640 × 360, judged on unthrottled seconds. The Studio MCP
+  cannot resize the viewport, so a run at another size records the size it ran at. The
+  real-phone check happens on the RC.
 
 Rationale: most of the audience plays on phones, and the first minute decides retention.
 
@@ -186,7 +236,10 @@ Rationale: monthly worlds and weekly object drops are only affordable if they ar
   other personal data.
 - Any player-visible text that a player can influence MUST go through `TextService`
   filtering.
-- Changing a DataStore schema, key name or migration MUST have owner approval.
+- Until the first publish to the live place there is no player data to protect, so changing a
+  DataStore schema, key name or migration is pre-approved as long as it carries the version
+  bump, the migration and its test. From the first live publish on, each such change MUST have
+  owner approval.
 
 Rationale: lost or corrupted progress is the fastest way to lose players, and the audience
 includes children.
@@ -254,25 +307,50 @@ Rationale: a two-person team with agents can only maintain what it understands.
 
 ## Quality Gates
 
-A task is done only when all of the following hold:
+A task is done only when gates 1, 3, 4 and 5 hold. A feature is ready for its pull request only
+when all five hold:
 
 1. Format, lint, type check and unit tests pass: `scripts/check.sh` exits 0.
-2. If the task touches server, client or UI behaviour: an agent has run a Studio playtest
-   through the Studio MCP server, read the console, and seen no new errors or warnings. For
-   UI changes it has also captured the viewport at a phone resolution.
-3. If the task adds an asset: it is within budget and its ID is in `src/shared/Assets.luau`.
+2. Once per feature, before its pull request, if the feature touches server, client or UI
+   behaviour: an agent has run a Studio playtest through the Studio MCP server, read the
+   console, and seen no new errors or warnings. For UI changes it has also inspected a capture
+   at a phone resolution. Capture files MUST NOT be required, because the Studio MCP cannot save
+   them.
+3. If the task adds an asset: it is within budget and its ID is in `src/shared/Assets.luau`. When
+   the upload is an owner hand-off, it has its stand-in or fallback instead and the hand-off is on
+   the release-candidate list.
 4. If the task adds a player-facing string: the string is in the localisation tables.
 5. The task is ticked in `tasks.md`.
 
 Each pull request description MUST state which gates applied and how each was met.
+
+What a feature may require, and what waits for the RC:
+
+- A feature's gates and its `tasks.md` MAY require only what an agent can run: `scripts/check.sh`,
+  Lune, Jest-Lua and the Studio MCP server. Pacing is checked by the Lune pace test, and timed
+  live bot runs are not required.
+- Anything that needs a person, a real device, the final map or owner taste goes in the
+  release-candidate list, `docs/release-candidate.md`. It MUST NOT be a task in `tasks.md` or a
+  human item, and MUST NOT hold a feature. Only the Human Approval list can stop a feature.
+- Owner hand-offs (mesh uploads, music picks and similar) MUST NOT block a feature. It ships with
+  its stand-in or fallback, and the hand-off goes on the list in a batch.
+- An agent-run check that fails twice because of tooling, not a game defect, moves to the list
+  with a note of what was tried. Agents MUST NOT keep building new drivers for it. A game defect
+  is still fixed. Gate 2's Studio playtest and console read are exempt: they MUST run before the
+  pull request, so a feature waits for Studio and Rojo if it has to. This is the one wait outside
+  the Human Approval list.
+- An open question with a proposed default, not on the Human Approval list, is settled by taking
+  the default and recording it in the spec and on the list. The owner can overrule it later.
 
 ## Human Approval Required
 
 Agents MUST stop and get owner approval before any of the following:
 
 - Publishing to the live place.
-- DataStore schema, key name or migration changes.
-- Prices, game passes or developer products (adding or changing).
+- DataStore schema, key name or migration changes, from the first publish to the live place on
+  (before that they are pre-approved under Principle VIII).
+- Creating or changing any real game pass, developer product or price (Principle V). Coin prices
+  and stubbed products behind a flag that is off need no approval.
 - Anything that could change the answers to the Roblox maturity questionnaire.
 - New tools, packages or external services.
 - Spending real money (ads, fees, Robux).
@@ -291,4 +369,4 @@ Agents MUST stop and get owner approval before any of the following:
   flag conflicts in the plan or analysis instead of working around them. A conflict is
   resolved by changing the work or by amending the constitution, never by ignoring it.
 
-**Version**: 2.0.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-10-28
+**Version**: 3.0.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-11-01

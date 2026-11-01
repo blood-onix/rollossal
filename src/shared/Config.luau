@@ -144,7 +144,7 @@ local Config = {
 		languageDefault = "auto",
 		languages = { "auto", "en-us", "es-es" },
 	},
-	DefaultWorldsUnlocked = { greybox = true, snow_village = true },
+	DefaultWorldsUnlocked = { greybox = true, snow_village = true, downtown = true },
 
 	-- Flags (AvatarPusher, BigBallMode and RewardedAds exist, unused, off)
 	Flags = {
@@ -157,6 +157,8 @@ local Config = {
 		DebugFps = true,
 		Shop = false,
 		SnowVillage = true,
+		-- Downtown (007): the launch world. Off falls back to Snow Village, then the grey-box room.
+		Downtown = true,
 		-- Theme system (005). On: the active theme's lighting, weather and music apply. Off: the theme's
 		-- palette, slots and textures still apply (the base zones need them), with no lighting, weather or music.
 		ThemeSystem = true,

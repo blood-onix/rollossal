@@ -1,6 +1,7 @@
 --!strict
 -- The active world and indexes over its content. Table building only, done once at require time.
--- Config.Flags.SnowVillage picks the world; with it off the game is the grey-box room (rollback).
+-- Config.Flags.Downtown picks Downtown; with it off Config.Flags.SnowVillage picks Snow Village; with both off
+-- the game is the grey-box room (rollback).
 -- 005: the active theme resolves once, here. Worlds.resolved carries the themed palette, slot objects
 -- and overlays; Worlds.active stays the base world (specs/005-theme-art-pipeline/data-model.md §6).
 -- With Config.Flags.ThemeSystem off the theme still resolves (the base zones name slots and cannot be
@@ -16,6 +17,7 @@ local Themes = require(Content.Themes)
 
 local GreyBoxRoom = require(Content.GreyBoxRoom)
 local SnowVillage = require(Content.Worlds.SnowVillage)
+local Downtown = require(Content.Worlds.Downtown)
 
 export type WorldDef = GreyBoxRoom.WorldDef
 export type ObjectDef = GreyBoxRoom.ObjectDef
@@ -27,7 +29,10 @@ export type ThemePageWithObjects = ThemeBookPage & {
 	objects: { ObjectDef },
 }
 
-local active: WorldDef = if Config.Flags.SnowVillage then SnowVillage else GreyBoxRoom
+local active: WorldDef = if Config.Flags.Downtown
+	then Downtown :: any
+	elseif Config.Flags.SnowVillage then SnowVillage :: any
+	else GreyBoxRoom
 
 local function sizeMap(objects: { ObjectDef }): { [string]: number }
 	local sizes: { [string]: number } = {}
@@ -144,6 +149,8 @@ for _, themeId in supportedList do
 	end
 end
 
+local growthK: number = active.growthK or Config.growthK
+
 local Worlds = {
 	active = active,
 	resolved = resolved,
@@ -168,7 +175,7 @@ local Worlds = {
 	sizeTiers = active.sizeTiers,
 	tierLikes = tierLikes,
 	starThresholds = active.starThresholds or Config.starThresholds,
-	growthK = active.growthK or Config.growthK,
+	growthK = growthK,
 	objectById = objectById,
 	objectByBookId = objectByBookId,
 	objectsByTier = objectsByTier,
