@@ -38,6 +38,7 @@ export type Rect = { x: number, z: number, hx: number, hz: number }
 local EPSILON = 1e-6
 -- A block whose top is at or under this height is ground: a marker may sit on it.
 local GROUND_TOP = 0.2
+local GOLDEN_CLEARANCE = 4
 
 local Markers = {
 	-- The fixed footprint of a golden spot (Feature 012 spawns an object there).
@@ -213,9 +214,11 @@ function Markers.validate(
 	-- is at its own height, so only the blocks taller than that one count against it.
 	local solid: { Rect } = {}
 	local solidTops: { number } = {}
+	local solidBottoms: { number } = {}
 	for _, block in blocks do
 		if block.cframe.y + block.size.y / 2 > GROUND_TOP then
 			table.insert(solidTops, block.cframe.y + block.size.y / 2)
+			table.insert(solidBottoms, block.cframe.y - block.size.y / 2)
 			table.insert(
 				solid,
 				rotatedBox(
@@ -267,7 +270,9 @@ function Markers.validate(
 		if marker.kind == "GoldenSpot" then
 			obstacles = {}
 			for index, rect in solid do
-				if solidTops[index] > marker.y + GROUND_TOP then
+				-- A slab whose underside is GOLDEN_CLEARANCE above the spot (a tunnel roof) is not in the way.
+				local above = solidBottoms[index] >= marker.y + GROUND_TOP + GOLDEN_CLEARANCE
+				if solidTops[index] > marker.y + GROUND_TOP and not above then
 					table.insert(obstacles, rect)
 				end
 			end

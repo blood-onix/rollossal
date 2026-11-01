@@ -1283,17 +1283,18 @@ block("dt_car_ramp_3", "Wedge", 194, 5, 50, 90, 16, 2, 12, "w-metal")
 box("dt_car_deck_3", 207, 50, 14, 16, 6, "dt-concrete")
 box("dt_car_parapet", 207, 41.5, 14, 0.6, 1, "dt-concrete", 6)
 
--- Storm-drain tunnel under Market Street: floor is the ground, two walls 5 tall, no roof (golden spot 3).
--- Walls are as tall as a Tier 3 ball (diameter >= 5) is wide, so it cannot climb them (a step needs to be below the
--- ball's radius); a ball big enough to climb one (diameter > 10) is wider than the 6-stud chamber and bridges it.
--- Tier 1 to 2 balls (diameter < 5) still fit. The chamber (z -8 to 8) keeps the 6-stud gap for the golden spot's
--- 6 x 6 footprint; each 6-stud mouth narrows to 4.6 so a Tier 3+ ball cannot enter.
+-- Storm-drain tunnel under Market Street: floor is the ground, two walls 5 tall, a roof slab on top (golden spot 3).
+-- The roof is what keeps a Tier 3+ ball out from above: a held jump clears 0.85 x diameter, so a ball of diameter
+-- 5.9 or more would clear 5-tall walls, but with the slab over the chamber and both mouths it can only land on top.
+-- Tier 1 to 2 balls (diameter < 5) still fit under the 5-stud clearance. The chamber (z -8 to 8) keeps the 6-stud
+-- gap for the golden spot's 6 x 6 footprint; each 6-stud mouth narrows to 4.6 so a Tier 3+ ball cannot enter.
 box("dt_tunnel_wall_w", -103.5, 0, 1, 16, 5, "dt-concrete")
 box("dt_tunnel_wall_e", -96.5, 0, 1, 16, 5, "dt-concrete")
 box("dt_tunnel_mouth_wn", -102.8, 11, 1, 6, 5, "dt-concrete")
 box("dt_tunnel_mouth_en", -97.2, 11, 1, 6, 5, "dt-concrete")
 box("dt_tunnel_mouth_ws", -102.8, -11, 1, 6, 5, "dt-concrete")
 box("dt_tunnel_mouth_es", -97.2, -11, 1, 6, 5, "dt-concrete")
+box("dt_tunnel_roof", -100, 0, 8, 28, 0.5, "dt-concrete", 5)
 
 -- Bus stop on Market Street: a roof slab on two posts (golden spot 1).
 box("dt_bus_post_w", 134, -22, 0.6, 0.6, 3, "w-metal-dark")

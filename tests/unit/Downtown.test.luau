@@ -955,16 +955,24 @@ test("Downtown F2: garlands and the sledding slope belong to the winter theme on
 end)
 
 test(
-	"Downtown F5: the drain tunnel walls are 5 tall, so a Tier 3 ball cannot climb them",
+	"Downtown F5: the drain tunnel has 5-tall walls and a roof over the chamber and mouths, so a jump cannot get in",
 	function()
-		local walls = 0
+		local walls, roof = 0, nil
 		for _, block in Downtown.environment.blocks do
-			if string.find(block.id, "^dt_tunnel_") then
+			if block.id == "dt_tunnel_roof" then
+				roof = block
+			elseif string.find(block.id, "^dt_tunnel_") then
 				walls += 1
 				expect.truthy(block.cframe.y + block.size.y / 2 >= 5, block.id)
 			end
 		end
 		expect.equal(walls, 6)
+		expect.truthy(roof ~= nil)
+		-- Covers z -14 to 14 and x -103.5 to -96.5, and sits at the wall tops (clearance 5 for D < 5).
+		expect.truthy(
+			roof.cframe.y - roof.size.y / 2 >= 5 and roof.cframe.y - roof.size.y / 2 <= 5.01
+		)
+		expect.truthy(roof.size.z >= 28 and roof.size.x >= 7)
 	end
 )
 
