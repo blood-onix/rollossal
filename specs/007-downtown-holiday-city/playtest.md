@@ -139,6 +139,21 @@ block lists) stall near D 5 on the winter spawn, and the MCP has no ball-routing
 - After the 240 s run ends the ball anchors in place (matches earlier rounds) — reads after that measure the finished run, not live play.
 - Conclusion after nine bot attempts across rounds 4-10 plus these two: the Studio MCP has no ball routing (`character_navigation` drives characters, not balls), and `screen_capture` returns images only and cannot save into `captures/`. The D 12/30/80 timings, live shortcut and Car Park traversals, and capture files therefore need a human-played session; geometry (kerbs 1.2, ramps 2.0 rise, tunnel gap 4.6, sphere casts), sightlines (12/12), parts (< 1,890), console and the world-build checks all stand from rounds 3-10.
 
+## Owner play: one full round (T015 partial, T016 not signed)
+Reported by the owner after the size-meter fix, one full 240 s round, `winter`, one spawn (not noted), Studio in front (unthrottled).
+- D 12 at about 120 s (2 minutes left). Final size D 30 at 240 s, so 1 star (thresholds 20 / 45 / 80); D 80 not reached.
+- Against the pace windows (model, optimal eater): Tier 3 (D 12) 70 to 110 s, so about 10 s late; Tier 4 (D 30) 145 to 185 s, so at least 55 s late.
+  A first human run is expected to trail the greedy-eater model; this is one run on one spawn, not a pass or a fail of the windows.
+- Not measured: D 5 time, the other 11 spawns, shortcuts, Car Park ramp, captures. The HUD size meter was hidden behind the Roblox top bar
+  during this run (fixed in dbfef42), which may have cost some pace.
+- **Owner decision**: pace polish waits for the real map. This build is a playground, the owner is not a top player, and the numbers depend on
+  the final layout, so `growthK` and the windows stay as they are for now.
+
+## Mesh import (T032, T033)
+The owner imported the 99 new `dt_*` FBX meshes through the 3D Importer. Their `MeshId`s were read from Studio and recorded in `Assets.meshes`
+(`dt_` plus the object id). `scripts/check.sh` passes (481 unit tests), also with `REQUIRE_ASSET_IDS=1`. The 65 Snow Village meshes kept their
+earlier ids. Not yet looked at in Play: mesh appearance, single material and atlas UVs on screen (T035).
+
 ## Open items
-- T015: a human-played (or owner-supplied) run for the D 5/12/30/80 timings across the 12 spawns, live shortcut and Car Park climb, and capture files; all static geometry already verified in rounds 3-10.
+- T015: one owner round is logged above (D 12 at ~120 s, D 30 at 240 s). Still needed: D 5/12/30/80 timings across the 12 spawns, live shortcut and Car Park climb, and capture files; all static geometry already verified in rounds 3-10.
 - T039 depends on T015. Owner items: T016, T032, T033, T035 (captures, sign-off).

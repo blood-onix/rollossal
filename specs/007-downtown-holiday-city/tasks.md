@@ -105,8 +105,8 @@
 
 ### Owner Upload Hand-Offs & Integration
 
-- [ ] T032 [US3] Human owner hand-off: Import exported FBX meshes into Studio via 3D Importer and supply numeric asset IDs
-- [ ] T033 [US3] Record uploaded mesh asset IDs in `src/shared/Assets.luau` and verify single material and atlas UVs via `tests/unit/ArtManifest.test.luau`
+- [X] T032 [US3] Human owner hand-off: Import exported FBX meshes into Studio via 3D Importer and supply numeric asset IDs
+- [X] T033 [US3] Record uploaded mesh asset IDs in `src/shared/Assets.luau` and verify single material and atlas UVs via `tests/unit/ArtManifest.test.luau`
 
 ### Performance Validation & Budget Lock
 
