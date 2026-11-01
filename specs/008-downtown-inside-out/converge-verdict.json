@@ -1,0 +1,12 @@
+{
+  "verdict": "incomplete",
+  "remaining": [
+    "T013 Studio Stage 1 verification: claim Studio MCP, sync probe (passes), overhead/street captures in winter and city, 12-spawn first-pickup check, record Stage 1 in specs/008-downtown-inside-out/playtest.md",
+    "T021 Tune growthK and Tier 3-5 placement distribution in src/shared/Content/Worlds/Downtown.luau until the pace windows pass: D 12 currently reached at 59.8 s (city) and 69.5 s (winter) vs the 70-110 s window",
+    "T022 Studio Stage 2 verification: overhead/street captures for Rings 2-5 in both themes, sphere casts for shortcuts and climbing ramps, camera zoom at D 20 and D 80, record Stage 2 in specs/008-downtown-inside-out/playtest.md",
+    "T025 Studio Gate 2 verification: 12-ball 60 s playtest in winter, per-second fps sampling (>= 30 fps unthrottled), active parts < 2000, dt_* mesh inspection in Play, console read, record Gate 2 in specs/008-downtown-inside-out/playtest.md",
+    "T029 Run scripts/check.sh full validation suite to 100% pass (currently fails the two Pace pace-window tests fixed by T021)"
+  ],
+  "human": [],
+  "summary": "The 008 implementation is data-complete and Lune-tested (493/495 pass); the only gaps are the open tasks T021 (pace tuning, D 12 under the 70-110 s window) and T029 (clean check.sh), plus the three Studio verification tasks T013/T022/T025, all agent-runnable since Studio MCP is connected and the Rojo sync probe returned no mismatches; no new convergence tasks were appended because every finding already has a tracked task ID."
+}
