@@ -61,9 +61,7 @@ local function modelFor(world: any, themeId: string): Model
 		placements = resolved.placements,
 		sizes = sizes,
 		spawns = world.spawnPoints,
-		growthK = (if world.themeBindings ~= nil and world.themeBindings[themeId] ~= nil
-			then world.themeBindings[themeId].growthK
-			else nil) or world.growthK or Config.growthK,
+		growthK = world.growthK or Config.growthK,
 	}
 end
 

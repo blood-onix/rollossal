@@ -149,14 +149,7 @@ for _, themeId in supportedList do
 	end
 end
 
--- A theme binding may override the world's growthK (the winter dressing places more edible mass than
--- the city one, so the pace windows need a per-theme constant). Data-only, like the rest of a binding.
-local activeBinding = if active.themeBindings ~= nil
-	then (active.themeBindings :: any)[activeThemeId]
-	else nil
-local growthK: number = (if activeBinding ~= nil then activeBinding.growthK else nil)
-	or active.growthK
-	or Config.growthK
+local growthK: number = active.growthK or Config.growthK
 
 local Worlds = {
 	active = active,

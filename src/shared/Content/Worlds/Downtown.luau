@@ -1662,7 +1662,6 @@ local citySlots = {
 
 local themeBindings: {
 	[string]: {
-		growthK: number?,
 		slots: { [string]: string },
 		overlays: { zones: { Zone }, fixedPlacements: { Fixed } },
 		heroVariants: { [string]: { assetKey: string, nameKey: string?, size: number? } },
@@ -1678,9 +1677,6 @@ local themeBindings: {
 } =
 	{
 		winter = {
-			-- Theme-scoped override (Worlds reads it for the active theme). Winter's cocoa cart is 6.5 studs so the
-			-- Plaza overlay does not pull D 30 below 145 s on the north-west spawns (Pace.test).
-			growthK = 1.95,
 			slots = winterSlots,
 			overlays = { zones = overlayZones, fixedPlacements = overlayFixed },
 			heroVariants = {

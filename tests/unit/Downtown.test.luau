@@ -105,6 +105,31 @@ local function intersects(a: { number }, b: { number }): boolean
 	return a[2] > b[1] and a[1] < b[2] and a[4] > b[3] and a[3] < b[4]
 end
 
+test("Downtown: theme object sizes match FR-005 and FR-006", function()
+	local expected: { [string]: number } = {
+		cocoa_cart = 6.5,
+		ice_lolly = 0.6,
+		paddling_pool = 8.0,
+		ice_cream_truck = 15.0,
+		bauble = 0.6,
+		gift_box = 2.0,
+		snowman = 8.0,
+		sleigh = 15.0,
+		mega_tree = 45.0,
+		beach_ball = 2.0,
+		giant_duck = 35.0,
+	}
+	local found: { [string]: number } = {}
+	for _, themeId in Downtown.supportedThemes do
+		for _, object in (Downtown.themeBindings :: any)[themeId].objects do
+			found[object.id] = object.size
+		end
+	end
+	for id, size in expected do
+		expect.equal(found[id], size, id)
+	end
+end)
+
 test("Downtown: identity, star targets, extents and theme set", function()
 	expect.equal(Downtown.worldId, "downtown")
 	expect.equal(Downtown.starThresholds[1], 20)

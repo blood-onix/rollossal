@@ -96,6 +96,14 @@ All 74 core Downtown absorbable objects (including 2–3 hero props per tier and
 - **Absorbable Parked Snowplough vs. Non-Absorbable Roaming Street Sweeper**: Holiday City's Tier 4 parked `snowplough` (`size = 22`) is an absorbable world object in `themeBindings.winter`, whereas the roaming `sweeper` hazard at `TrapSpot` markers is a non-absorbable municipal Street Sweeper (`006-jump-boosters-traps`); the two MUST use distinct IDs and visuals so players never confuse the trap with the Tier 4 pickup.
 - **Ambient Pigeons Non-Absorbability & District Cap**: Ambient pigeons are strictly non-absorbable client-side scenery (`<= 8` per district, never registered in `WorldSpawner` or `Objects`, `CanCollide = false`, `CanQuery = false`, `CanTouch = false`) that flutter away when a ball approaches and respect `Reduce motion`.
 
+## Clarifications
+
+### Session 2026-11-01 (PR #8 review, round 1)
+- Q: FR-005/FR-006 sizes differ from the code (`cocoa_cart`, `ice_lolly`, `paddling_pool`, `ice_cream_truck`); which wins? -> A: The code sizes (`6.5`, `0.6`, `8.0`, `15.0`) win, so each Sunny City slot object matches its Holiday City slot object in size and a theme switch never moves a base placement. FR-005 and FR-006 now state them, and `tests/unit/Downtown.test.luau` pins them.
+- Q: Theme-scoped `growthK` override? -> A: Removed (review F8). The world's `growthK` is the only constant; the winter value equalled it, so nothing changes.
+- Q: Garlands and sledding slope only in winter (F2), storm-drain tunnel blocking Tier 3+ balls from above (F5), and the other layout findings (F6, F7)? -> A: Deferred to backlog item 004f, where the layout is being redesigned. No fix in this feature; recorded in `playtest.md`.
+- Q: The human checks of the review (pacing over 12 spawns, 640x360 capture, mesh look in Play, live Car Park and scaffolding traversal, sign-off)? -> A: Closed by owner decision and moved to 004f. No new bot runs.
+
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
@@ -144,7 +152,7 @@ All 74 core Downtown absorbable objects (including 2–3 hero props per tier and
   - `overlays` (~`150` placements within the `1,400` placement budget, clear of all `keepOutAreas`) and `objects` defining the remaining 13 theme-only absorbable holiday props:
     - Tier 1: `fairy_light_bulb` (`0.5`), `mini_gift` (`0.9`), `gingerbread_cookie` (`1.0`) mixed into Stoops and Alleys doorstep crumbs;
     - Tier 2: `leaning_present_stack` (`3.6`, Hero), `poinsettia_pot` (`2.4`), `wooden_sled` (`3.2` on the Park sledding slope), `wreath` (`2.8` on shop doors);
-    - Tier 3: `snow_pile` (`6.0` at street edges), `light_up_reindeer` (`7.0`, Hero wire-frame glowing decoration, not a live animal), `cocoa_cart` (`7.5` in the Plaza);
+    - Tier 3: `snow_pile` (`6.0` at street edges), `light_up_reindeer` (`7.0`, Hero wire-frame glowing decoration, not a live animal), `cocoa_cart` (`6.5` in the Plaza);
     - Tier 4: `market_stall` (`12.0`, 6 stalls in a ring around the Mega Tree in the Plaza), `snowplough` (`22.0`, parked at street edge);
     - Tier 5: `ice_rink` (`40.0`, frozen Park pond);
     - Plus non-absorbable holiday scenery (`Market Street` overhead lit garlands and `The Park` packed-snow sledding slope) activated only when the active theme is `"winter"`;
@@ -154,10 +162,10 @@ All 74 core Downtown absorbable objects (including 2–3 hero props per tier and
   - `bookPage`: `id = "downtown.winter"`, `nameKey = "book.page.downtown.winter.name"` (*"Downtown: Holiday"*), `returningKey = "book.page.downtown.winter.returning"`, listing all 18 theme-only Holiday City `ObjectDef`s (`5` slots + `13` overlay objects).
 - **FR-006**: `Downtown.themeBindings.city` (**Sunny City**, for the January switch) MUST configure:
   - `slots`:
-    - `slot.small` -> `ice_lolly` (Tier 1, `size = 0.7`);
+    - `slot.small` -> `ice_lolly` (Tier 1, `size = 0.6`);
     - `slot.medium` -> `beach_ball` (Tier 2, `size = 2.0`);
-    - `slot.yard` -> `paddling_pool` (Tier 3, `size = 6.5`);
-    - `slot.street` -> `ice_cream_truck` (Tier 4, `size = 16.0`);
+    - `slot.yard` -> `paddling_pool` (Tier 3, `size = 8.0`);
+    - `slot.street` -> `ice_cream_truck` (Tier 4, `size = 15.0`);
     - `slot.landmark` -> `giant_duck` (Tier 5, `size = 35.0`);
   - `overlays = { zones = {}, fixedPlacements = {} }` and `heroVariants = {}` so switching `activeThemeId` to `"city"` strips all Holiday City overlays, hero variants, and holiday slots while leaving the base Downtown layout untouched;
   - `bookPage`: `id = "downtown.city"`, `nameKey = "book.page.downtown.city.name"`, `returningKey = "book.page.downtown.city.returning"`, listing the 5 Sunny City slot objects.

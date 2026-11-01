@@ -163,3 +163,11 @@ above: 59 to 60 fps, under 2,000 parts, one owner round (D 12 at about 120 s, D 
 ## Open items
 - T015: one owner round is logged above (D 12 at ~120 s, D 30 at 240 s). Still needed: D 5/12/30/80 timings across the 12 spawns, live shortcut and Car Park climb, and capture files; all static geometry already verified in rounds 3-10.
 - T039 depends on T015. Owner items: T016, T032, T033, T035 (captures, sign-off).
+
+## Review round 1 (PR #8): moved to 004f
+By owner decision the layout is being redesigned in backlog item 004f, so these review findings are not fixed here and move there: F2 (garlands
+and the sledding slope are base blocks, so they also exist in Sunny City), F5 (the storm-drain tunnel walls are open-topped, so a large ball can
+roll over them), F6 and F7. The review's human checks (pacing over 12 spawns, 640x360 capture, imported mesh look in Play, live Car Park and
+scaffolding traversal, sign-off) are closed by owner decision and move to 004f too; no new bot runs. FR-005 and FR-006 now state the code sizes
+(`cocoa_cart` 6.5, `ice_lolly` 0.6, `paddling_pool` 8.0, `ice_cream_truck` 15.0), pinned in `Downtown.test`. The unused theme `growthK` hook was
+removed (F8); the winter value equalled the world's.
