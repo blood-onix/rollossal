@@ -50,6 +50,16 @@ below have been tried and the wait has run out.
    re-run the probe every 30 to 60 s (Monitor or ScheduleWakeup) for up to 20 minutes. Continue when it
    passes. Never paste repo code into Studio by hand: Rojo is the only way code gets into the place.
 
+**Two-failure limit.** An agent-run check that fails twice because of tooling, not a game defect, stops there.
+Move it to `docs/release-candidate.md` with a note of what was tried, and do not build another driver for it.
+A Rojo wait that runs out, or a rerun with still no unthrottled seconds, counts as one failure. A game defect
+is still fixed. Gate 2's Studio playtest and console read are exempt: if Rojo stays disconnected, keep doing the
+non-Studio work, say so, and do not open the pull request until they have run.
+
+**Owner checks go to `docs/release-candidate.md`, not `tasks.md`.** That means anything that needs a person, a
+real device, the final map or owner taste: no 👤 tasks and no human items. They do not hold the feature; only
+the constitution's Human Approval list can stop one.
+
 ## How to run the Studio checks
 
 - **Playtest**: `start_stop_play`, then `execute_luau` on `Client` or `Server`. Restart Play after a code
