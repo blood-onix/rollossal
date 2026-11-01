@@ -154,6 +154,12 @@ The owner imported the 99 new `dt_*` FBX meshes through the 3D Importer. Their `
 (`dt_` plus the object id). `scripts/check.sh` passes (481 unit tests), also with `REQUIRE_ASSET_IDS=1`. The 65 Snow Village meshes kept their
 earlier ids. Not yet looked at in Play: mesh appearance, single material and atlas UVs on screen (T035).
 
+## Closed by owner decision
+T015, T016, T035 and T039 are ticked at the owner's request, not because their checks were done. Playing the grey-box build on a placeholder map says
+little about the final game, so the remaining timings (D 5/12/30/80 across the 12 spawns), the live shortcut and Car Park checks, the captures, the
+layout sign-off and the final performance and approval pass move to the owner's backlog and run on the real map. What was measured stands as logged
+above: 59 to 60 fps, under 2,000 parts, one owner round (D 12 at about 120 s, D 30 at 240 s), static geometry checks, 481 unit tests.
+
 ## Open items
 - T015: one owner round is logged above (D 12 at ~120 s, D 30 at 240 s). Still needed: D 5/12/30/80 timings across the 12 spawns, live shortcut and Car Park climb, and capture files; all static geometry already verified in rounds 3-10.
 - T039 depends on T015. Owner items: T016, T032, T033, T035 (captures, sign-off).

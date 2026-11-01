@@ -56,8 +56,8 @@
 - [X] T012 [US1] Author 12 doorstep `SpawnPoint`s, doorstep spawn zones (32 core T1 + 8 `slot.small` per doorstep), side-street sidewalk zones, and district placement zones totaling 1,245 base placements in `src/shared/Content/Worlds/Downtown.luau`
 - [X] T013 [US1] Author `environment.markers` (9-12 hazard markers, 5 seeded golden spots on static geometry) and `keepOutAreas` (6 gates, 5 shortcuts, 12 sightline corridors to Glass Tower and Ferris Wheel, marker footprints) in `src/shared/Content/Worlds/Downtown.luau`
 - [X] T014 [US1] Tune `growthK` (starting at 1.5) and zone placement counts in `src/shared/Content/Worlds/Downtown.luau` until `tests/unit/Downtown.test.luau` and `tests/unit/Pace.test.luau` pass with exit code 0
-- [ ] T015 [US1] 🔒 Run Studio grey-box playtest via MCP (claim: Studio) verifying 12-spawn bot runs, sightlines, shortcuts, jumping kerbs, Car Park ramp, part count `< 1,890`, capture screenshots in `specs/007-downtown-holiday-city/captures/`, and draft results in `specs/007-downtown-holiday-city/playtest.md`
-- [ ] T016 [US1] Human owner approval gate: Owner plays grey-box build and signs off on layout, pacing, and sightlines in `specs/007-downtown-holiday-city/playtest.md`
+- [X] T015 [US1] 🔒 Run Studio grey-box playtest via MCP (claim: Studio) verifying 12-spawn bot runs, sightlines, shortcuts, jumping kerbs, Car Park ramp, part count `< 1,890`, capture screenshots in `specs/007-downtown-holiday-city/captures/`, and draft results in `specs/007-downtown-holiday-city/playtest.md` (closed by owner decision, not verified: playtest and sign-off deferred to the backlog until the real map exists; see playtest.md)
+- [X] T016 [US1] Human owner approval gate: Owner plays grey-box build and signs off on layout, pacing, and sightlines in `specs/007-downtown-holiday-city/playtest.md` (closed by owner decision, not verified: playtest and sign-off deferred to the backlog until the real map exists; see playtest.md)
 
 **Checkpoint**: At this point, User Story 1 (MVP) is fully functional and verified in grey box.
 
@@ -111,7 +111,7 @@
 ### Performance Validation & Budget Lock
 
 - [X] T034 [US3] 🔒 Run 12-ball concurrent performance playtest in Holiday City at `640 × 360` via Studio MCP (claim: Studio), sample fps for 60 s, verify `>= 30 fps` unthrottled and parts `< 2,000`
-- [ ] T035 [US3] Lock per-tier triangle budgets (`500 / 700 / 1,500 / 3,500 / 5,000`) in `src/shared/Config.luau` and record final performance metrics, screen captures, and owner approval in `specs/007-downtown-holiday-city/playtest.md`
+- [X] T035 [US3] Lock per-tier triangle budgets (`500 / 700 / 1,500 / 3,500 / 5,000`) in `src/shared/Config.luau` and record final performance metrics, screen captures, and owner approval in `specs/007-downtown-holiday-city/playtest.md` (closed by owner decision, not verified: playtest and sign-off deferred to the backlog until the real map exists; see playtest.md)
 
 **Checkpoint**: All 3 user stories complete, asset catalogue integrated, and 30 fps mobile performance locked.
 
@@ -124,7 +124,7 @@
 - [X] T036 [P] Verify rollback safety by toggling `Config.Flags.Downtown = false` and validating Snow Village and GreyBoxRoom fallbacks in `tests/unit/Config.test.luau` and Studio
 - [X] T037 [P] Audit all updated and new test suites under `tests/unit/` and `tests/studio/` ensuring 100% pass rate
 - [X] T038 Execute full repository validation via `scripts/check.sh` ensuring formatting, linting, type-checking, and unit tests exit with code 0
-- [ ] T039 Run `quickstart.md` validation steps end-to-end and finalize all sections in `specs/007-downtown-holiday-city/playtest.md`
+- [X] T039 Run `quickstart.md` validation steps end-to-end and finalize all sections in `specs/007-downtown-holiday-city/playtest.md` (closed by owner decision, not verified: playtest and sign-off deferred to the backlog until the real map exists; see playtest.md)
 
 ---
 
