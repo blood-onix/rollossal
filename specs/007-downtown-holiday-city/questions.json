@@ -1,0 +1,10 @@
+{
+  "source": "clarify",
+  "questions": [
+    {
+      "id": "F1-theme-object-sizes",
+      "question": "FR-005 and FR-006 give cocoa_cart 7.5, ice_lolly 0.7, paddling_pool 6.5 and ice_cream_truck 16.0, but the code uses 6.5, 0.6, 8.0 and 15. Restoring the spec sizes fails 4 unit tests: the city slot objects no longer match the winter slot sizes (bauble 0.6, snowman 8.0, sleigh 15), so base placements move on a theme switch (dt_z_door_01_b_001 shifts about 5 studs, against US2/AC2 'base placements stay at identical coordinates'), and the winter and city pace windows are missed (Pace.test) with a 7.5 cocoa_cart. Which path do you want: (a) keep the code sizes and amend FR-005/FR-006 to 6.5 / 0.6 / 8.0 / 15, (b) restore the spec sizes and change the winter slot sizes and the zone data so both themes still share coordinates and meet the pace windows, or (c) keep the code sizes and record them as an owner-approved exception in the spec?",
+      "context": "src/shared/Content/Worlds/Downtown.luau winterKit/cityKit (comment: 'Slot objects match the winter ones in size, so a theme switch never moves a base placement'). tests/unit/Downtown.test.luau C7 and tests/unit/Pace.test.luau failed when the four spec sizes were restored. Other review fixes (F3 pigeon reset and Studio spec, F4 worldsUnlocked merge) are done in this round; F2 and F5 are left for the next round."
+    }
+  ]
+}

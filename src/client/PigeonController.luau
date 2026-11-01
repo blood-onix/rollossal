@@ -2,7 +2,8 @@
 -- Ambient pigeons (007, research R-14). Client-only decoration: small anchored parts that stand where the world
 -- data puts them (Worlds.active.ambient.pigeons) and fly off when the player's ball gets close. They are never
 -- tagged as world objects, never absorbable, never replicated, and skipped under Reduce motion. A pigeon that has
--- flown away stays gone for the rest of the run (the Studio spec restarts the controller state with a new run).
+-- flown away stays gone for the rest of the run; reset() brings the flock back when the next run starts (the
+-- RunState attribute turns Active), because Roll Again keeps the same client session.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -23,7 +24,7 @@ local PIGEON_COLOUR = Color3.fromRGB(150, 156, 168)
 local GROUND_OFFSET = 0.35
 local CHECK_INTERVAL = 0.2
 
-type Pigeon = { part: Part, flown: boolean }
+type Pigeon = { part: Part, flown: boolean, home: CFrame, tween: Tween? }
 
 local PigeonController = {}
 
@@ -31,8 +32,15 @@ local folder: Folder? = nil
 local pigeons: { Pigeon } = {}
 local started = false
 
+-- The Studio specs run without a LocalPlayer: they set the setting here instead of the player attribute.
+local reduceOverride: boolean? = nil
+
 local function reduceMotion(): boolean
-	return Players.LocalPlayer:GetAttribute("ReduceMotion") == true
+	if reduceOverride ~= nil then
+		return reduceOverride
+	end
+	local player = Players.LocalPlayer
+	return player ~= nil and player:GetAttribute("ReduceMotion") == true
 end
 
 local function applyVisibility()
@@ -54,10 +62,27 @@ local function flyOff(pigeon: Pigeon, awayFrom: Vector3)
 		TweenInfo.new(FLY_SECONDS, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
 		{ CFrame = CFrame.lookAt(target, target + direction), Transparency = 1 }
 	)
-	tween.Completed:Once(function()
-		part.LocalTransparencyModifier = 1
+	tween.Completed:Once(function(state)
+		if state == Enum.PlaybackState.Completed then
+			part.LocalTransparencyModifier = 1
+		end
 	end)
+	pigeon.tween = tween
 	tween:Play()
+end
+
+-- Run start: stop any flight in progress, stand every pigeon back on its spot and show it again.
+function PigeonController.reset()
+	for _, pigeon in pigeons do
+		if pigeon.tween ~= nil then
+			pigeon.tween:Cancel()
+			pigeon.tween = nil
+		end
+		pigeon.flown = false
+		pigeon.part.CFrame = pigeon.home
+		pigeon.part.Transparency = 0
+	end
+	applyVisibility()
 end
 
 local function build(spots: { { district: string, x: number, z: number } })
@@ -78,14 +103,47 @@ local function build(spots: { { district: string, x: number, z: number } })
 			part.Size = PIGEON_SIZE
 			part.Color = PIGEON_COLOUR
 			part.Material = Enum.Material.SmoothPlastic
-			part.CFrame = CFrame.new(spot.x, GROUND_OFFSET, spot.z)
+			local home = CFrame.new(spot.x, GROUND_OFFSET, spot.z)
 				* CFrame.Angles(0, (spot.x * 7 + spot.z * 13) % 6.283, 0)
+			part.CFrame = home
 			part.Parent = root
-			table.insert(pigeons, { part = part, flown = false })
+			table.insert(pigeons, { part = part, flown = false, home = home, tween = nil })
 		end
 	end
 	root.Parent = Workspace
 	folder = root
+end
+
+-- Every standing pigeon within SCARE_DISTANCE of the ball flies off. Nothing happens under Reduce motion.
+function PigeonController.scare(at: Vector3)
+	if reduceMotion() then
+		return
+	end
+	for _, pigeon in pigeons do
+		if not pigeon.flown and (pigeon.part.Position - at).Magnitude < SCARE_DISTANCE then
+			flyOff(pigeon, at)
+		end
+	end
+end
+
+-- Builds the flock from the world data (at most MAX_PER_DISTRICT per district). The Studio specs call this directly.
+function PigeonController.populate(spots: { { district: string, x: number, z: number } })
+	PigeonController.destroy()
+	build(spots)
+	applyVisibility()
+end
+
+function PigeonController.destroy()
+	if folder ~= nil then
+		folder:Destroy()
+		folder = nil
+	end
+	table.clear(pigeons)
+end
+
+function PigeonController.setReduceMotion(value: boolean?)
+	reduceOverride = value
+	applyVisibility()
 end
 
 function PigeonController.start()
@@ -98,9 +156,14 @@ function PigeonController.start()
 		return
 	end
 	started = true
-	build(spots)
+	PigeonController.populate(spots)
 	applyVisibility()
 	Players.LocalPlayer:GetAttributeChangedSignal("ReduceMotion"):Connect(applyVisibility)
+	Players.LocalPlayer:GetAttributeChangedSignal("RunState"):Connect(function()
+		if Players.LocalPlayer:GetAttribute("RunState") == "Active" then
+			PigeonController.reset()
+		end
+	end)
 
 	local ball: BasePart? = nil
 	local sinceCheck = 0
@@ -110,9 +173,6 @@ function PigeonController.start()
 			return
 		end
 		sinceCheck = 0
-		if reduceMotion() then
-			return
-		end
 		if ball == nil or ball.Parent == nil then
 			local balls = Workspace:FindFirstChild("Balls")
 			local found = if balls ~= nil
@@ -124,12 +184,7 @@ function PigeonController.start()
 		if current == nil then
 			return
 		end
-		local at = current.Position
-		for _, pigeon in pigeons do
-			if not pigeon.flown and (pigeon.part.Position - at).Magnitude < SCARE_DISTANCE then
-				flyOff(pigeon, at)
-			end
-		end
+		PigeonController.scare(current.Position)
 	end)
 end
 
