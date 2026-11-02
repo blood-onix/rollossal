@@ -25,7 +25,7 @@ Inanimate things with faces (the rubber duck, a mascot statue) are fine. Avoid g
 - Bottles are clearly **water or soda**: a screw cap and a colour band, no long glass neck, no labels with words.
 - Nothing shaped like a weapon (no swords, bats with spikes, toy guns, knives in the kitchen props), syringe, pill, cigarette, vape or lighter.
 - No real logos, brands, mascots, flags, landmarks or trademarked shapes (generic puzzle cube, generic controller).
-- No words on textures (localisation and moderation both); pictograms only.
+- Signs may carry invented shop names and short signage (Constitution IV). Shop names are proper nouns and are not translated; all other in-world text is a pictogram or has a localisation key. Never real brands, the words Roblox, Robux or Blox, alcohol or gambling names, or a name close to a real brand.
 - Vehicles are never shown crashed, burning or upside down.
 
 ## Engine budgets (from `src/shared/Config.luau`)
@@ -41,7 +41,7 @@ Inanimate things with faces (the rubber duck, a mascot statue) are fine. Avoid g
 
 ## Keep it cheap
 
-- **One texture.** All world props share the 1,024 px gradient atlas; a theme is another atlas with the same layout. No SurfaceAppearance/PBR, no per-prop textures, no decals with words. Realism comes from proportions, bevels and baked gradient shading, not texture maps.
+- **One texture.** All world props share the 1,024 px gradient atlas; a theme is another atlas with the same layout. The only additions are one shared atlas for building fronts and signs and a small capped set of billboard textures (Constitution XI). No SurfaceAppearance/PBR and no other per-prop textures. Realism comes from proportions, bevels and baked gradient shading, not texture maps.
 - **One MeshPart per absorbable prop**, one asset id per type. 40 cones = one mesh in memory. No multi-part models, no Unions (CSG) on anything absorbable.
 - **Default Parts for ground**: roads, pavements, kerbs, lawns are `Part`s with `SmoothPlastic` and a `w-*` colour. Use Roblox built-in materials only where they cost nothing extra (`Neon` for glow, `Foil` for chrome skins). Terrain is not used: it does not recolour by theme.
 - **Opaque everything.** Water and glass are opaque swatches; transparency costs overdraw on phones.
@@ -51,6 +51,7 @@ Inanimate things with faces (the rubber duck, a mascot statue) are fine. Avoid g
 - **Streaming on** (`StreamingEnabled`), fog from about 150 studs, the far skyline is one non-colliding mesh behind the fog.
 - **Culling.** Objects two tiers below the player are hidden client-side (`cullTierDelta`). Design levels so that's a feature: the city really does empty out.
 - **Creator Store meshes** may be used only mesh-only, inspected for scripts, re-UV'd onto the palette (Constitution XI). In practice it is faster to model the low-poly prop in Blender with the existing pipeline.
+- **Imported CC0 meshes** count as edited in Blender once imported and moved onto the atlas, with source and licence recorded in the repo and the licence checked per pack (Constitution XI). Any other licence needs owner approval.
 
 ## Before a prop ships
 
