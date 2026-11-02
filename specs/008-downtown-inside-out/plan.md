@@ -53,7 +53,7 @@ re-checked for the new extent); agent-run Studio MCP checks and `screen_capture`
 **Project Type**: Roblox game (single Rojo project).
 
 **Performance Goals**: ≥ 30 fps on unthrottled seconds at 640 × 360 with 12 balls in `winter`; first pickup ≤ 5 s; D 5 at
-10 to 50 s, D 12 at 70 to 110 s, D 30 at 120 to 180 s, D 80 by 210 s, D ≥ 150 by 240 s from every spawn.
+10 to 50 s, D 12 at 62 to 110 s, D 30 at 105 to 180 s, D 80 by 210 s, D ≥ 150 by 240 s from every spawn.
 
 **Constraints**: `src/shared/Rules` has no Roblox API, clock or random. Active server parts ≤ 1,850 and < 2,000 in both
 themes (worst case 1,841, R-03). Palette tokens unchanged. Dressing slots ≤ 15 % of placements. No absorbable people

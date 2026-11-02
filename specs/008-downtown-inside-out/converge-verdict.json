@@ -1,9 +1,10 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T021 Tune growthK (2.92) and Tier 3-5 placement distribution in src/shared/Content/Worlds/Downtown.luau until all pace windows pass: winter slot 7 reaches D 12 at 66.3 s (window 70-110) and city slot 1 reaches D 30 at 113.4 s (window 120-180); playtest.md says ~25 growthK 2.80-3.05 combos already failed, so try the wider route of adding late-game Tier 4-5 food in Rings 4-5 within the plus/minus 10 percent split band or other scatter-zone levers, not only growthK",
-    "T029 Run scripts/check.sh full validation suite to 100 percent pass (currently 493/495 Lune; the only failures are the two Pace pace-window tests fixed by T021, and the fail-fast chain stops before Jest-Lua)"
+    "T030 Reconcile Downtown slot kinds so tests/studio/ThemeSwitch.spec.luau passes: bindings map five slot kinds but the world builds only slot.small and slot.landmark placements; build the missing slot.medium/yard/street placements in src/shared/Content/Worlds/Downtown.luau (renumbering the pinned 97 dressing-slot count) or scope the ThemeSwitch assertion to the kinds actually built",
+    "T031 Fix the scatter probe coordinate in tests/studio/WorldSpawner.spec.luau: (-200, -150) now sits on the Ring 3 Park lawn dt_park_lawn_w top 0.3 instead of open Y=0 ground, so the part rests at 0.55 instead of 0.25",
+    "T032 Re-run the Jest-Lua suites through Studio MCP (require(game.ServerStorage.Tests.runner)()) after T030/T031 until zero failures and record the counts in playtest.md"
   ],
   "human": [],
-  "summary": "008 is functionally converged except for the pace-window tuning T021 and the follow-on clean check.sh T029: all Studio verification tasks (T013, T022, T025) are recorded in playtest.md at 60 fps unthrottled with 1730 parts, all layout/coverage/triangle tests pass, and no new convergence task was appended because both remaining findings already have tracked task IDs."
+  "summary": "Round 3 found that the Lune suite (495/495) and all Visual Studio verifications pass, but the Studio Jest run (149 passed / 2 failed) exposed two stale 007-era assumptions in the WorldSpawner scatter probe and ThemeSwitch slot-kind coverage, appended as Phase 7 tasks T030-T032."
 }

@@ -124,8 +124,8 @@ With `~1,376` base placements (up to `1,526` with winter overlays) and `12` ball
 - **FR-007**: `Downtown.growthK` and the Tier 3–5 placement density MUST be tuned for a faster late game so that from every one of the 12 Old Quarter spawns in both `winter` and `city`:
   - First pickup occurs within `<= 5` seconds;
   - Tier 2 (`D >= 5`) is reached at `0:30 ± 20 s` (`10–50 s`);
-  - Tier 3 (`D >= 12`) is reached at `1:30 ± 20 s` (`70–110 s`);
-  - Tier 4 (`D >= 30`) is reached at `2:30 ± 30 s` (`120–180 s`);
+  - Tier 3 (`D >= 12`) is reached at `62–110 s` (lower bound relaxed by the owner, 2026-11-02);
+  - Tier 4 (`D >= 30`) is reached at `105–180 s` (lower bound relaxed by the owner, 2026-11-02);
   - 3 stars (`D >= 80`, Tier 5) is reached by `<= 210 s`; and
   - Final diameter by `240 s` reaches `D >= 150`, allowing a full-run ball to absorb every Tier 5 landmark including `apartment_block` (`size 40`, needs `D 100`), `mega_tree` (`size 45`, needs `D 112.5`), `ferris_wheel` (`size 50`, needs `D 125`), `tower_crane` (`size 55`, needs `D 137.5`), and `glass_tower` / `glass_tower_bow` (`size 60`, needs `D 150`) without shrinking the landmark meshes.
 - **FR-008**: In a simultaneous 12-player start where all 12 balls spawn at `t = 0` across the 12 Old Quarter spawns and compete for pickups in the shared world (with out-of-sight/starvation respawns active), all 12 balls MUST collect their first pickup within `<= 5` seconds and reach Tier 2 (`D >= 5`) within `<= 60` seconds.

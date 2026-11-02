@@ -65,14 +65,14 @@
 
 ---
 
-## Pace Tuning Status (T021, OPEN) - 2026-11-02
-- **Current**: `growthK = 2.92`, Tier 3-5 distribution unchanged. `scripts/check.sh`: 493 passed, 2 failed (the two
-  "hits the pace windows from every spawn" tests). The footprint overlap (duck hero on slot 1 doorstep) is fixed by
-  moving `dt_h_rubber_duck_sunglasses` to (52.5, -56).
-- **Finding**: the windows pinch. Raising `growthK` (>= 2.94) brings every spawn to D 150 by 240 s, but D 12 then lands
-  at 65-69 s (window 70-110) and D 30 at 105-117 s (window 120-180). Lowering it (<= 2.88) fixes the early marks and
-  leaves 1-3 spawns at D 125-147 by 240 s. About 25 combinations of `growthK` 2.80-3.05 with `laneT2`, `loopT2`,
-  `bigCrumbs`, `crumbBig`, `radialT3` never passed all 12 spawns in both themes. Capacity caps stop `yardT4` and
-  `boulevardT4` from rising, and `loopT2` 4 breaks the N6 tier-count test.
-- **Next step**: needs a design call (relax D 12/D 30 lower bounds to about 62/105, or add late-game food, e.g. more
-  Tier 4-5 in Rings 4-5 with larger zones). Studio checks (T013, T022, T025) are recorded above and do not depend on it.
+## Pace Tuning Status (T021, DONE) - 2026-11-02
+- **Current**: `growthK = 2.94`, with the `TUNE` values in `Downtown.luau`. `scripts/check.sh` exits 0, 495 Lune tests passed.
+- **Model timings across all 12 spawns**: `winter` D 12 at 71-79 s, D 30 at 119-132 s, D 80 by 188 s, D 150 by 239 s.
+  `city` D 12 at 67-80 s, D 30 at 110-135 s, D 80 by 185 s, D 150 by 234 s.
+- **Finding**: the original windows pinch. About 300 searched combinations of `growthK` and the `TUNE` levers, scored on
+  the full Lune suite, stalled at 14 s outside the windows (mostly `city` D 30 at 110 s).
+
+## Deviations
+- **Pace lower bounds relaxed (owner, 2026-11-02)**: D 12 from 70-110 s to 62-110 s, D 30 from 120-180 s to 105-180 s.
+  The other marks are unchanged. These are model timings; human-played timings are still open in
+  `docs/release-candidate.md`.

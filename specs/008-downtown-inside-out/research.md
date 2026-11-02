@@ -163,6 +163,9 @@ before tuning. **Fallback**: record the best reachable D and the limiting term i
 and ask the owner once to relax that single mark (for example to D ≥ 130, which still eats the Ferris Wheel). The
 tasks must not shrink the 99 meshes or change `absorbRatio`.
 
+**Later change (2026-11-02).** The owner relaxed the lower bounds to D 12 at 62 s and D 30 at 105 s after the search
+below the old bounds stalled; see `playtest.md` "Deviations". The windows above are the originals.
+
 ## R-08: Built coverage is measured on a grid
 
 **Decision.** `Downtown.test` rasterises onto a 5-stud grid over `[-440, 440]²` (176 × 176 cells): every

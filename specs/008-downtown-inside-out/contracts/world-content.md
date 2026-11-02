@@ -49,7 +49,7 @@ valid `swatch`).
 ## Pace contract
 
 `Pace.simulate(world, themeId)` returns, for each of the 12 spawns, the second the eater first reaches D ≥ 2.4 (first
-pickup), 5, 12, 30, 80 and 150. Windows: ≤ 5 s; 10 to 50 s; 70 to 110 s; 120 to 180 s; ≤ 210 s; ≤ 240 s. `simulateTwelve`
+pickup), 5, 12, 30, 80 and 150. Windows: ≤ 5 s; 10 to 50 s; 62 to 110 s; 105 to 180 s; ≤ 210 s; ≤ 240 s. `simulateTwelve`
 adds a shared-food run: all 12 balls first pick up ≤ 5 s and reach D 5 ≤ 60 s. Details: `pace-and-tests.md`.
 
 ## Switching themes

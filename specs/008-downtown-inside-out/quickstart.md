@@ -20,8 +20,8 @@ Run `scripts/check.sh`. Expect exit 0 and, in the Lune section:
   tall perimeter wall, per-tier split 470 / 386 / 260 / 204 / 56 ± 10 %, street widths per ring, shortcuts 4.5 ± 0.1
   with a roof at 4.8 to 5.0, gates sealed to D 2 and open to D 5, F2 scoping, triangle ceilings, part budget ≤ 1,850 in
   `winter` and `city`, 12 spawns with ≥ 40 Tier 1 within 10 studs.
-- `Pace`: all 12 spawns inside the windows in both themes (first pickup ≤ 5 s; D 5 10 to 50 s; D 12 70 to 110 s; D 30
-  120 to 180 s; D 80 ≤ 210 s; D 150 ≤ 240 s) and `simulateTwelve` (all 12 first pickup ≤ 5 s, D 5 ≤ 60 s).
+- `Pace`: all 12 spawns inside the windows in both themes (first pickup ≤ 5 s; D 5 10 to 50 s; D 12 62 to 110 s; D 30
+  105 to 180 s; D 80 ≤ 210 s; D 150 ≤ 240 s) and `simulateTwelve` (all 12 first pickup ≤ 5 s, D 5 ≤ 60 s).
 - `Config`: 1500 and 320. `SnowVillage`, `Markers`, `ThemeResolve`, `Layout`, `ArtManifest`, `Strings` unchanged and green.
 - The `GreyBoxRoom` guard and the `Rules` purity guard pass.
 

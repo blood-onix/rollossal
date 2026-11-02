@@ -25,8 +25,8 @@ earliest eater first. Returns, per slot, the first-pickup time and the time to D
 | --- | --- | --- |
 | first pickup (D ≥ 2.4) | ≤ 5 s | FR-007 |
 | D 5 | 10 to 50 s | FR-007 |
-| D 12 | 70 to 110 s | FR-007 |
-| D 30 | 120 to 180 s | FR-007 |
+| D 12 | 62 to 110 s | FR-007 |
+| D 30 | 105 to 180 s | FR-007 |
 | D 80 | ≤ 210 s | FR-007 |
 | D 150 | ≤ 240 s | FR-007; **fallback in R-07** |
 | `simulateTwelve` | first pickup ≤ 5 s and D 5 ≤ 60 s for all 12 | FR-008 |
