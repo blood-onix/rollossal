@@ -1,0 +1,47 @@
+{
+  "generated": "2026-11-02",
+  "blender": "5.2.3 LTS",
+  "engine": "BLENDER_EEVEE",
+  "worldCommit": "3121b60",
+  "theme": "city",
+  "objects": 1599,
+  "missingFbx": {},
+  "images": [
+    {
+      "name": "01_spawn_d2",
+      "file": "01_spawn_d2.png",
+      "source": "blender-offline",
+      "sha256": "2eda2441d7a49c3f74ef5193c130faedbf6fc637d19c10d0c5ec3e82d0348eff"
+    },
+    {
+      "name": "02_street_d5",
+      "file": "02_street_d5.png",
+      "source": "blender-offline",
+      "sha256": "12ddcc9b17f82ca49b93c6ba0603a8aa984541aca600814c992f3312645450a8"
+    },
+    {
+      "name": "03_midgame_d12_30",
+      "file": "03_midgame_d12_30.png",
+      "source": "blender-offline",
+      "sha256": "d88bb25029e440c5bf8b5dccb1755373acaea7432eccc83a95a9d677b04e1da7"
+    },
+    {
+      "name": "04_lategame_d80",
+      "file": "04_lategame_d80.png",
+      "source": "blender-offline",
+      "sha256": "44030c8fdea950bf48cd40daf20d5271ef586955c352d3013e35952724ef2962"
+    },
+    {
+      "name": "05_overhead_map",
+      "file": "05_overhead_map.png",
+      "source": "blender-offline",
+      "sha256": "94cf9f9a965eea71577a76fcef1062fbeff809d27c290388b19563a8fe8adfad"
+    }
+  ],
+  "parityNotes": [
+    "Offline Blender (EEVEE) composition check, not a pixel match: Roblox tone mapping, bloom, atmosphere, fog and shadow filtering are not reproduced.",
+    "Mesh scale follows ObjectVisual.buildMesh (longest side = object size); objects without an FBX are drawn as their fallback primitive in grey.",
+    "Boundary colliders are skipped; sun direction is an approximation of Lighting.ClockTime 13.",
+    "Studio screen_capture was run for all 5 shots (same cameras) and compared; the MCP returns the image to the agent only and cannot write a file, so no studio_*.png is committed. Studio shows the winter theme (Edit place activeThemeId) in a 568x940 portrait viewport; composition matches the offline set (same lane, street, yard, skyline and overhead framing)."
+  ]
+}

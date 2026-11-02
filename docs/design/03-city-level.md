@@ -62,8 +62,11 @@ Coordinates: x east, z south, y up. `m = max(|x|, |z|)` is the ring measure.
   + 3 hub + 12 balls + 64 runtime parts), under the 2,000 budget, in both themes.
 - Built coverage (blocks above 0.2 and Tier 4 and 5 footprints) is at least 20 % of the square; at least 50 static
   blocks; nothing near the edge is taller than 8 studs.
-- Triangle ceilings from `art/export/manifest.json`: the whole `winter` scene at most 250,000, and what a Tier 5 player
-  sees (`cullTierDelta` 2) at most 100,000.
+- Triangle ceilings from `art/export/manifest.json`: the whole `winter` scene at most 550,000, and what a Tier 5 player
+  sees (`cullTierDelta` 2) at most 290,000. Measured, not guessed: the heavy-scene benchmark held 60 fps on every
+  sampled second at 699,872 triangles (367,264 at tier 4 to 5) with 12 balls and 1,851 parts, and the ceilings are 80 %
+  of that rounded down to 10,000 (`specs/009-style-bible-bakeoff/playtest.md`). A desktop at the vsync cap is an upper
+  bound; the owner's phone reading is on `docs/release-candidate.md` and may lower them.
 - `cullTierDelta` 2: a Tier 4 ball no longer renders Tier 1 to 2 litter. The city empties as you outgrow it, which is
   both the feeling and the frame-rate win.
 - The camera pulls back to 320 studs at D 80 (`Config.cameraMaxDistance`); the fog is 500 to 1600.
@@ -81,4 +84,4 @@ Coordinates: x east, z south, y up. `m = max(|x|, |z|)` is the ring measure.
 
 Stage 1 (the Old Quarter, one main street and the first Terraces block) is built and checked first, in both themes,
 before the other rings. Studio captures and sphere casts are recorded in
-`specs/008-downtown-inside-out/playtest.md`. Owner taste sign-off is on the release-candidate list.
+`specs/008-downtown-inside-out/playtest.md`. Under Constitution gate 6, a map is not finished until the owner has approved its images and played it.

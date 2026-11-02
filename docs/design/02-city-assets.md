@@ -2,6 +2,8 @@
 
 The proposed Downtown catalogue: **74 absorbable objects in 5 tiers**, plus non-absorbable scenery. Sizes are the longest side in studs (`ObjectDef.size`). An object is absorbed when `size ≤ 0.4 × ball diameter` (`Config.absorbRatio`), so it needs a ball of `size ÷ 0.4`. Triangle budgets today follow `Config.Budgets.meshTriangles` (300 / 300 / 800 / 2,500 / 2,500); the stylised-real look proposes 500 / 700 / 1,500 / 3,500 / 5,000 (*Art style: how realistic*). Model every object in real-world proportions; the Twist column is the one thing exaggerated.
 
+**Signage**: the pictogram signs below stay valid. The [style bible](08-style-bible.md) (section 5) also allows invented proper-noun shop names on facades and billboards, so a bakery can read as a named shop and still carry its donut. Triangle floors and targets for new assets are in its section 4.
+
 **Kit column**: **Core** is reused by every city level and theme; **★ Hero** is a showpiece built to grab attention (oversized feature, motion, glow or a sight gag); **Slot** is filled per theme (*World kit and seasons*, Pattern 2).
 
 **What makes a hero.** At least two of: a silhouette you can read from 50 studs away; one big `w-accent-*` area; something that moves or lights up (`w-glow` with Neon, a spin, a sway); a sight gag a 17-year-old would clip ("the ball ate the vending machine and it's still dispensing"). Plan 2–3 heroes per tier, placed on sightlines (*Default level: Downtown*).
@@ -93,12 +95,12 @@ Vehicles, stops and small shops. "My ball ate a bus" lives here.
 | Pickup truck | 16 | `w-accent-orange`, `w-rubber` | Bed full of traffic cones | Core |
 | Delivery van | 17 | `w-white`, `w-accent-teal` | Rear doors open, boxes spilling | Core |
 | ★ Donut Food Truck | 18 | `w-accent-pink`, `w-white` | A 6-stud donut on the roof, slowly turning | Hero |
-| Billboard | 18 | `w-metal-dark`, `w-trim` | Image in pictograms; theme swaps the panel role | Core |
+| Billboard | 18 | `w-metal-dark`, `w-trim` | Placeholder art that imitates no real ad; theme swaps the panel role | Core |
 | ★ Monster Truck | 18 | `w-accent-teal`, `w-rubber` | Wheels as tall as a car | Hero |
 | Shipping container | 20 | `w-accent-red` / `-blue` | Corrugated sides as 6 flat ridges | Core |
 | Big street tree | 20 | `w-leaf`, `w-leaf-dark`, `w-bark` | `w-season` canopy top | Core |
 | Garbage truck | 20 | `w-accent-teal`, `w-metal-dark` | Arm lifting a wheelie bin | Core |
-| Corner bakery | 22 | `w-wall-b`, `w-roof-a`, `w-glass` | Small shop, donut pictogram sign | Core |
+| Corner bakery | 22 | `w-wall-b`, `w-roof-a`, `w-glass` | Small shop, donut pictogram or invented name on its sign | Core |
 | Fire engine | 24 | `w-accent-red`, `w-metal` | Ladder raised a little | Core |
 | City bus | 25 | `w-accent-red`, `w-glass` | Bendy-bus accordion joint | Core |
 | *Slot: street* | 15–20 | theme | Ice-cream truck / sleigh / parade float / pumpkin cart / lit food truck | Slot |

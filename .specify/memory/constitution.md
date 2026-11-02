@@ -1,5 +1,61 @@
 <!--
 Sync Impact Report (temporary; remove before commit)
+Version change: 3.0.0 -> 4.0.0 (owner-approved request, 2026-11-02; approval on the PR still needed)
+Bump reason: MAJOR. "Owner taste MUST NOT hold a feature" and "only the Human Approval list can
+  stop a feature" are redefined incompatibly: for a map, world-art or ball-look feature the owner's
+  approval now can hold it. A plan written to 3.0.0 for such a feature (taste on the RC list, no
+  images, no wait) breaks the new rule. Same test as the 3.0.0 bump. The IV and XI changes alone
+  would be MINOR.
+Why: feature 008 closed as done with no images ever taken of the map, and the owner rejected the
+  result. Backlog item 004g records this.
+Modified principles:
+  - I (title unchanged): map, world-art and ball-look features are not finished until images exist
+    and the owner has approved them. Rationale extended.
+  - IV (title unchanged): invented shop names and short signage allowed on textures and billboards;
+    ban list extended; shop names need no localisation key; billboard and paid-placement rules.
+    Maturity-questionnaire rule kept.
+  - XI (title unchanged): imported CC0 meshes count as made or edited in Blender; one more shared
+    atlas for building fronts and signs; a capped set of billboard textures. Rationale extended.
+Modified sections:
+  - Quality Gates: new gate 6 (visual gate); the RC-list and two-failure rules name it as the second
+    wait outside the Human Approval list.
+Added sections: none
+Removed sections: none
+Unchanged: II, III, V, VI, VII, VIII, IX, X, XII, Human Approval Required, Governance, launch rules.
+Drafting choices the request did not spell out (overrule on the PR):
+  - Gate 6 holds the merge, not the opening of the PR. Owner approval is defined as a review or
+    comment on the PR or task, so the PR is the natural place to show the images.
+  - Gate 2's "capture files MUST NOT be required" does not apply to gate 6, which needs images the
+    owner can see. The Studio MCP still cannot save a capture, so a feature names its route.
+  - The shop-name rule is written in IV as the one exception to IX and gate 4. Their text is unchanged.
+Files updated: AGENTS.md (two-failure limit, owner checks, new visual gate paragraph);
+  docs/design/05-roblox-limits.md, README.md, 06-art-style.md, 03-city-level.md, 02-city-assets.md.
+  02-city-assets.md's "not in the kit" line on real brands still holds, so it is unchanged.
+Files checked, no change needed:
+  - docs/design/04-player-cosmetics.md: lines 71, 98, 109 and 127 are per-item notes (no words on
+    these cosmetics), not the rule, and they still comply: not shop names, so pictogram or key.
+  - .specify/templates/*, CLAUDE.md, .github/copilot-instructions.md, .claude/skills/speckit-*:
+    a search for the changed rules found nothing.
+Not checked: backlog item 004g itself (the profile blocks the Conveyor tools) and Conveyor's prompts.
+Follow-up TODOs from 4.0.0:
+  - Not edited, not on the request's list, and these repeat the old rules:
+    - docs/release-candidate.md header: "Nothing on this list holds a feature; only the
+      constitution's Human Approval list can stop one"; item "The owner's layout and pacing sign-off".
+    - docs/design/components/PropCard/README.md line 8: "Don't use ... words on any face".
+    - docs/rollossal-gdd.md line 277: "no words on textures". Governance says the spec is corrected.
+    - docs/design/speckit-prompt.md line 60, constitution-prompt.md line 26: past prompts, history.
+  - VII lists a theme as "a palette atlas, lighting, ..." and does not name a per-theme fronts atlas.
+    Left as is by request; the reskin rule (data and assets only) still covers it.
+  - One material per mesh stays, so a building on the fronts atlas needs all its faces in that atlas.
+    The feature that adds the atlas settles the layout.
+  - The cap on billboard textures does not exist in src/shared/Config.luau yet. The feature that adds
+    the textures adds it.
+  - Sign text other than a shop name needs a localisation key, and a texture cannot translate itself.
+    The feature that adds such a sign picks a pictogram or a localised route.
+  - An owner hand-off (gate 3) can still leave stand-ins in a gate 6 feature's images. The owner
+    decides whether that is enough to approve.
+
+Carried over from the 3.0.0 report, still open unless marked:
 Version change: 2.0.0 -> 3.0.0
 Bump reason: MAJOR. Principle I is redefined incompatibly: the owner playing a mechanic was
   required and MUST NOT be now; the outside round moves to the RC; a later mechanic no longer
@@ -35,8 +91,10 @@ Not checked: Conveyor's own prompts live outside this repo and may still produce
 Follow-up TODOs:
   - Not edited, by request. Backlog items that still repeat the old gates:
     - 004f: owner approves the slice and the map as acceptance, owner reviews each ring, "Carried
-      over from 007" list (now on the release-candidate list). See the conflict below.
-    - 004c: capture set saved in the feature folder; owner signs off the look.
+      over from 007" list (now on the release-candidate list). Owner approval of the map is allowed
+      again under gate 6 (4.0.0); the rest is unchanged.
+    - 004c: capture set saved in the feature folder; owner signs off the look. Allowed under gate 6
+      (4.0.0) if the feature's main output is world art.
     - 004d: cites constitution 1.1.0; "once it looks like a game" should become the RC.
     - 005: owner checks on a real phone; grey-box check "plus the owner playing it".
     - 006a: owner approval of the schema change; coin prices as an owner confirmation.
@@ -58,10 +116,11 @@ Follow-up TODOs:
       playtest.md points the open items at 004f; they now live on the release-candidate list.
   - docs/rollossal-gdd.md repeats the old order (section 11, item 5: 004d) and lists prices and the
     DataStore key name as owner questions. Governance says the spec is corrected; not edited, by
-    request. docs/design/ not edited or checked for these rules.
-  - Conflict to settle in 004f: its acceptance is owner taste, which the new gates say MUST NOT
-    hold a feature, yet the RC needs the map in its "final layout". The owner can still review the
-    slice; it just cannot be a gate unless this is changed.
+    request. docs/design/ not checked for 3.0.0's rules beyond the lines updated in 4.0.0.
+  - RESOLVED by gate 6 (4.0.0). Conflict to settle in 004f: its acceptance is owner taste, which
+    3.0.0 said MUST NOT hold a feature, yet the RC needs the map in its "final layout". A map
+    feature's images and the owner's approval of them can now hold it. Tuning values, phone checks
+    and the people round stay RC items.
   - Principle VI wording differs from the request: the MCP cannot resize Studio's viewport
     (AGENTS.md, 007 playtest round 3), so a frame-rate run at another size records that size.
   - Carried from 2.0.0, status not rechecked: flat-shaded/one-palette wording in older art scripts,
@@ -104,6 +163,10 @@ it.
   later, the owner decides whether it needs its own round.
 - Feel and tuning values (pace windows, `growthK`, star thresholds, jump, booster and trap
   values) are judged on the RC. They MUST NOT block a feature before then.
+- A feature whose main output is a world map, world art or the look of the player's ball is not
+  finished until images of it exist and the owner has approved them, from fixed shots and by
+  playing the build (Quality Gates, gate 6). Automated tests are a floor for these features and
+  never prove that the look is good.
 - Each agent run and the RC round MUST be recorded in the feature's spec folder
   (`specs/<feature>/playtest.md`) with the date, the build or commit, participant counts per age
   group (when people take part), findings, and, for the RC round, the owner's sign-off. Children
@@ -113,6 +176,8 @@ Rationale: art is expensive, and a mechanic that does not work in grey boxes wil
 by polish, so an agent still proves each mechanic before polish. Feel is different: tuning
 depends on the final map, and neither children nor the owner get useful signal from a build that
 does not yet read as a game. People therefore judge it once, on the RC, and always before launch.
+The look is different again: tests cannot see it, and a map feature once closed as done with no
+images taken and was then rejected. It is seen and approved before the feature is finished.
 
 ### II. Server Authority
 
@@ -160,8 +225,16 @@ safe for parallel agents to change.
   infinite scrolling.
 - The ball MUST NOT absorb people or real or live animals. Stand-ins such as statues,
   inflatables or decorations are fine. Ambient animals stay non-absorbable.
-- The game MUST NOT show real brands, logos, flags, meme images or real people's faces, and
-  MUST NOT put words on textures (pictograms only).
+- The game MUST NOT show real brands and logos, meme images, real people's faces, flags, alcohol
+  or gambling names, the words Roblox, Robux or Blox, anything imitating Roblox's logo, or any name
+  close to a real brand.
+- Textures and billboards MAY show invented shop names and short signage. Every sign MUST stay
+  Minimal-safe.
+- Shop names are proper nouns and are not translated, so they need no localisation key. This is the
+  one exception to Principle IX and gate 4. All other in-world text MUST stay a pictogram or have a
+  localisation key.
+- Placeholder billboard art MUST NOT imitate a real ad. A paid placement would need a future
+  amendment and owner approval, and MUST meet Roblox's disclosure rules.
 - Any change that could alter the answers to the Roblox maturity questionnaire MUST have
   owner approval before work starts.
 
@@ -272,13 +345,21 @@ live game.
 
 - 3D assets MUST be made or edited in Blender. Sources live in `art/source` and exports
   (FBX or glTF) in `art/export`.
+- An imported CC0 mesh counts as made or edited in Blender once it is imported to Blender and moved
+  onto the atlas, with its source and licence recorded in the repo. The licence MUST be checked per
+  pack. Any other licence needs owner approval.
 - World assets MUST be low-poly in real-world proportions, and MUST stay within the triangle
   budgets in `src/shared/Config`. Silhouette edges get one bevel segment. Round parts MAY be
   smooth-shaded and hard edges stay sharp.
 - Every world mesh MUST use the theme's gradient atlas: one 1,024 px texture per theme, all
   with the same layout, generated by script from `docs/design/tokens.json`. Each face's UVs
-  MUST sit inside one atlas cell or one trim strip, and each mesh has one material.
-- A theme swaps the atlas and never the meshes.
+  MUST sit inside one atlas cell or one trim strip, and each mesh has one material. The next two
+  rules are the only exceptions.
+- One more shared atlas MAY hold building fronts and signs, by the same rules as the theme atlas:
+  generated by script where practical, and per theme where its colours depend on the theme.
+- A small capped set of billboard textures MAY be used. The cap lives in `src/shared/Config.luau`,
+  is stated by the feature that adds them, and is measured.
+- A theme swaps its atlases and never the meshes.
 - World assets MUST NOT use SurfaceAppearance/PBR maps, transparency or a light per prop.
   Glow is `Material.Neon`.
 - Ball cosmetics (skins) MAY use their own texture of at most 512 px. Toppers use the world
@@ -289,7 +370,8 @@ live game.
   after an inspection confirms they contain no scripts.
 
 Rationale: one atlas per theme keeps phones fast and makes a season a texture swap, and
-strict budgets keep the look coherent. Stylised real reads as a real city for the 16+ launch
+strict budgets keep the look coherent. One extra atlas and a capped billboard set let a street show
+shop fronts at a measured cost. Stylised real reads as a real city for the 16+ launch
 audience, where flat-shaded toy art reads as a kids' game. Scripted free models are a
 security risk.
 
@@ -308,7 +390,8 @@ Rationale: a two-person team with agents can only maintain what it understands.
 ## Quality Gates
 
 A task is done only when gates 1, 3, 4 and 5 hold. A feature is ready for its pull request only
-when all five hold:
+when gates 1 to 5 hold. A feature under gate 6 is finished, and may merge, only when gate 6 holds
+too:
 
 1. Format, lint, type check and unit tests pass: `scripts/check.sh` exits 0.
 2. Once per feature, before its pull request, if the feature touches server, client or UI
@@ -321,6 +404,11 @@ when all five hold:
    the release-candidate list.
 4. If the task adds a player-facing string: the string is in the localisation tables.
 5. The task is ticked in `tasks.md`.
+6. If the feature's main output is a world map, world art or the look of the player's ball: images
+   of it exist where the owner can see them, and the owner has approved them, from fixed shots and
+   by playing the build. Gate 2's capture-file exemption does not apply here. The pull request MAY
+   be opened to show the images and MUST NOT be merged before this approval. Automated tests are a
+   floor and never prove that the look is good.
 
 Each pull request description MUST state which gates applied and how each was met.
 
@@ -328,17 +416,23 @@ What a feature may require, and what waits for the RC:
 
 - A feature's gates and its `tasks.md` MAY require only what an agent can run: `scripts/check.sh`,
   Lune, Jest-Lua and the Studio MCP server. Pacing is checked by the Lune pace test, and timed
-  live bot runs are not required.
-- Anything that needs a person, a real device, the final map or owner taste goes in the
-  release-candidate list, `docs/release-candidate.md`. It MUST NOT be a task in `tasks.md` or a
-  human item, and MUST NOT hold a feature. Only the Human Approval list can stop a feature.
+  live bot runs are not required. Gate 6's owner approval is the one exception, and it is a gate,
+  not a task.
+- Apart from gate 6, anything that needs a person, a real device, the final map or owner taste goes
+  in the release-candidate list, `docs/release-candidate.md`. It MUST NOT be a task in `tasks.md` or
+  a human item, and MUST NOT hold a feature. Apart from the two waits below, only the Human Approval
+  list can stop a feature. Tuning values, phone checks and the people round stay on the list, for a
+  gate 6 feature too.
 - Owner hand-offs (mesh uploads, music picks and similar) MUST NOT block a feature. It ships with
   its stand-in or fallback, and the hand-off goes on the list in a batch.
 - An agent-run check that fails twice because of tooling, not a game defect, moves to the list
   with a note of what was tried. Agents MUST NOT keep building new drivers for it. A game defect
   is still fixed. Gate 2's Studio playtest and console read are exempt: they MUST run before the
-  pull request, so a feature waits for Studio and Rojo if it has to. This is the one wait outside
-  the Human Approval list.
+  pull request, so a feature waits for Studio and Rojo if it has to. This is the first of two waits
+  outside the Human Approval list.
+- Gate 6's owner approval is the second wait: it MAY hold a feature. The two-failure rule does not
+  excuse a gate 6 feature from having images. If captures fail, the agent asks the owner once to
+  keep Studio in front and uses another route, such as rendering the world data in Blender.
 - An open question with a proposed default, not on the Human Approval list, is settled by taking
   the default and recording it in the spec and on the list. The owner can overrule it later.
 
@@ -369,4 +463,4 @@ Agents MUST stop and get owner approval before any of the following:
   flag conflicts in the plan or analysis instead of working around them. A conflict is
   resolved by changing the work or by amending the constitution, never by ignoring it.
 
-**Version**: 3.0.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-11-01
+**Version**: 4.0.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-11-02

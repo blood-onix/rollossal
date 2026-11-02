@@ -10,7 +10,7 @@ Golden hour on a snowy city street: warm lit windows, garlands over the road, a 
 
 | Layer | Holiday City |
 | --- | --- |
-| Palette | The `winter` tokens: white `w-season` caps on every top face, white roofs, snowy pavements, amber `w-glass` windows, holiday red and gold accents. |
+| Palette | The `winter` tokens: white `w-season` as an accent trim (roof ridges, awning tops, hedge caps; never a blanket, see the [style bible](08-style-bible.md) section 9), light roofs, snowy pavements, amber `w-glass` windows, holiday red and gold accents. |
 | Lighting | `clockTime` about 16.5, warm sun, `light-fog` and `light-sky` from the tokens, fog from about 150 studs. |
 | Weather | Snowfall emitter on the camera, at most 40 particles, off with Reduce motion. |
 | Music | A looping holiday track (`Assets.music`, still empty: owner picks one). |
