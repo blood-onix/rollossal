@@ -2,6 +2,8 @@
 
 The first draft used the current pipeline's toy look: chunky, flat-shaded, oversized features. For a 16+ launch audience that reads as a kids' game in the thumbnail. The recommendation is **stylised real**: real proportions and real detail, still on one shared texture, so phones keep 30 fps and a season is still one texture swap.
 
+> **Precedence.** [08-style-bible.md](08-style-bible.md) is the authoritative visual bar and overrides this file where they differ: triangle floors and targets, `w-season` as an accent trim (not on every top face), and signage with invented shop names. This file keeps the reasoning for choosing stylised real and the pipeline limits.
+
 ## The three options
 
 | | A. Toy low-poly (current) | **B. Stylised real (recommended)** | C. Realistic PBR |

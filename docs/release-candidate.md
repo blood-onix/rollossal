@@ -58,6 +58,36 @@ Source: `specs/008-downtown-inside-out/` (FR-014, quickstart §6). None of these
   "objects dumped in groups" (parked vehicles and scatter are still random-yaw zones; no road markings or lamps yet).
 - [ ] The camera at D 80 (320 studs back) and the fog (500 to 1600) on a phone.
 
+### Style bible, look gate and bake-off (009)
+
+Source: `specs/009-style-bible-bakeoff/` (FR-001, FR-009, FR-010). None of these holds the feature, except where the
+constitution amendment is needed before signage or a CC0 import is *authored* (not before this feature merges).
+
+- [ ] Owner approval of the constitution amendment drafted in `specs/009-style-bible-bakeoff/constitution-amendment-draft.md`
+  (Principle IV invented shop names, Principle I and Quality Gates visual gate, Principle XI CC0 and shared sign atlas).
+  Apply it with `/speckit-constitution` in its own pull request. Until then no signage is authored and no CC0 mesh is
+  imported into the game.
+  The style bible's signage rules and visual gate have no governing constitution text until it is applied (FR-001
+  is open, not met).
+- [ ] The concept reference image: add it as `specs/009-style-bible-bakeoff/concept-reference.png`. The bible (section
+  12) then gets a "checked against the concept" pass.
+- [ ] Early phone frame-rate reading on the heavy scene (the mid-range phone): run `tests/studio/HeavyScene.server.luau`
+  in Play on a build the phone can join, or tell the agent the model and the reading from the owner's own run. The
+  desktop result is 60 fps on every second at 699,872 triangles with 1,851 parts, so the ceilings (550,000 and
+  290,000) may need a one-line lowering.
+- [ ] Owner taste review of the five "before" shots (`specs/009-style-bible-bakeoff/captures/before/`) against the
+  style bible, and of the bake-off renders.
+- [ ] A 1,000,000-triangle benchmark step (and the planned 750k): needs the experience's Security setting that enables
+  mesh APIs (EditableMesh) in a dev copy, or uploaded meshes of 1,000+ triangles. The step that ran is 700k.
+- [x] Choose the asset sourcing rule from `specs/009-style-bible-bakeoff/bakeoff/README.md`. Owner decision, 2026-11-02:
+  in-house Blender to the bible's floors and targets. CC0 download and Creator Store inspection declined; the owner can
+  reopen the CC0 test after looking at the renders.
+- [ ] Accept a reduced SC-003, or reopen the comparison. Only Source 1 (in-house Blender) was run; Source 2 (CC0 pack on
+  the atlas, licence recorded) and the side-by-side were declined, so no CC0 licence is verified and the sourcing rule
+  is not backed by a comparison (FR-007, FR-008, SC-003 open). See `specs/009-style-bible-bakeoff/bakeoff/README.md`.
+- [ ] Approve or decline any `generate_3d` credit spend, only if the generators are turned on (they are off today).
+- [ ] Confirm the plan's deviations D1 to D9 (`plan.md`) and the benchmark deviation (`playtest.md` "Benchmark").
+
 ### Phone
 
 Source: `specs/004-snow-village/playtest.md` (SC-004 phone half, not met and not waived).
@@ -96,4 +126,7 @@ None yet.
 Each entry: the check, the feature, what was tried, and why it failed. A game defect does not belong here; fix it.
 Neither does Gate 2's Studio playtest and console read, which must run before the pull request.
 
-None yet.
+- Studio live capture files (009 T010): `screen_capture` returns the image to the agent only, so no `studio_*` file can
+  be committed; the offline Blender set is the committed baseline, and composition was compared by eye.
+- Procedural EditableMesh benchmark scene (009 T022, T023): the API is off in Play and a mesh made in Edit mode loses its
+  content when Play starts. The benchmark ran on the game's own uploaded meshes instead (up to 700k triangles).

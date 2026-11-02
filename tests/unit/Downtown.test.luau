@@ -57,6 +57,10 @@ local SPAWN_RADIUS = 10
 local TIER_TARGETS = { 470, 386, 260, 204, 56 }
 local MAX_PARTS = 1850
 local MIN_NEAR_TIER_1 = 40
+-- Measured by the 009 heavy-scene benchmark (specs/009-style-bible-bakeoff/playtest.md): the highest step that held
+-- 60 fps on every sampled second was 699,872 triangles, of which 367,264 tier 4 to 5. Ceiling = floor10k(0.8 x step).
+local UNCULLED_TRIANGLE_CEILING = 550000
+local CULLED_TRIANGLE_CEILING = 290000
 
 local objectById: { [string]: typeof(Downtown.objects[1]) } = {}
 for _, object in Downtown.objects do
@@ -1464,8 +1468,11 @@ test("Downtown N10: the triangle ceilings hold against the art manifest", functi
 			culled += count
 		end
 	end
-	expect.truthy(total <= 250000, `unculled {total}`)
-	expect.truthy(culled <= 100000, `culled {culled}`)
+	expect.truthy(
+		total <= UNCULLED_TRIANGLE_CEILING,
+		`unculled {total} of {UNCULLED_TRIANGLE_CEILING}`
+	)
+	expect.truthy(culled <= CULLED_TRIANGLE_CEILING, `culled {culled} of {CULLED_TRIANGLE_CEILING}`)
 end)
 
 test(

@@ -8,6 +8,7 @@ Downtown in its Holiday City theme instead of Snow Village, and the art style is
 the newer intent, but these points need the owner's approval before a spec relies on them:
 
 - a Constitution XI amendment for the stylised-real look (gradient atlas, one bevel segment);
+- the 009 constitution amendment (invented shop signage, visual gate, CC0 meshes), drafted in `specs/009-style-bible-bakeoff/constitution-amendment-draft.md`;
 - the per-tier triangle budgets in `Config.Budgets.meshTriangles` (500 / 700 / 1,500 / 3,500 / 5,000 proposed);
 - retiring Snow Village as the launch world;
 - the holiday music track;
@@ -22,6 +23,7 @@ the newer intent, but these points need the owner's approval before a spec relie
 - [Roblox limits, safety and performance](05-roblox-limits.md)
 - [Art style: how realistic](06-art-style.md)
 - [Launch theme: Holiday City](07-holiday-city.md)
+- [Style bible](08-style-bible.md): the authoritative visual bar; it overrides *Art style: how realistic* where they differ.
 - [Tokens](tokens.md): every colour per theme, type, spacing, radius and touch sizes ([tokens.json](tokens.json), [tokens.css](tokens.css)). Regenerate the CSS and tables with `python3 scripts/design-tokens.py` after editing the JSON.
 - [components/](components): one folder per preview, each with a `README.md` and a static `preview.html`.
 - [Spec Kit prompt](speckit-prompt.md): the `/speckit-specify` input for Downtown, Holiday City and the theme system.
@@ -52,7 +54,7 @@ Rollossal is a rolling-ball growth game for Roblox: start small, stick to everyt
 - **Brag, don't nag.** Results lead with the number (`34.6`), then stars, then what is new. No "Don't give up!", no exclamation spam: one `!` per screen at most.
 - **Deadpan object names.** Name props like a shop label, not a joke: "Inflatable Tube Guy", "Office Chair (Spinning)", "Suspiciously Large Donut". The twist is in the model; the name stays plain.
 - **Second person, no slang that dates.** "You", never "we". No memes, real brands or creator names.
-- **Every string is a localisation key** (`object.city.traffic_cone`). Never put words on textures: signs use pictograms (see Iconography), so English and Spanish ship the same meshes.
+- **Every string is a localisation key** (`object.city.traffic_cone`). Player-facing text is never baked into textures. In-world signage follows the [style bible](08-style-bible.md): pictograms on props, invented proper-noun shop names on facades and billboards.
 - **Status is never colour alone** (Constitution VI): every tier chip shows its number, every toggle its label.
 
 ### Visual foundations
@@ -62,7 +64,7 @@ Rollossal is a rolling-ball growth game for Roblox: start small, stick to everyt
 **Colour, world.** Every mesh face UVs into exactly one cell of the shared gradient atlas (1,024 px: 8 × 8 palette cells on top, trim strips below). The cells are the `w-*` tokens: rows 0–3 hold the 32 shared roles (ground, buildings, materials, accents), rows 4–7 stay free for level-specific heroes. A theme is a different atlas with the same layout, so **one asset set gives six cities**. Rules:
 - Model with roles, not colours: paint a hydrant `w-accent-red`, not "red". In `neon` it becomes hot pink-red; in `winter` holiday red.
 - Keep any one prop to 2–4 swatches and give each one hero accent (`w-accent-*`). The accents are where the eye goes; the city around them (`w-wall-*`, `w-sidewalk`, `w-asphalt`) stays quiet.
-- Put the seasonal face on every roof top, hedge top, car roof and lamp head with `w-season`. That one cell is the snow cap in `winter`, blossom in `spring`, leaf piles in `autumn` and neon strips in `neon`, so the theme changes with no new geometry.
+- Use `w-season` as an accent trim on roof ridges, awning tops, hedge caps and car roof lines, never as a blanket over every top face (see the [style bible](08-style-bible.md), section 9). That one cell is the snow cap in `winter`, blossom in `spring`, leaf piles in `autumn` and neon strips in `neon`, so the theme changes with no new geometry.
 - Light faces (`w-glow`) use `Material.Neon` on a separate MeshPart child only on tier 4–5 hero props; never a PointLight per prop.
 - `w-water` and `w-glass` are opaque. Transparency costs overdraw on phones.
 
@@ -81,8 +83,8 @@ Rollossal is a rolling-ball growth game for Roblox: start small, stick to everyt
 ### Iconography
 
 - UI icons are glyphs from `src/shared/Content/Icons.luau` until real icon assets exist (★ ⏱ ● ■ ▤ ⌂ ▶ ⚙ 🛒 🔒). Check every new glyph in a capture with both FredokaOne and GothamMedium: a glyph missing from FredokaOne renders blank, one missing from GothamMedium renders as a box.
-- **In-world signs are pictograms, never words**: a donut on the bakery, a bus on the stop, a wrench on the garage, an arrow on one-way streets. Model them as 1–2 swatch shapes on a `w-trim` board.
-- No real logos, brands, flags or national symbols, and nothing that imitates them.
+- **In-world signs on props are pictograms**: a donut on the bakery, a bus on the stop, a wrench on the garage, an arrow on one-way streets. Model them as 1–2 swatch shapes on a `w-trim` board. Facades and billboards may carry invented proper-noun shop names (style bible, section 5), once the constitution amendment drafted in `specs/009-style-bible-bakeoff/` lands.
+- No real logos, brands, flags, memes, real faces or national symbols, and nothing that imitates them; no alcohol or gambling names; never the words "Roblox", "Robux" or "Blox".
 
 ### Building on it
 
