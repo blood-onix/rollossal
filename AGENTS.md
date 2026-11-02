@@ -54,11 +54,19 @@ below have been tried and the wait has run out.
 Move it to `docs/release-candidate.md` with a note of what was tried, and do not build another driver for it.
 A Rojo wait that runs out, or a rerun with still no unthrottled seconds, counts as one failure. A game defect
 is still fixed. Gate 2's Studio playtest and console read are exempt: if Rojo stays disconnected, keep doing the
-non-Studio work, say so, and do not open the pull request until they have run.
+non-Studio work, say so, and do not open the pull request until they have run. The limit also does not excuse a
+visual-gate feature from having images: if captures fail, ask the owner once to keep Studio in front and use another
+route, such as rendering the world data in Blender.
 
 **Owner checks go to `docs/release-candidate.md`, not `tasks.md`.** That means anything that needs a person, a
-real device, the final map or owner taste: no 👤 tasks and no human items. They do not hold the feature; only
-the constitution's Human Approval list can stop one.
+real device, the final map or owner taste: no 👤 tasks and no human items. They do not hold the feature; apart from
+Gate 2's wait and the visual gate below, only the constitution's Human Approval list can stop one. Tuning values,
+phone checks and the people round stay on that list for every feature.
+
+**Visual gate (gate 6).** A feature whose main output is a world map, world art or the look of the player's ball is
+not finished until images exist and the owner has approved them, from fixed shots and by playing the build. This
+approval can hold the feature. Open the pull request to show the images, and do not merge it before the approval.
+Automated tests are a floor for these features and never prove that the look is good.
 
 ## How to run the Studio checks
 
