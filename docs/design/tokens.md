@@ -39,7 +39,7 @@ World tokens (`w-*`, `light-*`) change per theme; UI and tier tokens are the sam
 | `w-accent-orange` | `#ff8a2b` | `#ff9a3d` | `#ffb36b` | `#f07a1f` | `#ff7a00` | `#ff8a3d` | Hero accent 5: traffic cones, construction kit, basketballs. |
 | `w-accent-teal` | `#1fb5a6` | `#2f8f6a` | `#5fd1bd` | `#3f8f7f` | `#00e0c0` | `#19ffd1` | Hero accent 6: arcade cabinets, gaming chairs, shop signs. |
 | `w-glow` | `#fff3b0` | `#ffe8a3` | `#fff7cc` | `#ffd27a` | `#fffbe0` | `#fff0a0` | Light faces: lamp heads, neon signs, headlights. Use with Material Neon, never a PointLight per prop. |
-| `w-season` | `#6fbf4a` | `#ffffff` | `#ffc2da` | `#e8952f` | `#4be36a` | `#19ffd1` | The seasonal overlay face: snow caps, blossom, leaf piles, neon strips. Model caps and piles on every roof, hedge and car roof with this swatch. |
+| `w-season` | `#6fbf4a` | `#ffffff` | `#ffc2da` | `#e8952f` | `#4be36a` | `#19ffd1` | The seasonal overlay face: snow caps, blossom, leaf piles, neon strips. An accent trim (roof ridge, awning top, hedge cap, car roof line), never a blanket over every top face; see docs/design/08-style-bible.md. |
 | `light-sky` | `#8fd0ff` | `#b9cde6` | `#a9dcff` | `#f2c99a` | `#6fe0ff` | `#141632` | Lighting: Sky top colour (Atmosphere.Color / skybox tint). |
 | `light-fog` | `#d6ecff` | `#dbe5f1` | `#f0f4ff` | `#edd9c0` | `#e8fbff` | `#23264a` | Lighting: FogColor and Atmosphere.Decay. Hides streaming edges. |
 | `light-ambient` | `#9aa6b8` | `#9aa8c4` | `#b0b4c8` | `#a89a8a` | `#c0c0e0` | `#4a4f7a` | Lighting: OutdoorAmbient. |

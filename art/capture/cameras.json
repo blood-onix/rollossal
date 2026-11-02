@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "theme": "city",
+  "fov": 70,
+  "resolution": [1280, 720],
+  "shots": [
+    {
+      "name": "01_spawn_d2",
+      "diameter": 2,
+      "position": [52.5, 5, -31.0718],
+      "lookAt": [52.5, 1, -38],
+      "lighting": { "brightness": 3, "clockTime": 13, "fogStart": 200, "fogEnd": 1000, "atmosphere": 0.25 }
+    },
+    {
+      "name": "02_street_d5",
+      "diameter": 5,
+      "position": [41.2061, 9.3404, 0],
+      "lookAt": [60, 2.5, 0],
+      "lighting": { "brightness": 3, "clockTime": 13, "fogStart": 200, "fogEnd": 1000, "atmosphere": 0.25 }
+    },
+    {
+      "name": "03_midgame_d12_30",
+      "diameter": 12,
+      "position": [146.4972, 26.2857, 0],
+      "lookAt": [190, 6, 0],
+      "lighting": { "brightness": 3, "clockTime": 13, "fogStart": 200, "fogEnd": 1000, "atmosphere": 0.25 }
+    },
+    {
+      "name": "04_lategame_d80",
+      "diameter": 80,
+      "position": [47.8719, 200, 0],
+      "lookAt": [325, 40, 0],
+      "lighting": { "brightness": 3, "clockTime": 13, "fogStart": 200, "fogEnd": 1000, "atmosphere": 0.25 }
+    },
+    {
+      "name": "05_overhead_map",
+      "diameter": null,
+      "position": [0, 704.3, 149.7],
+      "lookAt": [0, 0, 0],
+      "lighting": { "brightness": 3, "clockTime": 13, "fogStart": 200, "fogEnd": 1000, "atmosphere": 0.25 }
+    }
+  ]
+}

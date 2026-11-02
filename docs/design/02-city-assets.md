@@ -2,6 +2,8 @@
 
 The proposed Downtown catalogue: **74 absorbable objects in 5 tiers**, plus non-absorbable scenery. Sizes are the longest side in studs (`ObjectDef.size`). An object is absorbed when `size ≤ 0.4 × ball diameter` (`Config.absorbRatio`), so it needs a ball of `size ÷ 0.4`. Triangle budgets today follow `Config.Budgets.meshTriangles` (300 / 300 / 800 / 2,500 / 2,500); the stylised-real look proposes 500 / 700 / 1,500 / 3,500 / 5,000 (*Art style: how realistic*). Model every object in real-world proportions; the Twist column is the one thing exaggerated.
 
+**Signage**: the pictogram signs below stay valid. The [style bible](08-style-bible.md) (section 5) also allows invented proper-noun shop names on facades and billboards, so a bakery can read as a named shop and still carry its donut. Triangle floors and targets for new assets are in its section 4.
+
 **Kit column**: **Core** is reused by every city level and theme; **★ Hero** is a showpiece built to grab attention (oversized feature, motion, glow or a sight gag); **Slot** is filled per theme (*World kit and seasons*, Pattern 2).
 
 **What makes a hero.** At least two of: a silhouette you can read from 50 studs away; one big `w-accent-*` area; something that moves or lights up (`w-glow` with Neon, a spin, a sway); a sight gag a 17-year-old would clip ("the ball ate the vending machine and it's still dispensing"). Plan 2–3 heroes per tier, placed on sightlines (*Default level: Downtown*).

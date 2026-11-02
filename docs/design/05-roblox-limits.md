@@ -25,7 +25,7 @@ Inanimate things with faces (the rubber duck, a mascot statue) are fine. Avoid g
 - Bottles are clearly **water or soda**: a screw cap and a colour band, no long glass neck, no labels with words.
 - Nothing shaped like a weapon (no swords, bats with spikes, toy guns, knives in the kitchen props), syringe, pill, cigarette, vape or lighter.
 - No real logos, brands, mascots, flags, landmarks or trademarked shapes (generic puzzle cube, generic controller).
-- Signs may carry invented shop names and short signage (Constitution IV). Shop names are proper nouns and are not translated; all other in-world text is a pictogram or has a localisation key. Never real brands, the words Roblox, Robux or Blox, alcohol or gambling names, or a name close to a real brand.
+- Signage: pictograms on props; invented proper-noun shop names and short signage only on facades and billboards ([style bible](08-style-bible.md) section 5, Constitution IV). Shop names are proper nouns and are not translated; all other in-world text is a pictogram or has a localisation key. Never real brands or logos, the words Roblox, Robux or Blox, alcohol or gambling names, or a name close to a real brand.
 - Vehicles are never shown crashed, burning or upside down.
 
 ## Engine budgets (from `src/shared/Config.luau`)
@@ -33,7 +33,7 @@ Inanimate things with faces (the rubber duck, a mascot statue) are fine. Avoid g
 | Budget | Value | What it means for art |
 | --- | --- | --- |
 | Active parts per server | 2,000 | About 1,400 placements per level, ground included |
-| Triangles per mesh by tier | 300 / 300 / 800 / 2,500 / 2,500 today; 500 / 700 / 1,500 / 3,500 / 5,000 proposed for stylised real | Silhouette first, one bevel segment, no hidden faces; `RenderFidelity` Automatic for LOD |
+| Triangles per mesh by tier | 300 / 300 / 800 / 2,500 / 2,500 today; 500 / 700 / 1,500 / 3,500 / 5,000 proposed for stylised real (ceilings; floors and targets in the [style bible](08-style-bible.md) section 4) | Silhouette first, one bevel segment, no hidden faces; `RenderFidelity` Automatic for LOD |
 | Visible stuck objects per ball | 30 (of 120 tracked) | Older pickups are "buried" and removed |
 | Touch targets | 96 px main, 64 px utility | Shop tiles too |
 | Text | 18 px minimum | All screens, all locales |
@@ -56,7 +56,7 @@ Inanimate things with faces (the rubber duck, a mascot statue) are fine. Avoid g
 ## Before a prop ships
 
 1. It reads at tier size in a 640 × 360 capture.
-2. It uses 2–4 `w-*` roles and one accent, plus `w-season` if it has a top face.
+2. It uses 2–4 `w-*` roles and one accent, plus `w-season` as an accent trim if it has a top face.
 3. It looks right in all six themes (render the palette QA grid per theme).
 4. It's under its tier's triangle budget, one material, one MeshPart.
 5. It passes the "not in the kit" list in *City asset list*.
