@@ -54,11 +54,15 @@
   - The earlier figure (`workspace:GetRealPhysicsFPS()`, 15 samples of 60) is the physics step rate, which stays at 60
     whatever the render rate. It is **not** evidence for the render-frame-rate half of FR-013 / SC-005 / US3 AC1 and is
     withdrawn. The run also recorded 15 one-second samples, not 60 s, and did not count throttled seconds.
-  - Status: **not measured.** The render-fps check (12 balls, 60 s, per-second client Heartbeat frame times, seconds at
-    exactly 15 fps reported as throttled) moved to `docs/release-candidate.md`. Only the part budget and mesh checks
-    below are met in Studio.
+  - Re-measured 2026-11-02 (review round 2), Studio Play, `winter`, 12 `BotRun` bots plus the local player (13 balls
+    in `Workspace.Balls`), Studio window not touched. A client `RunService.Heartbeat` sampler summed frame times and
+    logged one sample per second for 60 consecutive seconds.
+  - Result: **60 of 60 seconds at 59.9 to 60.1 fps (average 60.0, minimum 59.9). 0 seconds at exactly 15 fps, so 0
+    throttled seconds and 60 unthrottled.** Meets the Studio half of FR-013 / SC-005 / US3 AC1 (>= 30 fps over 60 s).
+  - Limits: this is Studio on the owner's laptop, not the 640x360 phone viewport or a phone; the 60 fps is the Studio
+    cap. The reference-phone half stays open in `docs/release-candidate.md`.
 - **Part Budget**:
-  - Total active BaseParts in Workspace during 12-ball run: `1,694` to `1,740` parts (strictly `< 2,000`).
+  - Total active BaseParts in Workspace during 12-ball run: `1,694` to `1,740` parts (server); the client had 1,263 parts in range at the end of the 60 s sample (strictly `< 2,000`).
 - **Mesh Asset QA (`dt_*`)**:
   - Inspected 1,434 `dt_*` MeshParts in live play:
     - Single material: `Plastic` (or SmoothPlastic).
