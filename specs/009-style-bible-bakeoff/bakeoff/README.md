@@ -95,18 +95,16 @@ do not meet the one-mesh, one-material, atlas rule without a rebuild.
 
 ## 6a. Requirement status (FR-007, FR-008, SC-003)
 
-Not fully met, and not waived. Source 1 ran for all five props with measured triangle counts and renders. Sources 2 and 4
-were declined by the owner on 2026-11-02 (declined in conversation, recorded in `tasks.md` T017 and T019, not as a waiver of
-a requirement), Source 3 could not run (generators off). So there is no CC0 licence record and no side-by-side
-comparison across the required sources. The agent cannot waive FR-008 or SC-003 and may not edit them; the open question
-is in `questions.json`: either the owner records a waiver, or the CC0 download and Source 4 inspection are reopened and
-run. Until then the sourcing rule below is provisional on one source.
+Source 1 ran for all five props with measured triangle counts and renders. Sources 2 and 4 were declined and Source 3
+could not run (generators off), so there is no CC0 licence record and no side-by-side comparison across sources.
+**Owner waiver, 2026-11-02 (review round 2):** the owner waived the multi-source comparison and the CC0 licence record
+for this feature and made the Source 1 rule final. Recorded in `spec.md` Clarifications.
 
 ## 7. Sourcing rule
 
 **Owner decision, 2026-11-02**: new world props are made in Blender with the in-house pipeline to the style bible's
 per-tier floors and targets (Source 1). The owner declined the CC0 download and the Creator Store inspection, so this
-rule rests on Source 1's counts and not on a side-by-side comparison. The owner can reopen the CC0 test after looking at
+rule rests on Source 1's counts and not on a side-by-side comparison; the owner waived the comparison (section 6a) and the rule is final. The owner can still reopen the CC0 test after looking at
 the renders; a CC0 mesh would still need the download and the constitution amendment approved. `generate_3d` and Creator
 Store models are not used unless they have been run through this same comparison. Copied into
 `docs/design/08-style-bible.md` section 11.

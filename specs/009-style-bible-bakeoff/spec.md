@@ -8,6 +8,12 @@
 
 **Input**: User description: "Owner, 2026-11-02, after playing 008: the result is not good enough, mostly the level design, and the props look childish. The spawn looks like \"someone vomited random objects in groups\". Inside Out is rejected. There is no fixed launch date: quality comes first, and the owner is ready to postpone everything. This item comes first because nothing else can be judged until agents and the owner can see the game."
 
+## Clarifications
+
+### Session 2026-11-02 (review round 2)
+
+- Q: FR-008 and SC-003 ask for the five-prop bake-off across the required sources, verified CC0 licence records and a sourcing rule backed by a side-by-side comparison. Only Source 1 (own Blender) ran; the owner declined Source 2 (CC0 download) and Source 4 (Creator Store inspection), and Source 3 cannot run (generators off). Waive, or reopen? → A: **Waived by the owner.** The multi-source comparison and the CC0 licence record are waived for this feature; the Source 1 sourcing rule (in-house Blender to the style bible's per-tier floors and targets) is final. FR-007's five-prop run is met by Source 1. The requirement text above is unchanged; this records the owner's waiver of its multi-source and CC0-licence parts. A CC0 import in a later feature still needs its licence recorded (constitution Principle XI).
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Repeatable 5-Shot Visual Capture Route & "Before" Baseline Set (Priority: P1)
