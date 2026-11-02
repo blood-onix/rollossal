@@ -1,8 +1,10 @@
 # Constitution amendment draft (009, FR-001, research R-01)
 
-Status: **draft, not applied.** `.specify/memory/constitution.md` stays at v3.0.0 until the owner approves this
-through `/speckit-constitution` and a pull request. The plan does not self-approve a governance change. Proposed bump:
-MINOR, 3.1.0 (rules added and relaxed, no principle removed).
+Status: **applied in this pull request (round 2 review fix).** `.specify/memory/constitution.md` is now v3.1.0 (MINOR:
+rules added and relaxed, no principle removed). Owner approval is the approval of this pull request, as Governance
+requires; the agent does not self-approve. The text below is the original draft; where the live constitution words it
+differently (Principle IV also states that shop names are untranslated proper nouns, other text stays a localisation key
+or pictogram, and placeholder art never imitates a real ad), the live constitution wins.
 
 ## Principle IV (replace the last-but-one bullet)
 

@@ -1,5 +1,14 @@
 <!--
 Sync Impact Report (temporary; remove before commit)
+Version change: 3.0.0 -> 3.1.0 (feature 009-style-bible-bakeoff, FR-001, owner decisions of 2026-11-02)
+Bump reason: MINOR. Rules are added and relaxed, no principle is removed.
+Modified: Principle I (look is the exception, per the visual gate), IV (invented shop names and short
+  signage allowed on textures and billboards; alcohol/gambling names and Roblox/Robux/Blox names and
+  logo imitations banned; placeholder art never imitates a real ad), XI (CC0 mesh counts as made in
+  Blender; shared facade/sign atlas and capped billboard textures), Quality Gates (visual gate).
+Human Approval list: unchanged. The amendment is approved by the pull request.
+Previous report (2.0.0 -> 3.0.0) follows.
+
 Version change: 2.0.0 -> 3.0.0
 Bump reason: MAJOR. Principle I is redefined incompatibly: the owner playing a mechanic was
   required and MUST NOT be now; the outside round moves to the RC; a later mechanic no longer
@@ -103,7 +112,8 @@ it.
   to the live place. It covers every mechanic that landed before it. For a mechanic that lands
   later, the owner decides whether it needs its own round.
 - Feel and tuning values (pace windows, `growthK`, star thresholds, jump, booster and trap
-  values) are judged on the RC. They MUST NOT block a feature before then.
+  values) are judged on the RC. They MUST NOT block a feature before then. Look is the
+  exception, per the visual gate in Quality Gates.
 - Each agent run and the RC round MUST be recorded in the feature's spec folder
   (`specs/<feature>/playtest.md`) with the date, the build or commit, participant counts per age
   group (when people take part), findings, and, for the RC round, the owner's sign-off. Children
@@ -160,8 +170,12 @@ safe for parallel agents to change.
   infinite scrolling.
 - The ball MUST NOT absorb people or real or live animals. Stand-ins such as statues,
   inflatables or decorations are fine. Ambient animals stay non-absorbable.
-- The game MUST NOT show real brands, logos, flags, meme images or real people's faces, and
-  MUST NOT put words on textures (pictograms only).
+- The game MUST NOT show real brands, logos, flags, meme images, real people's faces, alcohol or
+  gambling names, or the words "Roblox", "Robux" or "Blox" (nor imitations of the Roblox logo).
+  Placeholder art MUST NOT imitate a real ad.
+- Invented proper-noun shop names and short signage ARE allowed on textures and billboards. A
+  shop name is an untranslated proper noun; all other text on a texture MUST be a localisation
+  key or a pictogram.
 - Any change that could alter the answers to the Roblox maturity questionnaire MUST have
   owner approval before work starts.
 
@@ -271,7 +285,9 @@ live game.
 ### XI. Asset Pipeline
 
 - 3D assets MUST be made or edited in Blender. Sources live in `art/source` and exports
-  (FBX or glTF) in `art/export`.
+  (FBX or glTF) in `art/export`. A CC0 mesh imported and moved onto the theme atlas in Blender
+  (one material, UVs in one cell or strip) counts as made or edited in Blender; its licence MUST
+  be recorded in the feature's report.
 - World assets MUST be low-poly in real-world proportions, and MUST stay within the triangle
   budgets in `src/shared/Config`. Silhouette edges get one bevel segment. Round parts MAY be
   smooth-shaded and hard edges stay sharp.
@@ -281,6 +297,8 @@ live game.
 - A theme swaps the atlas and never the meshes.
 - World assets MUST NOT use SurfaceAppearance/PBR maps, transparency or a light per prop.
   Glow is `Material.Neon`.
+- One shared facade/sign atlas and a capped set of billboard textures MAY sit alongside the
+  1,024 px theme atlas.
 - Ball cosmetics (skins) MAY use their own texture of at most 512 px. Toppers use the world
   atlas.
 - Uploaded asset IDs MUST be recorded in `src/shared/Assets.luau` and MUST NOT be hard-coded
@@ -329,7 +347,12 @@ What a feature may require, and what waits for the RC:
 - A feature's gates and its `tasks.md` MAY require only what an agent can run: `scripts/check.sh`,
   Lune, Jest-Lua and the Studio MCP server. Pacing is checked by the Lune pace test, and timed
   live bot runs are not required.
-- Anything that needs a person, a real device, the final map or owner taste goes in the
+- Visual gate. Any map or art feature MUST capture the five fixed shots
+  (`art/capture/cameras.json`) before and after its change, and the owner's review of those
+  shots, or the owner playing the build, MAY hold that feature. The visual gate is exempt from
+  the two-failure rule below. Every other owner check (phone fps, pacing taste, outside
+  playtests) stays on the release-candidate list and MUST NOT hold a feature.
+- Anything else that needs a person, a real device, the final map or owner taste goes in the
   release-candidate list, `docs/release-candidate.md`. It MUST NOT be a task in `tasks.md` or a
   human item, and MUST NOT hold a feature. Only the Human Approval list can stop a feature.
 - Owner hand-offs (mesh uploads, music picks and similar) MUST NOT block a feature. It ships with
@@ -369,4 +392,4 @@ Agents MUST stop and get owner approval before any of the following:
   flag conflicts in the plan or analysis instead of working around them. A conflict is
   resolved by changing the work or by amending the constitution, never by ignoring it.
 
-**Version**: 3.0.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-11-01
+**Version**: 3.1.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-11-02

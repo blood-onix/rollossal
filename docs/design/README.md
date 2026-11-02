@@ -8,7 +8,7 @@ Downtown in its Holiday City theme instead of Snow Village, and the art style is
 the newer intent, but these points need the owner's approval before a spec relies on them:
 
 - a Constitution XI amendment for the stylised-real look (gradient atlas, one bevel segment);
-- the 009 constitution amendment (invented shop signage, visual gate, CC0 meshes), drafted in `specs/009-style-bible-bakeoff/constitution-amendment-draft.md`;
+- the 009 constitution amendment (invented shop signage, visual gate, CC0 meshes), applied as constitution v3.1.0 in the 009 pull request and approved with it (draft: `specs/009-style-bible-bakeoff/constitution-amendment-draft.md`);
 - the per-tier triangle budgets in `Config.Budgets.meshTriangles` (500 / 700 / 1,500 / 3,500 / 5,000 proposed);
 - retiring Snow Village as the launch world;
 - the holiday music track;
@@ -83,7 +83,7 @@ Rollossal is a rolling-ball growth game for Roblox: start small, stick to everyt
 ### Iconography
 
 - UI icons are glyphs from `src/shared/Content/Icons.luau` until real icon assets exist (★ ⏱ ● ■ ▤ ⌂ ▶ ⚙ 🛒 🔒). Check every new glyph in a capture with both FredokaOne and GothamMedium: a glyph missing from FredokaOne renders blank, one missing from GothamMedium renders as a box.
-- **In-world signs on props are pictograms**: a donut on the bakery, a bus on the stop, a wrench on the garage, an arrow on one-way streets. Model them as 1–2 swatch shapes on a `w-trim` board. Facades and billboards may carry invented proper-noun shop names (style bible, section 5), once the constitution amendment drafted in `specs/009-style-bible-bakeoff/` lands.
+- **In-world signs on props are pictograms**: a donut on the bakery, a bus on the stop, a wrench on the garage, an arrow on one-way streets. Model them as 1–2 swatch shapes on a `w-trim` board. Facades and billboards may carry invented proper-noun shop names (style bible, section 5), under constitution v3.1.0 (Principle IV).
 - No real logos, brands, flags, memes, real faces or national symbols, and nothing that imitates them; no alcohol or gambling names; never the words "Roblox", "Robux" or "Blox".
 
 ### Building on it

@@ -93,6 +93,15 @@ do not meet the one-mesh, one-material, atlas rule without a rebuild.
 - Facade continuity (style bible section 5) cannot be judged on a single shop; it needs a row, which is a map feature.
 - Source 2, 3 and 4 give no comparison, so no claim is made about them.
 
+## 6a. Requirement status (FR-007, FR-008, SC-003)
+
+Not fully met, and not waived. Source 1 ran for all five props with measured triangle counts and renders. Sources 2 and 4
+were declined by the owner on 2026-11-02 (declined in conversation, recorded in `tasks.md` T017 and T019, not as a waiver of
+a requirement), Source 3 could not run (generators off). So there is no CC0 licence record and no side-by-side
+comparison across the required sources. The agent cannot waive FR-008 or SC-003 and may not edit them; the open question
+is in `questions.json`: either the owner records a waiver, or the CC0 download and Source 4 inspection are reopened and
+run. Until then the sourcing rule below is provisional on one source.
+
 ## 7. Sourcing rule
 
 **Owner decision, 2026-11-02**: new world props are made in Blender with the in-house pipeline to the style bible's

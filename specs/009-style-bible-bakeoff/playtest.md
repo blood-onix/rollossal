@@ -65,7 +65,8 @@ triangle floors. Revisit when the owner's phone reading arrives.
 ## Visual gate dry run
 
 The five committed "before" shots (offline, `city`) read against `docs/design/08-style-bible.md`, 2026-11-02. The
-constitution amendment is not applied, so this is a dry run of the gate, not a binding verdict. Where the current map
+constitution amendment (v3.1.0) is applied in the same pull request but the owner has not yet reviewed these shots, so
+this is a dry run of the gate, not a binding verdict. Where the current map
 misses the bible:
 
 | Bible section | Observation in the shots | Shots |

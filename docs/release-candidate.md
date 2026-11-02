@@ -63,12 +63,10 @@ Source: `specs/008-downtown-inside-out/` (FR-014, quickstart §6). None of these
 Source: `specs/009-style-bible-bakeoff/` (FR-001, FR-009, FR-010). None of these holds the feature, except where the
 constitution amendment is needed before signage or a CC0 import is *authored* (not before this feature merges).
 
-- [ ] Owner approval of the constitution amendment drafted in `specs/009-style-bible-bakeoff/constitution-amendment-draft.md`
-  (Principle IV invented shop names, Principle I and Quality Gates visual gate, Principle XI CC0 and shared sign atlas).
-  Apply it with `/speckit-constitution` in its own pull request. Until then no signage is authored and no CC0 mesh is
-  imported into the game.
-  The style bible's signage rules and visual gate have no governing constitution text until it is applied (FR-001
-  is open, not met).
+- [ ] Owner approval of the constitution amendment (v3.1.0: Principle IV invented shop names, Principle I and Quality
+  Gates visual gate, Principle XI CC0 and shared sign atlas). It is applied in the 009 pull request, so approving that
+  pull request approves it. Until the pull request is approved no signage is authored and no CC0 mesh is imported into
+  the game. Draft and rationale: `specs/009-style-bible-bakeoff/constitution-amendment-draft.md`.
 - [ ] The concept reference image: add it as `specs/009-style-bible-bakeoff/concept-reference.png`. The bible (section
   12) then gets a "checked against the concept" pass.
 - [ ] Early phone frame-rate reading on the heavy scene (the mid-range phone): run `tests/studio/HeavyScene.server.luau`
