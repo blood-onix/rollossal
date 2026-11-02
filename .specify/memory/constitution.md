@@ -28,14 +28,9 @@ Drafting choices the request did not spell out (overrule on the PR):
   - Gate 2's "capture files MUST NOT be required" does not apply to gate 6, which needs images the
     owner can see. The Studio MCP still cannot save a capture, so a feature names its route.
   - The shop-name rule is written in IV as the one exception to IX and gate 4. Their text is unchanged.
-Files updated: AGENTS.md (two-failure limit, owner checks, new visual gate paragraph).
-NOT updated, requested but blocked: the docs-only profile of this run refuses writes to docs/design/.
-  These lines still state the old rules, and this constitution wins until they are changed:
-  - docs/design/05-roblox-limits.md lines 28, 44, 53 (add the CC0 rule after it).
-  - docs/design/README.md lines 55, 60, 62-67 (add the extra atlas), 84, 85.
-  - docs/design/06-art-style.md lines 3, 12, 13, 28, 29 (add the fronts atlas and billboards after it).
-  - docs/design/03-city-level.md line 84: "Owner taste sign-off is on the release-candidate list."
-  - docs/design/02-city-assets.md lines 96, 101, 133.
+Files updated: AGENTS.md (two-failure limit, owner checks, new visual gate paragraph);
+  docs/design/05-roblox-limits.md, README.md, 06-art-style.md, 03-city-level.md, 02-city-assets.md.
+  02-city-assets.md's "not in the kit" line on real brands still holds, so it is unchanged.
 Files checked, no change needed:
   - docs/design/04-player-cosmetics.md: lines 71, 98, 109 and 127 are per-item notes (no words on
     these cosmetics), not the rule, and they still comply: not shop names, so pictogram or key.
