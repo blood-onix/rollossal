@@ -61,7 +61,7 @@ description: "Task list for feature 008-downtown-inside-out implementation"
 - [X] T010 [US1] Implement 12 Old Quarter lane spawns at lane mouths with door zones (`dt_z_door_NN_a` with 32 core T1 + `dt_z_door_NN_b` with 8 `slot.small`) and 1.2 kerb blocks in `src/shared/Content/Worlds/Downtown.luau`
 - [X] T011 [US1] Implement south 30-stud main street and first double-sided Ring 2 Terraces block with plinths (top 1.2) and absorbable shops/houses (`corner_bakery`, `corner_shop_row`, `townhouse`) in `src/shared/Content/Worlds/Downtown.luau`
 - [X] T012 [US1] Implement first enclosed small-only shortcut (gap 4.5 ± 0.1 studs, flanking walls top 5.2, roof bottom face at y 4.9) and keep-out (`kind = "shortcut"`) in `src/shared/Content/Worlds/Downtown.luau`
-- [ ] T013 [US1] 🔒 Studio verification: Claim Studio MCP, run sync probe, inspect overhead and street-level screen captures in `winter` and `city`, verify 12-spawn first-pickup ≤ 5 s and part count, record observations under "Stage 1" in `specs/008-downtown-inside-out/playtest.md`, release Studio MCP claim
+- [X] T013 [US1] 🔒 Studio verification: Claim Studio MCP, run sync probe, inspect overhead and street-level screen captures in `winter` and `city`, verify 12-spawn first-pickup ≤ 5 s and part count, record observations under "Stage 1" in `specs/008-downtown-inside-out/playtest.md`, release Studio MCP claim
 
 **Checkpoint**: Stage 1 vertical slice is independently testable, visually confirmed in both themes, and recorded in `playtest.md`. Stage 2 rollout can begin.
 
@@ -86,7 +86,7 @@ description: "Task list for feature 008-downtown-inside-out implementation"
 - [X] T019 [US2] Implement Ring 5 (Skyline, Harbour, Horizon) 8 podiums (top 1.2), 4 quay blocks (top 1.2), 2 shallow basin slabs (`w-water`, top -0.4), 8 ramped exit lips (Wedges), 8 static horizon towers (`m` 450..540), and placements (10 T3, 16 T4, 28 T5) in `src/shared/Content/Worlds/Downtown.luau`
 - [X] T020 [US2] Implement theme bindings (`themeBindings.winter.blocks` for 24 garlands bottom y ≥ 9 and Park slope/ramp, `winter.overlays` ≤ 110, `city` slots), 15 built markers + 5 golden spots on static blocks, 5 pigeon districts (≤ 8 each), and fog lighting in `src/shared/Content/Worlds/Downtown.luau`
 - [ ] T021 [US2] Tune `growthK` (2.2–3.0) and Tier 3–5 placement distribution in `src/shared/Content/Worlds/Downtown.luau` until all pace windows in `tests/unit/Pace.test.luau` pass
-- [ ] T022 [US2] 🔒 Studio verification: Claim Studio MCP, take overhead and street screen captures for Rings 2–5 in `winter` and `city`, run sphere casts for 4.5 shortcuts and climbing ramps (Car Park, Construction, Rail Yard, Harbour lips), verify camera zoom at D 20 and D 80 (80 and 320 studs), record under "Stage 2" in `specs/008-downtown-inside-out/playtest.md`, release Studio MCP claim
+- [X] T022 [US2] 🔒 Studio verification: Claim Studio MCP, take overhead and street screen captures for Rings 2–5 in `winter` and `city`, run sphere casts for 4.5 shortcuts and climbing ramps (Car Park, Construction, Rail Yard, Harbour lips), verify camera zoom at D 20 and D 80 (80 and 320 studs), record under "Stage 2" in `specs/008-downtown-inside-out/playtest.md`, release Studio MCP claim
 
 **Checkpoint**: Full 5-ring map complete, pace tuned, shortcuts and ramps verified in Studio.
 
@@ -105,7 +105,7 @@ description: "Task list for feature 008-downtown-inside-out implementation"
 
 ### Implementation for User Story 3
 
-- [ ] T025 [US3] 🔒 Studio verification: Claim Studio MCP, run 12-ball 60-second playtest in Holiday City (`winter`) at 640x360, sample fps per second (verify ≥ 30 fps on unthrottled seconds), verify active parts in Workspace (< 2,000), inspect `dt_*` meshes in Play (single material, atlas UVs, Minimal rating), read console output, record results under "Gate 2" in `specs/008-downtown-inside-out/playtest.md`, release Studio MCP claim
+- [X] T025 [US3] 🔒 Studio verification: Claim Studio MCP, run 12-ball 60-second playtest in Holiday City (`winter`) at 640x360, sample fps per second (verify ≥ 30 fps on unthrottled seconds), verify active parts in Workspace (< 2,000), inspect `dt_*` meshes in Play (single material, atlas UVs, Minimal rating), read console output, record results under "Gate 2" in `specs/008-downtown-inside-out/playtest.md`, release Studio MCP claim
 
 **Checkpoint**: Performance budgets and visual mesh quality verified.
 
