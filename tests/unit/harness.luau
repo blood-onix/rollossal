@@ -48,15 +48,17 @@ function expect.same<T>(actual: { T }, expected: { T })
 	end
 end
 
-function expect.truthy(value: unknown)
+function expect.truthy(value: unknown, label: string?)
 	if not value then
-		fail(`expected a truthy value, got {tostring(value)}`, 2)
+		local prefix = if label then `{label}: ` else ""
+		fail(`{prefix}expected a truthy value, got {tostring(value)}`, 2)
 	end
 end
 
-function expect.falsy(value: unknown)
+function expect.falsy(value: unknown, label: string?)
 	if value then
-		fail(`expected a falsy value, got {tostring(value)}`, 2)
+		local prefix = if label then `{label}: ` else ""
+		fail(`{prefix}expected a falsy value, got {tostring(value)}`, 2)
 	end
 end
 

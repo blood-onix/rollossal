@@ -43,7 +43,7 @@ local Config = {
 	speedCap = 32,
 	cameraMultiplier = 4,
 	cameraMinDistance = 8,
-	cameraMaxDistance = 80,
+	cameraMaxDistance = 320,
 	cameraSmoothing = 4,
 	jumpImpulse = 24,
 	groundProbeExtra = 0.3,
@@ -186,7 +186,7 @@ local Config = {
 		meshTriangles = { 500, 700, 1500, 3500, 5000 },
 		maxWeatherParticles = 40,
 		maxDressingSlotShare = 0.15,
-		defaultMaxPlacements = 1400,
+		defaultMaxPlacements = 1500,
 	},
 	-- Weather emitter geometry (studs: the emission box above and around the camera; researcher R-08).
 	weatherEmitterHeight = 30,
