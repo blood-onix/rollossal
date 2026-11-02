@@ -19,11 +19,15 @@
 - **First Pickup**: In both single-eater and concurrent 12-eater (`simulateTwelve`) models, all 12 spawns achieve first pickup within `<= 1.12 s` (well under the `<= 5 s` ceiling).
 - **First Minute**: All 12 spawns achieve `D >= 5` (Tier 2) within `18.6 s to 20.9 s` (well within the `10–50 s` pace window, and concurrent starters reach Tier 2 within `22 s to 48 s` vs `<= 60 s` requirement).
 - **Kerb Collision** (WITHDRAWN 2026-11-02: no `dt_door_NN_kerb` blocks exist in `Downtown.luau`; this line was wrong): 1.2-stud kerbs (`dt_door_NN_kerb`) verified at every spawn mouth. D 2 ball held-jump apex is 2.27 studs (clearing 1.2), while unjumping ball is physically contained behind kerb.
-- **Screen Captures**: `screen_capture` tool attempted twice for overhead and street-level views; timed out due to MCP Studio window backgrounding. Transferred to `docs/release-candidate.md` per AGENTS.md two-failure tooling limit.
+- **Screen Captures**: `screen_capture` tool attempted twice for overhead and street-level views; timed out due to MCP Studio window backgrounding. Transferred to `docs/release-candidate.md` ("Overhead and street-level captures") per AGENTS.md two-failure tooling limit.
 
 ---
 
 ## Stage 2 Verification (T022 - User Story 2)
+- **Screen Captures**: not taken. T022 and FR-013 ask for overhead and street-level captures of Rings 2 to 5 in `winter`
+  and `city`; `screen_capture` times out in this setup (same tooling failure as Stage 1). Moved to
+  `docs/release-candidate.md` ("Overhead and street-level captures"). The geometry below was checked by
+  `execute_luau` measurements, not by looking at it.
 - **Rings 2–5 Geometry**: Full 5-ring world verified in Workspace:
   - Ring 1 (Old Quarter): 8-stud lanes, 30-stud main streets, central plaza with fountain and pedestal landmark slot.
   - Ring 2 (Terraces): Plinths (top 1.2), house rows on plinths, 4 enclosed alleys with flanking walls (top 5.2) and overhead roof slabs (bottom y 4.9).
@@ -80,15 +84,22 @@
   the full Lune suite, stalled at 14 s outside the windows (mostly `city` D 30 at 110 s).
 
 ## Deviations
+- **Plan deviations D1 to D8** (ratio split on the base layout, 1,500 placement cap, boundary colliders as blocks, block
+  minimum, spawns off the main streets, 2.0-stud ramp steps, horizon blocks, no spawn-to-landmark sightline) are
+  listed in `plan.md` under "Spec deviations and defaults to confirm". They are not repeated here.
 - **Pace lower bounds relaxed (owner, 2026-11-02)**: D 12 from 70-110 s to 62-110 s, D 30 from 120-180 s to 105-180 s.
   The other marks are unchanged. These are model timings; human-played timings are still open in
   `docs/release-candidate.md`.
 
 ## Jest
 
-2026-11-02, Studio Edit, `require(game.ServerStorage.Tests.runner)()` after T030/T031 and the review round 1 slot change: 12 suites, 0 failed suites; 154 tests, 151 passed, 0 failed (3 pending).
+2026-11-02, Studio Edit, `require(game.ServerStorage.Tests.runner)()` after T030/T031 and the review round 1 slot change: 12 suites, 0 failed suites; 154 tests, 151 passed, 0 failed (3 skipped on purpose, see below).
 
-- T030 option taken (revised in review round 1): built the missing `slot.medium` (4, Market), `slot.yard` (4, Park) and `slot.street` (4, Boulevard) placements in `Downtown.luau`, so all five slot kinds swap by data (US2 AC3, SC-003). The pinned dressing-slot count is now 109 (96 small + 4 + 4 + 4 + 1 landmark). The ThemeSwitch assertion covers all five kinds again. `boulevardT3` went 9 to 10 to keep the pace windows; the city placement band test now checks the 1500 cap (C7). Jest re-run after this change: 12 suites, 0 failed; 154 tests, 151 passed, 0 failed, 3 pending. Lune: 495 passed.
+- The 3 skipped tests are all in `tests/studio/DataService.spec.luau` (`itReward`, lines 141, 164 and 450: the page-reward
+  grant tests and the leave-and-rejoin test that checks rewards). They run only when `Worlds.sizeTiers[1].reward` is set;
+  Downtown has `reward = nil` at launch (decision D6, cosmetics are features 006a and 006b), so the file skips them with
+  `it.skip`. They are not failures and nothing else is skipped.
+- T030 option taken (revised in review round 1): built the missing `slot.medium` (4, Market), `slot.yard` (4, Park) and `slot.street` (4, Boulevard) placements in `Downtown.luau`, so all five slot kinds swap by data (US2 AC3, SC-003). The pinned dressing-slot count is now 109 (96 small + 4 + 4 + 4 + 1 landmark). The ThemeSwitch assertion covers all five kinds again. `boulevardT3` went 9 to 10 to keep the pace windows; the city placement band test now checks the 1500 cap (C7). Jest re-run after this change: 12 suites, 0 failed; 154 tests, 151 passed, 0 failed, 3 skipped. Lune: 495 passed.
 - T031: scatter probe moved to (0, -110), open Ring 2 street at Y = 0. (0, -100) holds a holiday garland at Y 11.
 
 

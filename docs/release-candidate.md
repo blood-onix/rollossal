@@ -46,9 +46,13 @@ Source: `specs/008-downtown-inside-out/` (FR-014, quickstart §6). None of these
   pickup ≤ 5 s; D 5 at 10 to 50 s; D 12 at 35 to 110 s and D 30 at 65 to 180 s (both lower bounds relaxed again on 2026-11-02, model timings); D 80 by 210 s; D 150 by 240 s). The
   Lune model is the only evidence so far.
 - [ ] Captures at phone resolutions (640 × 360, 844 × 390, 1280 × 720), saved by hand or by the owner.
+- [ ] Overhead and street-level captures of Stage 1 (Old Quarter and first Terraces block) and of Rings 2 to 5, in
+  `winter` and `city` (FR-013, SC-002, T013, T022). `screen_capture` timed out twice in Stage 1 and again in Stage 2
+  and again on 2026-11-02, so none was taken; geometry was checked by measurement only.
 - [ ] Frame rate with 12 balls in `winter` (≥ 30 fps) over 60 s on the reference phone. The Studio half is met
   (`playtest.md` Gate 2: 60 of 60 unthrottled seconds at 59.9 to 60.1 fps, 0 throttled); the phone is still open.
-- [ ] Confirm the plan's deviations D1 to D8 and any pace mark that had to be relaxed (see `playtest.md` "Deviations").
+- [ ] Confirm the plan's deviations D1 to D8 (`plan.md`, "Spec deviations and defaults to confirm") and any pace mark that
+  had to be relaxed (`playtest.md` "Deviations").
 - [ ] Owner look at the 2026-11-02 changes (`playtest.md` "Owner feedback round"): the 12 doorsteps (pad plus big-kind
   strips), the cosmetic traffic on the Terraces ring road and the Boulevard, and whether the city still reads as
   "objects dumped in groups" (parked vehicles and scatter are still random-yaw zones; no road markings or lamps yet).
