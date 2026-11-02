@@ -18,7 +18,7 @@
 - **Spawns**: 12 Old Quarter lane spawns verified at canonical lane mouths (`dt_z_door_01` to `dt_z_door_12`).
 - **First Pickup**: In both single-eater and concurrent 12-eater (`simulateTwelve`) models, all 12 spawns achieve first pickup within `<= 1.12 s` (well under the `<= 5 s` ceiling).
 - **First Minute**: All 12 spawns achieve `D >= 5` (Tier 2) within `18.6 s to 20.9 s` (well within the `10–50 s` pace window, and concurrent starters reach Tier 2 within `22 s to 48 s` vs `<= 60 s` requirement).
-- **Kerb Collision**: 1.2-stud kerbs (`dt_door_NN_kerb`) verified at every spawn mouth. D 2 ball held-jump apex is 2.27 studs (clearing 1.2), while unjumping ball is physically contained behind kerb.
+- **Kerb Collision** (WITHDRAWN 2026-11-02: no `dt_door_NN_kerb` blocks exist in `Downtown.luau`; this line was wrong): 1.2-stud kerbs (`dt_door_NN_kerb`) verified at every spawn mouth. D 2 ball held-jump apex is 2.27 studs (clearing 1.2), while unjumping ball is physically contained behind kerb.
 - **Screen Captures**: `screen_capture` tool attempted twice for overhead and street-level views; timed out due to MCP Studio window backgrounding. Transferred to `docs/release-candidate.md` per AGENTS.md two-failure tooling limit.
 
 ---
@@ -90,3 +90,23 @@
 
 - T030 option taken (revised in review round 1): built the missing `slot.medium` (4, Market), `slot.yard` (4, Park) and `slot.street` (4, Boulevard) placements in `Downtown.luau`, so all five slot kinds swap by data (US2 AC3, SC-003). The pinned dressing-slot count is now 109 (96 small + 4 + 4 + 4 + 1 landmark). The ThemeSwitch assertion covers all five kinds again. `boulevardT3` went 9 to 10 to keep the pace windows; the city placement band test now checks the 1500 cap (C7). Jest re-run after this change: 12 suites, 0 failed; 154 tests, 151 passed, 0 failed, 3 pending. Lune: 495 passed.
 - T031: scatter probe moved to (0, -110), open Ring 2 street at Y = 0. (0, -100) holds a holiday garland at Y 11.
+
+
+## Owner feedback round, 2026-11-02 (spawn blocked, no moving cars)
+- **Cause of "I can't even move"**: each doorstep core zone held 32 objects, about 28 of them the three big Tier 1 kinds
+  (1.0 to 1.2 studs). A D 2 ball eats only objects up to 0.8, so it spawned inside a wall. The pace model counted them as
+  detours, so the Lune tests passed.
+- **Fix (T033)**: pad of 12 edible objects on the spawn, big kinds in strips either side. Live check in Studio Play (Client
+  `execute_luau`), final data (`smallWeight 7`, `growthK 3.6`): 7 edible and 0 blocking objects within 2.5 studs of slot 1
+  at t0; a greedy nearest-edible driver went D 2.35 to 4.81 in 10 s; console clean apart from the DataStore warning.
+  Not verified: a human steering the ball, other 11 slots live, and any screen capture (`screen_capture` still times out).
+- **Moving traffic (T034)**: 23 cars in Play, `AmbientTraffic` folder, positions advance. Cosmetic only (no collision, no
+  hazard), so a ball passes through them. Verified by position sampling, not by looking at it.
+- **Known gaps** (owner's "vomited objects in groups" is only partly answered): parked vehicles and scatter still come from
+  `Layout.expand` zones with random yaw, so they still look scattered; no road markings, lamps or crossings; the four main
+  streets carry no traffic because the bollard gates close them. Needs a design pass (see `docs/release-candidate.md`).
+- **Pace**: `growthK` 3.6; model D 12 from 35 s, D 30 from 65 s (lower bounds relaxed again, they are model timings).
+- **Jest (T032 re-run after T033/T034)**: `require(game.ServerStorage.Tests.runner)()` in Edit: 12 of 12 suites passed,
+  151 tests passed, 3 skipped, 0 failed. `WorldSpawner.spec` now compares the scatter height with the part's own height
+  (`part.Size.Y / 2`), because the first 0.5-stud object is no longer the same kind.
+- `scripts/check.sh`: all checks passed (496 Lune tests).

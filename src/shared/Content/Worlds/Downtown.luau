@@ -906,9 +906,14 @@ end
 local TUNE = {
 	laneMax = 2.4,
 	loopMax = 2.2,
-	t3Rare = 0.2,
+	t3Rare = 0.1,
 	crumbBig = 16,
+	smallWeight = 7,
+	padCount = 12,
+	stripCount = 10,
 	bigCrumbs = 2,
+	midWeight = 10,
+	bigWeight = 100,
 	laneT2 = { 3, 3, 3, 1 },
 	loopT2 = 5,
 	radialT3 = 0,
@@ -927,14 +932,22 @@ local TUNE = {
 -- must be able to reach D 5 alone when twelve starters share the Old Quarter (FR-008). The other Tier 1 kinds
 -- come in the small (c) zone of each doorstep.
 local t1Crumbs: { MixEntry } = {}
+-- Every doorstep object is one a D 2 ball can eat (size <= 0.4 * D = 0.8): a bigger one would be a wall the new ball
+-- cannot move through. The three big kinds (headphones, basketball, takeout box) wait in the c zone behind it.
 for _, id in { "bottle_cap", "aa_battery", "earbud_case", "puzzle_cube", "soda_can", "tennis_ball" } do
-	table.insert(t1Crumbs, { objectId = id, weight = 1 })
+	table.insert(t1Crumbs, { objectId = id, weight = TUNE.smallWeight })
 end
-table.insert(t1Crumbs, { objectId = "headphones", weight = TUNE.crumbBig })
-table.insert(t1Crumbs, { objectId = "basketball", weight = TUNE.crumbBig })
-table.insert(t1Crumbs, { objectId = "takeout_box", weight = TUNE.crumbBig + 2 })
-local t1Big =
-	mix({ "coffee_cup", "donut", "smartphone", "water_bottle", "pizza_slice", "game_controller" })
+for _, id in { "coffee_cup", "donut", "smartphone" } do
+	table.insert(t1Crumbs, { objectId = id, weight = TUNE.crumbBig })
+end
+-- The bigger Tier 1 kinds stand in the strips either side of the pad, where the ball reaches them after the pad.
+local t1Big: { MixEntry } = {}
+for _, id in { "water_bottle", "pizza_slice", "game_controller" } do
+	table.insert(t1Big, { objectId = id, weight = TUNE.midWeight })
+end
+for _, id in { "headphones", "basketball", "takeout_box" } do
+	table.insert(t1Big, { objectId = id, weight = TUNE.bigWeight })
+end
 local t2Lane = mix(idsOfTier(2, true, 0, TUNE.laneMax))
 local t2All = mix(idsOfTier(2, true))
 local t2Loop = mix(idsOfTier(2, true, 0, TUNE.loopMax))
@@ -1033,18 +1046,25 @@ for _, spawn in spawnAt do
 		end
 		return spawn.x + towards * offset, spawn.z
 	end
-	local ax, az = at(0)
-	local bx, bz = at(6.55)
-	local w, d = 8, 10.1
-	local bw, bd = 8, 3
-	if spawn.axis == "x" then
-		w, d = d, w
-		bw, bd = bd, bw
+	local function strip(offset: number, length: number): (number, number, number, number)
+		local sx, sz = at(offset)
+		if spawn.axis == "x" then
+			return sx, sz, length, 8
+		end
+		return sx, sz, 8, length
 	end
-	local cx, cz = at(-6.55)
-	zone(name .. "_a", ax, az, w, d, 0, t1Crumbs, 32, slot * 100 + 1, slot)
-	zone(name .. "_c", cx, cz, bw, bd, 0, t1Big, TUNE.bigCrumbs, slot * 100 + 3, slot)
+	-- A pad of things a D 2 ball can eat on the spawn itself, then the bigger Tier 1 kinds in the strips either side
+	-- of it: the ball clears the pad (D 3) before it meets anything it cannot eat.
+	local px, pz, pw, pd = strip(0, 4.0)
+	zone(name .. "_a", px, pz, pw, pd, 0, t1Crumbs, TUNE.padCount, slot * 100 + 1, slot)
+	local fx, fz, fw, fd = strip(3.5, 2.95)
+	zone(name .. "_d", fx, fz, fw, fd, 0, t1Big, TUNE.stripCount, slot * 100 + 4, slot)
+	local gx, gz, gw, gd = strip(-3.5, 2.95)
+	zone(name .. "_e", gx, gz, gw, gd, 0, t1Big, TUNE.stripCount, slot * 100 + 5, slot)
+	local bx, bz, bw, bd = strip(6.55, 3)
 	zone(name .. "_b", bx, bz, bw, bd, 0, mix({ "slot.small" }), 8, slot * 100 + 2, slot)
+	local cx, cz, cw, cd = strip(-6.55, 3)
+	zone(name .. "_c", cx, cz, cw, cd, 0, t1Big, TUNE.bigCrumbs, slot * 100 + 3, slot)
 end
 
 -- Lane scatter: 16 Tier 2 objects per quarter on the free lane segments (canonical coordinates).
@@ -1101,9 +1121,9 @@ do
 	end
 	hero("rubber_duck_sunglasses", 0, 52.5, -56)
 	hero("lost_sneaker", 1, 45.8, -52.5)
-	hero("inflatable_flamingo", 2, 52.5, -46)
+	hero("inflatable_flamingo", 2, 52.5, -56)
 	hero("spinning_office_chair", 3, 45.8, -52.5)
-	hero("pizza_box_tower", 1, 52.5, -46)
+	hero("pizza_box_tower", 1, 52.5, -56)
 end
 
 -- Ring 2: the Terraces --------------------------------------------------------------------------------------------
@@ -1195,8 +1215,8 @@ end
 -- Scatter on loop A (Tier 2) and the radial streets (Tier 3); loop B is left for the markers and the winter overlays.
 for r = 0, 3 do
 	for index, span in { { 17, 45 }, { 65, 90 }, { -45, -17 }, { -90, -65 } } do
-		local cx, cz = turn(r, (span[1] + span[2]) / 2, -100)
-		local w, d = span[2] - span[1], 16
+		local cx, cz = turn(r, (span[1] + span[2]) / 2, -105.5)
+		local w, d = span[2] - span[1], 5
 		if r % 2 == 1 then
 			w, d = d, w
 		end
@@ -1369,8 +1389,8 @@ for r = 0, 3 do
 			{ x = sign * 220, w = 130, mix = t3Radial, count = TUNE.boulevardT3 },
 		}
 		for part, spec in outer do
-			local ox, oz = turn(r, spec.x, -342)
-			local ow, od = spec.w, 26
+			local ox, oz = turn(r, spec.x, -350.5)
+			local ow, od = spec.w, 9
 			if r % 2 == 1 then
 				ow, od = od, ow
 			end
@@ -1391,7 +1411,7 @@ for r = 0, 3 do
 end
 -- Street dressing slot (sleigh, ice cream truck): one on the outer carriageway of each side.
 for r = 0, 3 do
-	local sx, sz = turn(r, -312, -342)
+	local sx, sz = turn(r, -300, -308)
 	zone(`dt_z_blv_slot_{r}`, sx, sz, 20, 20, 0, mix({ "slot.street" }), 1, 4301 + r, nil)
 end
 -- Big vehicles stand in the unzoned stretches of the north carriageway.
@@ -1554,7 +1574,7 @@ spot("booster-dash-2", "BoosterSpot", "dash", 0, -345)
 spot("trap-bumper-2", "TrapSpot", "bumper", 12, -310)
 sweeperLoop(
 	"trap-sweeper-2",
-	{ { x = -8, z = 315 }, { x = 8, z = 315 }, { x = 8, z = 340 }, { x = -8, z = 340 } }
+	{ { x = -8, z = 315 }, { x = 8, z = 315 }, { x = 8, z = 328 }, { x = -8, z = 328 } }
 )
 -- Skyline and Harbour
 spot("booster-shield-2", "BoosterSpot", "shield", 0, -380)
@@ -1857,11 +1877,64 @@ flock("Park", { { -120, -250 }, { -100, -240 }, { -140, -200 }, { -110, -270 }, 
 flock("Market", { { 100, -240 }, { 120, -230 }, { 60, -235 }, { 140, -250 }, { 80, -255 } })
 flock("Harbour", { { -300, 392 }, { -250, 392 }, { 100, 392 }, { 150, 392 }, { 300, 392 } })
 
+-- Ambient traffic (client-only, no collision): a lane of cars on the Terraces ring road and one round the Boulevard.
+-- Both run clockwise on asphalt the static scatter leaves free (loop A's props sit on its outer half, the Boulevard's
+-- on the outermost strip of its outer carriageway). Loops are squares with cut corners, so cars turn in two steps.
+local function squareLoop(half: number, cut: number): { { x: number, z: number } }
+	return {
+		{ x = -half + cut, z = -half },
+		{ x = half - cut, z = -half },
+		{ x = half, z = -half + cut },
+		{ x = half, z = half - cut },
+		{ x = half - cut, z = half },
+		{ x = -half + cut, z = half },
+		{ x = -half, z = half - cut },
+		{ x = -half, z = -half + cut },
+	}
+end
+local carColours: { { number } } = {
+	{ 214, 70, 62 },
+	{ 238, 196, 66 },
+	{ 70, 118, 196 },
+	{ 236, 238, 242 },
+	{ 62, 146, 98 },
+	{ 232, 132, 52 },
+}
+local function convoy(
+	count: number,
+	first: number,
+	kinds: { "car" | "van" | "bus" }
+): { { kind: "car" | "van" | "bus", phase: number, colour: { number } } }
+	local cars = {}
+	for index = 1, count do
+		table.insert(cars, {
+			kind = kinds[(index - 1) % #kinds + 1],
+			phase = (first + (index - 1) / count) % 1,
+			colour = carColours[(index * 5 + math.floor(first * 100)) % #carColours + 1],
+		})
+	end
+	return cars
+end
+local traffic = {
+	{
+		id = "terraces_ring",
+		speed = 16,
+		waypoints = squareLoop(99, 6),
+		cars = convoy(7, 0, { "car", "car", "van", "car", "bus" }),
+	},
+	{
+		id = "boulevard",
+		speed = 24,
+		waypoints = squareLoop(339, 12),
+		cars = convoy(16, 0.03, { "car", "car", "van", "car", "car", "bus" }),
+	},
+}
+
 local Downtown = {
 	worldId = "downtown",
 	starThresholds = { 20, 45, 80 },
 	-- PROVISIONAL, owner to confirm: solved with the pace model (tests/unit/Pace.test, 008 research R-07).
-	growthK = 2.94,
+	growthK = 3.6,
 	halfExtent = 440,
 	outerHalfExtent = 560,
 	sizeTiers = sizeTiers,
@@ -1904,7 +1977,7 @@ local Downtown = {
 		atmosphereColor = { 200, 215, 235 },
 		atmosphereDecay = { 190, 200, 220 },
 	},
-	ambient = { pigeons = pigeons },
+	ambient = { pigeons = pigeons, traffic = traffic },
 }
 
 return Downtown

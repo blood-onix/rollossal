@@ -14,6 +14,7 @@ local WeatherController = require(script.Parent.WeatherController)
 local FpsReadout = require(script.Parent.FpsReadout)
 local HazardClient = require(script.Parent.HazardClient)
 local PigeonController = require(script.Parent.PigeonController)
+local TrafficController = require(script.Parent.TrafficController)
 
 local Shared = game:GetService("ReplicatedStorage"):WaitForChild("Shared")
 local Config = require(Shared.Config)
@@ -36,6 +37,7 @@ HazardClient.start()
 -- ambient list, and the Downtown flag being off, start nothing.
 if Config.Flags.Downtown then
 	PigeonController.start()
+	TrafficController.start()
 end
 
 if Config.Flags.Saving then

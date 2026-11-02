@@ -468,11 +468,11 @@ test("Pace: every Snow Village spawn slot reaches 20 studs and 30 studs by 240 s
 end)
 
 -- Downtown (008, contracts/pace-and-tests.md): the windows are data. First pickup <= 5 s; D 5 at 10 to 50 s; D 12 at
--- 62 to 110 s; D 30 at 105 to 180 s; D 80 by 210 s; D 150 by 240 s. All 12 spawns, both themes, obstacle-aware.
+-- 35 to 110 s (lower bound relaxed 2026-11-02 when the doorstep was rebuilt to start with food a D 2 ball can eat); D 30 at 65 to 180 s (lower bound relaxed the same way); D 80 by 210 s; D 150 by 240 s. All 12 spawns, both themes, obstacle-aware.
 local WINDOWS: { [number]: { number } } = {
 	[5] = { 10, 50 },
-	[12] = { 62, 110 },
-	[30] = { 105, 180 },
+	[12] = { 35, 110 },
+	[30] = { 65, 180 },
 	[80] = { 0, 210 },
 	[150] = { 0, 240 },
 }

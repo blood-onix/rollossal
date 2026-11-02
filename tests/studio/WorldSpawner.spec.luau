@@ -193,7 +193,8 @@ describe("WorldSpawner pooling and respawn", function()
 		expect(object.state).toBe("Scattered")
 		expect(object.part).toBe(part)
 		expect(part.Position.Y).toBeGreaterThan(0)
-		expect(part.Position.Y).toBeCloseTo(object.size / 2, 3)
+		-- The part rests on its own height, which is not always the object's longest side.
+		expect(part.Position.Y).toBeCloseTo(part.Size.Y / 2, 3)
 		expect(part:GetAttribute("Taken")).toBe(false)
 		WorldSpawner.update(NOW + Config.scatterGrace)
 		expect(object.state).toBe("Available")
@@ -204,7 +205,7 @@ describe("WorldSpawner pooling and respawn", function()
 		take(object, NOW, "k2")
 		local porch = Worlds.active.spawnPoints[1]
 		WorldSpawner.scatter(object, Vector3.new(porch.x, 0, porch.z), NOW)
-		expect(object.part.Position.Y).toBeCloseTo(porch.y + object.size / 2, 3)
+		expect(object.part.Position.Y).toBeCloseTo(porch.y + object.part.Size.Y / 2, 3)
 	end)
 
 	it("returnToSpawn never destroys the part", function()

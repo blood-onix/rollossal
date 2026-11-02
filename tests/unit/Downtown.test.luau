@@ -920,6 +920,65 @@ test(
 )
 
 test(
+	"Downtown traffic: every lane is a closed loop of spaced cars that drives clear of solid blocks",
+	function()
+		local ambient = Downtown.ambient
+		expect.truthy(ambient ~= nil and ambient.traffic ~= nil)
+		local lanes = (ambient :: any).traffic
+		expect.truthy(#lanes >= 2)
+		local solids = {}
+		for _, block in Downtown.environment.blocks do
+			local top = block.cframe.y + block.size.y / 2
+			if block.kind ~= "Boundary" and top > 0.3 then
+				local sx, sz = block.size.x, block.size.z
+				if math.floor(block.cframe.yaw / 90 + 0.5) % 2 == 1 then
+					sx, sz = sz, sx
+				end
+				table.insert(solids, {
+					x0 = block.cframe.x - sx / 2,
+					x1 = block.cframe.x + sx / 2,
+					z0 = block.cframe.z - sz / 2,
+					z1 = block.cframe.z + sz / 2,
+					id = block.id,
+				})
+			end
+		end
+		local CAR_HALF_WIDTH = 3.6
+		for _, lane in lanes do
+			expect.truthy(#lane.waypoints >= 3, lane.id)
+			expect.truthy(lane.speed > 0, lane.id)
+			local length = 0
+			for index, from in lane.waypoints do
+				local to = lane.waypoints[index % #lane.waypoints + 1]
+				expect.truthy(math.abs(from.x) <= Downtown.halfExtent, lane.id)
+				expect.truthy(math.abs(from.z) <= Downtown.halfExtent, lane.id)
+				local dx, dz = to.x - from.x, to.z - from.z
+				local segment = math.sqrt(dx * dx + dz * dz)
+				length += segment
+				for step = 0, math.floor(segment / 3) do
+					local f = step * 3 / segment
+					local px, pz = from.x + dx * f, from.z + dz * f
+					for _, solid in solids do
+						local hit = px > solid.x0 - CAR_HALF_WIDTH
+							and px < solid.x1 + CAR_HALF_WIDTH
+							and pz > solid.z0 - CAR_HALF_WIDTH
+							and pz < solid.z1 + CAR_HALF_WIDTH
+						expect.falsy(hit, `{lane.id} drives into {solid.id} near {px}, {pz}`)
+					end
+				end
+			end
+			expect.truthy(#lane.cars >= 1, lane.id)
+			-- 30 studs between cars: the longest body is 25 long.
+			expect.truthy(length / #lane.cars >= 30, `{lane.id}: cars closer than 30 studs`)
+			for _, car in lane.cars do
+				expect.truthy(car.phase >= 0 and car.phase < 1, lane.id)
+				expect.truthy(#car.colour == 3, lane.id)
+			end
+		end
+	end
+)
+
+test(
 	"Downtown C17: at most 8 pigeons per district, five districts, none in a marker keep-out",
 	function()
 		local ambient = Downtown.ambient

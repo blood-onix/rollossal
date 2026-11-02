@@ -43,12 +43,15 @@ Source: `specs/008-downtown-inside-out/` (FR-014, quickstart §6). None of these
 - [ ] Owner look-and-feel sign-off for the Stage 1 slice (Old Quarter and the first Terraces block) and for the full map,
   in `winter` and `city`: dark asphalt against light plinths, landmark, bollard gates, the 30-stud main streets.
 - [ ] Human-played D 5, 12, 30 and 80 timings from several of the 12 spawns, against the windows in the spec (first
-  pickup ≤ 5 s; D 5 at 10 to 50 s; D 12 at 62 to 110 s; D 30 at 105 to 180 s; D 80 by 210 s; D 150 by 240 s). The
+  pickup ≤ 5 s; D 5 at 10 to 50 s; D 12 at 35 to 110 s and D 30 at 65 to 180 s (both lower bounds relaxed again on 2026-11-02, model timings); D 80 by 210 s; D 150 by 240 s). The
   Lune model is the only evidence so far.
 - [ ] Captures at phone resolutions (640 × 360, 844 × 390, 1280 × 720), saved by hand or by the owner.
 - [ ] Frame rate with 12 balls in `winter` (≥ 30 fps) over 60 s on the reference phone. The Studio half is met
   (`playtest.md` Gate 2: 60 of 60 unthrottled seconds at 59.9 to 60.1 fps, 0 throttled); the phone is still open.
 - [ ] Confirm the plan's deviations D1 to D8 and any pace mark that had to be relaxed (see `playtest.md` "Deviations").
+- [ ] Owner look at the 2026-11-02 changes (`playtest.md` "Owner feedback round"): the 12 doorsteps (pad plus big-kind
+  strips), the cosmetic traffic on the Terraces ring road and the Boulevard, and whether the city still reads as
+  "objects dumped in groups" (parked vehicles and scatter are still random-yaw zones; no road markings or lamps yet).
 - [ ] The camera at D 80 (320 studs back) and the fog (500 to 1600) on a phone.
 
 ### Phone
