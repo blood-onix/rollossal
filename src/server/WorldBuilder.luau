@@ -77,6 +77,24 @@ local function buildGeometry(world: WorldDef, parent: Folder, themeId: string): 
 		table.move(binding.blocks, 1, #binding.blocks, #all + 1, all)
 	end
 	for _, block in all do
+		if block.kind == "Boundary" then
+			-- An invisible wall at the playable edge (008, R-01): solid to balls, never drawn, never hit by rays.
+			local at = block.cframe
+			local wall = Instance.new("Part")
+			wall.Name = block.id
+			wall.Anchored = true
+			wall.Size = Vector3.new(block.size.x, block.size.y, block.size.z)
+			wall.CFrame = CFrame.new(at.x, at.y, at.z) * CFrame.Angles(0, math.rad(at.yaw), 0)
+			wall.Transparency = 1
+			wall.CanCollide = true
+			wall.CanQuery = false
+			wall.CanTouch = false
+			wall.CastShadow = false
+			wall.Material = Enum.Material.SmoothPlastic
+			wall.Parent = parent
+			count += 1
+			continue
+		end
 		local swatch = palette[block.swatch]
 		if swatch == nil then
 			error(`WorldBuilder: block {block.id} uses unknown swatch {block.swatch}`)

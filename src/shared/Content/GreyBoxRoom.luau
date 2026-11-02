@@ -66,6 +66,7 @@ export type PlacementSeed = {
 }
 -- y is the surface the ball rests on; the ball sits at y + startDiameter / 2 + 0.5.
 export type SpawnPoint = { slot: number, x: number, y: number, z: number, yaw: number }
+-- kind: "Block" (default), "Wedge", "Cylinder" or "Boundary" (an invisible collider: no palette lookup, never drawn).
 export type BlockDef = {
 	id: string,
 	kind: string,
@@ -146,7 +147,16 @@ export type KeepOutDef = {
 
 -- Client-only decoration (007, R-14): ambient pigeons stand on the ground or on static geometry.
 export type PigeonSpot = { district: string, x: number, z: number }
-export type AmbientDef = { pigeons: { PigeonSpot }? }
+-- Ambient traffic (client-only, never collides and never hurts): cars, vans and buses that drive a closed loop over
+-- the streets. `phase` is where the car starts, as a fraction of the loop; `speed` is studs per second.
+export type TrafficCar = { kind: "car" | "van" | "bus", phase: number, colour: { number } }
+export type TrafficLane = {
+	id: string,
+	speed: number,
+	waypoints: { { x: number, z: number } },
+	cars: { TrafficCar },
+}
+export type AmbientDef = { pigeons: { PigeonSpot }?, traffic: { TrafficLane }? }
 
 export type WorldDef = {
 	worldId: string,
