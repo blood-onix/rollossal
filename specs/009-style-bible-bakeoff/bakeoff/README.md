@@ -21,16 +21,14 @@ Feature 009, US3. Date: 2026-11-02. Nothing here is added to `art/export/` or `m
 1. **Source 1, upgraded in-house Blender pipeline: done.** Rebuilt with boxes, convex hulls, cylinders and ico-spheres,
    a 1-segment bevel on main silhouettes only, unbevelled small details. Script: `art/scripts/bakeoff_props.py`
    (`build_and_render`); the stats are in `renders/source1.json`.
-2. **Source 2, CC0 pack (Kenney or Quaternius): not run (owner approval for the external download is outstanding).** A
-   new external resource needs approval (Human Approval list, Principle XII). Nothing was downloaded. No licence record
-   exists yet; the licence section below says what to capture when it runs.
+2. **Source 2, CC0 pack (Kenney or Quaternius): not run (owner declined, 2026-11-02).** Nothing was downloaded and no
+   licence record exists. The licence section below says what to capture if the owner reopens it.
 3. **Source 3, `generate_3d` hero: not run (generators off).** `get_addon_status` on 2026-11-02: tripo, hunyuan3d, hyper3d
    and meshy all `off`, libraries polyhaven, sketchfab and polypizza `off`, no premium generators. It cannot run, and
    credit spend would need approval anyway.
-4. **Source 4, Creator Store: searched, not inspected.** Read-only `search_asset` (scope `creator_store`, free only) was run
-   for each prop. Hits are listed in section 5. No model was inserted into the place, so scripts, triangle counts and
-   licence terms are not verified, and nothing is a candidate yet (inserting untrusted third-party models was not
-   approved and is not needed to pick a sourcing rule).
+4. **Source 4, Creator Store: searched, inspection declined by the owner (2026-11-02).** Read-only `search_asset` (scope
+   `creator_store`, free only) was run for each prop. Hits are listed in section 5. No model was inserted into the place,
+   so scripts, triangle counts and licence terms are not verified, and none is a candidate.
 
 ## 3. Matrix
 
@@ -38,11 +36,11 @@ Triangles are measured on the exported mesh (after triangulation). "Today" is th
 
 | Prop | Tier | Budget | Floor / target | Today | Source 1 triangles | Look | Atlas fit | Effort (agent) | Licence | Cost | Source 2 | Source 3 | Source 4 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| hatchback | 4 | 3,500 | 1,050 / 1,925 | 216 | **1,420** (in band) | 3 | 5 | about 15 min | own | 0 | not run (approval) | not run (generators off) | searched, not inspected |
-| shop_front | 5 | 5,000 | 1,500 / 2,750 | 200 (`dt_corner_bakery`), 432 (`dt_corner_shop_row`) | **2,032** (in band) | 4 | 5 | about 15 min | own | 0 | not run (approval) | not run (generators off) | searched, not inspected |
-| bench | 3 | 1,500 | 450 / 825 | 48 | **564** (in band) | 3 | 5 | about 5 min | own | 0 | not run (approval) | not run (generators off) | searched, not inspected |
-| street_tree | 3 | 1,500 | 450 / 825 | 88 | **456** (in band, just above floor) | 3 | 5 | about 5 min | own | 0 | not run (approval) | not run (generators off) | searched, not inspected |
-| fire_hydrant | 2 | 700 | 210 / 385 | 176 | **364** (in band) | 3 | 5 | about 5 min | own | 0 | not run (approval) | not run (generators off) | searched, not inspected |
+| hatchback | 4 | 3,500 | 1,050 / 1,925 | 216 | **1,420** (in band) | 3 | 5 | about 15 min | own | 0 | not run (owner declined) | not run (generators off) | searched, inspection declined |
+| shop_front | 5 | 5,000 | 1,500 / 2,750 | 200 (`dt_corner_bakery`), 432 (`dt_corner_shop_row`) | **2,032** (in band) | 4 | 5 | about 15 min | own | 0 | not run (owner declined) | not run (generators off) | searched, inspection declined |
+| bench | 3 | 1,500 | 450 / 825 | 48 | **564** (in band) | 3 | 5 | about 5 min | own | 0 | not run (owner declined) | not run (generators off) | searched, inspection declined |
+| street_tree | 3 | 1,500 | 450 / 825 | 88 | **456** (in band, just above floor) | 3 | 5 | about 5 min | own | 0 | not run (owner declined) | not run (generators off) | searched, inspection declined |
+| fire_hydrant | 2 | 700 | 210 / 385 | 176 | **364** (in band) | 3 | 5 | about 5 min | own | 0 | not run (owner declined) | not run (generators off) | searched, inspection declined |
 
 (`dt_bench`, `dt_street_tree` and `dt_fire_hydrant` counts in the plan, 48 / 88 / 176, are the figures used above; the
 manifest's older `bench` entry is a different mesh.)
@@ -62,10 +60,9 @@ All under `renders/`, prefix `source1_`:
 ## 5. Licences and inspection
 
 - **Source 1**: own work, no external licence.
-- **Source 2**: none recorded (not run). When it runs, record per pack: name, URL, licence page text (CC0 1.0),
+- **Source 2**: none recorded (not run). If the owner reopens it, record per pack: name, URL, licence page text (CC0 1.0),
   download date, creator, and the credit line even though CC0 needs none.
-- **Source 4 search hits** (2026-11-02, Creator Store, free; scripts and triangles **not** verified, so none is usable
-  yet):
+- **Source 4 search hits** (2026-11-02, Creator Store, free; scripts and triangles **not** verified, so none is usable):
 
 | Prop | Hit (asset id, creator) |
 | --- | --- |
@@ -77,8 +74,8 @@ All under `renders/`, prefix `source1_`:
 
 Inspection attempt (2026-11-02, round 1): `InsertService:LoadAsset` through `execute_luau` (Edit, nothing parented into
 the place) on 11 of these ids all failed with "User is not authorized to access Asset", so scripts, triangles and licence
-terms stay unverified. The remaining route is `insert_asset`, which puts untrusted third-party models into the place; that
-needs the owner's say-so and was not done.
+terms stay unverified. The remaining route is `insert_asset`, which puts untrusted third-party models into the place; the
+owner declined it on 2026-11-02 and it was not done.
 
 The shop and tree hits are typical of the store: multi-part models (many `Part`s, not one mesh) and spam titles. They
 do not meet the one-mesh, one-material, atlas rule without a rebuild.
@@ -94,20 +91,20 @@ do not meet the one-mesh, one-material, atlas rule without a rebuild.
   small and rely on their colour (red, wood) more than on added geometry, which supports per-class floors below the
   tier floor for the small props (hydrant 210 to 385 is already generous).
 - Facade continuity (style bible section 5) cannot be judged on a single shop; it needs a row, which is a map feature.
-- Source 2, 3 and 4 give no comparison yet, so no claim is made about them.
+- Source 2, 3 and 4 give no comparison, so no claim is made about them.
 
 ## 7. Sourcing rule
 
-The owner chooses the rule from these renders and counts; the owner has not yet. **Default taken** (open question with
-a proposed default, recorded in `docs/release-candidate.md`): new world props are made in Blender with the in-house
-pipeline to the style bible's per-tier floors and targets (Source 1). A CC0 pack mesh is an optional supplement, only
-after the download and the constitution amendment are approved, and counts as edited in Blender once re-UV'd to the
-atlas with its licence recorded. `generate_3d` and Creator Store models are not used until they have been run through
-this same comparison. Copied into `docs/design/08-style-bible.md` section 11.
+**Owner decision, 2026-11-02**: new world props are made in Blender with the in-house pipeline to the style bible's
+per-tier floors and targets (Source 1). The owner declined the CC0 download and the Creator Store inspection, so this
+rule rests on Source 1's counts and not on a side-by-side comparison. The owner can reopen the CC0 test after looking at
+the renders; a CC0 mesh would still need the download and the constitution amendment approved. `generate_3d` and Creator
+Store models are not used unless they have been run through this same comparison. Copied into
+`docs/design/08-style-bible.md` section 11.
 
 ## 8. Upload hand-off
 
 At most 5 props, none uploaded by the agent. Nothing is proposed for upload from this bake-off: the Source 1 meshes are
-comparison builds kept in a scratch Blender scene, not in `art/source` or `art/export`. If the owner picks Source 1 for
-all five, the follow-up build feature adds them to `art/source`, exports them through `export_all.py` and hands the five
-FBX files over.
+comparison builds kept in a scratch Blender scene, not in `art/source` or `art/export`. With Source 1 chosen, the
+follow-up build feature adds them to `art/source`, exports them through `export_all.py` and hands the five FBX files
+over.
