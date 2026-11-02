@@ -1,9 +1,10 @@
 --!strict
--- Content validation for src/shared/Content/Worlds/Downtown.luau (007; contracts/world-content.md invariants
--- C1 to C18, data-model.md). The ranges below are written out by hand from the spec and the design, not read
+-- Content validation for src/shared/Content/Worlds/Downtown.luau (007 and 008; contracts/world-content.md
+-- invariants C1 to C18 and N1 to N10, data-model.md). The ranges below are written out by hand from the spec and the design, not read
 -- from the data under test.
 
 local fs = require("@lune/fs")
+local serde = require("@lune/serde")
 
 local harness = require("./harness")
 local Config = require("../../src/shared/Config")
@@ -37,26 +38,24 @@ local HEROES = {
 	"tower_crane",
 	"glass_tower",
 }
+-- The winter overlays (data-model.md section 14): Tier 2 to 4 dressing, one ice rink, no Tier 1.
 local OVERLAY_COUNTS: { [string]: number } = {
-	fairy_light_bulb = 24,
-	mini_gift = 18,
-	gingerbread_cookie = 18,
-	leaning_present_stack = 6,
-	poinsettia_pot = 14,
 	wooden_sled = 14,
-	wreath = 16,
 	snow_pile = 12,
-	light_up_reindeer = 5,
 	cocoa_cart = 8,
-	market_stall = 8,
-	snowplough = 6,
+	market_stall = 5,
+	poinsettia_pot = 16,
+	wreath = 16,
 	ice_rink = 1,
 }
+local OVERLAY_TOTAL = 72
 local HUB_PARTS = 3
 local BALLS = 12
 -- Runtime parts of Feature 006 (48 trail patches and 16 sweeper and bumper parts) that a Studio capture sees.
 local RUNTIME_PARTS = 64
 local SPAWN_RADIUS = 10
+local TIER_TARGETS = { 470, 386, 260, 204, 56 }
+local MAX_PARTS = 1850
 local MIN_NEAR_TIER_1 = 40
 
 local objectById: { [string]: typeof(Downtown.objects[1]) } = {}
@@ -135,9 +134,9 @@ test("Downtown: identity, star targets, extents and theme set", function()
 	expect.equal(Downtown.starThresholds[1], 20)
 	expect.equal(Downtown.starThresholds[2], 45)
 	expect.equal(Downtown.starThresholds[3], 80)
-	expect.equal(Downtown.halfExtent, 300)
-	expect.equal(Downtown.outerHalfExtent, 400)
-	expect.equal(Downtown.maxPlacements, 1400)
+	expect.equal(Downtown.halfExtent, 440)
+	expect.equal(Downtown.outerHalfExtent, 560)
+	expect.equal(Downtown.maxPlacements, 1500)
 	expect.equal(Downtown.activeThemeId, "winter")
 	expect.equal(#Downtown.supportedThemes, 2)
 	expect.equal(Downtown.supportedThemes[1], "winter")
@@ -373,8 +372,12 @@ test(
 			expect.equal(twin.x, placement.x, placement.id)
 			expect.equal(twin.z, placement.z, placement.id)
 		end
-		expect.equal(#resolved.winter.placements - #resolved.city.placements, 150)
-		expect.truthy(#resolved.city.placements >= 1200 and #resolved.city.placements <= 1290)
+		expect.equal(#resolved.winter.placements - #resolved.city.placements, OVERLAY_TOTAL)
+		-- C7: winter (city plus the overlays) stays within the 1500 cap.
+		expect.truthy(
+			#resolved.city.placements >= 1300
+				and #resolved.winter.placements <= Config.Budgets.defaultMaxPlacements
+		)
 	end
 )
 
@@ -396,8 +399,8 @@ test("Downtown: no two footprints overlap in either theme", function()
 	end
 end)
 
-test("Downtown C8: dressing slots stay inside the 15 percent share and are 148 in all", function()
-	local expected = { small = 96, medium = 30, yard = 14, street = 6, landmark = 2 }
+test("Downtown C8: dressing slots stay inside the 15 percent share and are 109 in all", function()
+	local expected = { small = 96, medium = 4, yard = 4, street = 4, landmark = 1 }
 	local kinds = { small = 0, medium = 0, yard = 0, street = 0, landmark = 0 }
 	for _, zone in Downtown.zones do
 		local entry = zone.mix[1].objectId
@@ -418,7 +421,7 @@ test("Downtown C8: dressing slots stay inside the 15 percent share and are 148 i
 		for _ in resolved[themeId].slotPlacementIds do
 			slots += 1
 		end
-		expect.equal(slots, 148, themeId)
+		expect.equal(slots, 109, themeId)
 		expect.truthy(
 			slots / #resolved[themeId].placements <= Config.Budgets.maxDressingSlotShare,
 			themeId
@@ -433,13 +436,10 @@ test(
 		expect.equal(#points, 12)
 		for index, point in points do
 			expect.equal(point.slot, index)
-			expect.equal(point.y, 0.6)
-			expect.truthy(
-				math.abs(point.x) <= Downtown.halfExtent
-					and math.abs(point.z) <= Downtown.halfExtent
-			)
-			-- Three per quadrant, 40 to 70 studs in from the outer edge.
-			expect.truthy(math.abs(point.x) >= 120 and math.abs(point.x) <= 260)
+			expect.equal(point.y, 0)
+			-- In the Old Quarter (m <= 90) and never inside a main-street corridor.
+			expect.truthy(math.max(math.abs(point.x), math.abs(point.z)) <= 90)
+			expect.truthy(math.abs(point.x) >= 15 and math.abs(point.z) >= 15)
 			for _, themeId in Downtown.supportedThemes do
 				local near = 0
 				for _, placement in resolved[themeId].placements do
@@ -555,7 +555,7 @@ test("Downtown C10 to C13: theme bindings", function()
 		expect.equal(counts[id], count, id)
 		total += count
 	end
-	expect.equal(total, 150)
+	expect.equal(total, OVERLAY_TOTAL)
 	-- The winter slot objects are in the book page, too, and the tiers of the overlay kit are right.
 	local overlayTiers = { fairy_light_bulb = 1, snow_pile = 3, market_stall = 4, ice_rink = 5 }
 	for id, tier in overlayTiers do
@@ -569,10 +569,10 @@ test("Downtown C10: overlays sit clear of every keep-out, all four kinds", funct
 		counts[keepOut.kind] += 1
 		expect.truthy(keepOut.w > 0 and keepOut.d > 0, keepOut.id)
 	end
-	expect.equal(counts.gate, 6)
+	expect.equal(counts.gate, 4)
 	expect.equal(counts.shortcut, 5)
-	expect.equal(counts.sightline, 12)
-	expect.truthy(counts.marker >= 17 + 5, `marker keep-outs {counts.marker}`)
+	expect.equal(counts.sightline, 16)
+	expect.truthy(counts.marker >= 15 + 5, `marker keep-outs {counts.marker}`)
 	for _, zone in Downtown.themeBindings.winter.overlays.zones do
 		local zoneRect = rectOf(zone)
 		for _, keepOut in Downtown.keepOutAreas do
@@ -621,53 +621,75 @@ test(
 )
 
 test(
-	"Downtown C16: 12 sightline corridors, one per spawn, 12 wide and 80 long, clear of T4 and T5",
+	"Downtown C16: 4 main-street and 12 lane corridors are clear of tall blocks and Tier 4 and 5 buildings",
 	function()
 		local corridors = {}
+		local streets, lanes = 0, 0
 		for _, keepOut in Downtown.keepOutAreas do
 			if keepOut.kind == "sightline" then
 				table.insert(corridors, keepOut)
+				if keepOut.w == 30 or keepOut.d == 30 then
+					streets += 1
+				elseif keepOut.w == 8 or keepOut.d == 8 then
+					lanes += 1
+				end
 			end
 		end
-		expect.equal(#corridors, 12)
-		for index, point in Downtown.spawnPoints do
-			local corridor = corridors[index]
-			expect.equal(corridor.w, 12)
-			expect.truthy(corridor.d >= 80)
-			-- It starts at the doorstep and runs out along the spawn's street towards the tower or the wheel.
-			expect.equal(corridor.x, point.x)
-			expect.truthy(math.abs(corridor.z - point.z) - corridor.d / 2 <= 0.001)
-			expect.truthy(math.abs(point.z - corridor.z) <= corridor.d / 2 + 0.001)
-			local outward = if point.z < 0 then -1 else 1
-			expect.truthy((corridor.z - point.z) * outward > 0)
+		expect.equal(#corridors, 16)
+		expect.equal(streets, 4)
+		expect.equal(lanes, 12)
+		-- Every spawn is the near end of one lane corridor.
+		for _, point in Downtown.spawnPoints do
+			local found = false
+			for _, corridor in corridors do
+				if
+					math.abs(point.x - corridor.x) <= corridor.w / 2
+					and math.abs(point.z - corridor.z) <= corridor.d / 2
+				then
+					found = true
+				end
+			end
+			expect.truthy(found, `slot {point.slot} has a corridor`)
 		end
+		local all = table.clone(Downtown.environment.blocks)
 		for _, themeId in Downtown.supportedThemes do
-			for _, placement in resolved[themeId].placements do
-				local object = resolvedObjects[themeId][placement.objectId]
-				if object.tier >= 4 and placement.objectId ~= "slot.landmark" then
-					local isLandmark = object.id == "mega_tree" or object.id == "giant_duck"
+			local themeBlocks = (Downtown.themeBindings :: any)[themeId].blocks
+			local list = if themeBlocks
+				then table.move(themeBlocks, 1, #themeBlocks, #all + 1, table.clone(all))
+				else all
+			for _, block in list do
+				local top = block.cframe.y + block.size.y / 2
+				local bottom = block.cframe.y - block.size.y / 2
+				-- Garlands hang at bottom y >= 9: overhead, not a sightline block.
+				if block.kind ~= "Boundary" and top > 2.5 and bottom < 9 then
+					local sideways = block.cframe.yaw % 180 ~= 0
+					local rect = {
+						block.cframe.x - (if sideways then block.size.z else block.size.x) / 2,
+						block.cframe.x + (if sideways then block.size.z else block.size.x) / 2,
+						block.cframe.z - (if sideways then block.size.x else block.size.z) / 2,
+						block.cframe.z + (if sideways then block.size.x else block.size.z) / 2,
+					}
 					for _, corridor in corridors do
-						local half = object.size / 2
-						local hit = math.abs(placement.x - corridor.x) < half + corridor.w / 2
-							and math.abs(placement.z - corridor.z) < half + corridor.d / 2
 						expect.falsy(
-							hit and not isLandmark,
-							`{themeId}: {placement.id} blocks {corridor.id}`
+							intersects(rect, rectOf(corridor)),
+							`{themeId}: block {block.id} crosses {corridor.id}`
 						)
 					end
 				end
 			end
-		end
-		-- The goals themselves stand at the ends of the two streets.
-		local glass, ferris
-		for _, placement in Downtown.fixedPlacements do
-			if placement.objectId == "glass_tower" then
-				glass = placement
-			elseif placement.objectId == "ferris_wheel" then
-				ferris = placement
+			for _, placement in resolved[themeId].placements do
+				local object = resolvedObjects[themeId][placement.objectId]
+				local isLandmark = object.id == "mega_tree" or object.id == "giant_duck"
+				if object.tier >= 4 and not isLandmark then
+					for _, corridor in corridors do
+						local half = object.size / 2
+						local hit = math.abs(placement.x - corridor.x) < half + corridor.w / 2
+							and math.abs(placement.z - corridor.z) < half + corridor.d / 2
+						expect.falsy(hit, `{themeId}: {placement.id} blocks {corridor.id}`)
+					end
+				end
 			end
 		end
-		expect.truthy(glass.z < -200 and ferris.z > 200)
 	end
 )
 
@@ -687,27 +709,31 @@ test(
 	end
 )
 
-test("Downtown C14: at most 400 blocks and the part budget holds in both themes", function()
-	local baseBlocks = #Downtown.environment.blocks
-	expect.truthy(baseBlocks <= 400, `{baseBlocks} blocks`)
-	local built = 0
-	for _, marker in Downtown.environment.markers do
-		if marker.kind ~= "GoldenSpot" then
-			built += 1
+test(
+	"Downtown C14: at most 215 base blocks, 250 in winter, and the part budget holds in both themes",
+	function()
+		local baseBlocks = #Downtown.environment.blocks
+		expect.truthy(baseBlocks <= 215, `{baseBlocks} blocks`)
+		local built = 0
+		for _, marker in Downtown.environment.markers do
+			if marker.kind ~= "GoldenSpot" then
+				built += 1
+			end
+		end
+		expect.truthy(built >= 9 and built <= 16, `{built} built markers`)
+		for _, themeId in Downtown.supportedThemes do
+			local themeBlocks = (Downtown.themeBindings :: any)[themeId].blocks
+			local blocks = baseBlocks + (if themeBlocks then #themeBlocks else 0)
+			expect.truthy(blocks <= 250, `{themeId}: {blocks} blocks`)
+			local total = #resolved[themeId].placements + blocks + built + HUB_PARTS + BALLS
+			expect.truthy(
+				total + RUNTIME_PARTS <= MAX_PARTS,
+				`{themeId}: {total} parts plus {RUNTIME_PARTS} runtime parts`
+			)
+			expect.truthy(total + RUNTIME_PARTS < Config.Budgets.maxActivePartsPerServer)
 		end
 	end
-	expect.truthy(built >= 9 and built <= 16, `{built} built markers`)
-	for _, themeId in Downtown.supportedThemes do
-		local themeBlocks = (Downtown.themeBindings :: any)[themeId].blocks
-		local blocks = baseBlocks + (if themeBlocks then #themeBlocks else 0)
-		local total = #resolved[themeId].placements + blocks + built + HUB_PARTS + BALLS
-		expect.truthy(
-			total + RUNTIME_PARTS <= Config.Budgets.maxActivePartsPerServer,
-			`{themeId}: {total} parts plus {RUNTIME_PARTS} runtime parts`
-		)
-		expect.truthy(total <= Config.Budgets.maxActivePartsPerServer - RUNTIME_PARTS)
-	end
-end)
+)
 
 test(
 	"Downtown: every block swatch exists in the world palette or every theme, and kinds are known",
@@ -718,10 +744,14 @@ test(
 			expect.falsy(ids[block.id], block.id)
 			ids[block.id] = true
 			expect.truthy(
-				block.kind == "Block" or block.kind == "Wedge" or block.kind == "Cylinder",
+				block.kind == "Block"
+					or block.kind == "Wedge"
+					or block.kind == "Cylinder"
+					or block.kind == "Boundary",
 				block.id
 			)
 			expect.truthy(block.size.x > 0 and block.size.y > 0 and block.size.z > 0, block.id)
+			expect.truthy(block.cframe.yaw % 90 == 0, `{block.id} yaw`)
 			for _, themeId in Downtown.supportedThemes do
 				expect.truthy(
 					palette[block.swatch] ~= nil
@@ -729,8 +759,18 @@ test(
 					`{block.id} swatch {block.swatch}`
 				)
 			end
+			-- Blocks sit inside the playable square; the invisible walls may be 8 outside it and the horizon
+			-- towers stand beyond it.
+			local limit = Downtown.halfExtent + 2
+			if block.kind == "Boundary" then
+				limit = Downtown.halfExtent + 8
+			elseif string.sub(block.id, 1, 11) == "dt_horizon_" then
+				limit = Downtown.outerHalfExtent
+			elseif string.sub(block.id, 1, 9) == "dt_basin_" or block.id == "dt_ground" then
+				limit = Downtown.outerHalfExtent + 100
+			end
 			expect.truthy(
-				math.abs(block.cframe.x) <= 303 and math.abs(block.cframe.z) <= 303,
+				math.abs(block.cframe.x) <= limit and math.abs(block.cframe.z) <= limit,
 				block.id
 			)
 		end
@@ -767,8 +807,13 @@ test("Downtown C18: a Tier 1 kerb 1.0 to 1.5 tall stands next to every spawn", f
 		for _, block in Downtown.environment.blocks do
 			local top = block.cframe.y + block.size.y / 2
 			if top >= 1.0 and top <= 1.5 then
-				local dx, dz = block.cframe.x - point.x, block.cframe.z - point.z
-				if dx * dx + dz * dz <= 15 * 15 then
+				-- Within 4.5 studs of the block's footprint: the lane edge is the kerb (D5).
+				local sideways = block.cframe.yaw % 180 ~= 0
+				local hx = (if sideways then block.size.z else block.size.x) / 2
+				local hz = (if sideways then block.size.x else block.size.z) / 2
+				local dx = math.max(math.abs(point.x - block.cframe.x) - hx, 0)
+				local dz = math.max(math.abs(point.z - block.cframe.z) - hz, 0)
+				if dx * dx + dz * dz <= 4.5 * 4.5 then
 					found = true
 				end
 			end
@@ -798,7 +843,7 @@ test(
 		expect.equal(kinds.GoldenSpot, 5)
 		expect.truthy(kinds.BoosterSpot >= 5 and kinds.TrapSpot >= 4)
 		expect.truthy(
-			kinds.BoosterSpot + kinds.TrapSpot >= 9 and kinds.BoosterSpot + kinds.TrapSpot <= 12
+			kinds.BoosterSpot + kinds.TrapSpot >= 9 and kinds.BoosterSpot + kinds.TrapSpot <= 16
 		)
 		for _, name in
 			{
@@ -923,7 +968,8 @@ end)
 test("Downtown: the winter look is the launch look and the lighting copy matches", function()
 	expect.equal(Themes.winter.lighting.clockTime, 16.5)
 	expect.equal(Downtown.lighting.clockTime, 16.5)
-	expect.equal(Downtown.hub.center.x, -460)
+	expect.equal(Downtown.hub.center.x, -620)
+	expect.equal(Downtown.hub.center.z, 0)
 	expect.truthy(Downtown.growthK > 0)
 end)
 
@@ -939,40 +985,451 @@ test("Downtown: the active world is picked in priority order and the flag is on"
 	expect.truthy(string.find(text, "else GreyBoxRoom", 1, true) ~= nil)
 end)
 
-test("Downtown F2: garlands and the sledding slope belong to the winter theme only", function()
-	local function ids(list: { { id: string } }): { [string]: boolean }
-		local set: { [string]: boolean } = {}
-		for _, block in list do
-			set[block.id] = true
+test(
+	"Downtown N9 (F2): garlands, the slope and the sled ramp belong to the winter theme only",
+	function()
+		local function ids(list: { { id: string } }): { [string]: boolean }
+			local set: { [string]: boolean } = {}
+			for _, block in list do
+				set[block.id] = true
+			end
+			return set
 		end
-		return set
+		for _, block in Downtown.environment.blocks do
+			expect.falsy(string.find(block.id, "garland", 1, true), block.id)
+			expect.falsy(string.find(block.id, "slope", 1, true), block.id)
+		end
+		local winterList = (Downtown.themeBindings :: any).winter.blocks or {}
+		local winter = ids(winterList)
+		expect.truthy(winter.dt_park_slope and winter.dt_park_sledramp)
+		local garlands = 0
+		for _, block in winterList do
+			if string.find(block.id, "garland", 1, true) then
+				garlands += 1
+				expect.truthy(block.cframe.y - block.size.y / 2 >= 9, block.id)
+			end
+		end
+		expect.equal(garlands, 24)
+		expect.truthy(#winterList <= 35)
+		expect.falsy((Downtown.themeBindings :: any).city.blocks ~= nil)
 	end
-	local base = ids(Downtown.environment.blocks)
-	local winter = ids((Downtown.themeBindings :: any).winter.blocks or {})
-	expect.truthy(winter.dt_park_slope and winter.dt_garland_1)
-	expect.falsy(base.dt_park_slope or base.dt_garland_1)
-	expect.falsy((Downtown.themeBindings :: any).city.blocks ~= nil)
+)
+
+-- Helpers for the 008 layout checks -------------------------------------------------------------------------------
+
+type Rect = { number }
+
+local function blockRect(block: any): Rect
+	local sideways = block.cframe.yaw % 180 ~= 0
+	local hx = (if sideways then block.size.z else block.size.x) / 2
+	local hz = (if sideways then block.size.x else block.size.z) / 2
+	return { block.cframe.x - hx, block.cframe.x + hx, block.cframe.z - hz, block.cframe.z + hz }
+end
+
+local function blockTop(block: any): number
+	return block.cframe.y + block.size.y / 2
+end
+
+local function blockBottom(block: any): number
+	return block.cframe.y - block.size.y / 2
+end
+
+local function blocksFor(themeId: string): { any }
+	local all = table.clone(Downtown.environment.blocks) :: { any }
+	local themeBlocks = (Downtown.themeBindings :: any)[themeId].blocks
+	if themeBlocks then
+		table.move(themeBlocks, 1, #themeBlocks, #all + 1, all)
+	end
+	return all
+end
+
+test("Downtown N1: the envelope pins and four invisible 8-thick boundary walls", function()
+	expect.equal(Downtown.halfExtent, 440)
+	expect.equal(Downtown.outerHalfExtent, 560)
+	expect.equal(Downtown.hub.center.x, -620)
+	expect.equal(Downtown.hub.center.z, 0)
+	expect.equal(Config.cameraMaxDistance, 320)
+	local found: { [string]: boolean } = {}
+	for _, block in Downtown.environment.blocks do
+		if block.kind == "Boundary" then
+			expect.truthy(block.size.y >= 150, block.id)
+			local rect = blockRect(block)
+			-- Inner faces at +-halfExtent, thickness >= 8.
+			if block.size.x >= 800 and block.size.z <= block.size.x then
+				local north = block.cframe.z < 0
+				expect.truthy(block.size.z >= 8, block.id)
+				expect.equal(
+					if north then rect[4] else rect[3],
+					if north then -440 else 440,
+					block.id
+				)
+				found[if north then "n" else "s"] = true
+			else
+				local west = block.cframe.x < 0
+				expect.truthy(block.size.x >= 8, block.id)
+				expect.equal(
+					if west then rect[2] else rect[1],
+					if west then -440 else 440,
+					block.id
+				)
+				found[if west then "w" else "e"] = true
+			end
+		end
+	end
+	for _, side in { "n", "s", "e", "w" } do
+		expect.truthy(found[side], side)
+	end
+	-- The old perimeter wall is gone.
+	for _, block in Downtown.environment.blocks do
+		expect.falsy(string.find(block.id, "dt_wall_", 1, true), block.id)
+	end
+end)
+
+-- Rasterises blocks (top > 0.2) and Tier 4 or 5 buildings onto a 5-stud grid over [-440, 440]^2.
+local function coverage(themeId: string): number
+	local cells = 176
+	local marked: { [number]: boolean } = {}
+	local count = 0
+	local function mark(rect: Rect)
+		local i0 = math.max(0, math.floor((rect[1] + 440) / 5))
+		local i1 = math.min(cells - 1, math.ceil((rect[2] + 440) / 5) - 1)
+		local j0 = math.max(0, math.floor((rect[3] + 440) / 5))
+		local j1 = math.min(cells - 1, math.ceil((rect[4] + 440) / 5) - 1)
+		for i = i0, i1 do
+			for j = j0, j1 do
+				local key = i * cells + j
+				if not marked[key] then
+					marked[key] = true
+					count += 1
+				end
+			end
+		end
+	end
+	for _, block in blocksFor(themeId) do
+		if block.kind ~= "Boundary" and blockTop(block) > 0.2 and blockBottom(block) < 9 then
+			mark(blockRect(block))
+		end
+	end
+	for _, placement in resolved[themeId].placements do
+		local object = resolvedObjects[themeId][placement.objectId]
+		if object.tier >= 4 then
+			local half = object.size / 2
+			mark({ placement.x - half, placement.x + half, placement.z - half, placement.z + half })
+		end
+	end
+	return count / (cells * cells)
+end
+
+test("Downtown N2: built coverage is at least 20 percent in both themes", function()
+	for _, themeId in Downtown.supportedThemes do
+		local value = coverage(themeId)
+		expect.truthy(value >= 0.2, `{themeId}: coverage {value}`)
+	end
+end)
+
+test("Downtown N3 and N4: at least 50 static blocks and no tall perimeter wall", function()
+	local count = 0
+	for _, block in Downtown.environment.blocks do
+		if block.kind ~= "Boundary" then
+			local rect = blockRect(block)
+			local area = (rect[2] - rect[1]) * (rect[4] - rect[3])
+			if blockTop(block) > 0.5 or area < 4000 then
+				count += 1
+			end
+			-- Nothing within 12 studs of the playable edge is taller than 8.
+			local touches = rect[2] >= 428 and rect[1] <= 452
+				or rect[1] <= -428 and rect[2] >= -452
+				or rect[4] >= 428 and rect[3] <= 452
+				or rect[3] <= -428 and rect[4] >= -452
+			if touches and string.sub(block.id, 1, 11) ~= "dt_horizon_" then
+				expect.truthy(blockTop(block) <= 8, `{block.id} is a tall perimeter wall`)
+			end
+		end
+	end
+	expect.truthy(count >= 50, `{count} static blocks`)
 end)
 
 test(
-	"Downtown F5: the drain tunnel has 5-tall walls and a roof over the chamber and mouths, so a jump cannot get in",
+	"Downtown N6: base placements per tier are within 10 percent of 470 / 386 / 260 / 204 / 56",
 	function()
-		local walls, roof = 0, nil
-		for _, block in Downtown.environment.blocks do
-			if block.id == "dt_tunnel_roof" then
-				roof = block
-			elseif string.find(block.id, "^dt_tunnel_") then
-				walls += 1
-				expect.truthy(block.cframe.y + block.size.y / 2 >= 5, block.id)
+		local counts = { 0, 0, 0, 0, 0 }
+		for _, placement in resolved.city.placements do
+			local tier = resolvedObjects.city[placement.objectId].tier
+			counts[tier] += 1
+		end
+		for tier = 1, 5 do
+			local target = TIER_TARGETS[tier]
+			expect.truthy(
+				counts[tier] >= math.ceil(target * 0.9) and counts[tier] <= math.floor(target * 1.1),
+				`tier {tier}: {counts[tier]} placements, wanted {target} +- 10 percent`
+			)
+		end
+		-- The winter overlays carry Tier 2 and above only (D5), and the base is the same in both themes.
+		for _, placement in resolved.winter.placements do
+			if string.sub(placement.id, 1, 6) == "dt_ol_" then
+				expect.truthy(resolvedObjects.winter[placement.objectId].tier >= 2, placement.id)
 			end
 		end
-		expect.equal(walls, 6)
-		expect.truthy(roof ~= nil)
-		-- Covers z -14 to 14 and x -103.5 to -96.5, and sits at the wall tops (clearance 5 for D < 5).
-		expect.truthy(
-			roof.cframe.y - roof.size.y / 2 >= 5 and roof.cframe.y - roof.size.y / 2 <= 5.01
-		)
-		expect.truthy(roof.size.z >= 28 and roof.size.x >= 7)
+	end
+)
+
+-- Free width across a street at a point: from the centre outwards until a block with top >= 1 (a plinth or wall).
+local function clearWidth(x: number, z: number, alongX: boolean, themeId: string): number
+	local solid: { Rect } = {}
+	for _, block in blocksFor(themeId) do
+		if block.kind == "Block" and blockTop(block) >= 1.0 and blockBottom(block) < 3 then
+			table.insert(solid, blockRect(block))
+		end
+	end
+	local function inside(px: number, pz: number): boolean
+		for _, rect in solid do
+			if px > rect[1] and px < rect[2] and pz > rect[3] and pz < rect[4] then
+				return true
+			end
+		end
+		return false
+	end
+	local low, high = 0, 0
+	while
+		low < 80
+		and not inside(if alongX then x - low - 0.5 else x, if alongX then z else z - low - 0.5)
+	do
+		low += 0.5
+	end
+	while
+		high < 80
+		and not inside(if alongX then x + high + 0.5 else x, if alongX then z else z + high + 0.5)
+	do
+		high += 0.5
+	end
+	return low + high
+end
+
+test("Downtown N7: street widths per ring", function()
+	local function widths(
+		label: string,
+		points: { { number } },
+		alongX: boolean,
+		minimum: number,
+		maximum: number
+	)
+		for _, themeId in Downtown.supportedThemes do
+			for _, point in points do
+				local width = clearWidth(point[1], point[2], alongX, themeId)
+				expect.truthy(
+					width >= minimum and width <= maximum,
+					`{themeId} {label} at ({point[1]}, {point[2]}): {width}`
+				)
+			end
+		end
+	end
+	-- Ring 1 lanes: 8 +- 1, sampled away from the crossings.
+	local laneX, laneZ = {}, {}
+	for _, sx in { -1, 1 } do
+		for _, sz in { -1, 1 } do
+			for _, t in { 22, 38, 65, 75, 85 } do
+				table.insert(laneX, { sx * 52.5, sz * t })
+				table.insert(laneZ, { sx * t, sz * 52.5 })
+			end
+		end
+	end
+	widths("lane x", laneX, true, 7, 9)
+	widths("lane z", laneZ, false, 7, 9)
+	-- Main streets 30 +- 1 through Rings 1 and 2, at points between the loops.
+	local north, east = {}, {}
+	for _, sign in { -1, 1 } do
+		for _, t in { 40, 60, 80, 115, 125, 135, 165, 175 } do
+			table.insert(north, { 0, sign * t })
+			table.insert(east, { sign * t, 0 })
+		end
+	end
+	widths("main street ns", north, true, 29, 31)
+	widths("main street ew", east, false, 29, 31)
+	-- Ring 2 loops and radials: 16 to 30.
+	widths("loop A", { { 30, -100 }, { 70, -100 }, { -30, 100 }, { -70, 100 } }, false, 15, 30)
+	widths("loop B", { { 30, -150 }, { 70, -150 }, { -30, 150 }, { 70, 150 } }, false, 15, 30)
+	widths("radial", { { 55, -125 }, { -55, -125 }, { 55, -170 }, { -55, 170 } }, true, 15, 30)
+	-- Ring 5 avenues: at least 40.
+	widths("avenue n", { { 0, -400 }, { 0, -380 } }, true, 40, 80)
+	widths("avenue e", { { 400, 0 }, { 380, 0 } }, false, 40, 80)
+	-- Ring 3 approaches: at least 30 (open ground beyond the yards' fences is measured as 80).
+	widths("approach", { { 0, -250 }, { 250, 0 } }, true, 30, 200)
+	-- Ring 4: two 26-stud carriageways either side of an 8-stud median, 60 in all.
+	local medians = 0
+	for _, block in Downtown.environment.blocks do
+		if string.sub(block.id, 1, 7) == "dt_med_" then
+			medians += 1
+			expect.truthy(math.abs(blockTop(block) - 0.8) < 0.01, block.id)
+			local rect = blockRect(block)
+			local thin = math.min(rect[2] - rect[1], rect[4] - rect[3])
+			expect.equal(thin, 8, block.id)
+			local face = if rect[2] - rect[1] < rect[4] - rect[3] then rect[1] else rect[3]
+			local centre = (face + thin / 2)
+			local inner = math.abs(centre) - 4 - 295
+			local outer = 355 - (math.abs(centre) + 4)
+			expect.truthy(inner >= 24 and outer >= 24, block.id)
+			expect.equal(inner + 8 + outer, 60, block.id)
+		end
+	end
+	expect.equal(medians, 8)
+end)
+
+-- Flood fill over the Old Quarter at 2-stud cells: can a ball of diameter D leave it? Walls and the bollard cones
+-- (size 2, eaten only when 0.4 D >= 2) are the obstacles, grown by the ball's radius.
+local function leavesOldQuarter(diameter: number): boolean
+	local radius = diameter / 2
+	local walls: { Rect } = {}
+	for _, block in Downtown.environment.blocks do
+		if
+			block.kind == "Block"
+			and blockBottom(block) < diameter
+			and blockTop(block) > math.max(2.5, 0.5 * diameter)
+		then
+			local rect = blockRect(block)
+			table.insert(
+				walls,
+				{ rect[1] - radius, rect[2] + radius, rect[3] - radius, rect[4] + radius }
+			)
+		end
+	end
+	for _, fixed in Downtown.fixedPlacements do
+		if fixed.objectId == "traffic_cone" and 2.0 > Config.absorbRatio * diameter then
+			table.insert(walls, {
+				fixed.x - 1 - radius,
+				fixed.x + 1 + radius,
+				fixed.z - 1 - radius,
+				fixed.z + 1 + radius,
+			})
+		end
+	end
+	local function blocked(x: number, z: number): boolean
+		for _, rect in walls do
+			if x > rect[1] and x < rect[2] and z > rect[3] and z < rect[4] then
+				return true
+			end
+		end
+		return false
+	end
+	-- Cells are 2 studs; indices run -60 to 59 (x, z from -120 to 118).
+	local seen: { [number]: boolean } = {}
+	local function key(i: number, j: number): number
+		return (i + 100) * 1000 + (j + 100)
+	end
+	local start = Downtown.spawnPoints[1]
+	local queue = { { math.floor(start.x / 2), math.floor(start.z / 2) } }
+	seen[key(queue[1][1], queue[1][2])] = true
+	local head = 1
+	while head <= #queue do
+		local cell = queue[head]
+		head += 1
+		for _, step in { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } } do
+			local i, j = cell[1] + step[1], cell[2] + step[2]
+			if i >= -60 and i < 60 and j >= -60 and j < 60 and not seen[key(i, j)] then
+				local x, z = i * 2 + 1, j * 2 + 1
+				if not blocked(x, z) then
+					seen[key(i, j)] = true
+					if math.max(math.abs(x), math.abs(z)) >= 93 then
+						return true
+					end
+					table.insert(queue, { i, j })
+				end
+			end
+		end
+	end
+	return false
+end
+
+test("Downtown N8: a D 2 ball cannot leave the Old Quarter, a D 5 ball can", function()
+	expect.falsy(leavesOldQuarter(2))
+	expect.falsy(leavesOldQuarter(4.5))
+	expect.truthy(leavesOldQuarter(5))
+end)
+
+test(
+	"Downtown N5 (F5, F6): every shortcut is 4.5 wide with a roof at 4.8 to 5.0 and 5.2 walls",
+	function()
+		local byId: { [string]: any } = {}
+		for _, block in Downtown.environment.blocks do
+			byId[block.id] = block
+		end
+		local shortcuts = 0
+		for _, keepOut in Downtown.keepOutAreas do
+			if keepOut.kind == "shortcut" then
+				shortcuts += 1
+				local name = string.gsub(keepOut.id, "^ko_shortcut_", "")
+				local prefix = if name == "drain" then "dt_drain_3" else `dt_sc_{name}`
+				local wallA, wallB, roof =
+					byId[prefix .. "_wa"], byId[prefix .. "_wb"], byId[prefix .. "_roof"]
+				expect.truthy(wallA ~= nil and wallB ~= nil and roof ~= nil, keepOut.id)
+				local a, b, r = blockRect(wallA), blockRect(wallB), blockRect(roof)
+				local acrossX = (a[2] - a[1]) < (a[4] - a[3])
+				local gap = if acrossX then math.abs(b[1] - a[2]) else math.abs(b[3] - a[4])
+				if acrossX and b[1] < a[1] then
+					gap = a[1] - b[2]
+				elseif not acrossX and b[3] < a[3] then
+					gap = a[3] - b[4]
+				end
+				expect.truthy(math.abs(gap - 4.5) <= 0.1, `{keepOut.id}: gap {gap}`)
+				expect.truthy(blockTop(wallA) >= 5.2 and blockTop(wallB) >= 5.2, keepOut.id)
+				local bottom = blockBottom(roof)
+				expect.truthy(bottom >= 4.8 and bottom <= 5.0, `{keepOut.id}: roof bottom {bottom}`)
+				-- The roof covers the corridor along its length and across both walls.
+				local length = if acrossX then keepOut.d else keepOut.w
+				local roofLength = if acrossX then r[4] - r[3] else r[2] - r[1]
+				expect.truthy(roofLength >= length - 0.01, keepOut.id)
+				expect.truthy(
+					if acrossX
+						then r[1] <= math.min(a[1], b[1]) and r[2] >= math.max(a[2], b[2])
+						else r[3] <= math.min(a[3], b[3]) and r[4] >= math.max(a[4], b[4]),
+					keepOut.id
+				)
+			end
+		end
+		expect.equal(shortcuts, 5)
+	end
+)
+
+test("Downtown N10: the triangle ceilings hold against the art manifest", function()
+	local manifest = serde.decode("json", fs.readFile("art/export/manifest.json"))
+	local triangles: { [string]: number } = {}
+	for _, mesh in manifest.meshes do
+		triangles[mesh.id] = mesh.triangles
+	end
+	local total, culled = 0, 0
+	for _, placement in resolved.winter.placements do
+		local object = resolvedObjects.winter[placement.objectId]
+		local count = triangles[object.assetKey :: string]
+		expect.truthy(count ~= nil, `no manifest row for {object.assetKey}`)
+		total += count
+		if object.tier >= 4 then
+			culled += count
+		end
+	end
+	expect.truthy(total <= 250000, `unculled {total}`)
+	expect.truthy(culled <= 100000, `culled {culled}`)
+end)
+
+test(
+	"Downtown: each ring group has a booster and a trap, and every Studio-built block id is unique",
+	function()
+		local groups = {
+			{ 0, 90 },
+			{ 90, 185 },
+			{ 185, 290 },
+			{ 290, 360 },
+			{ 360, 440 },
+		}
+		for index, group in groups do
+			local booster, trap = false, false
+			for _, marker in Downtown.environment.markers do
+				local m = math.max(math.abs(marker.x), math.abs(marker.z))
+				if m > group[1] and m <= group[2] then
+					booster = booster or marker.kind == "BoosterSpot"
+					trap = trap or marker.kind == "TrapSpot"
+				end
+			end
+			expect.truthy(booster and trap, `ring group {index}`)
+		end
 	end
 )
 

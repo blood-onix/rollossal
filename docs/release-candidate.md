@@ -11,8 +11,9 @@ the feature's `playtest.md`, then tick the item here.
 
 ## Checks on the RC
 
-The numbers below come from the placeholder Downtown map. Backlog item 004f redesigns that map, so re-measure them on
-the final one.
+The Downtown map is now the "Inside Out" layout of feature 008 (880 × 880 studs, five rings). The 008 numbers come from
+the Lune pace model and the agent-run Studio checks in `specs/008-downtown-inside-out/playtest.md`; the items below
+need a person or a device.
 
 ### Downtown layout and pacing
 
@@ -34,6 +35,22 @@ Source: `specs/007-downtown-holiday-city/playtest.md` (T015, T016, T035, T039, c
 to 185 s), 1 star (thresholds 20 / 45 / 80), D 80 not reached. One run, one spawn, `winter`, on the placeholder map,
 with the HUD size meter hidden behind the top bar (since fixed). The windows come from a greedy-eater model, so this
 is not a pass or a fail. `growthK` and the windows stay as they are until the RC.
+
+### Downtown "Inside Out" (008)
+
+Source: `specs/008-downtown-inside-out/` (FR-014, quickstart §6). None of these holds the feature.
+
+- [ ] Owner look-and-feel sign-off for the Stage 1 slice (Old Quarter and the first Terraces block) and for the full map,
+  in `winter` and `city`: dark asphalt against light plinths, landmark, bollard gates, the 30-stud main streets.
+- [ ] Human-played D 5, 12, 30 and 80 timings from several of the 12 spawns, against the windows in the spec (first
+  pickup ≤ 5 s; D 5 at 10 to 50 s; D 12 at 62 to 110 s; D 30 at 105 to 180 s; D 80 by 210 s; D 150 by 240 s). The
+  Lune model is the only evidence so far.
+- [ ] Captures at phone resolutions (640 × 360, 844 × 390, 1280 × 720), saved by hand or by the owner.
+- [ ] Frame rate with 12 balls in `winter` (≥ 30 fps) over 60 s: per-second client Heartbeat (render) frame times, with
+  seconds at exactly 15 fps reported as throttled, in Studio and on the reference phone. `playtest.md` Gate 2 has no
+  valid figure (its `GetRealPhysicsFPS` samples measure the physics step, not rendering).
+- [ ] Confirm the plan's deviations D1 to D8 and any pace mark that had to be relaxed (see `playtest.md` "Deviations").
+- [ ] The camera at D 80 (320 studs back) and the fog (500 to 1600) on a phone.
 
 ### Phone
 

@@ -50,10 +50,13 @@
   - Spawned 12 playerless bots in Holiday City (`winter`) via `ServerStorage.Tests.BotRun:Clone().Parent = ServerScriptService`.
   - 13 concurrent balls active in Workspace (`Balls` folder).
   - Ran for 120 seconds.
-- **Performance Sampling**:
-  - Measured `workspace:GetRealPhysicsFPS()` on Client across 15 consecutive 1-second samples:
-    `[60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60]`
-  - Stable 60 FPS throughout the entire run. 0 throttled seconds. Exceeds the `>= 30 FPS` unthrottled gate.
+- **Performance Sampling (correction after review round 1)**:
+  - The earlier figure (`workspace:GetRealPhysicsFPS()`, 15 samples of 60) is the physics step rate, which stays at 60
+    whatever the render rate. It is **not** evidence for the render-frame-rate half of FR-013 / SC-005 / US3 AC1 and is
+    withdrawn. The run also recorded 15 one-second samples, not 60 s, and did not count throttled seconds.
+  - Status: **not measured.** The render-fps check (12 balls, 60 s, per-second client Heartbeat frame times, seconds at
+    exactly 15 fps reported as throttled) moved to `docs/release-candidate.md`. Only the part budget and mesh checks
+    below are met in Studio.
 - **Part Budget**:
   - Total active BaseParts in Workspace during 12-ball run: `1,694` to `1,740` parts (strictly `< 2,000`).
 - **Mesh Asset QA (`dt_*`)**:
@@ -79,7 +82,7 @@
 
 ## Jest
 
-2026-11-02, Studio Edit, `require(game.ServerStorage.Tests.runner)()` after T030/T031: 12 suites, 0 failed suites; 154 tests, 151 passed, 0 failed (3 not run/skipped).
+2026-11-02, Studio Edit, `require(game.ServerStorage.Tests.runner)()` after T030/T031 and the review round 1 slot change: 12 suites, 0 failed suites; 154 tests, 151 passed, 0 failed (3 pending).
 
-- T030 option taken: scoped the ThemeSwitch slot-object assertion to the kinds Downtown builds (`slot.small`, `slot.landmark`). The world has no medium/yard/street placements, and the unit tests pin 96 + 1 dressing slots, so adding placements would change the pinned count for no spec need.
+- T030 option taken (revised in review round 1): built the missing `slot.medium` (4, Market), `slot.yard` (4, Park) and `slot.street` (4, Boulevard) placements in `Downtown.luau`, so all five slot kinds swap by data (US2 AC3, SC-003). The pinned dressing-slot count is now 109 (96 small + 4 + 4 + 4 + 1 landmark). The ThemeSwitch assertion covers all five kinds again. `boulevardT3` went 9 to 10 to keep the pace windows; the city placement band test now checks the 1500 cap (C7). Jest re-run after this change: 12 suites, 0 failed; 154 tests, 151 passed, 0 failed, 3 pending. Lune: 495 passed.
 - T031: scatter probe moved to (0, -110), open Ring 2 street at Y = 0. (0, -100) holds a holiday garland at Y 11.

@@ -1,15 +1,16 @@
 --!strict
--- Downtown world data (007). Data only: no Roblox APIs and no requires, so Lune can load it directly.
+-- Downtown world data (008, "Inside Out"). Data only: no Roblox APIs and no requires, so Lune can load it directly.
 -- Shape: the WorldDef type in Content/GreyBoxRoom.luau; checked against it in Worlds.luau.
--- Design: specs/007-downtown-holiday-city/data-model.md, contracts/world-content.md (invariants C1 to C18).
+-- Design: specs/008-downtown-inside-out/data-model.md and contracts/world-content.md (C1 to C18, N1 to N10).
 -- Everything is built once at require time by plain loops over the tables below: no clock, no randomness.
 --
--- Map (x east, z south, studs). The playable square is 600 x 600.
---   * Skyline Block: z -300 to -220 (north band). Waterfront: z 220 to 300 (south band).
---   * Spawn streets at z = -135 (slots 1 to 6) and z = 135 (slots 7 to 12); three doorsteps per quadrant.
---   * Sidewalk and alley strip: |z| 160 to 220, with the 4-stud alleys cut through the building rows.
---   * Interior: Park (west), Construction Site (north-east), Car Park (south-east), Market Street along z = 0,
---     the Plaza (centre) with its fountain, and the storm-drain tunnel at x = -100.
+-- Map (x east, z south, studs; origin at the centre of the Old Quarter plaza; m = max(|x|, |z|)). The playable
+-- square is 880 x 880 in five rings that grow outwards:
+--   1 Old Quarter (m <= 90): 8-stud lanes, 30-stud main streets, plaza and landmark, 12 spawns, bollard gates.
+--   2 Terraces (90 to 185): 16-stud streets, house rows on plinths, roofed 4.5 shortcuts, storm drain.
+--   3 Yards (185 to 290): Park, Market, Construction Site, Car Park, Rail Yard.
+--   4 Boulevard (295 to 355): two 26-stud carriageways and an 8-stud median.
+--   5 Skyline (north, east) and Harbour (south, west) out to 440, then the horizon towers and water.
 
 type Shape = "Block" | "Ball" | "Cylinder"
 
@@ -742,13 +743,6 @@ for _, entry in catalogue do
 	heroIds[entry.id] = entry.hero
 end
 
-local function fixed(id: string, objectId: string, x: number, z: number, yaw: number?)
-	table.insert(
-		fixedPlacements,
-		{ id = id, objectId = objectId, x = x, y = 0, z = z, yaw = yaw or 0, spawnSlot = nil }
-	)
-end
-
 -- Scenery that only the Holiday City theme shows (garlands, sledding slope): themeBindings.winter.blocks.
 local winterBlocks: { Block } = {}
 
@@ -799,167 +793,61 @@ local function keepOut(
 	table.insert(keepOutAreas, { id = id, kind = kind, x = x, z = z, w = w, d = d })
 end
 
--- Spawns and doorsteps --------------------------------------------------------------------------------------------
--- Twelve doorsteps on the two spawn streets, slots 1 to 12 clockwise from the north-west (data-model.md §6).
--- Every doorstep holds 32 core Tier 1 objects and 8 slot.small objects within 10 studs of its spawn point, in a
--- 14 x 14 square (the corner is 9.9 studs away). The square is split into the core rectangle A and the slot
--- rectangle B so that the two zones never overlap.
+-- Rotation and shape helpers ------------------------------------------------------------------------------------------
+-- Rings 1 and 2, the Boulevard and the Skyline are drawn once for the north-east (or north) side and turned three
+-- times (clockwise, as seen from above with north up): (x, z) -> (-z, x). Yards are written out in full.
 
-local PORCH = 0.6
--- Zone counts that set the growth pace, solved with tests/unit/Pace.test (research R-08). Tuning these (and
--- growthK) is how the pace windows are met; the layout itself does not change.
-local TUNE = {
-	crumbs = 2,
-	walkIn = 7,
-	walkOut = 4,
-	walkIn1 = 8,
-	walkIn2 = 1,
-	walkIn3 = 10,
-	walkIn4 = 3,
-	walkIn5 = 4,
-	walkIn6 = 14,
-	walkIn7 = 8,
-	walkIn8 = 10,
-	walkIn9 = 1,
-	walkIn10 = 3,
-	walkIn11 = 5,
-	walkIn12 = 5,
-	walkOut1 = 5,
-	walkOut2 = 0,
-	walkOut3 = 5,
-	walkOut4 = 3,
-	walkOut5 = 2,
-	walkOut6 = 0,
-	walkOut7 = 9,
-	walkOut8 = 0,
-	walkOut9 = 3,
-	walkOut10 = 5,
-	walkOut11 = 8,
-	walkOut12 = 1,
-	parkW = 11,
-	parkE = 3,
-	site = 10,
-	car = 4,
-	stripN2 = 1,
-	stripS2 = 4,
-	stripN3 = 4,
-	stripS3 = 1,
-	stripN4 = 3,
-	stripS4 = 3,
-	stripN5 = 0,
-	stripS5 = 4,
-	block = 4,
-	marketRow = 6,
-	ringStep = 7,
-	skyW = 0,
-	watW = 8,
-}
--- Per-doorstep walk-in and walk-out counts (slot 1 to 12), so each spawn can be tuned on its own.
-local WALK_IN = {
-	TUNE.walkIn1,
-	TUNE.walkIn2,
-	TUNE.walkIn3,
-	TUNE.walkIn4,
-	TUNE.walkIn5,
-	TUNE.walkIn6,
-	TUNE.walkIn7,
-	TUNE.walkIn8,
-	TUNE.walkIn9,
-	TUNE.walkIn10,
-	TUNE.walkIn11,
-	TUNE.walkIn12,
-}
-local WALK_OUT = {
-	TUNE.walkOut1,
-	TUNE.walkOut2,
-	TUNE.walkOut3,
-	TUNE.walkOut4,
-	TUNE.walkOut5,
-	TUNE.walkOut6,
-	TUNE.walkOut7,
-	TUNE.walkOut8,
-	TUNE.walkOut9,
-	TUNE.walkOut10,
-	TUNE.walkOut11,
-	TUNE.walkOut12,
-}
-local SPAWN_Z = 135
-local spawnXs = { -250, -190, -130, 130, 190, 250, 250, 190, 130, -130, -190, -250 }
-
-local spawnPoints = {}
-local spawns: { { slot: number, x: number, z: number, inward: number } } = {}
-for slot = 1, 12 do
-	local north = slot <= 6
-	local sz = if north then -SPAWN_Z else SPAWN_Z
-	table.insert(spawnPoints, {
-		slot = slot,
-		x = spawnXs[slot],
-		y = PORCH,
-		z = sz,
-		-- Facing the middle of town: +Z for the north street, -Z for the south one.
-		yaw = if north then 0 else 180,
-	})
-	table.insert(
-		spawns,
-		{ slot = slot, x = spawnXs[slot], z = sz, inward = if north then 1 else -1 }
-	)
-end
-
-local t1Core = idsOfTier(1)
-local t1Large = idsOfTier(1, false, 0.8)
-local t2Core = idsOfTier(2)
-local t2Small = idsOfTier(2, false, 0, 3.0)
-local t3Small = idsOfTier(3, true, 0, 7.5)
-
--- Seeds: slot * 100 + offset keeps each zone independent (editing one moves only its own objects).
-for _, spawn in spawns do
-	local slot, sx, sz, inward = spawn.slot, spawn.x, spawn.z, spawn.inward
-	local function off(distance: number): number
-		return sz + inward * distance
+local function turn(r: number, x: number, z: number): (number, number)
+	for _ = 1, r do
+		x, z = -z, x
 	end
-	local name = string.format("dt_z_door_%02d", slot)
-	zone(name .. "_a", sx, off(-2.5), 14, 9, PORCH, mix(t1Core), 32, slot * 100 + 1, slot)
-	zone(name .. "_b", sx, off(4.5), 14, 5, PORCH, mix({ "slot.small" }), 8, slot * 100 + 2, slot)
-	zone(name .. "_crumbs", sx, off(12), 56, 4, 0, mix(t1Large), TUNE.crumbs, slot * 100 + 6, nil)
-	zone(
-		name .. "_walk_in",
-		sx,
-		off(20),
-		56,
-		12,
-		0,
-		mix(t2Core),
-		WALK_IN[slot],
-		slot * 100 + 3 + (if slot == 3 then 80 else 0),
-		nil
-	)
-	zone(name .. "_slot", sx, off(28.5), 56, 4, 0, mix({ "slot.medium" }), 2, slot * 100 + 4, nil)
-	zone(
-		name .. "_walk_out",
-		sx,
-		off(-20),
-		56,
-		12,
-		0,
-		mix(t2Core),
-		WALK_OUT[slot],
-		slot * 100 + 5,
-		nil
-	)
+	return x, z
 end
 
--- Heroes of Tiers 1 and 2 stand in the free 7-stud band between the doorstep and the outer sidewalk.
-local function bandHero(slot: number, objectId: string)
-	local spawn = spawns[slot]
-	fixed("dt_h_" .. objectId, objectId, spawn.x - 15, spawn.z - spawn.inward * 10.5, 0)
-end
-bandHero(2, "rubber_duck_sunglasses")
-bandHero(8, "lost_sneaker")
-bandHero(5, "inflatable_flamingo")
-bandHero(11, "spinning_office_chair")
-bandHero(1, "pizza_box_tower")
+type Area = { x0: number, x1: number, z0: number, z1: number }
 
--- Districts ----------------------------------------------------------------------------------------------------------
+-- A slab from `bottom` (default the ground) up to `top`, given by canonical corners and turned r times.
+local function slab(
+	id: string,
+	r: number,
+	x0: number,
+	x1: number,
+	z0: number,
+	z1: number,
+	top: number,
+	swatch: string,
+	bottom: number?
+): Area
+	local cx, cz = turn(r, (x0 + x1) / 2, (z0 + z1) / 2)
+	local w, d = x1 - x0, z1 - z0
+	if r % 2 == 1 then
+		w, d = d, w
+	end
+	local base = bottom or 0
+	block(id, "Block", cx, base + (top - base) / 2, cz, 0, w, top - base, d, swatch)
+	return { x0 = cx - w / 2, x1 = cx + w / 2, z0 = cz - d / 2, z1 = cz + d / 2 }
+end
+
+-- A Wedge that rises towards +Z at yaw 0, +X at 90, -Z at 180 and -X at 270. Size is (width, rise, run).
+local function ramp(
+	id: string,
+	x: number,
+	z: number,
+	yaw: number,
+	width: number,
+	rise: number,
+	run: number,
+	from: number,
+	swatch: string,
+	into: { Block }?
+)
+	block(id, "Wedge", x, from + rise / 2, z, yaw, width, rise, run, swatch, into)
+end
+
+local sizeOf: { [string]: number } = {}
+for _, entry in catalogue do
+	sizeOf[entry.id] = entry.size
+end
 
 local function fixedAt(id: string, objectId: string, x: number, y: number, z: number)
 	table.insert(
@@ -968,387 +856,649 @@ local function fixedAt(id: string, objectId: string, x: number, y: number, z: nu
 	)
 end
 
--- Mid T4 (up to 17 studs), weighted towards the vans and pickups so the wall of cars is mostly food worth a stop.
-local t4Mid: { MixEntry } = {}
-for _, id in idsOfTier(4, true, 0, 17) do
-	table.insert(
-		t4Mid,
-		{ objectId = id, weight = if id == "pickup_truck" or id == "delivery_van" then 5 else 1 }
-	)
+-- Stands objects side by side along the long axis of a plinth, cycling through `ids`, centred on the strip. An
+-- object that is wider than the strip, or would run past the end, is skipped. Returns how many were placed.
+local function stock(
+	prefix: string,
+	area: Area,
+	y: number,
+	ids: { string },
+	maxCount: number,
+	gap: number?
+): number
+	local w, d = area.x1 - area.x0, area.z1 - area.z0
+	local alongX = w >= d
+	local length = if alongX then w else d
+	local across = if alongX then d else w
+	local chosen: { string } = {}
+	local used = 0
+	for index = 1, #ids * 4 do
+		if #chosen >= maxCount then
+			break
+		end
+		local objectId = ids[(index - 1) % #ids + 1]
+		local size = sizeOf[objectId]
+		local step = size + (gap or 1)
+		if size <= across - 1 and used + step - (gap or 1) <= length then
+			table.insert(chosen, objectId)
+			used += step
+		end
+	end
+	used -= (gap or 1)
+	local cursor = ((if alongX then area.x0 else area.z0) + (length - used) / 2)
+	local midX, midZ = (area.x0 + area.x1) / 2, (area.z0 + area.z1) / 2
+	for index, objectId in chosen do
+		local size = sizeOf[objectId]
+		local at = cursor + size / 2
+		fixedAt(
+			`{prefix}_{index}`,
+			objectId,
+			if alongX then at else midX,
+			y,
+			if alongX then midZ else at
+		)
+		cursor += size + (gap or 1)
+	end
+	return #chosen
 end
-local t4Heavy = {
-	"pickup_truck",
-	"delivery_van",
-	"garbage_truck",
-	"shipping_container",
-	"billboard",
-	"big_street_tree",
-}
-local t4Vans = { "delivery_van", "pickup_truck", "taxi" }
 
--- Park (west): two lawns with a path between them (magnet booster), a pond in the south-west corner, a slope in
--- the south-east, and a hedge of street trees along the east side with one opening (a gate).
-zone("dt_z_park_w", -268, -20, 56, 120, 0, mix(t3Small), TUNE.parkW, 3001, nil)
-zone("dt_z_park_e", -197, -20, 50, 120, 0, mix(t3Small), TUNE.parkE, 3002, nil)
-zone("dt_z_park_slot_w", -268, -90, 56, 16, 0, mix({ "slot.yard" }), 3, 3003, nil)
-zone("dt_z_park_slot_e", -197, -90, 50, 16, 0, mix({ "slot.yard" }), 2, 3004, nil)
--- Every third hedge plant is a street tree, the rest is fence (benches and recycling banks).
-local hedgeKinds = { "street_tree", "bench", "recycling_bank" }
-for index = 1, 17 do
-	local z = -96 + (index - 1) * 12
-	if z ~= 0 then
-		fixed(string.format("dt_g_park_%02d", index), hedgeKinds[index % 3 + 1], -165, z)
+-- Pace levers (specs/008-downtown-inside-out/research.md R-07), solved with tests/unit/Pace.test.
+local TUNE = {
+	laneMax = 2.4,
+	loopMax = 2.2,
+	t3Rare = 0.2,
+	crumbBig = 16,
+	bigCrumbs = 2,
+	laneT2 = { 3, 3, 3, 1 },
+	loopT2 = 5,
+	radialT3 = 0,
+	yardT2 = 17,
+	yardT3 = 5,
+	parkT3 = 8,
+	yardT4 = 4,
+	boulevardT4 = 7,
+	boulevardT2 = 18,
+	boulevardT3 = 10,
+	quay = 4,
+}
+
+-- Mixes by tier. Heroes are fixed placements, so zone mixes skip them.
+-- The doorstep (a) is mostly the three big Tier 1 kinds with a few tiny ones to start on: with 40 objects a spawn
+-- must be able to reach D 5 alone when twelve starters share the Old Quarter (FR-008). The other Tier 1 kinds
+-- come in the small (c) zone of each doorstep.
+local t1Crumbs: { MixEntry } = {}
+for _, id in { "bottle_cap", "aa_battery", "earbud_case", "puzzle_cube", "soda_can", "tennis_ball" } do
+	table.insert(t1Crumbs, { objectId = id, weight = 1 })
+end
+table.insert(t1Crumbs, { objectId = "headphones", weight = TUNE.crumbBig })
+table.insert(t1Crumbs, { objectId = "basketball", weight = TUNE.crumbBig })
+table.insert(t1Crumbs, { objectId = "takeout_box", weight = TUNE.crumbBig + 2 })
+local t1Big =
+	mix({ "coffee_cup", "donut", "smartphone", "water_bottle", "pizza_slice", "game_controller" })
+local t2Lane = mix(idsOfTier(2, true, 0, TUNE.laneMax))
+local t2All = mix(idsOfTier(2, true))
+local t2Loop = mix(idsOfTier(2, true, 0, TUNE.loopMax))
+local t3Radial = mix(idsOfTier(3, true, 0, 6.0))
+-- The big Tier 3 kinds (7 studs and up) are rarer, so the climb from D 12 to D 30 takes more pickups (pace tuning).
+local t3All: { MixEntry } = {}
+for _, id in idsOfTier(3, true) do
+	table.insert(t3All, { objectId = id, weight = if sizeOf[id] > 6.6 then TUNE.t3Rare else 1 })
+end
+local t4Cars = mix({ "hatchback", "taxi", "pickup_truck", "delivery_van" })
+local t4Yard = mix({ "bus_shelter", "kiosk", "hatchback", "taxi", "pickup_truck", "delivery_van" })
+local t3Quay = mix(idsOfTier(3, true, 0, 6.0))
+
+local zoneSeed = 9000
+local function seed(): number
+	zoneSeed += 7
+	return zoneSeed
+end
+
+-- Shell ------------------------------------------------------------------------------------------------------------
+-- Dark asphalt ground under everything (top 0). The south and west edges stop at the harbour, where a shallow
+-- basin of water sits 0.4 below it (R-13); the north and east reach the horizon.
+
+block("dt_ground", "Block", 80, -0.5, -80, 0, 960, 1, 960, "w-asphalt")
+block("dt_basin_s", "Block", 0, -0.9, 480, 0, 1120, 1, 160, "w-water")
+block("dt_basin_w", "Block", -480, -0.9, -80, 0, 160, 1, 960, "w-water")
+-- Invisible walls: inner faces at +-440, 8 thick, 200 tall (R-01). North and south are longer so the corners close.
+block("dt_boundary_n", "Boundary", 0, 100, -444, 0, 896, 200, 8, "w-asphalt")
+block("dt_boundary_s", "Boundary", 0, 100, 444, 0, 896, 200, 8, "w-asphalt")
+block("dt_boundary_e", "Boundary", 444, 100, 0, 0, 8, 200, 880, "w-asphalt")
+block("dt_boundary_w", "Boundary", -444, 100, 0, 0, 8, 200, 880, "w-asphalt")
+
+-- Ring 1: the Old Quarter -----------------------------------------------------------------------------------------
+-- Canonical north-east quarter [15, 90] x [-90, -15]. Two 8-wide lanes (x = 52.5 and z = -52.5) cut it into four
+-- sub-blocks; the inner one is notched by the 15 x 15 plaza corner. Main streets are 30 wide (|t| <= 15).
+
+local PLINTH = 1.2
+local quarterPlinths: { { name: string, x0: number, x1: number, z0: number, z1: number } } = {
+	{ name = "far", x0 = 56.5, x1 = 90, z0 = -90, z1 = -56.5 },
+	{ name = "north", x0 = 15, x1 = 48.5, z0 = -90, z1 = -56.5 },
+	{ name = "east", x0 = 56.5, x1 = 90, z0 = -48.5, z1 = -15 },
+	{ name = "inner_a", x0 = 30, x1 = 48.5, z0 = -48.5, z1 = -15 },
+	{ name = "inner_b", x0 = 15, x1 = 30, z0 = -48.5, z1 = -30 },
+}
+local plinthArea: { [string]: Area } = {}
+for r = 0, 3 do
+	for _, p in quarterPlinths do
+		plinthArea[`{p.name}{r}`] =
+			slab(`dt_pl1_{r}_{p.name}`, r, p.x0, p.x1, p.z0, p.z1, PLINTH, "w-sidewalk")
+	end
+	-- Edge walls (top 6) seal the lane ends and the sub-block outer faces; the main-street gap stays open.
+	slab(`dt_edge_{r}_a`, r, 15, 92, -92, -90, 6, "w-wall-b")
+	slab(`dt_edge_{r}_b`, r, 90, 92, -90, -15, 6, "w-wall-b")
+end
+block("dt_plaza", "Block", 0, 0.15, 0, 0, 60, 0.3, 60, "w-sand")
+box("dt_pedestal", 0, 0, 12, 12, 2.4, "w-kerb")
+
+-- Spawns: three per quarter on the lanes, never on a main street. Slot 1 to 12 run clockwise from the north-east.
+local spawnPoints = {}
+local spawnAt: { { slot: number, x: number, z: number, axis: string } } = {}
+local canonicalSpawns = {
+	{ x = 52.5, z = -38, axis = "z" },
+	{ x = 52.5, z = -68, axis = "z" },
+	{ x = 35, z = -52.5, axis = "x" },
+}
+for r = 0, 3 do
+	for index, spawn in canonicalSpawns do
+		local slot = r * 3 + index
+		local x, z = turn(r, spawn.x, spawn.z)
+		local axis = spawn.axis
+		if r % 2 == 1 then
+			axis = if axis == "z" then "x" else "z"
+		end
+		table.insert(spawnAt, { slot = slot, x = x, z = z, axis = axis })
+		table.insert(spawnPoints, {
+			slot = slot,
+			x = x,
+			y = 0,
+			z = z,
+			yaw = math.floor(math.deg(math.atan2(-x, -z)) + 0.5),
+		})
 	end
 end
 
--- Construction Site (north-east): a pocket for the container stack, spring pad and mud, then the T3 yard.
-zone("dt_z_site", 255, -63, 82, 42, 0, mix(t3Small), TUNE.site, 3101, nil)
-zone("dt_z_site_slot", 255, -91, 82, 10, 0, mix({ "slot.yard" }), 4, 3102, nil)
-
--- Car Park (south-east): the spiral sits in the west pocket, the T3 yard east of it.
-zone("dt_z_car", 255, 63, 82, 42, 0, mix(t3Small), TUNE.car, 3201, nil)
-zone("dt_z_car_slot", 255, 91, 82, 10, 0, mix({ "slot.yard" }), 5, 3202, nil)
-
--- Market Street east: vans parked along both pavements (the Tier 4 wall).
-zone("dt_z_market_n", 233, -26, 126, 24, 0, mix(t4Vans, 1), 6, 4001, nil)
-zone("dt_z_market_s", 233, 26, 126, 24, 0, mix(t4Vans, 1), 6, 4002, nil)
-zone("dt_z_market_c", 233, 0, 126, 28, 0, mix(t4Vans, 1), TUNE.marketRow, 4003, nil)
-
--- Centre block, north and south of the Plaza. The right halves are small T4 zones; the left halves hold the heavy
--- and big T4 kinds as fixed placements so every kind stands somewhere. The avenue x -14 to 14 stays open for the
--- Tier 3 arcade and vending heroes.
-zone("dt_z_blk_n_r", 105, -81, 106, 34, 0, t4Mid, TUNE.block, 4101, nil)
-zone("dt_z_blk_s_r", 105, 81, 106, 34, 0, t4Mid, TUNE.block, 4102, nil)
-for _, side in { { name = "n", z = -81 }, { name = "s", z = 81 } } do
-	local sign = if side.name == "n" then 1 else 2
-	zone(
-		`dt_z_blk_{side.name}_slot_l`,
-		-38,
-		side.z,
-		28,
-		34,
-		0,
-		mix({ "slot.street" }),
-		1,
-		4110 + sign,
-		nil
-	)
-	zone(
-		`dt_z_blk_{side.name}_slot_r`,
-		38,
-		side.z,
-		28,
-		34,
-		0,
-		mix({ "slot.street" }),
-		1,
-		4120 + sign,
-		nil
-	)
-end
-zone("dt_z_west_n", -136, -48, 44, 28, 0, mix({ "slot.street" }), 1, 4201, nil)
-zone("dt_z_west_s", -136, 48, 44, 28, 0, mix({ "slot.street" }), 1, 4202, nil)
-for index, objectId in { "garbage_truck", "shipping_container", "billboard", "big_street_tree" } do
-	fixed("dt_f_" .. objectId, objectId, -146 + (index - 1) * 24, -81)
-end
-for index, objectId in { "corner_bakery", "fire_engine", "city_bus" } do
-	fixed("dt_f_" .. objectId, objectId, -140 + (index - 1) * 32, 81)
+-- Doorsteps: a zone of 32 core Tier 1 objects (a) and 8 slot.small (b) on the lane, within 10 studs of the spawn.
+-- The second zone sits on the main-street side of the first.
+for _, spawn in spawnAt do
+	local slot = spawn.slot
+	local name = string.format("dt_z_door_%02d", slot)
+	-- Which way is the main street along this lane? Towards the origin on the lane's long axis.
+	local along = if spawn.axis == "z" then spawn.z else spawn.x
+	local towards = if along > 0 then -1 else 1
+	local function at(offset: number): (number, number)
+		if spawn.axis == "z" then
+			return spawn.x, spawn.z + towards * offset
+		end
+		return spawn.x + towards * offset, spawn.z
+	end
+	local ax, az = at(0)
+	local bx, bz = at(6.55)
+	local w, d = 8, 10.1
+	local bw, bd = 8, 3
+	if spawn.axis == "x" then
+		w, d = d, w
+		bw, bd = bd, bw
+	end
+	local cx, cz = at(-6.55)
+	zone(name .. "_a", ax, az, w, d, 0, t1Crumbs, 32, slot * 100 + 1, slot)
+	zone(name .. "_c", cx, cz, bw, bd, 0, t1Big, TUNE.bigCrumbs, slot * 100 + 3, slot)
+	zone(name .. "_b", bx, bz, bw, bd, 0, mix({ "slot.small" }), 8, slot * 100 + 2, slot)
 end
 
--- Sidewalk strips north and south: T4 clusters between the sightline corridors.
-local stripPieces = {
-	{ -276.5, 39, 2, 2 },
-	{ -220, 46, TUNE.stripN2, TUNE.stripS2 },
-	{ -160, 46, TUNE.stripN3, TUNE.stripS3 },
-	{ 160, 46, TUNE.stripN4, TUNE.stripS4 },
-	{ 220, 46, TUNE.stripN5, TUNE.stripS5 },
-	{ 276.5, 39, 2, 2 },
+-- Lane scatter: 16 Tier 2 objects per quarter on the free lane segments (canonical coordinates).
+local laneSegments = {
+	{ x = 52.5, z = -85.025, w = 8, d = 9.95 },
+	{ x = 52.5, z = -21, w = 8, d = 11.9 },
+	{ x = 73.25, z = -52.5, w = 33.5, d = 8 },
+	{ x = 21, z = -52.5, w = 11.9, d = 8 },
 }
-for index, piece in stripPieces do
-	zone(
-		`dt_z_strip_n_{index}`,
-		piece[1],
-		-190.5,
-		piece[2],
-		51,
-		0,
-		t4Mid,
-		piece[3],
-		4300 + index,
-		nil
-	)
-	zone(
-		`dt_z_strip_s_{index}`,
-		piece[1],
-		190.5,
-		piece[2],
-		51,
-		0,
-		t4Mid,
-		piece[4],
-		4310 + index,
-		nil
-	)
+for r = 0, 3 do
+	for index, segment in laneSegments do
+		local x, z = turn(r, segment.x, segment.z)
+		local w, d = segment.w, segment.d
+		if r % 2 == 1 then
+			w, d = d, w
+		end
+		zone(`dt_z_lane_{r}_{index}`, x, z, w, d, 0, t2Lane, TUNE.laneT2[index], seed(), nil)
+	end
 end
 
--- The Plaza -------------------------------------------------------------------------------------------------------
--- A square apron, ±62. The fountain basin and pedestal are blocks (below); the landmark slot stands on the pedestal.
--- A ring of Tier 2 bollards at ±58 with four 16-stud openings (the gates) is the Tier 2 wall.
+-- Bollard gates: eight cones per main-street gap, 3.75 apart (1.75 between them), in the plane of the edge wall.
+for r = 0, 3 do
+	for index = 1, 8 do
+		local x, z = turn(r, -13.125 + (index - 1) * 3.75, -91)
+		fixedAt(`dt_g_{r}_{index}`, "traffic_cone", x, 0, z)
+	end
+end
+
+-- Shops on the plinths. Ring 1 Tier 5 is the shop-row on the far plinth; Tier 4 the rest.
+for r = 0, 3 do
+	local far = plinthArea[`far{r}`]
+	fixedAt(
+		`dt_b1_{r}_far`,
+		"corner_shop_row",
+		(far.x0 + far.x1) / 2,
+		PLINTH,
+		(far.z0 + far.z1) / 2
+	)
+	stock(`dt_b1_{r}_north`, plinthArea[`north{r}`], PLINTH, { "corner_bakery" }, 1)
+	stock(`dt_b1_{r}_east`, plinthArea[`east{r}`], PLINTH, { "corner_bakery" }, 1)
+	stock(`dt_b1_{r}_ia`, plinthArea[`inner_a{r}`], PLINTH, { "kiosk", "kiosk" }, 2)
+	stock(`dt_b1_{r}_ib`, plinthArea[`inner_b{r}`], PLINTH, { "bus_shelter" }, 1)
+end
+-- The landmark slot stands on the pedestal; the fountain beside it on the plaza slab; one keyboard in a lane.
 fixedAt("dt_l_1", "slot.landmark", 0, 2.4, 0)
-local bollardIds = { "traffic_cone", "parking_meter" }
-local ringIndex = 0
-for _, edge in { "n", "s", "w", "e" } do
-	for step = -52, 52, TUNE.ringStep do
-		if math.abs(step) > 10 then
-			ringIndex += 1
-			local x = if edge == "w" then -58 elseif edge == "e" then 58 else step
-			local z = if edge == "n" then -58 elseif edge == "s" then 58 else step
-			fixed(string.format("dt_g_plaza_%02d", ringIndex), bollardIds[ringIndex % 2 + 1], x, z)
+fixedAt("dt_f_fountain", "fountain", 24, 0.3, -24)
+fixedAt("dt_f_keyboard", "keyboard", 52.5, 0, -52.5)
+
+-- Tier 1 and 2 heroes in free lane segments.
+do
+	local function hero(objectId: string, r: number, x: number, z: number)
+		local tx, tz = turn(r, x, z)
+		fixedAt("dt_h_" .. objectId, objectId, tx, 0, tz)
+	end
+	hero("rubber_duck_sunglasses", 0, 52.5, -56)
+	hero("lost_sneaker", 1, 45.8, -52.5)
+	hero("inflatable_flamingo", 2, 52.5, -46)
+	hero("spinning_office_chair", 3, 45.8, -52.5)
+	hero("pizza_box_tower", 1, 52.5, -46)
+end
+
+-- Ring 2: the Terraces --------------------------------------------------------------------------------------------
+-- Canonical north side, turned in a pinwheel (each side runs past one corner). Loop A is m 92 to 108, row 1 is m 108
+-- to 142 (34 deep), loop B is m 142 to 158, row 2 is m 158 to 185 (27 deep). Radial streets are 16 wide.
+
+local ROW1: { { number } } = { { -108, -63 }, { -47, -15 }, { 15, 47 }, { 63, 132 } }
+local ROW2: { { number } } = { { -132, -63 }, { -47, -15 }, { 15, 47 }, { 63, 132 }, { 148, 185 } }
+local t4Fill =
+	{ "corner_bakery", "kiosk", "delivery_van", "big_street_tree", "taxi", "pickup_truck" }
+local t5Queue: { string } = {}
+for _ = 1, 12 do
+	table.insert(t5Queue, "townhouse")
+end
+for _ = 1, 5 do
+	table.insert(t5Queue, "corner_shop_row")
+end
+local t5Next = 1
+
+local function terraceBuilding(prefix: string, area: Area, y: number, deep: number)
+	local w, d = area.x1 - area.x0, area.z1 - area.z0
+	local nextBuilding = t5Queue[t5Next]
+	if
+		nextBuilding ~= nil
+		and math.min(w, d) >= sizeOf[nextBuilding] + 1
+		and math.max(w, d) >= sizeOf[nextBuilding] + 1
+	then
+		t5Next += 1
+		fixedAt(prefix, nextBuilding, (area.x0 + area.x1) / 2, y, (area.z0 + area.z1) / 2)
+	else
+		stock(prefix, area, y, t4Fill, deep)
+	end
+end
+
+for r = 0, 3 do
+	-- Row 1: the fourth segment holds the alley, so it is two plinths with a roofed 4.5 gap between flank walls.
+	for index, segment in ROW1 do
+		if index == 4 then
+			local a = slab(`dt_pl2_{r}_r1_{index}a`, r, 63, 94.25, -142, -108, PLINTH, "w-sidewalk")
+			local b =
+				slab(`dt_pl2_{r}_r1_{index}b`, r, 100.75, 132, -142, -108, PLINTH, "w-sidewalk")
+			slab(`dt_sc_{r}_wa`, r, 94.25, 95.25, -142, -108, 5.2, "w-wall-a")
+			slab(`dt_sc_{r}_wb`, r, 99.75, 100.75, -142, -108, 5.2, "w-wall-a")
+			slab(`dt_sc_{r}_roof`, r, 94.25, 100.75, -142, -108, 5.4, "w-roof-a", 4.9)
+			terraceBuilding(`dt_b2_{r}_r1_{index}a`, a, PLINTH, 2)
+			terraceBuilding(`dt_b2_{r}_r1_{index}b`, b, PLINTH, 2)
+		else
+			local area = slab(
+				`dt_pl2_{r}_r1_{index}`,
+				r,
+				segment[1],
+				segment[2],
+				-142,
+				-108,
+				PLINTH,
+				"w-sidewalk"
+			)
+			terraceBuilding(`dt_b2_{r}_r1_{index}`, area, PLINTH, 3)
+		end
+	end
+	-- Row 2. The north side's third segment is left empty for a golden spot; the west side's first becomes the
+	-- storm-drain tunnel (r = 3 turns canonical north into west).
+	for index, segment in ROW2 do
+		if r == 3 and index == 4 then
+			slab(`dt_pl2_{r}_r2_{index}a`, r, 63, 132, -185, -174.75, PLINTH, "w-sidewalk")
+			slab(`dt_pl2_{r}_r2_{index}b`, r, 63, 132, -168.25, -158, PLINTH, "w-sidewalk")
+			slab(`dt_drain_{r}_wa`, r, 63, 132, -174.75, -173.75, 5.2, "dt-concrete")
+			slab(`dt_drain_{r}_wb`, r, 63, 132, -169.25, -168.25, 5.2, "dt-concrete")
+			slab(`dt_drain_{r}_roof`, r, 63, 132, -174.75, -168.25, 5.4, "dt-concrete", 4.9)
+		else
+			local area = slab(
+				`dt_pl2_{r}_r2_{index}`,
+				r,
+				segment[1],
+				segment[2],
+				-185,
+				-158,
+				PLINTH,
+				"w-sidewalk"
+			)
+			-- Left empty at r 0, index 3: golden spot 1 stands here.
+			if r ~= 0 or index ~= 3 then
+				terraceBuilding(`dt_b2_{r}_r2_{index}`, area, PLINTH, 4)
+			end
 		end
 	end
 end
-fixed("dt_h_donut_food_truck", "donut_food_truck", -44, -44)
-fixed("dt_h_monster_truck", "monster_truck", 44, 44)
-fixed("dt_h_inflatable_tube_guy", "inflatable_tube_guy", -72, -14)
-fixed("dt_h_arcade_cabinet", "arcade_cabinet", 0, -81)
-fixed("dt_h_vending_machine", "vending_machine", 0, 81)
--- The dish stands in the open ground west of the avenue so the Tier 3 page never depends on a random mix.
-fixed("dt_f_satellite_dish", "satellite_dish", -88, -46)
 
--- Skyline Block (north) and Waterfront (south): the Tier 5 rows. The west halves are heavy Tier 4 (vans, trucks,
--- containers) as the approach to the towers, the east halves hold the two smaller buildings, and the heroes and the
--- bigger buildings are fixed. The corridors end at |z| 215, short of the bands.
-local t5Row = { "corner_shop_row", "townhouse" }
-zone("dt_z_sky_w", -166, -260, 260, 80, 0, mix(t4Heavy), TUNE.skyW, 5001, nil)
-zone("dt_z_sky_e", 86, -260, 104, 80, 0, mix(t5Row), 4, 5002, nil)
-zone("dt_z_wat_w", -196, 260, 200, 80, 0, mix(t4Heavy), TUNE.watW, 5003, nil)
-zone("dt_z_wat_e", 86, 260, 104, 80, 0, mix(t5Row), 4, 5004, nil)
-fixed("dt_f_street_lamp", "street_lamp", -20, -222)
-fixed("dt_f_traffic_light", "traffic_light", 20, -222)
-fixed("dt_h_glass_tower", "glass_tower", 0, -262)
-fixed("dt_h_tower_crane", "tower_crane", 170, -262)
-fixed("dt_h_rocket_water_tower", "rocket_water_tower", 255, -262)
-fixed("dt_h_ferris_wheel", "ferris_wheel", 0, 262)
-fixed("dt_f_cinema", "cinema", 170, 262)
-fixed("dt_f_apartment_block", "apartment_block", 240, 262)
-fixed("dt_f_ev_charging_station", "ev_charging_station", 278, 262)
-fixedAt("dt_l_2", "slot.landmark", -66, 0, 262)
-
--- Side-street and interior fillers: Tier 2 clusters (and Tier 1 scatter along the outer edges) on the open ground
--- between the districts. Each rectangle was picked clear of every zone, keep-out and tall block.
-local fillT2 = mix(t2Small)
-local fillT1 = mix(t1Large)
-local fills: { { string | number | { MixEntry } } } = {
-	{ "a", -88, -46, 48, 44, fillT2, 7 },
-	{ "b", -95, 45, 34, 44, fillT2, 6 },
-	{ "d", -231, -34, 16, 136, fillT1, 13 },
-	{ "e", -54, -115, 92, 18, fillT2, 13 },
-	{ "f", 54, 115, 92, 18, fillT2, 19 },
-	{ "g", -6, 221, 76, 26, fillT2, 68 },
-	{ "h", 45, -128, 28, 46, fillT2, 1 },
-	{ "i", -45, 128, 28, 46, fillT2, 1 },
-	{ "k1", -288, -131, 18, 62, fillT1, 18 },
-	{ "k2", -288, 131, 18, 62, fillT1, 15 },
-	{ "l1", -113, -191, 20, 56, fillT2, 19 },
-	{ "l2", 113, -191, 20, 56, fillT2, 6 },
-	{ "l3", -113, 191, 20, 56, fillT2, 23 },
-	{ "l4", 113, 191, 20, 56, fillT2, 4 },
-	{ "m", 135, 25, 68, 16, fillT2, 32 },
-	{ "n", 84, 0, 14, 66, fillT2, 5 },
-	{ "o1", 36, -30, 18, 50, fillT2, 17 },
-	{ "o2", -36, 30, 18, 50, fillT2, 12 },
-	{ "q", -80, 222, 30, 30, fillT2, 23 },
-	{ "r1", 288, -134, 18, 58, fillT1, 19 },
-	{ "r2", 288, 134, 18, 58, fillT1, 14 },
-	{ "r3", 168, -68, 18, 58, fillT1, 2 },
-	{ "s", 218, -257, 38, 80, fillT2, 29 },
-}
-for index, fill in fills do
-	zone(
-		`dt_z_fill_{fill[1]}`,
-		fill[2] :: number,
-		fill[3] :: number,
-		fill[4] :: number,
-		fill[5] :: number,
-		0,
-		fill[6] :: { MixEntry },
-		fill[7] :: number,
-		6000 + index,
-		nil
-	)
-end
-zone("dt_z_fill_slot", -151, 0, 12, 66, 0, mix({ "slot.medium" }), 6, 6100, nil)
-
--- Environment blocks ---------------------------------------------------------------------------------------------------
--- Everything is a plain anchored block. Swatches are w-* roles (present in every theme) or the world palette below.
-
-block("dt_ground", "Block", 0, -0.5, 0, 0, 640, 1, 640, "w-sidewalk")
--- Roads sit 0.04 above the ground: under every marker and placement, and no obstacle.
-block("dt_road_market", "Block", 75, 0, 0, 0, 450, 0.08, 24, "w-asphalt")
-block("dt_road_spawn_n", "Block", 0, 0, -135, 0, 600, 0.08, 10, "w-asphalt")
-block("dt_road_spawn_s", "Block", 0, 0, 135, 0, 600, 0.08, 10, "w-asphalt")
-block("dt_road_avenue", "Block", 0, 0, 0, 0, 14, 0.08, 600, "w-asphalt")
-block("dt_road_line_market", "Block", 75, 0.01, 0, 0, 450, 0.08, 0.6, "w-road-line")
-block("dt_plaza_apron", "Block", 0, 0.01, 0, 0, 124, 0.08, 124, "w-sand")
-
--- Plaza fountain (R-11): basin, water, pedestal; the landmark slot stands on the pedestal at y 2.4.
-box("dt_fountain_basin", 0, 0, 44, 44, 1.2, "w-kerb")
-block("dt_fountain_water", "Block", 0, 1.25, 0, 0, 38, 0.1, 38, "w-water")
-box("dt_fountain_pedestal", 0, 0, 12, 12, 1.2, "w-kerb", 1.2)
-
--- Doorsteps: a 0.6 porch under the two doorstep zones and a 1.2 kerb across the way in (Tier 1 must jump it).
-for _, spawn in spawns do
-	local sx, sz, inward = spawn.x, spawn.z, spawn.inward
-	local name = string.format("dt_door_%02d", spawn.slot)
-	box(name .. "_porch", sx, sz, 18, 14, PORCH, "w-wood")
-	box(name .. "_kerb", sx, sz + inward * 9.5, 20, 1, 1.2, "w-kerb")
-end
-
--- Alley rows: three buildings per side with a 4-stud alley between them (the four shortcuts).
-local buildingSpans = { { -76, 48 }, { 0, 96 }, { 76, 48 } }
-local buildingSwatch = { "w-wall-b", "w-wall-a", "w-wall-c" }
-for _, side in { { name = "n", sign = -1 }, { name = "s", sign = 1 } } do
-	for index, span in buildingSpans do
-		box(
-			`dt_alley_{side.name}_{index}`,
-			span[1],
-			side.sign * 187.5,
-			span[2],
-			35,
-			14,
-			buildingSwatch[index]
-		)
-		box(
-			`dt_alley_{side.name}_{index}_roof`,
-			span[1],
-			side.sign * 187.5,
-			span[2] + 1,
-			36,
-			1,
-			"w-roof-b",
-			14
-		)
+-- Scatter on loop A (Tier 2) and the radial streets (Tier 3); loop B is left for the markers and the winter overlays.
+for r = 0, 3 do
+	for index, span in { { 17, 45 }, { 65, 90 }, { -45, -17 }, { -90, -65 } } do
+		local cx, cz = turn(r, (span[1] + span[2]) / 2, -100)
+		local w, d = span[2] - span[1], 16
+		if r % 2 == 1 then
+			w, d = d, w
+		end
+		zone(`dt_z_loopa_{r}_{index}`, cx, cz, w, d, 0, t2Loop, TUNE.loopT2, seed(), nil)
+	end
+	for index, tangent in { 55, -55 } do
+		local cx, cz = turn(r, tangent, -125)
+		local w, d = 16, 34
+		if r % 2 == 1 then
+			w, d = d, w
+		end
+		zone(`dt_z_radial_{r}_{index}`, cx, cz, w, d, 0, t3Radial, TUNE.radialT3, seed(), nil)
 	end
 end
 
--- Park: lawns, path, pond (the ice rink in winter) and a slope.
-block("dt_park_lawn_w", "Block", -268, 0.02, -20, 0, 56, 0.08, 120, "w-grass")
-block("dt_park_lawn_e", "Block", -197, 0.02, -20, 0, 50, 0.08, 120, "w-grass")
-block("dt_park_path", "Block", -231, 0.02, 0, 0, 18, 0.08, 196, "w-sand")
-block("dt_park_pond", "Block", -268, 0.03, 71, 0, 56, 0.08, 54, "w-water")
--- The slope rises towards +Z (yaw 0): sleds wait at its foot (the northern edge).
-block("dt_park_slope", "Wedge", -197, 2.5, 78, 0, 42, 5, 40, "w-season", winterBlocks)
-for index = 1, 8 do
-	box(
-		string.format("dt_park_rail_%02d", index),
-		-296 + index * 14 - 7,
-		97,
-		12,
-		0.6,
-		1.2,
-		"w-wood"
-	)
+-- Ring 3: the Yards ------------------------------------------------------------------------------------------------
+-- Five districts on slabs 0.25 to 0.5 thick. Each scatter run is a grid of square tiles; every tile is one zone.
+local TILE = { t2 = 24, t3 = 36, t4 = 42 }
+local tileMix: { [string]: { MixEntry } } = { t2 = t2All, t3 = t3All, t4 = t4Yard }
+local runs = 0
+local function tileRun(
+	prefix: string,
+	kind: string,
+	x0: number,
+	z0: number,
+	nx: number,
+	nz: number,
+	y: number,
+	count: number
+)
+	local ts = TILE[kind]
+	runs += 1
+	for i = 0, nx - 1 do
+		for j = 0, nz - 1 do
+			zone(
+				`dt_z_{prefix}_{kind}{runs}_{i}_{j}`,
+				x0 + ts * (i + 0.5),
+				z0 + ts * (j + 0.5),
+				ts,
+				ts,
+				y,
+				tileMix[kind],
+				count,
+				seed(),
+				nil
+			)
+		end
+	end
 end
 
--- Construction Site: container stack (spring target), a ramp up to it, hoardings, scaffold planks, a mud patch.
-block("dt_site_ground", "Block", 233, 0.02, -68, 0, 126, 0.08, 62, "w-soil")
-box("dt_site_container_1", 188, -70, 20, 8, 2.6, "dt-container")
-box("dt_site_container_2", 188, -70, 20, 8, 2.6, "dt-container", 2.6)
-block("dt_site_ramp", "Wedge", 205, 2.6, -70, -90, 8, 5.2, 10, "w-wood")
-for index = 1, 6 do
-	box(
-		string.format("dt_site_hoarding_%02d", index),
-		296.5,
-		-96 + index * 10,
-		1,
-		8,
-		4,
-		"dt-hoarding"
-	)
+-- Park (north-west): lawns, a pond, hedges. Winter adds a sledding slope and a rink (theme blocks and overlays).
+block("dt_park_lawn_n", "Block", -152.5, 0.15, -237.5, 0, 275, 0.3, 105, "w-grass")
+block("dt_park_lawn_w", "Block", -237.5, 0.15, -100, 0, 105, 0.3, 170, "w-grass")
+block("dt_park_pond", "Block", -270, 0.175, -270, 0, 40, 0.35, 40, "w-water")
+for index, x in { -265, -215, -165, -115, -65, -30 } do
+	box(`dt_park_hedge_{index}`, x, -188, 30, 1.5, 1.2, "w-leaf-dark")
 end
-box("dt_site_scaffold_1", 232, -92, 1, 1, 8, "w-metal")
-box("dt_site_scaffold_2", 276, -92, 1, 1, 8, "w-metal")
-box("dt_site_plank", 254, -92, 44, 1, 0.5, "w-wood", 8)
-block("dt_site_mud", "Block", 188, 0.03, -48, 0, 14, 0.08, 14, "w-soil")
--- Crane base: a ballast stack under the Skyline Block crane (golden spot 4).
-box("dt_crane_ballast", 170, -228, 10, 10, 3, "dt-concrete")
-box("dt_crane_ballast_top", 170, -236, 8, 6, 1, "dt-concrete")
+box("dt_park_gate_a", -240, -186, 4, 1, 1.2, "w-wood")
+box("dt_park_golden", -70, -215, 8, 8, 1.0, "w-kerb")
+tileRun("park", "t3", -244, -282, 4, 2, 0.3, TUNE.parkT3)
+tileRun("park", "t3", -286, -70, 2, 1, 0.3, TUNE.parkT3)
+tileRun("park", "t2", -210, -70, 1, 2, 0.3, 4)
+fixedAt("dt_f_park_ev", "ev_charging_station", -60, 0.3, -250)
+fixedAt("dt_h_inflatable_tube_guy", "inflatable_tube_guy", -30, 0.3, -215)
+fixedAt("dt_f_park_bench", "bench", -30, 0.3, -285)
+fixedAt("dt_f_park_tree", "big_street_tree", -30, 0.3, -260)
+fixedAt("dt_f_park_street_tree", "street_tree", -50, 0.3, -285)
+-- Yard dressing slot (snowman, paddling pool): on the west lawn.
+zone("dt_z_park_slot", -255, -140, 20, 20, 0.3, mix({ "slot.yard" }), 4, 3003, nil)
 
--- Car Park: three decks, two ramps up and one ramp across, a top deck (golden spot 2).
-block("dt_car_ramp_1", "Wedge", 180, 1, 92, 180, 16, 2, 12, "w-metal")
-box("dt_car_deck_1", 180, 78, 16, 16, 2, "dt-concrete")
-block("dt_car_ramp_2", "Wedge", 180, 3, 64, 180, 16, 2, 12, "w-metal")
-box("dt_car_deck_2", 180, 50, 16, 16, 4, "dt-concrete")
-block("dt_car_ramp_3", "Wedge", 194, 5, 50, 90, 16, 2, 12, "w-metal")
-box("dt_car_deck_3", 207, 50, 14, 16, 6, "dt-concrete")
-box("dt_car_parapet", 207, 41.5, 14, 0.6, 1, "dt-concrete", 6)
+-- Market (north-east): paving, counters, vans, vending.
+block("dt_market_n", "Block", 152.5, 0.15, -237.5, 0, 275, 0.3, 105, "w-sand")
+block("dt_market_e", "Block", 237.5, 0.15, -100, 0, 105, 0.3, 170, "w-sand")
+for index = 0, 5 do
+	box(`dt_market_counter_{index + 1}`, 40 + index * 40, -195, 14, 4, 1.2, "w-wood")
+end
+tileRun("market", "t3", 30, -285, 4, 2, 0.3, TUNE.yardT3)
+tileRun("market", "t2", 262, -285, 1, 3, 0.3, 4)
+tileRun("market", "t4", 190, -175, 2, 3, 0.3, TUNE.yardT4)
+fixedAt("dt_f_market_apartment", "apartment_block", 230, 0.3, -250)
+fixedAt("dt_f_market_billboard", "billboard", 270, 0.3, -200)
+fixedAt("dt_h_arcade_cabinet", "arcade_cabinet", 280, 0.3, -30)
+fixedAt("dt_h_vending_machine", "vending_machine", 280, 0.3, -45)
+fixedAt("dt_f_market_hotdog", "hot_dog_cart", 280, 0.3, -60)
+-- Medium dressing slot (gift box, beach ball): on the east paving.
+zone("dt_z_market_slot", 280, -175, 12, 12, 0.3, mix({ "slot.medium" }), 4, 3103, nil)
 
--- Storm-drain tunnel under Market Street: floor is the ground, two walls 5 tall, a roof slab on top (golden spot 3).
--- The roof is what keeps a Tier 3+ ball out from above: a held jump clears 0.85 x diameter, so a ball of diameter
--- 5.9 or more would clear 5-tall walls, but with the slab over the chamber and both mouths it can only land on top.
--- Tier 1 to 2 balls (diameter < 5) still fit under the 5-stud clearance. The chamber (z -8 to 8) keeps the 6-stud
--- gap for the golden spot's 6 x 6 footprint; each 6-stud mouth narrows to 4.6 so a Tier 3+ ball cannot enter.
-box("dt_tunnel_wall_w", -103.5, 0, 1, 16, 5, "dt-concrete")
-box("dt_tunnel_wall_e", -96.5, 0, 1, 16, 5, "dt-concrete")
-box("dt_tunnel_mouth_wn", -102.8, 11, 1, 6, 5, "dt-concrete")
-box("dt_tunnel_mouth_en", -97.2, 11, 1, 6, 5, "dt-concrete")
-box("dt_tunnel_mouth_ws", -102.8, -11, 1, 6, 5, "dt-concrete")
-box("dt_tunnel_mouth_es", -97.2, -11, 1, 6, 5, "dt-concrete")
-box("dt_tunnel_roof", -100, 0, 8, 28, 0.5, "dt-concrete", 5)
+-- Construction Site (west, south half): hoarding, scaffold ramps up to a container platform.
+block("dt_site_slab", "Block", -237.5, 0.25, 100, 0, 105, 0.5, 170, "dt-concrete")
+for index, z in { 35, 75, 115, 155 } do
+	box(`dt_site_hoarding_{index}`, -190, z, 1, 20, 4, "dt-hoarding", 0.5)
+end
+box("dt_site_platform", -250, 100, 20, 20, 2, "w-metal", 0.5)
+ramp("dt_site_ramp_w", -263, 100, 90, 8, 2, 6, 0.5, "w-wood")
+ramp("dt_site_ramp_e", -237, 100, 270, 8, 2, 6, 0.5, "w-wood")
+ramp("dt_site_ramp_n", -250, 87, 180, 8, 2, 6, 0.5, "w-wood")
+ramp("dt_site_ramp_s", -250, 113, 0, 8, 2, 6, 0.5, "w-wood")
+fixedAt("dt_f_site_container", "shipping_container", -250, 2.5, 100)
+tileRun("site", "t3", -286, 22, 2, 1, 0.5, TUNE.yardT3)
+tileRun("site", "t4", -286, 132, 2, 1, 0.5, TUNE.yardT4)
 
--- Bus stop on Market Street: a roof slab on two posts (golden spot 1).
-box("dt_bus_post_w", 134, -22, 0.6, 0.6, 3, "w-metal-dark")
-box("dt_bus_post_e", 146, -22, 0.6, 0.6, 3, "w-metal-dark")
-box("dt_bus_roof", 140, -22, 14, 6, 0.6, "w-glass", 3)
+-- Car Park (south, west half): three decks, four ramps, two parapets; the golden spot is on the top deck.
+block("dt_car_slab", "Block", -152.5, 0.25, 237.5, 0, 275, 0.5, 105, "dt-concrete")
+box("dt_car_deck_1", -170, 255, 60, 60, 2, "dt-concrete", 0.5)
+box("dt_car_deck_2", -170, 255, 40, 40, 2, "dt-concrete", 2.5)
+box("dt_car_deck_3", -170, 255, 20, 20, 2, "dt-concrete", 4.5)
+ramp("dt_car_ramp_1", -170, 222, 0, 8, 2, 6, 0.5, "w-metal")
+ramp("dt_car_ramp_2", -170, 232, 0, 8, 2, 6, 2.5, "w-metal")
+ramp("dt_car_ramp_3", -170, 242, 0, 8, 2, 6, 4.5, "w-metal")
+ramp("dt_car_ramp_4", -137, 255, 270, 8, 2, 6, 0.5, "w-metal")
+box("dt_car_parapet_1", -170, 265.3, 20, 0.6, 1, "dt-concrete", 6.5)
+box("dt_car_parapet_2", -170, 274.7, 40, 0.6, 1, "dt-concrete", 4.5)
+tileRun("car", "t3", -286, 190, 2, 2, 0.5, TUNE.yardT3)
+tileRun("car", "t2", -130, 190, 4, 3, 0.5, 3)
 
--- Waterfront: promenade, quay edge, railings and the ticket hut platform behind the Ferris Wheel (golden spot 5).
-block("dt_waterfront_promenade", "Block", 0, 0.02, 212, 0, 560, 0.08, 14, "w-sand")
-block("dt_waterfront_quay", "Block", 0, 0.02, 296, 0, 600, 0.08, 8, "w-water")
-box("dt_ticket_platform", 0, 292, 12, 8, 1, "w-wood")
-box("dt_ticket_hut", -4, 292, 3, 3, 3, "w-wall-b", 1)
-for index = 1, 10 do
-	box(
-		string.format("dt_waterfront_rail_%02d", index),
-		-270 + (index - 1) * 60,
-		287,
-		40,
-		0.5,
-		1.1,
+-- Rail Yard (south-east): bed, six tracks, a platform, containers and vans.
+block("dt_rail_s", "Block", 152.5, 0.125, 237.5, 0, 275, 0.25, 105, "w-soil")
+block("dt_rail_e", "Block", 237.5, 0.125, 100, 0, 105, 0.25, 170, "w-soil")
+for index = 0, 5 do
+	block(
+		`dt_rail_track_{index + 1}`,
+		"Block",
+		125,
+		0.15,
+		232 + index * 4,
+		0,
+		190,
+		0.3,
+		1.5,
 		"w-metal-dark"
 	)
 end
+box("dt_rail_platform_1", 100, 262, 100, 8, 1.0, "w-sidewalk")
+box("dt_rail_platform_2", 100, 276, 100, 8, 1.0, "w-sidewalk")
+tileRun("rail", "t3", 30, 190, 3, 1, 0.25, TUNE.yardT3)
+tileRun("rail", "t2", 150, 190, 4, 1, 0.25, 4)
+tileRun("rail", "t4", 190, 30, 2, 3, 0.25, TUNE.yardT4)
+fixedAt("dt_f_rail_cinema", "cinema", 250, 0.25, 270)
 
--- Garlands over Market Street: Holiday City only (FR-005).
-for index, x in { -130, -60, 60, 100, 200, 260 } do
-	block(
-		string.format("dt_garland_%d", index),
-		"Block",
-		x,
-		11,
-		0,
-		0,
-		0.6,
-		0.4,
-		24,
-		"w-trim",
-		winterBlocks
-	)
+-- Separators: low fences (top 3) at the seams between yards; the 30-wide approaches stay open.
+box("dt_sep_1", -237.5, 185, 105, 1, 3, "w-wood")
+box("dt_sep_2", -185, 237.5, 1, 105, 3, "w-wood")
+box("dt_sep_3", 185, 237.5, 1, 105, 3, "w-wood")
+box("dt_sep_4", 237.5, 185, 105, 1, 3, "w-wood")
+box("dt_sep_5", -185, -237.5, 1, 105, 3, "w-wood")
+box("dt_sep_6", 185, -237.5, 1, 105, 3, "w-wood")
+
+-- Ring 4: the Boulevard --------------------------------------------------------------------------------------------
+-- m 295 to 355: inner carriageway 26, median 8 (top 0.8), outer carriageway 26.
+for r = 0, 3 do
+	slab(`dt_med_{r}_a`, r, -321, -15, -329, -321, 0.8, "w-kerb")
+	slab(`dt_med_{r}_b`, r, 15, 329, -329, -321, 0.8, "w-kerb")
+	for index, x in { -200, 60, 220 } do
+		slab(`dt_shelter_{r}_{index}`, r, x - 3, x + 3, -327, -323, 3.0, "w-glass", 0.8)
+	end
+	slab(`dt_billboard_{r}`, r, -84, -72, -326, -324, 7.0, "w-trim", 0.8)
+	for half = 0, 1 do
+		local sign = if half == 0 then 1 else -1
+		-- Inner carriageway (z -321 to -295): cars.
+		local innerX, innerW = sign * 105, 160
+		local cx, cz = turn(r, innerX, -308)
+		local w, d = innerW, 26
+		if r % 2 == 1 then
+			w, d = d, w
+		end
+		zone(`dt_z_blv_in_{r}_{half}`, cx, cz, w, d, 0, t4Cars, TUNE.boulevardT4, seed(), nil)
+		-- Outer carriageway (z -355 to -329): small things, Tier 2 near the axis and Tier 3 beyond.
+		local outer: { { x: number, w: number, mix: { MixEntry }, count: number } } = {
+			{ x = sign * 87.5, w = 125, mix = t2All, count = TUNE.boulevardT2 },
+			{ x = sign * 220, w = 130, mix = t3Radial, count = TUNE.boulevardT3 },
+		}
+		for part, spec in outer do
+			local ox, oz = turn(r, spec.x, -342)
+			local ow, od = spec.w, 26
+			if r % 2 == 1 then
+				ow, od = od, ow
+			end
+			zone(
+				`dt_z_blv_out_{r}_{half}_{part}`,
+				ox,
+				oz,
+				ow,
+				od,
+				0,
+				spec.mix,
+				spec.count,
+				seed(),
+				nil
+			)
+		end
+	end
+end
+-- Street dressing slot (sleigh, ice cream truck): one on the outer carriageway of each side.
+for r = 0, 3 do
+	local sx, sz = turn(r, -312, -342)
+	zone(`dt_z_blv_slot_{r}`, sx, sz, 20, 20, 0, mix({ "slot.street" }), 1, 4301 + r, nil)
+end
+-- Big vehicles stand in the unzoned stretches of the north carriageway.
+fixedAt("dt_f_blv_traffic_light", "traffic_light", 280, 0.8, -325)
+fixedAt("dt_f_blv_street_lamp", "street_lamp", -280, 0.8, -325)
+fixedAt("dt_f_blv_bus", "city_bus", 210, 0, -308)
+fixedAt("dt_f_blv_fire", "fire_engine", 240, 0, -308)
+fixedAt("dt_f_blv_garbage", "garbage_truck", 268, 0, -308)
+fixedAt("dt_h_donut_food_truck", "donut_food_truck", -210, 0, -308)
+fixedAt("dt_h_monster_truck", "monster_truck", -245, 0, -308)
+
+-- Ring 5: Skyline (north, east) and Harbour (south, west), then the horizon ----------------------------------------
+for index, span in { { 20, 230 }, { 230, 440 }, { -230, -20 }, { -440, -230 } } do
+	slab(`dt_podium_n{index}`, 0, span[1], span[2], -440, -360, PLINTH, "w-sidewalk")
+end
+for index, span in { { -360, -190 }, { -190, -20 }, { 20, 190 }, { 190, 360 } } do
+	slab(`dt_podium_e{index}`, 0, 360, 440, span[1], span[2], PLINTH, "w-sidewalk")
+end
+fixedAt("dt_h_glass_tower", "glass_tower", 330, PLINTH, -400)
+fixedAt("dt_h_tower_crane", "tower_crane", -330, PLINTH, -400)
+fixedAt("dt_h_ferris_wheel", "ferris_wheel", 400, PLINTH, -275)
+fixedAt("dt_h_rocket_water_tower", "rocket_water_tower", 400, PLINTH, 275)
+local t5Towers = { "apartment_block", "apartment_block", "ev_charging_station", "townhouse" }
+local skylineAreas: { Area } = {
+	{ x0 = 22, x1 = 228, z0 = -430, z1 = -370 },
+	{ x0 = -228, x1 = -22, z0 = -430, z1 = -370 },
+	{ x0 = 232, x1 = 296, z0 = -430, z1 = -370 },
+	{ x0 = 364, x1 = 438, z0 = -430, z1 = -370 },
+	{ x0 = -438, x1 = -366, z0 = -430, z1 = -370 },
+	{ x0 = -298, x1 = -232, z0 = -430, z1 = -370 },
+	{ x0 = 370, x1 = 430, z0 = -358, z1 = -306 },
+	{ x0 = 370, x1 = 430, z0 = -244, z1 = -22 },
+	{ x0 = 370, x1 = 430, z0 = 22, z1 = 256 },
+	{ x0 = 370, x1 = 430, z0 = 294, z1 = 358 },
+}
+for index, area in skylineAreas do
+	stock(`dt_b5_{index}`, area, PLINTH, t5Towers, 6)
 end
 
--- Planters round the Plaza basin and bus-stop bench.
-for index, corner in { { -56, -56 }, { 56, -56 }, { -56, 56 }, { 56, 56 } } do
-	box(string.format("dt_plaza_planter_%d", index), corner[1], corner[2], 4, 4, 1, "w-leaf-dark")
+-- Harbour: quays (top 1.2) broken at the avenues, a shallow basin beyond, and ramped lips back out of the water.
+for index, span in { { -400, -20 }, { 20, 440 } } do
+	slab(`dt_quay_s{index}`, 0, span[1], span[2], 360, 400, PLINTH, "w-sidewalk")
+end
+for index, span in { { -360, -20 }, { 20, 360 } } do
+	slab(`dt_quay_w{index}`, 0, -400, -360, span[1], span[2], PLINTH, "w-sidewalk")
+end
+for index, x in { -300, -150, 150, 300 } do
+	ramp(`dt_lip_s{index}`, x, 402.5, 180, 8, 1.6, 5, -0.4, "w-sidewalk")
+end
+for index, z in { -250, -100, 100, 250 } do
+	ramp(`dt_lip_w{index}`, -402.5, z, 90, 8, 1.6, 5, -0.4, "w-sidewalk")
+end
+stock(
+	"dt_b5_qs1",
+	{ x0 = -398, x1 = -22, z0 = 370, z1 = 390 },
+	PLINTH,
+	{ "shipping_container" },
+	4,
+	30
+)
+stock(
+	"dt_b5_qs2",
+	{ x0 = 22, x1 = 438, z0 = 370, z1 = 390 },
+	PLINTH,
+	{ "shipping_container" },
+	4,
+	30
+)
+stock(
+	"dt_b5_qw1",
+	{ x0 = -392, x1 = -368, z0 = -358, z1 = -22 },
+	PLINTH,
+	{ "shipping_container" },
+	4,
+	30
+)
+stock(
+	"dt_b5_qw2",
+	{ x0 = -392, x1 = -368, z0 = 22, z1 = 358 },
+	PLINTH,
+	{ "shipping_container" },
+	4,
+	30
+)
+zone("dt_z_quay_1", -200, 365, 300, 9, PLINTH, t3Quay, TUNE.quay, seed(), nil)
+zone("dt_z_quay_2", 230, 365, 190, 9, PLINTH, t3Quay, TUNE.quay, seed(), nil)
+
+-- Horizon: eight static towers beyond the invisible wall. Blocks, not placements; nothing reaches them.
+for index, at in
+	{
+		{ -300, -500 },
+		{ -100, -500 },
+		{ 100, -500 },
+		{ 300, -500 },
+		{ 500, -300 },
+		{ 500, -100 },
+		{ 500, 100 },
+		{ 500, 300 },
+	}
+do
+	local height = 120 + (index % 3) * 40
+	block(`dt_horizon_{index}`, "Block", at[1], height / 2, at[2], 0, 60, height, 60, "w-wall-b")
 end
 
--- Boundary walls and the far skyline strip.
-block("dt_wall_n", "Block", 0, 20, -302, 0, 608, 40, 4, "dt-concrete")
-block("dt_wall_s", "Block", 0, 20, 302, 0, 608, 40, 4, "dt-concrete")
-block("dt_wall_e", "Block", 302, 20, 0, 0, 4, 40, 608, "dt-concrete")
-block("dt_wall_w", "Block", -302, 20, 0, 0, 4, 40, 608, "dt-concrete")
-
--- Markers (data-model.md §10) ---------------------------------------------------------------------------------------
--- yaw is in degrees and local +Z is the facing: a spring pad at (188, -86) with yaw 0 launches towards the
--- container stack at z = -70. Sweeper loops run on open ground in the north and south pockets.
+-- Markers (data-model.md §13) ---------------------------------------------------------------------------------------
+-- yaw is in degrees and local +Z is the facing. Boosters and traps stand on open asphalt (the Markers rules refuse
+-- any block above 0.2 under them); golden spots stand on a plinth, pedestal, median, deck or podium.
 
 local function spot(
 	id: string,
@@ -1384,33 +1534,40 @@ local function sweeperLoop(id: string, corners: { { x: number, z: number } })
 	})
 end
 
-spot("booster-dash-1", "BoosterSpot", "dash", -70, -130)
-spot("booster-dash-2", "BoosterSpot", "dash", 70, 130)
-spot("booster-magnet-1", "BoosterSpot", "magnet", -231, 40)
-spot("booster-spring-1", "BoosterSpot", "spring", 188, -86, 0)
-spot("booster-shield-1", "BoosterSpot", "shield", -30, -30)
-spot("booster-slick_trail-1", "BoosterSpot", "slick_trail", -60, 212)
-spot("trap-slick-1", "TrapSpot", "slick", -30, -140)
-spot("trap-slick-2", "TrapSpot", "slick", 30, 140)
-spot("trap-bumper-1", "TrapSpot", "bumper", 198, 92)
-spot("trap-slow-1", "TrapSpot", "slow", 188, -48)
+-- Old Quarter
+spot("booster-dash-1", "BoosterSpot", "dash", -6, -50)
+spot("trap-bumper-1", "TrapSpot", "bumper", 7, -70)
+-- Terraces (loop B)
+spot("booster-magnet-1", "BoosterSpot", "magnet", -100, -150)
+spot("booster-slick_trail-1", "BoosterSpot", "slick_trail", 150, -100)
+spot("trap-slow-1", "TrapSpot", "slow", -150, 100)
+-- Yards (the main-street approaches)
+spot("booster-spring-1", "BoosterSpot", "spring", 0, -250, 0)
+spot("booster-shield-1", "BoosterSpot", "shield", 200, 0)
+spot("trap-slick-1", "TrapSpot", "slick", 260, 0)
 sweeperLoop(
 	"trap-sweeper-1",
-	{ { x = 0, z = -140 }, { x = 24, z = -140 }, { x = 24, z = -116 }, { x = 0, z = -116 } }
+	{ { x = -8, z = 205 }, { x = 8, z = 205 }, { x = 8, z = 235 }, { x = -8, z = 235 } }
 )
+-- Boulevard
+spot("booster-dash-2", "BoosterSpot", "dash", 0, -345)
+spot("trap-bumper-2", "TrapSpot", "bumper", 12, -310)
 sweeperLoop(
 	"trap-sweeper-2",
-	{ { x = -24, z = 116 }, { x = 0, z = 116 }, { x = 0, z = 140 }, { x = -24, z = 140 } }
+	{ { x = -8, z = 315 }, { x = 8, z = 315 }, { x = 8, z = 340 }, { x = -8, z = 340 } }
 )
--- Golden spots stand on static geometry: bus-stop roof, Car Park top deck, tunnel floor, crane ballast, ticket
--- platform behind the Ferris Wheel (D2: the ballast, not the jib counterweight).
-spot("golden-1", "GoldenSpot", "golden", 140, -22, 0, 3.6)
-spot("golden-2", "GoldenSpot", "golden", 207, 50, 0, 6)
-spot("golden-3", "GoldenSpot", "golden", -100, 0, 0, 0)
-spot("golden-4", "GoldenSpot", "golden", 170, -228, 0, 3)
-spot("golden-5", "GoldenSpot", "golden", 2, 292, 0, 1)
+-- Skyline and Harbour
+spot("booster-shield-2", "BoosterSpot", "shield", 0, -380)
+spot("booster-magnet-2", "BoosterSpot", "magnet", 390, 0)
+spot("trap-slick-2", "TrapSpot", "slick", 0, 380)
+-- Golden spots: a Terraces plinth, the Park pedestal, the Car Park top deck, a Boulevard median, a Skyline podium.
+spot("golden-1", "GoldenSpot", "golden", 31, -171.5, 0, 1.2)
+spot("golden-2", "GoldenSpot", "golden", -70, -215, 0, 1.0)
+spot("golden-3", "GoldenSpot", "golden", -170, 255, 0, 6.5)
+spot("golden-4", "GoldenSpot", "golden", 150, -325, 0, 0.8)
+spot("golden-5", "GoldenSpot", "golden", 250, -364, 0, 1.2)
 
--- Keep-outs (data-model.md §9) ---------------------------------------------------------------------------------------
+-- Keep-outs (data-model.md §12) ---------------------------------------------------------------------------------------
 -- Footprints per sub-kind (Content/Hazards.luau); the test compares this table with the Hazards rows.
 local footprints: { [string]: { w: number, d: number } } = {
 	dash = { w = 5, d = 5 },
@@ -1451,30 +1608,47 @@ for _, marker in markers do
 	end
 end
 
--- Six gates: the openings in the Plaza bollard ring (4), the Park hedge (1) and the Market Street van wall (1).
-keepOut("ko_gate_1", "gate", -58, 0, 16, 16)
-keepOut("ko_gate_2", "gate", 58, 0, 16, 16)
-keepOut("ko_gate_3", "gate", 0, -58, 16, 16)
-keepOut("ko_gate_4", "gate", 0, 58, 16, 16)
-keepOut("ko_gate_5", "gate", -165, 0, 12, 16)
-keepOut("ko_gate_6", "gate", 152, 0, 40, 30)
-
--- Five shortcuts: the four 4-stud alleys (with their approach) and the drain tunnel mouth.
-for _, alley in { { -50, -187.5 }, { 50, -187.5 }, { -50, 187.5 }, { 50, 187.5 } } do
-	keepOut(`ko_shortcut_{#keepOutAreas + 1}`, "shortcut", alley[1], alley[2], 8, 60)
+-- A canonical (north) rectangle turned r times, for the keep-outs.
+local function turned(
+	r: number,
+	x: number,
+	z: number,
+	w: number,
+	d: number
+): (number, number, number, number)
+	local tx, tz = turn(r, x, z)
+	if r % 2 == 1 then
+		return tx, tz, d, w
+	end
+	return tx, tz, w, d
 end
-keepOut("ko_shortcut_tunnel", "shortcut", -100, 0, 14, 44)
 
--- Twelve sightline corridors, 12 wide and 80 long, one per spawn, from the doorstep out to the sidewalk's end.
-for _, spawn in spawns do
-	keepOut(
-		string.format("ko_sightline_%02d", spawn.slot),
-		"sightline",
-		spawn.x,
-		spawn.z - spawn.inward * 40,
-		12,
-		80
-	)
+for r = 0, 3 do
+	-- Four gates: the bollard gaps at the Old Quarter edge. The keep-out is the street mouth just outside the cones.
+	local gx, gz, gw, gd = turned(r, 0, -96, 30, 7)
+	keepOut(`ko_gate_{r + 1}`, "gate", gx, gz, gw, gd)
+	-- Four alleys (one per side) and, on the west side, the storm drain.
+	local sx, sz, sw, sd = turned(r, 97.5, -125, 6.5, 34)
+	keepOut(`ko_shortcut_{r}`, "shortcut", sx, sz, sw, sd)
+	-- Four main-street corridors from the plaza edge to the end of Ring 2.
+	local cx, cz, cw, cd = turned(r, 0, -107.5, 30, 155)
+	keepOut(`ko_sightline_street_{r}`, "sightline", cx, cz, cw, cd)
+end
+do
+	local dx, dz, dw, dd = turned(3, 97.5, -171.5, 69, 8)
+	keepOut("ko_shortcut_drain", "shortcut", dx, dz, dw, dd)
+end
+-- Twelve lane corridors, 8 wide, from each spawn to the main street its lane meets.
+for r = 0, 3 do
+	local lanes = {
+		{ x = 52.5, z = -25, w = 8, d = 20 },
+		{ x = 52.5, z = -43.5, w = 8, d = 57 },
+		{ x = 25, z = -52.5, w = 20, d = 8 },
+	}
+	for index, lane in lanes do
+		local lx, lz, lw, ld = turned(r, lane.x, lane.z, lane.w, lane.d)
+		keepOut(`ko_sightline_lane_{r * 3 + index}`, "sightline", lx, lz, lw, ld)
+	end
 end
 
 -- Themes (data-model.md §5) -----------------------------------------------------------------------------------------
@@ -1523,7 +1697,8 @@ end
 local winterObjects, winterIds = kitObjects(winterKit)
 local cityObjects, cityIds = kitObjects(cityKit)
 
--- Winter overlays (150): 60 doorstep crumbs, 50 Tier 2, 25 Tier 3, 14 Tier 4, 1 Tier 5.
+-- Winter overlays (data-model.md §14): Tier 2 to 4 dressing in areas the base layout leaves free. They sit clear of
+-- every keep-out and every base zone, so they never plug a route.
 local overlayZones: { Zone } = {}
 local overlayFixed: { Fixed } = {}
 
@@ -1533,9 +1708,9 @@ local function overlayZone(
 	z: number,
 	w: number,
 	d: number,
+	y: number,
 	objectId: string,
-	count: number,
-	seed: number
+	count: number
 )
 	table.insert(overlayZones, {
 		id = id,
@@ -1543,126 +1718,59 @@ local function overlayZone(
 		z = z,
 		w = w,
 		d = d,
-		y = 0,
+		y = y,
 		mix = { { objectId = objectId, weight = 1 } },
 		count = count,
-		seed = seed,
+		seed = seed(),
 		spawnSlot = nil,
 	})
 end
 
-local function overlayAt(id: string, objectId: string, x: number, z: number)
-	table.insert(
-		overlayFixed,
-		{ id = id, objectId = objectId, x = x, y = 0, z = z, yaw = 0, spawnSlot = nil }
-	)
+-- Park: sleds at the foot of the slope, snow piles on the lawn, the pond becomes a rink.
+overlayZone("dt_ol_sleds", -220, -125, 46, 10, 0.3, "wooden_sled", 14)
+overlayZone("dt_ol_snow_1", -240, -178, 100, 14, 0.3, "snow_pile", 6)
+overlayZone("dt_ol_snow_2", -240, -160, 100, 14, 0.3, "snow_pile", 6)
+table.insert(overlayFixed, {
+	id = "dt_ol_rink",
+	objectId = "ice_rink",
+	x = -270,
+	y = 0.35,
+	z = -270,
+	yaw = 0,
+	spawnSlot = nil,
+})
+-- Market: cocoa carts between the stalls and the paving, market stalls on the east side.
+overlayZone("dt_ol_cocoa", 100, -206, 150, 13, 0.3, "cocoa_cart", 8)
+overlayZone("dt_ol_stalls", 230, -29, 80, 22, 0.3, "market_stall", 5)
+-- Boulevard: pots and wreaths on the median (canonical north, turned for the other three sides).
+for r = 0, 3 do
+	local ax, az = turn(r, -135, -325)
+	local bx, bz = turn(r, 110, -325)
+	local cx, cz = turn(r, -40, -325)
+	local dx, dz = turn(r, 275, -325)
+	local d = 6
+	local w30, w25, w40 = 30, 25, 40
+	local d30, d25, d40 = d, d, d
+	if r % 2 == 1 then
+		w30, d30 = d30, w30
+		w25, d25 = d25, w25
+		w40, d40 = d40, w40
+	end
+	overlayZone(`dt_ol_pots_{r}_1`, ax, az, w30, d30, 0.8, "poinsettia_pot", 2)
+	overlayZone(`dt_ol_pots_{r}_2`, bx, bz, w30, d30, 0.8, "poinsettia_pot", 2)
+	overlayZone(`dt_ol_wreaths_{r}_1`, cx, cz, w25, d25, 0.8, "wreath", 2)
+	overlayZone(`dt_ol_wreaths_{r}_2`, dx, dz, w40, d40, 0.8, "wreath", 2)
 end
 
-for _, spawn in spawns do
-	local sx, sz, inward, slot = spawn.x, spawn.z, spawn.inward, spawn.slot
-	local z = sz - inward * 10.5
-	local odd = slot % 2 == 1
-	overlayZone(
-		`dt_ol_door_{slot}_lights`,
-		sx + 10.75,
-		z,
-		5.5,
-		5,
-		"fairy_light_bulb",
-		2,
-		7000 + slot
-	)
-	overlayZone(
-		`dt_ol_door_{slot}_gifts`,
-		sx + 17.25,
-		z,
-		5.5,
-		5,
-		"mini_gift",
-		if odd then 2 else 1,
-		7100 + slot
-	)
-	overlayZone(
-		`dt_ol_door_{slot}_cookies`,
-		sx + 23.75,
-		z,
-		5.5,
-		5,
-		"gingerbread_cookie",
-		if odd then 1 else 2,
-		7200 + slot
-	)
-end
--- Tier 2: shop fronts (pots and wreaths along the alley buildings), the Park slope (sleds), Market Street.
--- Each row is cut in three so it leaves the 8-stud alley approaches (the shortcut keep-outs at x -50 and 50) open.
-local function overlayRow(
-	id: string,
-	z: number,
-	d: number,
-	objectId: string,
-	counts: { number },
-	seed: number
-)
-	local segments = { { -78, 44 }, { 0, 88 }, { 78, 44 } }
-	for index, segment in segments do
-		overlayZone(
-			`{id}_{index}`,
-			segment[1],
-			z,
-			segment[2],
-			d,
-			objectId,
-			counts[index],
-			seed * 10 + index
-		)
+-- Holiday-only scenery (F2): garlands over the Ring 1 and Ring 2 main streets, the sledding slope and its ramp.
+for r = 0, 3 do
+	for index, m in { 45, 65, 100, 125, 150, 175 } do
+		local gx, gz, gw, gd = turned(r, 0, -m, 30, 0.6)
+		block(`dt_garland_{r}_{index}`, "Block", gx, 11, gz, 0, gw, 0.4, gd, "w-trim", winterBlocks)
 	end
 end
-overlayRow("dt_ol_pots_n", -156, 8, "poinsettia_pot", { 2, 3, 2 }, 7301)
-overlayRow("dt_ol_pots_s", 156, 8, "poinsettia_pot", { 2, 3, 2 }, 7302)
-overlayRow("dt_ol_wreaths_n", -164.5, 7, "wreath", { 2, 4, 2 }, 7303)
-overlayRow("dt_ol_wreaths_s", 164.5, 7, "wreath", { 2, 4, 2 }, 7304)
-overlayZone("dt_ol_sleds", -197, 51, 46, 10, "wooden_sled", 14, 7305)
-for index, at in
-	{ { -140, -22 }, { -140, 22 }, { -124, -22 }, { -124, 22 }, { 110, -8 }, { 110, 8 } }
-do
-	overlayAt(`dt_ol_f_{index}`, "leaning_present_stack", at[1], at[2])
-end
--- Tier 3: snow piles on the pocket edges, reindeer lamps at the Plaza approaches, cocoa carts in the Plaza.
-overlayZone("dt_ol_snow_n", 80, -130, 40, 40, "snow_pile", 6, 7401)
-overlayZone("dt_ol_snow_s", -80, 130, 40, 40, "snow_pile", 6, 7402)
-for index, at in { { -72, 14 }, { -72, 40 }, { 72, 14 }, { 72, -14 }, { 72, 40 } } do
-	overlayAt(`dt_ol_f_{6 + index}`, "light_up_reindeer", at[1], at[2])
-end
-for index, at in
-	{
-		{ 50, 22 },
-		{ 50, -22 },
-		{ -50, 22 },
-		{ -50, -22 },
-		{ 22, 50 },
-		{ -22, 50 },
-		{ 22, -50 },
-		{ -22, -50 },
-	}
-do
-	overlayAt(`dt_ol_f_{11 + index}`, "cocoa_cart", at[1], at[2])
-end
--- Tier 4: six stalls round the tree and two on Market Street; ploughs on the east pavements.
-for index = 1, 6 do
-	local angle = math.rad((index - 1) * 60)
-	overlayAt(
-		`dt_ol_f_{19 + index}`,
-		"market_stall",
-		math.floor(36 * math.cos(angle) * 100 + 0.5) / 100,
-		math.floor(36 * math.sin(angle) * 100 + 0.5) / 100
-	)
-end
-overlayAt("dt_ol_f_26", "market_stall", 96, -22)
-overlayAt("dt_ol_f_27", "market_stall", 96, 22)
-overlayZone("dt_ol_plough_n", 111, -48, 94, 28, "snowplough", 3, 7501)
-overlayZone("dt_ol_plough_s", 111, 48, 94, 28, "snowplough", 3, 7502)
--- Tier 5: the Park pond becomes the ice rink.
-overlayAt("dt_ol_f_28", "ice_rink", -268, 71)
+ramp("dt_park_slope", -220, -95, 0, 40, 5, 40, 0.3, "w-season", winterBlocks)
+ramp("dt_park_sledramp", -255, -95, 0, 10, 2, 6, 0.3, "w-wood", winterBlocks)
 
 local winterSlots = {
 	["slot.small"] = "bauble",
@@ -1743,19 +1851,19 @@ local function flock(district: string, spots: { { number } })
 		table.insert(pigeons, { district = district, x = at[1], z = at[2] })
 	end
 end
-flock("Park", { { -231, -70 }, { -231, -45 }, { -231, -20 }, { -231, 10 }, { -231, 70 } })
-flock("Plaza", { { 30, -14 }, { -30, 14 }, { 14, -30 }, { 8, 28 }, { -14, 26 } })
-flock("Waterfront", { { -40, 214 }, { -20, 214 }, { 20, 214 }, { 40, 214 }, { 60, 214 } })
-flock("Construction Site", { { 176, -30 }, { 196, -30 }, { 180, -100 }, { 200, -104 } })
-flock("Car Park", { { 176, 34 }, { 196, 34 }, { 182, 100 }, { 202, 100 } })
+flock("Old Quarter", { { 10, 10 }, { -10, 12 }, { 14, -12 }, { -12, -10 }, { 0, 18 } })
+flock("Terraces", { { 20, -125 }, { 30, -112 }, { -30, -112 }, { -20, -125 }, { 0, -118 } })
+flock("Park", { { -120, -250 }, { -100, -240 }, { -140, -200 }, { -110, -270 }, { -80, -265 } })
+flock("Market", { { 100, -240 }, { 120, -230 }, { 60, -235 }, { 140, -250 }, { 80, -255 } })
+flock("Harbour", { { -300, 392 }, { -250, 392 }, { 100, 392 }, { 150, 392 }, { 300, 392 } })
 
 local Downtown = {
 	worldId = "downtown",
 	starThresholds = { 20, 45, 80 },
-	-- PROVISIONAL, owner to confirm: solved with the pace model (tests/unit/Pace.test, research R-08).
-	growthK = 1.95,
-	halfExtent = 300,
-	outerHalfExtent = 400,
+	-- PROVISIONAL, owner to confirm: solved with the pace model (tests/unit/Pace.test, 008 research R-07).
+	growthK = 2.94,
+	halfExtent = 440,
+	outerHalfExtent = 560,
 	sizeTiers = sizeTiers,
 	objects = objects,
 	zones = zones,
@@ -1766,7 +1874,7 @@ local Downtown = {
 	supportedThemes = { "winter", "city" },
 	themeBindings = themeBindings,
 	keepOutAreas = keepOutAreas,
-	maxPlacements = 1400,
+	maxPlacements = 1500,
 	environment = {
 		palette = {
 			["dt-concrete"] = { 168, 168, 163 },
@@ -1777,21 +1885,21 @@ local Downtown = {
 		markers = markers,
 	},
 	hub = {
-		center = { x = -460, z = 0 },
+		center = { x = -620, z = 0 },
 		halfExtent = 24,
 		spawn = { x = 0, z = 0 },
 		padRadius = 5,
 		assetKey = "hub",
 	},
-	-- Used only when Flags.ThemeSystem is off: a copy of the winter look.
+	-- Used only when Flags.ThemeSystem is off: a copy of the winter look, with fog pushed out for the 320-stud camera.
 	lighting = {
 		ambient = { 150, 165, 190 },
 		outdoorAmbient = { 170, 185, 210 },
 		brightness = 2,
 		clockTime = 16.5,
 		fogColor = { 205, 218, 235 },
-		fogStart = 150,
-		fogEnd = 900,
+		fogStart = 500,
+		fogEnd = 1600,
 		atmosphereDensity = 0.3,
 		atmosphereColor = { 200, 215, 235 },
 		atmosphereDecay = { 190, 200, 220 },

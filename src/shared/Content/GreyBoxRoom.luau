@@ -66,6 +66,7 @@ export type PlacementSeed = {
 }
 -- y is the surface the ball rests on; the ball sits at y + startDiameter / 2 + 0.5.
 export type SpawnPoint = { slot: number, x: number, y: number, z: number, yaw: number }
+-- kind: "Block" (default), "Wedge", "Cylinder" or "Boundary" (an invisible collider: no palette lookup, never drawn).
 export type BlockDef = {
 	id: string,
 	kind: string,
