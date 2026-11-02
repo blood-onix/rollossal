@@ -76,3 +76,10 @@
 - **Pace lower bounds relaxed (owner, 2026-11-02)**: D 12 from 70-110 s to 62-110 s, D 30 from 120-180 s to 105-180 s.
   The other marks are unchanged. These are model timings; human-played timings are still open in
   `docs/release-candidate.md`.
+
+## Jest
+
+2026-11-02, Studio Edit, `require(game.ServerStorage.Tests.runner)()` after T030/T031: 12 suites, 0 failed suites; 154 tests, 151 passed, 0 failed (3 not run/skipped).
+
+- T030 option taken: scoped the ThemeSwitch slot-object assertion to the kinds Downtown builds (`slot.small`, `slot.landmark`). The world has no medium/yard/street placements, and the unit tests pin 96 + 1 dressing slots, so adding placements would change the pinned count for no spec need.
+- T031: scatter probe moved to (0, -110), open Ring 2 street at Y = 0. (0, -100) holds a holiday garland at Y 11.
