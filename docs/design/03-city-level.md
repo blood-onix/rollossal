@@ -84,4 +84,4 @@ Coordinates: x east, z south, y up. `m = max(|x|, |z|)` is the ring measure.
 
 Stage 1 (the Old Quarter, one main street and the first Terraces block) is built and checked first, in both themes,
 before the other rings. Studio captures and sphere casts are recorded in
-`specs/008-downtown-inside-out/playtest.md`. Owner taste sign-off is on the release-candidate list.
+`specs/008-downtown-inside-out/playtest.md`. Under Constitution gate 6, a map is not finished until the owner has approved its images and played it.

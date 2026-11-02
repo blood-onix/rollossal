@@ -1,10 +1,9 @@
 # Constitution amendment draft (009, FR-001, research R-01)
 
-Status: **applied in this pull request (round 2 review fix).** `.specify/memory/constitution.md` is now v3.1.0 (MINOR:
-rules added and relaxed, no principle removed). Owner approval is the approval of this pull request, as Governance
-requires; the agent does not self-approve. The text below is the original draft; where the live constitution words it
-differently (Principle IV also states that shop names are untranslated proper nouns, other text stays a localisation key
-or pictogram, and placeholder art never imitates a real ad), the live constitution wins.
+Status: **superseded by constitution v4.0.0**, which came from the owner-approved request and has its own pull request:
+https://github.com/blood-onix/rollossal/pull/10. This branch first applied this draft as v3.1.0; the merge of v4.0.0 replaced it. Owner
+approval is on that pull request. The text below is the original draft, kept as history, and the live constitution wins
+wherever it differs.
 
 ## Principle IV (replace the last-but-one bullet)
 

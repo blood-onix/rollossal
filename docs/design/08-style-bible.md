@@ -16,7 +16,7 @@ This document overrides [06-art-style.md](06-art-style.md) where they disagree. 
 | Was | Now |
 | --- | --- |
 | `w-season` "on every roof, hedge top, car roof and lamp head" (README, 06, 07, tokens) | `w-season` is an accent trim, never a blanket (section 9) |
-| "Never put words on textures", "signs are pictograms, never words" (README, 05) | Invented proper-noun shop names and short signage are allowed (section 5). Real brands, logos, flags, memes and faces stay banned. Allowed by constitution v3.1.0 (Principle IV), once this pull request is approved |
+| "Never put words on textures", "signs are pictograms, never words" (README, 05) | Invented proper-noun shop names and short signage are allowed (section 5). Real brands, logos, flags, memes and faces stay banned. Allowed by constitution v4.0.0 (Principle IV), once its pull request is approved |
 | Tier budgets "proposed" as ceilings only | Budgets are ceilings; floors and targets are in section 4 |
 | Prop yaw left to chance | Props face a reason (section 7) |
 
@@ -76,7 +76,7 @@ Scene totals are a separate limit, measured by the heavy-scene benchmark (`docs/
   set on the fascia or a billboard texture. Pictograms remain valid and are preferred for the absorbable props.
   Banned: real brands and logos, flags, meme images, real faces, alcohol or gambling names, and the words "Roblox",
   "Robux" and "Blox". A name is art direction, not a localisation key, until a build feature adds the texture.
-- Signage may be authored once constitution v3.1.0 (Principle IV, applied in the 009 pull request) is approved with that pull request.
+- Signage may be authored once constitution v4.0.0 (Principle IV) is approved on its pull request.
 - Facade windows are `w-glass` with a frame trim strip; no window is a flat painted square on a plain wall at D5
   distance.
 

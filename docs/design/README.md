@@ -8,7 +8,7 @@ Downtown in its Holiday City theme instead of Snow Village, and the art style is
 the newer intent, but these points need the owner's approval before a spec relies on them:
 
 - a Constitution XI amendment for the stylised-real look (gradient atlas, one bevel segment);
-- the 009 constitution amendment (invented shop signage, visual gate, CC0 meshes), applied as constitution v3.1.0 in the 009 pull request and approved with it (draft: `specs/009-style-bible-bakeoff/constitution-amendment-draft.md`);
+- the constitution amendment for invented shop signage, the visual gate and CC0 meshes: v4.0.0, approved on its own pull request, not with 009;
 - the per-tier triangle budgets in `Config.Budgets.meshTriangles` (500 / 700 / 1,500 / 3,500 / 5,000 proposed);
 - retiring Snow Village as the launch world;
 - the holiday music track;
@@ -54,14 +54,14 @@ Rollossal is a rolling-ball growth game for Roblox: start small, stick to everyt
 - **Brag, don't nag.** Results lead with the number (`34.6`), then stars, then what is new. No "Don't give up!", no exclamation spam: one `!` per screen at most.
 - **Deadpan object names.** Name props like a shop label, not a joke: "Inflatable Tube Guy", "Office Chair (Spinning)", "Suspiciously Large Donut". The twist is in the model; the name stays plain.
 - **Second person, no slang that dates.** "You", never "we". No memes, real brands or creator names.
-- **Every string is a localisation key** (`object.city.traffic_cone`). Player-facing text is never baked into textures. In-world signage follows the [style bible](08-style-bible.md): pictograms on props, invented proper-noun shop names on facades and billboards.
+- **Every string is a localisation key** (`object.city.traffic_cone`). Words on textures are limited to invented shop names and short signage (Constitution IV), placed as the [style bible](08-style-bible.md) says. Shop names are proper nouns and are not translated; anything else is a pictogram (see Iconography) or has a localisation key.
 - **Status is never colour alone** (Constitution VI): every tier chip shows its number, every toggle its label.
 
 ### Visual foundations
 
-**The look: stylised real.** Real city objects in real proportions, simplified into clean low-poly forms with bevelled edges, smooth round parts and gradient shading, all on one shared texture (see *Art style: how realistic*). Exaggerate only the one hero feature, and by at most 10 %. Big clean colour areas read at phone size; texture detail does not. It should look like a real city that a giant ball is eating, not a toy town.
+**The look: stylised real.** Real city objects in real proportions, simplified into clean low-poly forms with bevelled edges, smooth round parts and gradient shading, all on shared atlases (see *Art style: how realistic*). Exaggerate only the one hero feature, and by at most 10 %. Big clean colour areas read at phone size; texture detail does not. It should look like a real city that a giant ball is eating, not a toy town.
 
-**Colour, world.** Every mesh face UVs into exactly one cell of the shared gradient atlas (1,024 px: 8 × 8 palette cells on top, trim strips below). The cells are the `w-*` tokens: rows 0–3 hold the 32 shared roles (ground, buildings, materials, accents), rows 4–7 stay free for level-specific heroes. A theme is a different atlas with the same layout, so **one asset set gives six cities**. Rules:
+**Colour, world.** Every mesh face UVs into exactly one cell of the shared gradient atlas (1,024 px: 8 × 8 palette cells on top, trim strips below). The cells are the `w-*` tokens: rows 0–3 hold the 32 shared roles (ground, buildings, materials, accents), rows 4–7 stay free for level-specific heroes. A theme is a different atlas with the same layout, so **one asset set gives six cities**. Building fronts and signs may use one more shared atlas, and billboards a small capped set of textures (Constitution XI). Rules:
 - Model with roles, not colours: paint a hydrant `w-accent-red`, not "red". In `neon` it becomes hot pink-red; in `winter` holiday red.
 - Keep any one prop to 2–4 swatches and give each one hero accent (`w-accent-*`). The accents are where the eye goes; the city around them (`w-wall-*`, `w-sidewalk`, `w-asphalt`) stays quiet.
 - Use `w-season` as an accent trim on roof ridges, awning tops, hedge caps and car roof lines, never as a blanket over every top face (see the [style bible](08-style-bible.md), section 9). That one cell is the snow cap in `winter`, blossom in `spring`, leaf piles in `autumn` and neon strips in `neon`, so the theme changes with no new geometry.
@@ -83,8 +83,8 @@ Rollossal is a rolling-ball growth game for Roblox: start small, stick to everyt
 ### Iconography
 
 - UI icons are glyphs from `src/shared/Content/Icons.luau` until real icon assets exist (★ ⏱ ● ■ ▤ ⌂ ▶ ⚙ 🛒 🔒). Check every new glyph in a capture with both FredokaOne and GothamMedium: a glyph missing from FredokaOne renders blank, one missing from GothamMedium renders as a box.
-- **In-world signs on props are pictograms**: a donut on the bakery, a bus on the stop, a wrench on the garage, an arrow on one-way streets. Model them as 1–2 swatch shapes on a `w-trim` board. Facades and billboards may carry invented proper-noun shop names (style bible, section 5), under constitution v3.1.0 (Principle IV).
-- No real logos, brands, flags, memes, real faces or national symbols, and nothing that imitates them; no alcohol or gambling names; never the words "Roblox", "Robux" or "Blox".
+- **In-world signs on props are pictograms**: a donut on the bakery, a bus on the stop, a wrench on the garage, an arrow on one-way streets. Model them as 1–2 swatch shapes on a `w-trim` board. Facades and billboards may carry invented shop names such as Blocky Mart and short signage (style bible, section 5; Constitution IV).
+- No real logos, brands, flags, memes, real faces or national symbols, and nothing that imitates them. No alcohol or gambling names, no words Roblox, Robux or Blox, and nothing imitating Roblox's logo.
 
 ### Building on it
 

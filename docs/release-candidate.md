@@ -63,10 +63,9 @@ Source: `specs/008-downtown-inside-out/` (FR-014, quickstart §6). None of these
 Source: `specs/009-style-bible-bakeoff/` (FR-001, FR-009, FR-010). None of these holds the feature, except where the
 constitution amendment is needed before signage or a CC0 import is *authored* (not before this feature merges).
 
-- [ ] Owner approval of the constitution amendment (v3.1.0: Principle IV invented shop names, Principle I and Quality
-  Gates visual gate, Principle XI CC0 and shared sign atlas). It is applied in the 009 pull request, so approving that
-  pull request approves it. Until the pull request is approved no signage is authored and no CC0 mesh is imported into
-  the game. Draft and rationale: `specs/009-style-bible-bakeoff/constitution-amendment-draft.md`.
+- [ ] Owner approval of the constitution amendment (v4.0.0: Principle IV invented shop names, Principle I and Quality
+  Gates gate 6, Principle XI CC0 and shared sign atlas), on its own pull request: https://github.com/blood-onix/rollossal/pull/10. Until
+  it is approved no signage is authored and no CC0 mesh is imported into the game.
 - [ ] The concept reference image: add it as `specs/009-style-bible-bakeoff/concept-reference.png`. The bible (section
   12) then gets a "checked against the concept" pass.
 - [ ] Early phone frame-rate reading on the heavy scene (the mid-range phone): run `tests/studio/HeavyScene.server.luau`
