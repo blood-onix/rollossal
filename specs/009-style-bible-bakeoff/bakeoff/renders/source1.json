@@ -1,0 +1,52 @@
+{
+  "hatchback": {
+    "triangles": 1420,
+    "tier": 4,
+    "floor": 1050,
+    "target": 1925,
+    "size": 14.0,
+    "render3q": "source1_hatchback_3q.png",
+    "renderGame": "source1_hatchback_game.png",
+    "gameDistance": 140.0
+  },
+  "shop_front": {
+    "triangles": 2032,
+    "tier": 5,
+    "floor": 1500,
+    "target": 2750,
+    "size": 22.0,
+    "render3q": "source1_shop_front_3q.png",
+    "renderGame": "source1_shop_front_game.png",
+    "gameDistance": 220.0
+  },
+  "bench": {
+    "triangles": 564,
+    "tier": 3,
+    "floor": 450,
+    "target": 825,
+    "size": 7.0,
+    "render3q": "source1_bench_3q.png",
+    "renderGame": "source1_bench_game.png",
+    "gameDistance": 70.0
+  },
+  "street_tree": {
+    "triangles": 456,
+    "tier": 3,
+    "floor": 450,
+    "target": 825,
+    "size": 9.0,
+    "render3q": "source1_street_tree_3q.png",
+    "renderGame": "source1_street_tree_game.png",
+    "gameDistance": 90.0
+  },
+  "fire_hydrant": {
+    "triangles": 364,
+    "tier": 2,
+    "floor": 210,
+    "target": 385,
+    "size": 2.4,
+    "render3q": "source1_fire_hydrant_3q.png",
+    "renderGame": "source1_fire_hydrant_game.png",
+    "gameDistance": 23.999999999999996
+  }
+}

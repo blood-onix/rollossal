@@ -1,0 +1,15 @@
+{
+  "verdict": "incomplete",
+  "remaining": [],
+  "human": [
+    {
+      "item": "T017 Import CC0 pack (Kenney/Quaternius) for bake-off Source 2, re-UV to city atlas, render, and record licence URL and terms in bakeoff/README.md",
+      "reason": "The CC0 pack download is a new external resource requiring owner approval per the constitution's Human Approval list (Principle XII); the request is already recorded in bakeoff/README.md and docs/release-candidate.md"
+    },
+    {
+      "item": "T019 Inspect Creator Store candidates (verify zero scripts, triangle counts, licence terms) for bake-off Source 4",
+      "reason": "Read-only search was run, but inspection requires inserting third-party models into the place (InsertService failed with 'User is not authorized'; only insert_asset remains), which needs owner approval per plan Human Approval item 4"
+    }
+  ],
+  "summary": "All agent-doable work for 009-style-bible-bakeoff is done and verified (5-shot before set, 12-section style bible with doc overrides, Source-1 bake-off with sourcing rule, 550k/290k measured ceilings, check.sh exit 0); only the approval-gated CC0 import (T017) and Creator Store inspection (T019) remain with the owner."
+}
