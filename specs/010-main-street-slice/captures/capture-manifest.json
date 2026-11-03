@@ -1,0 +1,48 @@
+{
+  "generated": "2026-11-03",
+  "blender": "5.2.3 LTS",
+  "engine": "BLENDER_EEVEE",
+  "worldCommit": "4f7034f",
+  "theme": "city",
+  "objects": 1003,
+  "missingFbx": {
+    "": 65
+  },
+  "images": [
+    {
+      "name": "01_spawn_d2",
+      "file": "01_spawn_d2.png",
+      "source": "blender-offline",
+      "sha256": "543fb6cc5011254514abff4638c9dc3d286323f83ab3806e01c3220cb42d8656"
+    },
+    {
+      "name": "02_street_d5",
+      "file": "02_street_d5.png",
+      "source": "blender-offline",
+      "sha256": "e9e78a8b3a81e9ed5c19a8f326f0b292a7f31e77e40528a9f821c2c6560f2a7a"
+    },
+    {
+      "name": "03_midgame_d12_30",
+      "file": "03_midgame_d12_30.png",
+      "source": "blender-offline",
+      "sha256": "66801f5868892d8d1480a10a11da302083ff45741589eff10b2dce7cc473a972"
+    },
+    {
+      "name": "04_lategame_d80",
+      "file": "04_lategame_d80.png",
+      "source": "blender-offline",
+      "sha256": "bce6b4b2d785129f5b81bfbf5c881ce47a1e85b3ba33c1245659c5b49bf8c584"
+    },
+    {
+      "name": "05_overhead_map",
+      "file": "05_overhead_map.png",
+      "source": "blender-offline",
+      "sha256": "115c6d55fc05227d9adf11269e02ff8e6d88c119e245a5f69655af904e762b6a"
+    }
+  ],
+  "parityNotes": [
+    "Offline Blender (EEVEE) composition check, not a pixel match: Roblox tone mapping, bloom, atmosphere, fog and shadow filtering are not reproduced.",
+    "Mesh scale follows ObjectVisual.buildMesh (longest side = object size); objects without an FBX are drawn as their fallback primitive in grey.",
+    "Boundary colliders are skipped; sun direction is an approximation of Lighting.ClockTime 13."
+  ]
+}

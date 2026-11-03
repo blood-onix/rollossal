@@ -51,16 +51,16 @@
 
 - [X] T005 [P] [US1] Implement pure street rules unit tests in tests/unit/StreetRules.test.luau checking hand-computed coordinates and guarantees: kerb band 0.4 stud high, sidewalk width `sidewalk >= 6`, road surface `w-asphalt` >= 2.5x darker than `w-sidewalk`, centre/lane markings (1-stud stripe, 1-stud gap), zebra crossings at junctions, trees every `treeEvery = 18`, lamps every `lampEvery = 24` with clearance `lampTreeClear = 4` (no lamp within 4 studs of a tree trunk), corner bins, road-facing benches, parallel-parked cars, and seeded jitter bounds (+-0.5 stud position, +-3 degrees yaw)
 - [X] T006 [P] [US1] Implement pure scene kit expansion unit tests in tests/unit/SceneKit.test.luau verifying kit translation and rotation `x = ox + dx*cos(yaw) + dz*sin(yaw)` and `z = oz - dx*sin(yaw) + dz*cos(yaw)`, seeded jitter, placement IDs prefixed `idPrefix .. "_" .. index`, and hard error when any entry falls outside kit footprint (`halfX`, `halfZ`) or world bounds
-- [ ] T007 [US1] Implement slice world unit tests in tests/unit/MainStreetSlice.test.luau asserting `worldId = "main_street_slice"`, `halfExtent = 250`, boundaries at x in [-100, 100] and z in [-250, 250], exactly 12 spawn points >= 10 studs apart pairwise facing +z within 30 degrees with Tier 1 pickup within 15 studs, zone order along z (park [-250, -130], suburb [-130, -60], main street [-60, 170], skyline [170, 250]), placement count <= `maxPlacements = 1200`, unique placement IDs, object sizes <= `absorbRatio * tier ceiling`, all 10 kits present, and full determinism across repeated seeded runs
+- [X] T007 [US1] Implement slice world unit tests in tests/unit/MainStreetSlice.test.luau asserting `worldId = "main_street_slice"`, `halfExtent = 250`, boundaries at x in [-100, 100] and z in [-250, 250], exactly 12 spawn points >= 10 studs apart pairwise facing +z within 30 degrees with Tier 1 pickup within 15 studs, zone order along z (park [-250, -130], suburb [-130, -60], main street [-60, 170], skyline [170, 250]), placement count <= `maxPlacements = 1200`, unique placement IDs, object sizes <= `absorbRatio * tier ceiling`, all 10 kits present, and full determinism across repeated seeded runs
 
 ### Implementation for User Story 1
 
 - [X] T008 [P] [US1] Implement pure street rules generator in src/shared/Rules/StreetRules.luau expanding `StreetDef` into `StreetOut = { blocks: { BlockDef }, placements: { Placement } }` with zero engine calls or clock reads (using Park-Miller RNG `seed * 48271 % 2147483647`, kerb height 0.4 stud, `sidewalk >= 6`, zebra crossings, `treeEvery = 18`, `lampEvery = 24`, `lampTreeClear = 4`, corner bins, road-facing benches, and parallel-parked cars)
 - [X] T009 [P] [US1] Implement pure scene kit expansion engine in src/shared/Rules/SceneKit.luau defining `SceneKit.expand(kit, instance, idPrefix, bounds) -> { Placement }` rotating entries by `instance.yaw`, adding origin `(ox, oz)`, applying seeded jitter, generating IDs, and throwing error on footprint or boundary overflow
 - [X] T010 [P] [US1] Define the 10 starter scene kits as data in src/shared/Content/SceneKits.luau (`picnic_spread`, `cafe_terrace`, `bus_stop`, `fruit_stall`, `bike_rack`, `road_works`, `car_park_rows`, `yard_sale`, `flower_bed`, `recycling_point`) with relative offsets (`dx`, `dz`, `yaw`), footprints (`halfX`, `halfZ`), and valid object IDs
-- [ ] T011 [US1] Implement vertical slice world definition and precedence in src/shared/Content/Worlds/MainStreetSlice.luau, src/shared/Worlds.luau, and tests/unit/Downtown.test.luau with `worldId = "main_street_slice"`, `halfExtent = 250`, `outerHalfExtent = 300`, `maxPlacements = 1200`, 12 park spawn points >= 10 studs apart facing +z, Boundary blocks at x = +-100 and z = +-250, slice ObjectDefs (`shop_front`, `fruit_crate`, `flower_pot`, `picnic_blanket`, `awning`, `road_barrier` with `bookId = "slice." .. id`), building fixed placements and blocks via `StreetRules.expand` and `SceneKit.expand`, and updating `Worlds.active` precedence chain `if Config.Flags.MainStreetSlice then MainStreetSlice :: any elseif Config.Flags.Downtown ...`
-- [ ] T012 [P] [US1] Update ambient controller start condition in src/client/Main.client.luau to check "world has `ambient`" instead of `Config.Flags.Downtown`, starting pigeons on the slice while leaving traffic disabled
-- [ ] T013 [P] [US1] Document street placement rules and scene kit data contract in specs/010-main-street-slice/contracts/street-rules-and-scene-kits.md for reuse by 004j on Downtown
+- [X] T011 [US1] Implement vertical slice world definition and precedence in src/shared/Content/Worlds/MainStreetSlice.luau, src/shared/Worlds.luau, and tests/unit/Downtown.test.luau with `worldId = "main_street_slice"`, `halfExtent = 250`, `outerHalfExtent = 300`, `maxPlacements = 1200`, 12 park spawn points >= 10 studs apart facing +z, Boundary blocks at x = +-100 and z = +-250, slice ObjectDefs (`shop_front`, `fruit_crate`, `flower_pot`, `picnic_blanket`, `awning`, `road_barrier` with `bookId = "slice." .. id`), building fixed placements and blocks via `StreetRules.expand` and `SceneKit.expand`, and updating `Worlds.active` precedence chain `if Config.Flags.MainStreetSlice then MainStreetSlice :: any elseif Config.Flags.Downtown ...`
+- [X] T012 [P] [US1] Update ambient controller start condition in src/client/Main.client.luau to check "world has `ambient`" instead of `Config.Flags.Downtown`, starting pigeons on the slice while leaving traffic disabled
+- [X] T013 [P] [US1] Document street placement rules and scene kit data contract in specs/010-main-street-slice/contracts/street-rules-and-scene-kits.md for reuse by 004j on Downtown
 
 **Checkpoint**: User Story 1 is functional and testable independently (MVP increment)
 
@@ -76,13 +76,13 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T014 [P] [US2] Implement pure ball heap unit tests in tests/unit/Heap.test.luau verifying deterministic scoring `score(e) = e.size / (1 + e.age)`, tie-breaking by key, protecting items with tier >= `protectTier = 4`, `coverage(ballD, outer, itemFootprint)` >= `Config.heapCoverageTarget = 0.6` at `heapCoverageTargetD = 5`, `coreColor(buried, paletteOf)` average RGB calculation, and linear `buryProgress(elapsed, duration)`
+- [X] T014 [P] [US2] Implement pure ball heap unit tests in tests/unit/Heap.test.luau verifying deterministic scoring `score(e) = e.size / (1 + e.age)`, tie-breaking by key, protecting items with tier >= `protectTier = 4`, `coverage(ballD, outer, itemFootprint)` >= `Config.heapCoverageTarget = 0.6` at `heapCoverageTargetD = 5`, `coreColor(buried, paletteOf)` average RGB calculation, and linear `buryProgress(elapsed, duration)`
 
 ### Implementation for User Story 2
 
-- [ ] T015 [P] [US2] Implement pure heap selection and coverage logic in src/shared/Rules/Heap.luau exporting `select(entries, params) -> HeapResult`, `coverage(ballD, outer, itemFootprint) -> number`, `coreColor(buried, paletteOf) -> { r: number, g: number, b: number }`, and `buryProgress(elapsed, duration) -> number` with no engine types or `require(script`
-- [ ] T016 [P] [US2] Update stuck replication in src/server/BallService.luau to publish up to `Config.maxPublishedStuck = 60` entries in the `Stuck` attribute when `Config.Flags.HeapRedesign` is true while keeping server `maxTrackedStuck = 120` and knock-off logic intact
-- [ ] T017 [US2] Redesign ball attachment rendering in src/client/StuckVisuals.luau using `Heap.select` (with `Config.heapLocalCap = 40` for local ball and `heapRemoteCap = 12` for remote balls) when `Config.Flags.HeapRedesign` is true, welding outer visuals at `radius + size * stuckEmbed` scaled by `(D / refD) ^ heapScaleExponent`, smoothly shrinking buried items over `buryProgress`, and tinting the base sphere with `Heap.coreColor`
+- [X] T015 [P] [US2] Implement pure heap selection and coverage logic in src/shared/Rules/Heap.luau exporting `select(entries, params) -> HeapResult`, `coverage(ballD, outer, itemFootprint) -> number`, `coreColor(buried, paletteOf) -> { r: number, g: number, b: number }`, and `buryProgress(elapsed, duration) -> number` with no engine types or `require(script`
+- [X] T016 [P] [US2] Update stuck replication in src/server/BallService.luau to publish up to `Config.maxPublishedStuck = 60` entries in the `Stuck` attribute when `Config.Flags.HeapRedesign` is true while keeping server `maxTrackedStuck = 120` and knock-off logic intact
+- [X] T017 [US2] Redesign ball attachment rendering in src/client/StuckVisuals.luau using `Heap.select` (with `Config.heapLocalCap = 40` for local ball and `heapRemoteCap = 12` for remote balls) when `Config.Flags.HeapRedesign` is true, welding outer visuals at `radius + size * stuckEmbed` scaled by `(D / refD) ^ heapScaleExponent`, smoothly shrinking buried items over `buryProgress`, and tinting the base sphere with `Heap.coreColor`
 
 **Checkpoint**: User Stories 1 and 2 work independently and together
 
@@ -96,9 +96,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T018 [P] [US3] Update HUD component gating in src/client/Hud.luau to omit creation of `NextTier`, `Star1..n`, and `TierBanner` when `Config.Flags.SliceHud` is true, displaying only the timer and ball size readout
-- [ ] T019 [P] [US3] Implement bump audio trigger hook in src/client/Feedback.luau to play `Assets.sounds.bump` upon client-side too-large obstacle contact
-- [ ] T020 [US3] Implement physical too-large obstacle bump in src/client/BallController.luau applying an immediate `AssemblyLinearVelocity` impulse of `Config.tooLargeBumpImpulse = 18` studs/s away from contact with cooldown `Config.tooLargeBumpCooldown = 0.4` s when `Absorb.canAbsorb` returns false and `Config.Flags.SliceHud` is true
+- [X] T018 [P] [US3] Update HUD component gating in src/client/Hud.luau to omit creation of `NextTier`, `Star1..n`, and `TierBanner` when `Config.Flags.SliceHud` is true, displaying only the timer and ball size readout
+- [X] T019 [P] [US3] Implement bump audio trigger hook in src/client/Feedback.luau to play `Assets.sounds.bump` upon client-side too-large obstacle contact
+- [X] T020 [US3] Implement physical too-large obstacle bump in src/client/BallController.luau applying an immediate `AssemblyLinearVelocity` impulse of `Config.tooLargeBumpImpulse = 18` studs/s away from contact with cooldown `Config.tooLargeBumpCooldown = 0.4` s when `Absorb.canAbsorb` returns false and `Config.Flags.SliceHud` is true
 
 **Checkpoint**: User Stories 1, 2, and 3 are functional and verifiable
 
@@ -112,9 +112,9 @@
 
 ### Implementation for User Story 4
 
-- [ ] T021 [P] [US4] Define sign slots and billboard slots as data in src/shared/Content/Signs.luau specifying `SignSlot = { id, facadeId, shopName, atlasRegion, x, y, z, yaw }` with invented proper-noun shop names and `BillboardSlot = { id, x, y, z, yaw, imageAsset, sponsored }` with `sponsored = false` and `imageAsset` keys `"b1"` through `"b6"`
-- [ ] T022 [US4] Integrate sign and billboard slot tables into src/shared/Content/Worlds/MainStreetSlice.luau, attaching signs to main-street building facades and placing billboards along designated street and skyline structures
-- [ ] T023 [US4] Add sign and billboard validation suite to tests/unit/MainStreetSlice.test.luau asserting all `facadeId` references exist, all `atlasRegion` names are valid, distinct `imageAsset` count <= `Config.billboardTextureCap = 6`, all slots have `sponsored == false`, all slots lie within world bounds, and shop names/billboard IDs pass the banned word and real-brand filter list
+- [X] T021 [P] [US4] Define sign slots and billboard slots as data in src/shared/Content/Signs.luau specifying `SignSlot = { id, facadeId, shopName, atlasRegion, x, y, z, yaw }` with invented proper-noun shop names and `BillboardSlot = { id, x, y, z, yaw, imageAsset, sponsored }` with `sponsored = false` and `imageAsset` keys `"b1"` through `"b6"`
+- [X] T022 [US4] Integrate sign and billboard slot tables into src/shared/Content/Worlds/MainStreetSlice.luau, attaching signs to main-street building facades and placing billboards along designated street and skyline structures
+- [X] T023 [US4] Add sign and billboard validation suite to tests/unit/MainStreetSlice.test.luau asserting all `facadeId` references exist, all `atlasRegion` names are valid, distinct `imageAsset` count <= `Config.billboardTextureCap = 6`, all slots have `sponsored == false`, all slots lie within world bounds, and shop names/billboard IDs pass the banned word and real-brand filter list
 
 **Checkpoint**: All user stories (US1 through US4) are implemented and testable
 
@@ -124,12 +124,12 @@
 
 **Purpose**: Offline capture tooling, static validation, Studio 12-ball benchmark, playtest verification, and fixed shots capture
 
-- [ ] T024 [P] Define the five slice camera shots in art/capture/cameras-slice.json (`01_spawn_d2`, `02_street_d5`, `03_midgame_d12_30`, `04_lategame_d80`, `05_overhead_map`) and pin the file with unit test tests/unit/CaptureCamerasSlice.test.luau
-- [ ] T025 [P] Add `--world slice` option to scripts/capture-export.luau to export slice camera configurations and bounds for offline Blender fallback rendering
-- [ ] T026 Execute quality gate 1 validation via scripts/check.sh verifying StyLua formatting, Selene linting, strict luau-lsp typechecking, pure rules purity grep, and all Lune unit tests pass clean with exit code 0
-- [ ] T027 🔒 Extend Studio benchmark harness in tests/studio/HeavyScene.server.luau and tests/studio/HeavySampler.client.luau to load MainStreetSlice with 12 active balls at 640x360, evaluate heap candidates (1: baseline, 2: outer cap A, 3: A+B, 4: A+B+C, 5: D), record per-second fps, active parts, triangles, and draw calls in specs/010-main-street-slice/playtest.md, and verify >= 30 fps on unthrottled seconds under 2,000 server parts (Quality Gate 2)
-- [ ] T028 🔒 Run Studio playtest and console read on MainStreetSlice using scripts/studio-sync-probe.sh and Roblox_Studio_get_console_output to verify 0 new console errors or warnings and confirm open park start and too-large bump behavior (Quality Gate 2)
-- [ ] T029 🔒 Capture the five fixed camera shots (`01_spawn_d2`, `02_street_d5`, `03_midgame_d12_30`, `04_lategame_d80`, `05_overhead_map`) into specs/010-main-street-slice/captures/ via Studio screen_capture or offline Blender fallback renderer (Quality Gate 6)
+- [X] T024 [P] Define the five slice camera shots in art/capture/cameras-slice.json (`01_spawn_d2`, `02_street_d5`, `03_midgame_d12_30`, `04_lategame_d80`, `05_overhead_map`) and pin the file with unit test tests/unit/CaptureCamerasSlice.test.luau
+- [X] T025 [P] Add `--world slice` option to scripts/capture-export.luau to export slice camera configurations and bounds for offline Blender fallback rendering
+- [X] T026 Execute quality gate 1 validation via scripts/check.sh verifying StyLua formatting, Selene linting, strict luau-lsp typechecking, pure rules purity grep, and all Lune unit tests pass clean with exit code 0
+- [X] T027 🔒 Extend Studio benchmark harness in tests/studio/HeavyScene.server.luau and tests/studio/HeavySampler.client.luau to load MainStreetSlice with 12 active balls at 640x360, evaluate heap candidates (1: baseline, 2: outer cap A, 3: A+B, 4: A+B+C, 5: D), record per-second fps, active parts, triangles, and draw calls in specs/010-main-street-slice/playtest.md, and verify >= 30 fps on unthrottled seconds under 2,000 server parts (Quality Gate 2)
+- [X] T028 🔒 Run Studio playtest and console read on MainStreetSlice using scripts/studio-sync-probe.sh and Roblox_Studio_get_console_output to verify 0 new console errors or warnings and confirm open park start and too-large bump behavior (Quality Gate 2)
+- [X] T029 🔒 Capture the five fixed camera shots (`01_spawn_d2`, `02_street_d5`, `03_midgame_d12_30`, `04_lategame_d80`, `05_overhead_map`) into specs/010-main-street-slice/captures/ via Studio screen_capture or offline Blender fallback renderer (Quality Gate 6)
 
 ---
 
