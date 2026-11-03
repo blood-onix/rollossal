@@ -3,9 +3,9 @@
   "remaining": [],
   "human": [
     {
-      "item": "Gate 6 (release-candidate item, no tasks.md ID): owner approval of the five captures in specs/010-main-street-slice/captures/ and of playing the slice, before the PR merges",
-      "reason": "Requires the owner's visual and taste review of the build in Roblox Studio on their machine; it holds only the PR merge, not the feature build"
+      "item": "Gate 6 (owner item, no tasks.md ID): owner approval of the five captures in specs/010-main-street-slice/captures/ and of playing the slice, before the PR merges",
+      "reason": "Requires the owner's subjective visual and taste review of the build in Roblox Studio on their machine; it holds only the PR merge, not the feature build"
     }
   ],
-  "summary": "Round 3 re-verification found nothing new: all 29 tasks done, scripts/check.sh passes clean (574 tests), the Gate 2 benchmark/playtest record and the five Blender-fallback captures are current with the final code, leaving only the owner's Gate 6 approval before merge."
+  "summary": "Final round 4 re-verification found nothing new: all 29 tasks done, scripts/check.sh passes clean (574 tests), the Gate 2 benchmark/playtest record and the five captures are current with the code, leaving only the owner's Gate 6 approval before merge."
 }
