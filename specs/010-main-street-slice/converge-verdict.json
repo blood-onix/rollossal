@@ -1,0 +1,24 @@
+{
+  "verdict": "incomplete",
+  "remaining": [
+    "T007: implement tests/unit/MainStreetSlice.test.luau asserting spawns, zones, bounds, kits and determinism",
+    "T011: implement src/shared/Content/Worlds/MainStreetSlice.luau, Worlds.luau flag precedence and Downtown.test chain update",
+    "T014: implement tests/unit/Heap.test.luau for pure heap selection, burial and coverage rules",
+    "T015: implement src/shared/Rules/Heap.luau (select, coverage, coreColor, buryProgress)",
+    "T016: update BallService.publishStuck to publish up to Config.maxPublishedStuck = 60 under HeapRedesign",
+    "T017: redesign StuckVisuals.luau to render the lumpy heap via Heap.select with scaling, burial and core tint",
+    "T018: gate Hud.luau so NextTier, Star rows and TierBanner are omitted when SliceHud is true",
+    "T019: add the too-large bump impact-sound hook in Feedback.luau using Assets.sounds.bump",
+    "T020: apply the too-large contact bump impulse with cooldown in BallController.luau under SliceHud",
+    "T022: integrate sign and billboard slot tables into the MainStreetSlice world definition",
+    "T023: add sign/billboard validation suite to tests/unit/MainStreetSlice.test.luau",
+    "T024: define art/capture/cameras-slice.json and pin it with tests/unit/CaptureCamerasSlice.test.luau",
+    "T025: add --world slice option to scripts/capture-export.luau for offline Blender fallback",
+    "T026: run scripts/check.sh to a clean exit 0 (StyLua, Selene, luau-lsp strict, purity grep, all Lune tests)",
+    "T027: run the 12-ball Studio benchmark in HeavyScene/HeavySampler on the slice and record specs/010-main-street-slice/playtest.md",
+    "T028: run the Studio playtest and console read on the slice verifying 0 new errors and the park start and bump behavior",
+    "T029: capture the five fixed camera shots into specs/010-main-street-slice/captures/ via Studio capture or Blender fallback"
+  ],
+  "human": [],
+  "summary": "Config flags, pure street/scene-kit rules and tests, Signs data, both contracts, the RC section and ambient gating are done with 536 unit tests passing, but the slice world itself, the entire heap redesign (US2), the HUD/bump readability work (US3), sign integration and validation, capture tooling and all three Studio gates (T007, T011, T014-T020, T022-T029) remain."
+}
