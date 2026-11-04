@@ -1,0 +1,189 @@
+{
+  "generated": "2026-11-04",
+  "blender": "5.2.3 LTS",
+  "engine": "BLENDER_EEVEE",
+  "worldCommit": "cc5c0d4",
+  "objects": 4745,
+  "images": [
+    {
+      "name": "spawn_nw",
+      "file": "spawn_nw.png",
+      "source": "blender-offline",
+      "sha256": "964a5b3214e61a6859d0af77ea2410d3dd38900d0a02043361d7c87dd9a8f54f",
+      "position": [
+        -450,
+        2.5,
+        -450
+      ],
+      "lookAt": [
+        -370,
+        6,
+        -370
+      ]
+    },
+    {
+      "name": "spawn_ne",
+      "file": "spawn_ne.png",
+      "source": "blender-offline",
+      "sha256": "0250b5cc9f528e702804224bed49263e6b353433d8e2f526e84130351d2afb70",
+      "position": [
+        180,
+        2.5,
+        -440
+      ],
+      "lookAt": [
+        180,
+        2,
+        -350
+      ]
+    },
+    {
+      "name": "spawn_se",
+      "file": "spawn_se.png",
+      "source": "blender-offline",
+      "sha256": "da5a79dea3525d31030bf14088534229d969caf212820ba12f983c99078e90a4",
+      "position": [
+        450,
+        2.5,
+        450
+      ],
+      "lookAt": [
+        450,
+        20,
+        330
+      ]
+    },
+    {
+      "name": "spawn_sw",
+      "file": "spawn_sw.png",
+      "source": "blender-offline",
+      "sha256": "b9a8a760de7c69340fa022e1e54546b3be8f0ccc436de42cf99a4f0386411966",
+      "position": [
+        -180,
+        2.5,
+        440
+      ],
+      "lookAt": [
+        -349,
+        2,
+        349
+      ]
+    },
+    {
+      "name": "duck_island",
+      "file": "duck_island.png",
+      "source": "blender-offline",
+      "sha256": "d1966219790e0030f47c96c0214d498e25b103c6148667a72bd22534c57443ed",
+      "position": [
+        90,
+        30,
+        -270
+      ],
+      "lookAt": [
+        180,
+        1,
+        -350
+      ]
+    },
+    {
+      "name": "hedge_maze",
+      "file": "hedge_maze.png",
+      "source": "blender-offline",
+      "sha256": "7a1e87070c2bee9957b08f4068ad41215627db5bccda93231e846c35f12503e5",
+      "position": [
+        -279,
+        70,
+        459
+      ],
+      "lookAt": [
+        -349,
+        0,
+        349
+      ]
+    },
+    {
+      "name": "roof_run",
+      "file": "roof_run.png",
+      "source": "blender-offline",
+      "sha256": "f242b1558407c695f58dd570e0c9dade9767239628a50019af73e0e75e5c23a9",
+      "position": [
+        146,
+        45,
+        -140
+      ],
+      "lookAt": [
+        146,
+        10,
+        -232
+      ]
+    },
+    {
+      "name": "car_park",
+      "file": "car_park.png",
+      "source": "blender-offline",
+      "sha256": "87c71ecb0bf96c9b693c19fe2767f1f27d9b1f78ce485ff9a98df66d45dcb9e1",
+      "position": [
+        107,
+        55,
+        303
+      ],
+      "lookAt": [
+        197,
+        10,
+        203
+      ]
+    },
+    {
+      "name": "plaza",
+      "file": "plaza.png",
+      "source": "blender-offline",
+      "sha256": "83f9c1d99fdbfad3a3fb02372d1363aa37fdd62f46d4848e4a3c45e1932d7ca3",
+      "position": [
+        0,
+        40,
+        110
+      ],
+      "lookAt": [
+        0,
+        5,
+        0
+      ]
+    },
+    {
+      "name": "giant_oak",
+      "file": "giant_oak.png",
+      "source": "blender-offline",
+      "sha256": "8004477e63140885c602a8c0ff1463c4e8473efd604f628a7a3a807c68df6bba",
+      "position": [
+        -300,
+        35,
+        -300
+      ],
+      "lookAt": [
+        -370,
+        15,
+        -370
+      ]
+    },
+    {
+      "name": "overview",
+      "file": "overview.png",
+      "source": "blender-offline",
+      "sha256": "79759a65f0063f7698914f55124b77d70a7c7a36cc5f99ca080767d4b58b57b6",
+      "position": [
+        0,
+        600,
+        480
+      ],
+      "lookAt": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "parityNotes": [
+    "Offline Blender (EEVEE) composition check of the world data, not a pixel match: Roblox lighting, fog and shadow filtering are not reproduced.",
+    "Every object is a box by its dims (tier colours: T1 yellow, T2 orange, T3 red, T4 purple, T5 blue, T6 dark); ramps are wedges; spirals are planks along the helix; placeholders are simple boxes."
+  ]
+}

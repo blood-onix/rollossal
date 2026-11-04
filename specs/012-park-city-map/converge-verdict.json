@@ -1,0 +1,19 @@
+{
+  "verdict": "incomplete",
+  "remaining": [
+    "T046 Fix Downtown doorstep so a D 1 ball is not boxed in under Flags.ReadableRules, with a Lune check",
+    "T047 Re-run the open T016 Stage A checks on Downtown (violin, bump, bob/wobble cues, no text) and record in playtest.md",
+    "T048 Run the route checks left out of T027 (doorstep to loop, root hollow, oak spiral, car park ramp, hoardings, Spoke to Plaza) and record in playtest.md"
+  ],
+  "human": [
+    {
+      "item": "T045 Gate 6: owner approval of the shots and of the played build",
+      "reason": "Needs the owner's judgement and recorded approval in playtest.md; the agent cannot give it."
+    },
+    {
+      "item": "T035 second-client check that a taken light object disappears for another player",
+      "reason": "Needs two connected Studio clients; only one is available here. The outbox spec covers the server side."
+    }
+  ],
+  "summary": "Checks pass and most of the feature is built, but the Downtown doorstep boxes in a D 1 ball, T016 is only partly run, and several T027 routes were never run; owner approval (gate 6) is still pending."
+}

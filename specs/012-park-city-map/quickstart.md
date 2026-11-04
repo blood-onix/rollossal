@@ -89,13 +89,14 @@ Writes the pace report. Read `specs/012-park-city-map/pace-report.md`: the per-s
 more than 15 % behind the median. It never fails on these.
 
 ```bash
-lune run scripts/capture-export -- --world parkcity --out art/render/world-parkcity.json
+lune run scripts/park-capture-export -- --out art/render/world-parkcity.json
 ```
 
-Writes the world for the offline renderer. Render the eleven shots (research R6) into `specs/012-park-city-map/shots/`.
+Writes the world for the offline renderer. Render the eleven shots (research R6) into `specs/012-park-city-map/shots/` with `art/scripts/park_capture_render.py`
+through the Blender MCP (its header has the call).
 
-Heavy-scene benchmark (G6): run `tests/studio/HeavyScene.server.luau` inside Play with `Flags.ParkCity` on and start
-`HeavySampler.client.luau`, as its header says. The report lands in the `HeavySceneReport` attribute and in
+Heavy-scene benchmark (G6): run `tests/studio/ParkHeavyScene.server.luau` inside Play with `Flags.ParkCity` on and start
+`ParkHeavySampler.client.luau`, as its header says. The report lands in the `ParkHeavyReport` attribute and in
 `specs/012-park-city-map/playtest.md`: every unthrottled second at or above 30 fps, throttled seconds listed apart,
 viewport size recorded.
 
