@@ -24,6 +24,7 @@ the newer intent, but these points need the owner's approval before a spec relie
 - [Art style: how realistic](06-art-style.md)
 - [Launch theme: Holiday City](07-holiday-city.md)
 - [Style bible](08-style-bible.md): the authoritative visual bar; it overrides *Art style: how realistic* where they differ.
+- [Level design: Park City](09-park-city-level.md): **proposal** for the launch map (city in a park, set pieces, rails, pacing and budgets); replaces *Default level: Downtown* once the owner approves it.
 - [Tokens](tokens.md): every colour per theme, type, spacing, radius and touch sizes ([tokens.json](tokens.json), [tokens.css](tokens.css)). Regenerate the CSS and tables with `python3 scripts/design-tokens.py` after editing the JSON.
 - [components/](components): one folder per preview, each with a `README.md` and a static `preview.html`.
 - [Spec Kit prompt](speckit-prompt.md): the `/speckit-specify` input for Downtown, Holiday City and the theme system.
