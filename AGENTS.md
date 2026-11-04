@@ -12,6 +12,12 @@ items its README lists as needing the owner's approval stay open until a spec or
 decision. `tokens.css` and `tokens.md` are generated from `tokens.json`: change the JSON, then run
 `python3 scripts/design-tokens.py`.
 
+A world map comes from one layout file (constitution VII). For Park City that is
+`docs/design/maps/park-city-layout.json`, written by `scripts/park_city_layout.py`; the map pictures come from
+`scripts/park_city_render.py` and the game's world module is generated from the same file. Change the script,
+never the JSON, the SVGs or the world module by hand (see `docs/design/maps/README.md`). The Python scripts in
+`scripts/` use the standard library only.
+
 ## Never take over the user's screen
 
 The user works on this same laptop while the agent runs. Nothing the agent starts may steal focus, move the
@@ -67,6 +73,14 @@ phone checks and the people round stay on that list for every feature.
 not finished until images exist and the owner has approved them, from fixed shots and by playing the build. This
 approval can hold the feature. Open the pull request to show the images, and do not merge it before the approval.
 Automated tests are a floor for these features and never prove that the look is good.
+
+**Maps and pace (constitution I and VII).** A map feature starts from a layout whose rendered maps the owner has
+approved; gate 6 still applies at the end. Stage a large feature so the first stage is a build the owner can play
+(its rules and look on an existing map, or a grey box with fewer objects), and end each later stage playable too.
+The Lune pace test measures and reports growth pace (sizes and tier times against the pace windows) and never
+fails a feature on it before the RC. It fails only on the playability floors: a first pickup within 3 s of every
+spawn, no gap in the open-route food ladder (each zone's smallest food at most 1.25 × the previous zone's largest),
+and the map's coverage rule.
 
 ## How to run the Studio checks
 
