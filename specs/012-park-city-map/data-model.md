@@ -11,8 +11,8 @@ Written by `scripts/park_city_world.py` (research R1). Never edited by hand.
 
 | Module | Holds | Source in the layout |
 | --- | --- | --- |
-| `Content/Worlds/ParkCity.luau` | the `WorldDef`: `rules`, `sizeTiers` (6), `starThresholds` {20, 50, 90}, `spawnPoints` (12), `hub` (x −760, z 0), `environment` (palette, 71 blocks, markers), `lighting`, `objects` (219 `ObjectDef`), `placeholders`, `golden`, `shots`, `hazards` | `world`, `zones`, `blocks`, `spawns`, `objects`, `rails`, `pads`, `catapults`, `water`, `tunnels`, `hazards`, `golden`, `roofRun` |
-| `Content/Worlds/ParkCityParts.luau` | the 942 Tier 3–6 `PlacementSeed` rows, used as `fixedPlacements` (the existing builder pools them as Parts); ids `p<n>` | `scenes[].items`, `trails[].items`, `landmarks` with `tier >= 3` |
+| `Content/Worlds/ParkCity.luau` | the `WorldDef`: `rules`, `sizeTiers` (6), `starThresholds` {20, 50, 90}, `spawnPoints` (12), `hub` (x −760, z 0), `environment` (palette, 91 blocks, markers), `lighting`, `objects` (219 `ObjectDef`), `placeholders`, `golden`, `shots`, `hazards` | `world`, `zones`, `blocks`, `spawns`, `objects`, `rails` (14 rails and 4 drain pipes, `kind`), `pads`, `catapults`, `water`, `maze`, `hazards`, `golden`, `roofRun` |
+| `Content/Worlds/ParkCityParts.luau` | the 1,064 Tier 3–6 `PlacementSeed` rows, used as `fixedPlacements` (the existing builder pools them as Parts); ids `p<n>` | `scenes[].items`, `trails[].items`, `landmarks` with `tier >= 3` |
 | `Content/Worlds/ParkCityLight.luau` | `kinds: {string}` and `data: {number}`, stride 5 (kind index, x, y, z, yaw); the light id of row `i` is `"L"..i` | the same sources with `tier <= 2`, in layout order |
 | `Localization/ParkCityStrings.luau` | `object.park.<id>` names, English and Spanish | `objects` keys |
 
@@ -28,7 +28,7 @@ Zones are not generated: `zones = {}` (the placements are explicit), so `Layout.
 | `bulk` | cube root of `l × w × h`. Pooled Parts carry it as the `Bulk` attribute. |
 | `size` | the longest side (`max(l, w, h)`). Kept so every existing reader of `size` still works. |
 | `tier` | `Tiers.lookup(needsD)` over the six park tiers, where `needsD = max(2 × bulk, longest / 1.5)`. |
-| `solid` | true for hedge pieces and fences: the client pool draws them collidable until the ball can eat them. |
+| `solid` | true for hedge pieces (light) and hoarding pieces (Parts): they stay collidable until the ball can eat them. |
 | `light` | true for Tier 1–2: not a server Part. |
 
 ### WorldDef (additions)

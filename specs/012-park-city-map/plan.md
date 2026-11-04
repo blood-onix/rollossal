@@ -1,15 +1,15 @@
 # Implementation Plan: Park City Map (Grey Box)
 
-**Branch**: `claude/zealous-volta-6h9wnq` (spec folder `012-park-city-map`) | **Date**: 2026-11-04 | **Spec**: [spec.md](spec.md)
+**Branch**: `012-park-city-map` | **Date**: 2026-11-04 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `specs/012-park-city-map/spec.md`
 
 ## Summary
 
 Turn the approved Park City layout into a playable grey box, in four stages. Each stage ends in a build the owner can
-play. The world is generated from `park-city-layout.json` into Luau content data by a script. Tiers 3–6 (942 objects)
-stay server Parts through the existing builder and pool. Tiers 1–2 (3,107 objects) become server data plus client
-drawing. The size and readability rules are per-world data, so Downtown and Snow Village keep today's rules. Growth
+play. The world is generated from `park-city-layout.json` into Luau content data by a script. Tiers 3–6 (1,064 objects, including 126 hoarding pieces)
+stay server Parts through the existing builder and pool. Tiers 1–2 (3,458 objects, including the maze's 476 hedge
+pieces) become server data plus client drawing. The size and readability rules are per-world data, so Downtown and Snow Village keep today's rules. Growth
 pace is reported, never gated.
 
 Read first: [research.md](research.md) (six decisions), [data-model.md](data-model.md), [quickstart.md](quickstart.md).
@@ -33,23 +33,23 @@ state and absorb validation; the Studio MCP for the playtest, the benchmark and 
 
 **Constraints**: Part budget (below); the 1,000 × 1,000 map; Principle II for every light-object claim.
 
-**Scale/Scope**: 4,049 objects, 71 blocks, 12 spawns, 233 scenes, about 100 placeholders.
+**Scale/Scope**: 4,522 objects, 91 blocks, 12 spawns, 233 scenes, about 110 placeholders (14 rails, 4 drain pipes, 40 pads, 6 catapults, 3 water areas).
 
 ### Part budget (server, 12 balls)
 
 | Item | Parts |
 | --- | --- |
-| Tier 3–6 objects (pooled) | 942 |
-| Blocks (the layout's 190 minus 119 hedge blocks, which become light objects) | 71 |
-| Placeholders (rails, pads, catapults, water) | about 100 |
+| Tier 3–6 objects (pooled, including 126 hoarding pieces) | 1,064 |
+| Blocks (every layout block is a literal box; hedges are objects, not blocks) | 91 |
+| Placeholders (rails, drain pipes, pads, catapults, water) | about 110 |
 | Boundary walls, hub | about 20 |
 | Balls (12) | 12 |
 | Runtime (stuck visuals are client-side; boosters, traps, hazards, traffic) | about 100 |
-| **Total** | **about 1,250** |
+| **Total** | **about 1,400** (Stage B adds 328 doorstep and spawn-trail crumbs as Parts: about 1,730) |
 
-If Stage B measures over 1,800, thin Tier 1–2 first as the brief allows (it only applies to the Parts-only Stage B,
-where the light system does not exist yet). Stage B reports the part count, and the thinning rule is "drop every second
-Tier 2 object of scenes tagged park fill", recorded when used.
+Stage B builds only the 240 doorstep crumbs and the 88 spawn-trail crumbs as Parts (about 1,730 in all, under 2,000).
+No other Tier 1–2 object is a Part at any stage, so no thinning rule is needed. To judge the rest of the map before
+Stage C, the owner uses the size tool (below).
 
 ## Constitution Check
 
@@ -156,19 +156,27 @@ Behind `Flags.ReadableRules` (off) and `Flags.HeapFix` (off). Downtown is the ma
 
 ### Stage B: the Park City world from the layout, as Parts (about 10 tasks)
 
-Behind `Flags.ParkCity` (off). The light objects are not built yet, so Tier 1–2 objects are pooled Parts only in the
-areas Stage B needs, and thinned if the part count would exceed 1,800 (drop every second Tier 2 object of park-fill
-scenes; recorded where used). The doorstep crumbs, trails and all Tier 3–6 objects are complete.
+Behind `Flags.ParkCity` (off). The light objects are not built yet. Stage B builds every block, all Tier 3–6 objects,
+the placeholders, and only the doorstep crumbs and spawn-trail crumbs of Tiers 1–2 as Parts. Every other Tier 1–2
+object waits for Stage C.
 
-- First task: make `park_city_layout.py` fail (exit 1) on overlaps, on a park quarter with more than 5 % of its area over
-  40 studs from food, and on the part and light budgets, and add `--check`; wire it into `scripts/check.sh`.
+- **Size tool** (`Flags.DebugSize`, Studio only, off in anything published): a small owner panel, or a chat command in
+  Studio, that sets the local ball's diameter (1, 3, 6, 15, 35, 80). The server applies it through the normal size
+  path. It lets the owner tour each ring at the size it was built for in Stage B, and helps the route check. It is
+  never shown to players, and it goes on the publish checklist.
+- `park_city_layout.py` already fails (exit 1) on overlaps, on a park quarter with more than 5 % of its area over
+  40 studs from food, and on budgets (server objects over 1,200, light objects over 3,500), and has `--check`. Stage B
+  wires it into `scripts/check.sh`.
 - `park_city_world.py` and its `--check`; the three generated modules and the strings; `ParkCity.test` (match to the
   layout, ids, dims, tiers, spawns, placeholders).
-- `Worlds.luau` picks ParkCity. Blocks, ramps, decks, maze, tunnels and drains built by the existing builder; the hub is
+- `Worlds.luau` picks ParkCity. Blocks are built literally as boxes: ramps by their `up` side, the two spirals (oak,
+  Sky Rail) from `turns` and `width`, the root tunnels as walls and a roof. The maze is hedge objects, not blocks. The
+  drains are pipe placeholders. The hub is
   at x = −760 because the world's `hub` data says so (no code change beyond reading it).
 - Placeholders (R5): rails, pads, catapults, bullseyes, water, all inert.
-- Owner sees: the whole 1,000 × 1,000 map, every ring, spawn and set piece at the layout coordinates, with food at
-  reduced small-object density, and the placeholder rails, pads, catapults and water in place.
+- Owner sees: the whole 1,000 × 1,000 map, every ring, spawn and set piece at the layout coordinates, the doorsteps,
+  all the bigger food, and the placeholder rails, pipes, pads, catapults and water in place. With the size tool they can
+  tour every ring at its own size.
 
 ### Stage C: light objects at the layout's full density (about 8 tasks)
 
@@ -176,7 +184,8 @@ scenes; recorded where used). The doorstep crumbs, trails and all Tier 3–6 obj
   `AbsorbService`; `LightDelta`; `LightField` pooling and the tier cull; `StuckVisuals` for light ids.
 - Studio specs: a far claim is refused, a taken object is refused, a too-big object is refused, the rate limit holds,
   a take reaches a second client, respawn works.
-- Stage B's thinning is removed. Owner sees: the full-density food, 3,107 crumbs and pockets, with 12 balls.
+- The Stage B doorstep Parts move to light state. Owner sees: the full-density food, 3,458 crumbs, pockets and hedge
+  pieces, with 12 balls. This is the first stage a ball can grow through the whole map without the size tool.
 
 ### Stage D: report, shots, benchmark, playtest, gate 6 (about 10 tasks)
 
@@ -198,6 +207,7 @@ scenes; recorded where used). The doorstep crumbs, trails and all Tier 3–6 obj
 | --- | --- | --- |
 | `Flags.ParkCity` | false | `Worlds.active` is Park City; implies `HeapFix`. |
 | `Flags.HeapFix` | false | `StuckVisuals` uses `HeapFit` (also on whenever `ParkCity` is on). |
+| `Flags.DebugSize` | false | Stage B: the Studio-only size tool. Never on in a published build. |
 | `Flags.ReadableRules` | false | Stage A: Downtown uses its `readableRules` table (bulk rule, D 1, six tiers, stars, speed cap) and the cues. Park City always has them as its own data. |
 
 ## What must keep passing unchanged

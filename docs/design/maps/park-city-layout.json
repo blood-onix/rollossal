@@ -400,27 +400,192 @@
    "label": null
   },
   {
-   "id": "park_edge",
-   "kind": "railing",
+   "id": "park_kerb_n1",
+   "kind": "kerb",
    "rect": [
-    -302,
-    -302,
-    302,
-    302
+    -288,
+    -303,
+    -14,
+    -301
    ],
    "y": [
     0,
-    3
+    1
    ],
-   "label": "railing + hedge line, 8 gates"
+   "label": null
   },
   {
-   "id": "boundary",
+   "id": "park_kerb_n2",
+   "kind": "kerb",
+   "rect": [
+    14,
+    -303,
+    288,
+    -301
+   ],
+   "y": [
+    0,
+    1
+   ],
+   "label": null
+  },
+  {
+   "id": "park_kerb_s0",
+   "kind": "kerb",
+   "rect": [
+    -302,
+    301,
+    -262,
+    303
+   ],
+   "y": [
+    0,
+    1
+   ],
+   "label": null
+  },
+  {
+   "id": "park_kerb_s1",
+   "kind": "kerb",
+   "rect": [
+    -238,
+    301,
+    -14,
+    303
+   ],
+   "y": [
+    0,
+    1
+   ],
+   "label": null
+  },
+  {
+   "id": "park_kerb_s2",
+   "kind": "kerb",
+   "rect": [
+    14,
+    301,
+    288,
+    303
+   ],
+   "y": [
+    0,
+    1
+   ],
+   "label": null
+  },
+  {
+   "id": "park_kerb_w1",
+   "kind": "kerb",
+   "rect": [
+    -303,
+    -288,
+    -301,
+    -14
+   ],
+   "y": [
+    0,
+    1
+   ],
+   "label": null
+  },
+  {
+   "id": "park_kerb_w2",
+   "kind": "kerb",
+   "rect": [
+    -303,
+    14,
+    -301,
+    288
+   ],
+   "y": [
+    0,
+    1
+   ],
+   "label": null
+  },
+  {
+   "id": "park_kerb_e1",
+   "kind": "kerb",
+   "rect": [
+    301,
+    -288,
+    303,
+    -14
+   ],
+   "y": [
+    0,
+    1
+   ],
+   "label": null
+  },
+  {
+   "id": "park_kerb_e2",
+   "kind": "kerb",
+   "rect": [
+    301,
+    14,
+    303,
+    288
+   ],
+   "y": [
+    0,
+    1
+   ],
+   "label": null
+  },
+  {
+   "id": "boundary_n",
    "kind": "wall",
    "rect": [
     -500,
+    -501,
+    500,
+    -500
+   ],
+   "y": [
+    0,
+    200
+   ],
+   "label": "invisible boundary"
+  },
+  {
+   "id": "boundary_s",
+   "kind": "wall",
+   "rect": [
     -500,
     500,
+    500,
+    501
+   ],
+   "y": [
+    0,
+    200
+   ],
+   "label": "invisible boundary"
+  },
+  {
+   "id": "boundary_w",
+   "kind": "wall",
+   "rect": [
+    -501,
+    -500,
+    -500,
+    500
+   ],
+   "y": [
+    0,
+    200
+   ],
+   "label": "invisible boundary"
+  },
+  {
+   "id": "boundary_e",
+   "kind": "wall",
+   "rect": [
+    500,
+    -500,
+    501,
     500
    ],
    "y": [
@@ -502,7 +667,204 @@
     0,
     22
    ],
-   "label": "root ramp: 2 turns round the trunk, 8 wide, 12 deg"
+   "label": "root ramp: 2 turns round the trunk, 8 wide, 12 deg",
+   "turns": 2,
+   "width": 8
+  },
+  {
+   "id": "root_hollow_roof",
+   "kind": "tunnel_roof",
+   "rect": [
+    -342.6,
+    -342.6,
+    -331.9,
+    -331.9
+   ],
+   "y": [
+    3.0,
+    3.6
+   ],
+   "label": "root hollow (stash)"
+  },
+  {
+   "id": "root_hollow_n",
+   "kind": "tunnel_wall",
+   "rect": [
+    -342.6,
+    -342.6,
+    -331.9,
+    -342.0
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
+  },
+  {
+   "id": "root_hollow_w",
+   "kind": "tunnel_wall",
+   "rect": [
+    -342.6,
+    -342.6,
+    -342.0,
+    -331.9
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
+  },
+  {
+   "id": "root_hollow_s1",
+   "kind": "tunnel_wall",
+   "rect": [
+    -342.6,
+    -332.5,
+    -339.0,
+    -331.9
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
+  },
+  {
+   "id": "root_hollow_s2",
+   "kind": "tunnel_wall",
+   "rect": [
+    -336.0,
+    -332.5,
+    -331.9,
+    -331.9
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
+  },
+  {
+   "id": "root_hollow_e1",
+   "kind": "tunnel_wall",
+   "rect": [
+    -332.5,
+    -342.6,
+    -331.9,
+    -339.0
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
+  },
+  {
+   "id": "root_hollow_e2",
+   "kind": "tunnel_wall",
+   "rect": [
+    -332.5,
+    -336.0,
+    -331.9,
+    -331.9
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
+  },
+  {
+   "id": "root_tunnel_a_roof",
+   "kind": "tunnel_roof",
+   "rect": [
+    -339.6,
+    -331.9,
+    -335.4,
+    -315
+   ],
+   "y": [
+    3.0,
+    3.6
+   ],
+   "label": "root tunnel (small only)"
+  },
+  {
+   "id": "root_tunnel_a_w",
+   "kind": "tunnel_wall",
+   "rect": [
+    -339.6,
+    -331.9,
+    -339.0,
+    -315
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
+  },
+  {
+   "id": "root_tunnel_a_e",
+   "kind": "tunnel_wall",
+   "rect": [
+    -336.0,
+    -331.9,
+    -335.4,
+    -315
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
+  },
+  {
+   "id": "root_tunnel_b_roof",
+   "kind": "tunnel_roof",
+   "rect": [
+    -331.9,
+    -339.6,
+    -326,
+    -335.4
+   ],
+   "y": [
+    3.0,
+    3.6
+   ],
+   "label": "root tunnel (small only)"
+  },
+  {
+   "id": "root_tunnel_b_n",
+   "kind": "tunnel_wall",
+   "rect": [
+    -331.9,
+    -339.6,
+    -326,
+    -339.0
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
+  },
+  {
+   "id": "root_tunnel_b_s",
+   "kind": "tunnel_wall",
+   "rect": [
+    -331.9,
+    -336.0,
+    -326,
+    -335.4
+   ],
+   "y": [
+    0,
+    3.6
+   ],
+   "label": null
   },
   {
    "id": "footbridge",
@@ -667,7 +1029,8 @@
     0,
     5
    ],
-   "label": "quarter pipe"
+   "label": "quarter pipe",
+   "up": "north"
   },
   {
    "id": "quarter_pipe_2",
@@ -682,7 +1045,8 @@
     0,
     5
    ],
-   "label": "quarter pipe"
+   "label": "quarter pipe",
+   "up": "south"
   },
   {
    "id": "funbox",
@@ -712,7 +1076,8 @@
     0,
     3
    ],
-   "label": "kicker"
+   "label": "kicker",
+   "up": "west"
   },
   {
    "id": "skate_shelter_roof",
@@ -728,1791 +1093,6 @@
     14
    ],
    "label": "skate shelter roof y 14 (stash)"
-  },
-  {
-   "id": "hedge_00_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    304,
-    -388,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_01",
-   "kind": "hedge",
-   "rect": [
-    -388,
-    304,
-    -382,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    304,
-    -376,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_03",
-   "kind": "hedge",
-   "rect": [
-    -376,
-    304,
-    -370,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_04",
-   "kind": "hedge",
-   "rect": [
-    -370,
-    304,
-    -364,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_05",
-   "kind": "hedge",
-   "rect": [
-    -364,
-    304,
-    -358,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    304,
-    -352,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_07",
-   "kind": "hedge",
-   "rect": [
-    -352,
-    304,
-    -346,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_08",
-   "kind": "hedge",
-   "rect": [
-    -346,
-    304,
-    -340,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_09",
-   "kind": "hedge",
-   "rect": [
-    -340,
-    304,
-    -334,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    304,
-    -328,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_11",
-   "kind": "hedge",
-   "rect": [
-    -328,
-    304,
-    -322,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    304,
-    -316,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_13",
-   "kind": "hedge",
-   "rect": [
-    -316,
-    304,
-    -310,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_00_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    304,
-    -304,
-    310
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_01_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    310,
-    -388,
-    316
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_01_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    310,
-    -352,
-    316
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_01_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    310,
-    -304,
-    316
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    316,
-    -388,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    316,
-    -376,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_03",
-   "kind": "hedge",
-   "rect": [
-    -376,
-    316,
-    -370,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_04",
-   "kind": "hedge",
-   "rect": [
-    -370,
-    316,
-    -364,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    316,
-    -352,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_08",
-   "kind": "hedge",
-   "rect": [
-    -346,
-    316,
-    -340,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_09",
-   "kind": "hedge",
-   "rect": [
-    -340,
-    316,
-    -334,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    316,
-    -328,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_11",
-   "kind": "hedge",
-   "rect": [
-    -328,
-    316,
-    -322,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    316,
-    -316,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_02_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    316,
-    -304,
-    322
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_03_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    322,
-    -388,
-    328
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_03_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    322,
-    -376,
-    328
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_03_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    322,
-    -352,
-    328
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_03_08",
-   "kind": "hedge",
-   "rect": [
-    -346,
-    322,
-    -340,
-    328
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_03_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    322,
-    -316,
-    328
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_03_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    322,
-    -304,
-    328
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_04_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    328,
-    -388,
-    334
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_04_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    328,
-    -376,
-    334
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_04_04",
-   "kind": "hedge",
-   "rect": [
-    -370,
-    328,
-    -364,
-    334
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_04_05",
-   "kind": "hedge",
-   "rect": [
-    -364,
-    328,
-    -358,
-    334
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_04_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    328,
-    -352,
-    334
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_04_08",
-   "kind": "hedge",
-   "rect": [
-    -346,
-    328,
-    -340,
-    334
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_04_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    328,
-    -328,
-    334
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_04_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    328,
-    -316,
-    334
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_04_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    328,
-    -304,
-    334
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_05_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    334,
-    -388,
-    340
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_05_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    334,
-    -376,
-    340
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_05_08",
-   "kind": "hedge",
-   "rect": [
-    -346,
-    334,
-    -340,
-    340
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_05_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    334,
-    -328,
-    340
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_05_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    334,
-    -304,
-    340
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_06_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    340,
-    -388,
-    346
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_06_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    340,
-    -376,
-    346
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_06_03",
-   "kind": "hedge",
-   "rect": [
-    -376,
-    340,
-    -370,
-    346
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_06_04",
-   "kind": "hedge",
-   "rect": [
-    -370,
-    340,
-    -364,
-    346
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_06_05",
-   "kind": "hedge",
-   "rect": [
-    -364,
-    340,
-    -358,
-    346
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_06_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    340,
-    -328,
-    346
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_06_11",
-   "kind": "hedge",
-   "rect": [
-    -328,
-    340,
-    -322,
-    346
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_06_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    340,
-    -316,
-    346
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_06_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    340,
-    -304,
-    346
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_07_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    346,
-    -388,
-    352
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_07_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    346,
-    -304,
-    352
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    352,
-    -388,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_01",
-   "kind": "hedge",
-   "rect": [
-    -388,
-    352,
-    -382,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    352,
-    -376,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_03",
-   "kind": "hedge",
-   "rect": [
-    -376,
-    352,
-    -370,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_04",
-   "kind": "hedge",
-   "rect": [
-    -370,
-    352,
-    -364,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    352,
-    -328,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_11",
-   "kind": "hedge",
-   "rect": [
-    -328,
-    352,
-    -322,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    352,
-    -316,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_13",
-   "kind": "hedge",
-   "rect": [
-    -316,
-    352,
-    -310,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_08_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    352,
-    -304,
-    358
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_09_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    358,
-    -388,
-    364
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_09_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    358,
-    -352,
-    364
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_09_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    358,
-    -328,
-    364
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_09_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    358,
-    -304,
-    364
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    364,
-    -388,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    364,
-    -376,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_03",
-   "kind": "hedge",
-   "rect": [
-    -376,
-    364,
-    -370,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_04",
-   "kind": "hedge",
-   "rect": [
-    -370,
-    364,
-    -364,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_05",
-   "kind": "hedge",
-   "rect": [
-    -364,
-    364,
-    -358,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    364,
-    -352,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_07",
-   "kind": "hedge",
-   "rect": [
-    -352,
-    364,
-    -346,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_08",
-   "kind": "hedge",
-   "rect": [
-    -346,
-    364,
-    -340,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_09",
-   "kind": "hedge",
-   "rect": [
-    -340,
-    364,
-    -334,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    364,
-    -328,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    364,
-    -316,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_10_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    364,
-    -304,
-    370
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_11_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    370,
-    -388,
-    376
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_11_04",
-   "kind": "hedge",
-   "rect": [
-    -370,
-    370,
-    -364,
-    376
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_11_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    370,
-    -328,
-    376
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_11_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    370,
-    -316,
-    376
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_11_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    370,
-    -304,
-    376
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    376,
-    -388,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_01",
-   "kind": "hedge",
-   "rect": [
-    -388,
-    376,
-    -382,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    376,
-    -376,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_04",
-   "kind": "hedge",
-   "rect": [
-    -370,
-    376,
-    -364,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    376,
-    -352,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_07",
-   "kind": "hedge",
-   "rect": [
-    -352,
-    376,
-    -346,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_08",
-   "kind": "hedge",
-   "rect": [
-    -346,
-    376,
-    -340,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    376,
-    -328,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    376,
-    -316,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_12_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    376,
-    -304,
-    382
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_13_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    382,
-    -388,
-    388
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_13_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    382,
-    -352,
-    388
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_13_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    382,
-    -316,
-    388
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_13_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    382,
-    -304,
-    388
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_00",
-   "kind": "hedge",
-   "rect": [
-    -394,
-    388,
-    -388,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_01",
-   "kind": "hedge",
-   "rect": [
-    -388,
-    388,
-    -382,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_02",
-   "kind": "hedge",
-   "rect": [
-    -382,
-    388,
-    -376,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_03",
-   "kind": "hedge",
-   "rect": [
-    -376,
-    388,
-    -370,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_04",
-   "kind": "hedge",
-   "rect": [
-    -370,
-    388,
-    -364,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_05",
-   "kind": "hedge",
-   "rect": [
-    -364,
-    388,
-    -358,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_06",
-   "kind": "hedge",
-   "rect": [
-    -358,
-    388,
-    -352,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_08",
-   "kind": "hedge",
-   "rect": [
-    -346,
-    388,
-    -340,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_09",
-   "kind": "hedge",
-   "rect": [
-    -340,
-    388,
-    -334,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_10",
-   "kind": "hedge",
-   "rect": [
-    -334,
-    388,
-    -328,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_11",
-   "kind": "hedge",
-   "rect": [
-    -328,
-    388,
-    -322,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_12",
-   "kind": "hedge",
-   "rect": [
-    -322,
-    388,
-    -316,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_13",
-   "kind": "hedge",
-   "rect": [
-    -316,
-    388,
-    -310,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
-  },
-  {
-   "id": "hedge_14_14",
-   "kind": "hedge",
-   "rect": [
-    -310,
-    388,
-    -304,
-    394
-   ],
-   "y": [
-    0,
-    3
-   ],
-   "label": null
   },
   {
    "id": "allotment_path",
@@ -2692,7 +1272,8 @@
     0,
     10
    ],
-   "label": "delivery ramp up to roof 1"
+   "label": "delivery ramp up to roof 1",
+   "up": "west"
   },
   {
    "id": "billboard_ramp",
@@ -2707,7 +1288,8 @@
     20,
     26
    ],
-   "label": "billboard ramp: launch south to the Plaza"
+   "label": "billboard ramp: launch south to the Plaza",
+   "up": "south"
   },
   {
    "id": "carpark_deck_1",
@@ -2760,44 +1342,47 @@
    "rect": [
     236,
     160,
-    248,
+    256,
     245
    ],
    "y": [
     0,
     24
    ],
-   "label": "spiral ramp, 12 deg"
+   "label": "open ramp to the top deck (16 deg)",
+   "up": "south"
   },
   {
    "id": "carpark_ramp_2",
    "kind": "ramp",
    "rect": [
-    148,
+    140,
     160,
     160,
     245
    ],
    "y": [
     0,
-    24
-   ],
-   "label": "spiral ramp, 12 deg"
-  },
-  {
-   "id": "site_hoarding",
-   "kind": "hoarding",
-   "rect": [
-    165,
-    40,
-    245,
-    130
-   ],
-   "y": [
-    0,
     8
    ],
-   "label": "site hoardings"
+   "label": "ramp to deck 1 (5 deg)",
+   "up": "north"
+  },
+  {
+   "id": "carpark_ramp_3",
+   "kind": "ramp",
+   "rect": [
+    162,
+    165,
+    174,
+    240
+   ],
+   "y": [
+    8,
+    16
+   ],
+   "label": "inside ramp, deck 1 to deck 2 (6 deg)",
+   "up": "south"
   },
   {
    "id": "container_platform",
@@ -2948,66 +1533,6 @@
     22
    ],
    "label": "catapult stash y 22"
-  },
-  {
-   "id": "hoarding_n",
-   "kind": "hoarding",
-   "rect": [
-    -150,
-    -152,
-    150,
-    -148
-   ],
-   "y": [
-    0,
-    12
-   ],
-   "label": "hoardings (bulk 8.3, food from D 17)"
-  },
-  {
-   "id": "hoarding_s",
-   "kind": "hoarding",
-   "rect": [
-    -150,
-    148,
-    150,
-    152
-   ],
-   "y": [
-    0,
-    12
-   ],
-   "label": "hoardings (bulk 8.3, food from D 17)"
-  },
-  {
-   "id": "hoarding_w",
-   "kind": "hoarding",
-   "rect": [
-    -152,
-    -150,
-    -148,
-    150
-   ],
-   "y": [
-    0,
-    12
-   ],
-   "label": "hoardings (bulk 8.3, food from D 17)"
-  },
-  {
-   "id": "hoarding_e",
-   "kind": "hoarding",
-   "rect": [
-    148,
-    -150,
-    152,
-    150
-   ],
-   "y": [
-    0,
-    12
-   ],
-   "label": "hoardings (bulk 8.3, food from D 17)"
   }
  ],
  "spawns": [
@@ -6762,123 +5287,123 @@
    "id": "root_stash",
    "kind": "squirrel_stash",
    "zone": "park_nw",
-   "x": -378,
-   "z": -378,
+   "x": -337.25,
+   "z": -337.25,
    "y": 0.0,
-   "yaw": 45,
+   "yaw": 135,
    "footprint": [
-    10,
-    10
+    8,
+    8
    ],
-   "label": "root tunnel stash (under the oak)",
+   "label": "root hollow stash",
    "items": [
     {
      "object": "acorn",
      "tier": 1,
      "bulk": 0.28,
-     "x": -378.51,
-     "z": -381.82,
+     "x": -334.2,
+     "z": -337.66,
      "y": 0.0,
-     "yaw": 31.9
+     "yaw": 121.9
     },
     {
      "object": "acorn",
      "tier": 1,
      "bulk": 0.28,
-     "x": -377.21,
-     "z": -380.48,
+     "x": -335.27,
+     "z": -336.62,
      "y": 0.0,
-     "yaw": 49.2
+     "yaw": 139.2
     },
     {
      "object": "acorn",
      "tier": 1,
      "bulk": 0.28,
-     "x": -375.94,
-     "z": -379.34,
+     "x": -336.18,
+     "z": -335.6,
      "y": 0.0,
-     "yaw": 39.6
+     "yaw": 129.6
     },
     {
      "object": "acorn",
      "tier": 1,
      "bulk": 0.28,
-     "x": -372.9,
-     "z": -377.18,
+     "x": -337.91,
+     "z": -333.17,
      "y": 0.0,
-     "yaw": 44.3
+     "yaw": 134.3
     },
     {
      "object": "conker",
      "tier": 1,
      "bulk": 0.38,
-     "x": -381.0,
-     "z": -379.74,
+     "x": -335.86,
+     "z": -339.65,
      "y": 0.0,
-     "yaw": 43.6
+     "yaw": 133.6
     },
     {
      "object": "conker",
      "tier": 1,
      "bulk": 0.38,
-     "x": -379.83,
-     "z": -378.66,
+     "x": -336.72,
+     "z": -338.71,
      "y": 0.0,
-     "yaw": 45.5
+     "yaw": 135.5
     },
     {
      "object": "conker",
      "tier": 1,
      "bulk": 0.38,
-     "x": -376.68,
-     "z": -376.79,
+     "x": -338.22,
+     "z": -336.2,
      "y": 0.0,
-     "yaw": 58.9
+     "yaw": 148.9
     },
     {
      "object": "conker",
      "tier": 1,
      "bulk": 0.38,
-     "x": -376.19,
-     "z": -375.07,
+     "x": -339.6,
+     "z": -335.8,
      "y": 0.0,
-     "yaw": 34.0
+     "yaw": 124.0
     },
     {
      "object": "mushroom_cluster",
      "tier": 2,
      "bulk": 1.59,
-     "x": -382.48,
-     "z": -378.82,
+     "x": -336.6,
+     "z": -340.83,
      "y": 0.0,
-     "yaw": 59.4
+     "yaw": 149.4
     },
     {
      "object": "mushroom_cluster",
      "tier": 2,
      "bulk": 1.59,
-     "x": -379.32,
-     "z": -375.63,
+     "x": -339.15,
+     "z": -338.31,
      "y": 0.0,
-     "yaw": 46.7
+     "yaw": 136.7
     },
     {
      "object": "birds_nest",
      "tier": 1,
      "bulk": 1.06,
-     "x": -381.97,
-     "z": -377.37,
+     "x": -337.76,
+     "z": -340.42,
      "y": 0.0,
-     "yaw": 56.5
+     "yaw": 146.5
     },
     {
      "object": "birds_nest",
      "tier": 1,
      "bulk": 1.06,
-     "x": -380.23,
-     "z": -375.59,
+     "x": -339.17,
+     "z": -339.03,
      "y": 0.0,
-     "yaw": 43.8
+     "yaw": 133.8
     }
    ]
   },
@@ -12568,6 +11093,4782 @@
      "z": 422.14,
      "y": 0.0,
      "yaw": 3.6
+    }
+   ]
+  },
+  {
+   "id": "maze_walls",
+   "kind": "hedge_maze",
+   "zone": "park_sw",
+   "x": -349,
+   "z": 349,
+   "y": 0,
+   "yaw": 0,
+   "footprint": [
+    90,
+    90
+   ],
+   "label": null,
+   "items": [
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -386.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -386.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -383.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -383.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -350.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -350.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -347.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -347.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -338.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -338.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -335.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -335.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -314.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -314.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -311.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -311.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 305.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 308.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 311.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 314.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 311.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 314.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 311.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 314.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 311.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 314.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 311.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 314.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 311.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 314.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -338.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -338.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -335.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -335.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 317.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 320.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 323.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 326.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 329.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 332.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 335.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 338.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 341.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 344.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 347.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 350.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 347.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 350.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 347.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 350.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 347.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 350.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -386.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -386.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -383.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -383.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -314.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -314.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -311.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -311.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 353.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 356.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 359.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 362.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 359.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 362.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 359.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 362.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 359.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 362.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 359.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 362.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 359.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 362.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 359.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 362.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 359.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 362.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -350.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -350.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -347.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -347.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -338.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -338.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -335.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -335.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 365.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 368.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 371.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 374.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -386.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -386.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -383.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -383.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -350.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -350.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -347.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -347.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 377.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 380.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 383.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 386.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 383.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 386.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 383.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 386.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 383.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 386.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 383.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 386.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 383.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 386.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 383.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 386.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 383.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 386.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -392.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -389.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -386.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -386.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -383.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -383.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -380.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -377.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -374.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -371.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -368.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -365.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -362.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -359.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -356.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -353.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -344.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -341.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -338.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -338.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -335.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -335.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -332.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -329.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -326.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -323.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -320.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -317.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -314.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -314.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -311.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -311.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -308.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 389.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
+    },
+    {
+     "object": "hedge_piece",
+     "tier": 2,
+     "bulk": 3.0,
+     "x": -305.5,
+     "z": 392.5,
+     "y": 0,
+     "yaw": 0,
+     "solid": true
     }
    ]
   },
@@ -20770,12 +24071,12 @@
    "id": "carpark_row_1a",
    "kind": "parking_row",
    "zone": "nbh_se",
-   "x": 197,
+   "x": 205,
    "z": 175,
    "y": 8,
    "yaw": 0,
    "footprint": [
-    60,
+    48,
     8
    ],
    "label": null,
@@ -20784,7 +24085,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 169.69,
+     "x": 183.39,
      "z": 177.08,
      "y": 8,
      "yaw": 6.8
@@ -20793,7 +24094,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 174.91,
+     "x": 188.03,
      "z": 177.42,
      "y": 8,
      "yaw": 11.5
@@ -20802,7 +24103,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 181.52,
+     "x": 193.9,
      "z": 177.13,
      "y": 8,
      "yaw": 359.1
@@ -20811,7 +24112,7 @@
      "object": "taxi",
      "tier": 3,
      "bulk": 7.49,
-     "x": 173.32,
+     "x": 187.07,
      "z": 177.74,
      "y": 8,
      "yaw": 353.7
@@ -20820,7 +24121,7 @@
      "object": "van",
      "tier": 4,
      "bulk": 9.84,
-     "x": 172.75,
+     "x": 186.52,
      "z": 177.24,
      "y": 8,
      "yaw": 14.5
@@ -20831,12 +24132,12 @@
    "id": "carpark_row_1b",
    "kind": "parking_row",
    "zone": "nbh_se",
-   "x": 197,
+   "x": 205,
    "z": 230,
    "y": 8,
    "yaw": 180,
    "footprint": [
-    60,
+    48,
     8
    ],
    "label": null,
@@ -20845,7 +24146,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 222.83,
+     "x": 225.3,
      "z": 227.95,
      "y": 8,
      "yaw": 186.6
@@ -20854,7 +24155,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 218.91,
+     "x": 221.81,
      "z": 227.97,
      "y": 8,
      "yaw": 169.3
@@ -20863,7 +24164,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 212.82,
+     "x": 216.39,
      "z": 227.52,
      "y": 8,
      "yaw": 182.6
@@ -20872,7 +24173,7 @@
      "object": "taxi",
      "tier": 3,
      "bulk": 7.49,
-     "x": 220.94,
+     "x": 223.19,
      "z": 227.64,
      "y": 8,
      "yaw": 194.7
@@ -20881,7 +24182,7 @@
      "object": "van",
      "tier": 4,
      "bulk": 9.84,
-     "x": 220.5,
+     "x": 222.76,
      "z": 227.24,
      "y": 8,
      "yaw": 184.4
@@ -20892,12 +24193,12 @@
    "id": "carpark_row_2a",
    "kind": "parking_row",
    "zone": "nbh_se",
-   "x": 197,
+   "x": 205,
    "z": 175,
    "y": 16,
    "yaw": 0,
    "footprint": [
-    60,
+    48,
     8
    ],
    "label": null,
@@ -20906,7 +24207,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 169.09,
+     "x": 182.86,
      "z": 177.46,
      "y": 16,
      "yaw": 13.0
@@ -20915,7 +24216,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 175.86,
+     "x": 188.88,
      "z": 177.12,
      "y": 16,
      "yaw": 8.3
@@ -20924,7 +24225,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 183.77,
+     "x": 195.9,
      "z": 177.18,
      "y": 16,
      "yaw": 347.9
@@ -20933,7 +24234,7 @@
      "object": "taxi",
      "tier": 3,
      "bulk": 7.49,
-     "x": 171.25,
+     "x": 185.08,
      "z": 177.05,
      "y": 16,
      "yaw": 359.4
@@ -20942,7 +24243,7 @@
      "object": "van",
      "tier": 4,
      "bulk": 9.84,
-     "x": 169.72,
+     "x": 183.61,
      "z": 177.36,
      "y": 16,
      "yaw": 9.2
@@ -20953,12 +24254,12 @@
    "id": "carpark_row_2b",
    "kind": "parking_row",
    "zone": "nbh_se",
-   "x": 197,
+   "x": 205,
    "z": 230,
    "y": 16,
    "yaw": 180,
    "footprint": [
-    60,
+    48,
     8
    ],
    "label": null,
@@ -20967,7 +24268,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 223.36,
+     "x": 225.77,
      "z": 227.64,
      "y": 16,
      "yaw": 194.7
@@ -20976,7 +24277,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 218.78,
+     "x": 221.69,
      "z": 227.59,
      "y": 16,
      "yaw": 183.0
@@ -20985,7 +24286,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 213.17,
+     "x": 216.71,
      "z": 227.33,
      "y": 16,
      "yaw": 190.8
@@ -20994,7 +24295,7 @@
      "object": "taxi",
      "tier": 3,
      "bulk": 7.49,
-     "x": 219.94,
+     "x": 222.22,
      "z": 227.85,
      "y": 16,
      "yaw": 193.4
@@ -21003,7 +24304,7 @@
      "object": "van",
      "tier": 4,
      "bulk": 9.84,
-     "x": 221.84,
+     "x": 224.05,
      "z": 227.75,
      "y": 16,
      "yaw": 171.4
@@ -21014,12 +24315,12 @@
    "id": "carpark_row_3a",
    "kind": "parking_row",
    "zone": "nbh_se",
-   "x": 197,
+   "x": 205,
    "z": 175,
    "y": 24,
    "yaw": 0,
    "footprint": [
-    60,
+    48,
     8
    ],
    "label": null,
@@ -21028,7 +24329,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 171.07,
+     "x": 184.61,
      "z": 177.46,
      "y": 24,
      "yaw": 348.3
@@ -21037,7 +24338,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 175.54,
+     "x": 188.59,
      "z": 177.47,
      "y": 24,
      "yaw": 5.6
@@ -21046,7 +24347,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 181.14,
+     "x": 193.57,
      "z": 177.73,
      "y": 24,
      "yaw": 13.4
@@ -21055,7 +24356,7 @@
      "object": "taxi",
      "tier": 3,
      "bulk": 7.49,
-     "x": 174.19,
+     "x": 187.9,
      "z": 177.16,
      "y": 24,
      "yaw": 14.1
@@ -21064,7 +24365,7 @@
      "object": "van",
      "tier": 4,
      "bulk": 9.84,
-     "x": 169.97,
+     "x": 183.85,
      "z": 177.74,
      "y": 24,
      "yaw": 10.4
@@ -21075,12 +24376,12 @@
    "id": "carpark_row_3b",
    "kind": "parking_row",
    "zone": "nbh_se",
-   "x": 197,
+   "x": 205,
    "z": 230,
    "y": 24,
    "yaw": 180,
    "footprint": [
-    60,
+    48,
     8
    ],
    "label": null,
@@ -21089,7 +24390,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 224.96,
+     "x": 227.19,
      "z": 227.55,
      "y": 24,
      "yaw": 192.5
@@ -21098,7 +24399,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 218.19,
+     "x": 221.17,
      "z": 227.89,
      "y": 24,
      "yaw": 187.8
@@ -21107,7 +24408,7 @@
      "object": "hatchback",
      "tier": 3,
      "bulk": 7.49,
-     "x": 210.29,
+     "x": 214.14,
      "z": 227.83,
      "y": 24,
      "yaw": 167.4
@@ -21116,7 +24417,7 @@
      "object": "taxi",
      "tier": 3,
      "bulk": 7.49,
-     "x": 222.81,
+     "x": 224.98,
      "z": 227.96,
      "y": 24,
      "yaw": 179.1
@@ -21125,7 +24426,7 @@
      "object": "van",
      "tier": 4,
      "bulk": 9.84,
-     "x": 222.65,
+     "x": 224.83,
      "z": 227.43,
      "y": 24,
      "yaw": 167.3
@@ -28986,148 +32287,6 @@
    ]
   },
   {
-   "id": "fill_nw_08",
-   "kind": "park_kit",
-   "zone": "park_nw",
-   "x": -335,
-   "z": -275,
-   "y": 0.0,
-   "yaw": 135,
-   "footprint": [
-    20,
-    12
-   ],
-   "label": "park kit",
-   "items": [
-    {
-     "object": "napkin",
-     "tier": 1,
-     "bulk": 0.32,
-     "x": -327.39,
-     "z": -278.11,
-     "y": 0.0,
-     "yaw": 143.5
-    },
-    {
-     "object": "napkin",
-     "tier": 1,
-     "bulk": 0.32,
-     "x": -329.52,
-     "z": -276.02,
-     "y": 0.0,
-     "yaw": 130.7
-    },
-    {
-     "object": "napkin",
-     "tier": 1,
-     "bulk": 0.32,
-     "x": -333.07,
-     "z": -272.31,
-     "y": 0.0,
-     "yaw": 121.1
-    },
-    {
-     "object": "water_bottle",
-     "tier": 1,
-     "bulk": 1.05,
-     "x": -327.26,
-     "z": -278.62,
-     "y": 0.0,
-     "yaw": 148.9
-    },
-    {
-     "object": "water_bottle",
-     "tier": 1,
-     "bulk": 1.05,
-     "x": -332.12,
-     "z": -273.71,
-     "y": 0.0,
-     "yaw": 131.7
-    },
-    {
-     "object": "deckchair",
-     "tier": 2,
-     "bulk": 2.15,
-     "x": -330.24,
-     "z": -281.17,
-     "y": 0.0,
-     "yaw": 129.0
-    },
-    {
-     "object": "deckchair",
-     "tier": 2,
-     "bulk": 2.15,
-     "x": -332.98,
-     "z": -277.53,
-     "y": 0.0,
-     "yaw": 124.3
-    },
-    {
-     "object": "deckchair",
-     "tier": 2,
-     "bulk": 2.15,
-     "x": -335.01,
-     "z": -275.6,
-     "y": 0.0,
-     "yaw": 132.9
-    },
-    {
-     "object": "bench",
-     "tier": 3,
-     "bulk": 3.48,
-     "x": -332.46,
-     "z": -283.14,
-     "y": 0.0,
-     "yaw": 125.1
-    },
-    {
-     "object": "bench",
-     "tier": 3,
-     "bulk": 3.48,
-     "x": -336.09,
-     "z": -278.79,
-     "y": 0.0,
-     "yaw": 120.4
-    },
-    {
-     "object": "flower_planter",
-     "tier": 2,
-     "bulk": 2.88,
-     "x": -332.64,
-     "z": -281.76,
-     "y": 0.0,
-     "yaw": 124.9
-    },
-    {
-     "object": "flower_planter",
-     "tier": 2,
-     "bulk": 2.88,
-     "x": -334.84,
-     "z": -279.47,
-     "y": 0.0,
-     "yaw": 136.7
-    },
-    {
-     "object": "bush",
-     "tier": 3,
-     "bulk": 5.24,
-     "x": -331.34,
-     "z": -283.51,
-     "y": 0.0,
-     "yaw": 133.3
-    },
-    {
-     "object": "bush",
-     "tier": 3,
-     "bulk": 5.24,
-     "x": -335.75,
-     "z": -279.06,
-     "y": 0.0,
-     "yaw": 146.1
-    }
-   ]
-  },
-  {
    "id": "fill_ne_08",
    "kind": "park_kit",
    "zone": "park_ne",
@@ -29266,6 +32425,148 @@
      "z": -92.73,
      "y": 0.0,
      "yaw": 262.9
+    }
+   ]
+  },
+  {
+   "id": "fill_nw_08",
+   "kind": "park_kit",
+   "zone": "park_nw",
+   "x": -335,
+   "z": -275,
+   "y": 0.0,
+   "yaw": 135,
+   "footprint": [
+    20,
+    12
+   ],
+   "label": "park kit",
+   "items": [
+    {
+     "object": "napkin",
+     "tier": 1,
+     "bulk": 0.32,
+     "x": -327.39,
+     "z": -278.11,
+     "y": 0.0,
+     "yaw": 143.5
+    },
+    {
+     "object": "napkin",
+     "tier": 1,
+     "bulk": 0.32,
+     "x": -329.52,
+     "z": -276.02,
+     "y": 0.0,
+     "yaw": 130.7
+    },
+    {
+     "object": "napkin",
+     "tier": 1,
+     "bulk": 0.32,
+     "x": -333.07,
+     "z": -272.31,
+     "y": 0.0,
+     "yaw": 121.1
+    },
+    {
+     "object": "water_bottle",
+     "tier": 1,
+     "bulk": 1.05,
+     "x": -327.26,
+     "z": -278.62,
+     "y": 0.0,
+     "yaw": 148.9
+    },
+    {
+     "object": "water_bottle",
+     "tier": 1,
+     "bulk": 1.05,
+     "x": -332.12,
+     "z": -273.71,
+     "y": 0.0,
+     "yaw": 131.7
+    },
+    {
+     "object": "deckchair",
+     "tier": 2,
+     "bulk": 2.15,
+     "x": -330.24,
+     "z": -281.17,
+     "y": 0.0,
+     "yaw": 129.0
+    },
+    {
+     "object": "deckchair",
+     "tier": 2,
+     "bulk": 2.15,
+     "x": -332.98,
+     "z": -277.53,
+     "y": 0.0,
+     "yaw": 124.3
+    },
+    {
+     "object": "deckchair",
+     "tier": 2,
+     "bulk": 2.15,
+     "x": -335.01,
+     "z": -275.6,
+     "y": 0.0,
+     "yaw": 132.9
+    },
+    {
+     "object": "bench",
+     "tier": 3,
+     "bulk": 3.48,
+     "x": -332.46,
+     "z": -283.14,
+     "y": 0.0,
+     "yaw": 125.1
+    },
+    {
+     "object": "bench",
+     "tier": 3,
+     "bulk": 3.48,
+     "x": -336.09,
+     "z": -278.79,
+     "y": 0.0,
+     "yaw": 120.4
+    },
+    {
+     "object": "flower_planter",
+     "tier": 2,
+     "bulk": 2.88,
+     "x": -332.64,
+     "z": -281.76,
+     "y": 0.0,
+     "yaw": 124.9
+    },
+    {
+     "object": "flower_planter",
+     "tier": 2,
+     "bulk": 2.88,
+     "x": -334.84,
+     "z": -279.47,
+     "y": 0.0,
+     "yaw": 136.7
+    },
+    {
+     "object": "bush",
+     "tier": 3,
+     "bulk": 5.24,
+     "x": -331.34,
+     "z": -283.51,
+     "y": 0.0,
+     "yaw": 133.3
+    },
+    {
+     "object": "bush",
+     "tier": 3,
+     "bulk": 5.24,
+     "x": -335.75,
+     "z": -279.06,
+     "y": 0.0,
+     "yaw": 146.1
     }
    ]
   },
@@ -29683,148 +32984,6 @@
      "z": -276.24,
      "y": 0.0,
      "yaw": 231.0
-    }
-   ]
-  },
-  {
-   "id": "fill_sw_10",
-   "kind": "park_kit",
-   "zone": "park_sw",
-   "x": -345,
-   "z": 285,
-   "y": 0.0,
-   "yaw": 45,
-   "footprint": [
-    20,
-    12
-   ],
-   "label": "park kit",
-   "items": [
-    {
-     "object": "napkin",
-     "tier": 1,
-     "bulk": 0.32,
-     "x": -348.99,
-     "z": 276.7,
-     "y": 0.0,
-     "yaw": 39.5
-    },
-    {
-     "object": "napkin",
-     "tier": 1,
-     "bulk": 0.32,
-     "x": -346.12,
-     "z": 279.62,
-     "y": 0.0,
-     "yaw": 56.8
-    },
-    {
-     "object": "napkin",
-     "tier": 1,
-     "bulk": 0.32,
-     "x": -342.52,
-     "z": 282.8,
-     "y": 0.0,
-     "yaw": 44.4
-    },
-    {
-     "object": "water_bottle",
-     "tier": 1,
-     "bulk": 1.05,
-     "x": -348.66,
-     "z": 276.8,
-     "y": 0.0,
-     "yaw": 45.6
-    },
-    {
-     "object": "water_bottle",
-     "tier": 1,
-     "bulk": 1.05,
-     "x": -344.2,
-     "z": 281.21,
-     "y": 0.0,
-     "yaw": 58.3
-    },
-    {
-     "object": "deckchair",
-     "tier": 2,
-     "bulk": 2.15,
-     "x": -351.38,
-     "z": 278.88,
-     "y": 0.0,
-     "yaw": 37.7
-    },
-    {
-     "object": "deckchair",
-     "tier": 2,
-     "bulk": 2.15,
-     "x": -347.8,
-     "z": 282.4,
-     "y": 0.0,
-     "yaw": 50.4
-    },
-    {
-     "object": "deckchair",
-     "tier": 2,
-     "bulk": 2.15,
-     "x": -345.63,
-     "z": 285.42,
-     "y": 0.0,
-     "yaw": 33.7
-    },
-    {
-     "object": "bench",
-     "tier": 3,
-     "bulk": 3.48,
-     "x": -353.56,
-     "z": 281.25,
-     "y": 0.0,
-     "yaw": 59.8
-    },
-    {
-     "object": "bench",
-     "tier": 3,
-     "bulk": 3.48,
-     "x": -349.14,
-     "z": 285.57,
-     "y": 0.0,
-     "yaw": 41.6
-    },
-    {
-     "object": "flower_planter",
-     "tier": 2,
-     "bulk": 2.88,
-     "x": -353.68,
-     "z": 281.24,
-     "y": 0.0,
-     "yaw": 35.1
-    },
-    {
-     "object": "flower_planter",
-     "tier": 2,
-     "bulk": 2.88,
-     "x": -350.36,
-     "z": 285.21,
-     "y": 0.0,
-     "yaw": 30.4
-    },
-    {
-     "object": "bush",
-     "tier": 3,
-     "bulk": 5.24,
-     "x": -353.19,
-     "z": 282.34,
-     "y": 0.0,
-     "yaw": 40.1
-    },
-    {
-     "object": "bush",
-     "tier": 3,
-     "bulk": 5.24,
-     "x": -350.41,
-     "z": 285.08,
-     "y": 0.0,
-     "yaw": 52.9
     }
    ]
   },
@@ -30406,7 +33565,7 @@
    ]
   },
   {
-   "id": "fill_sw_11",
+   "id": "fill_sw_10",
    "kind": "park_kit",
    "zone": "park_sw",
    "x": -485,
@@ -30423,71 +33582,80 @@
      "object": "napkin",
      "tier": 1,
      "bulk": 0.32,
-     "x": -487.35,
-     "z": 387.7,
-     "y": 0.0,
-     "yaw": 32.9
-    },
-    {
-     "object": "napkin",
-     "tier": 1,
-     "bulk": 0.32,
-     "x": -485.5,
-     "z": 389.45,
-     "y": 0.0,
-     "yaw": 44.7
-    },
-    {
-     "object": "napkin",
-     "tier": 1,
-     "bulk": 0.32,
-     "x": -483.29,
-     "z": 392.44,
-     "y": 0.0,
-     "yaw": 58.0
-    },
-    {
-     "object": "water_bottle",
-     "tier": 1,
-     "bulk": 1.05,
      "x": -488.99,
-     "z": 387.47,
+     "z": 386.7,
      "y": 0.0,
-     "yaw": 35.4
+     "yaw": 39.5
+    },
+    {
+     "object": "napkin",
+     "tier": 1,
+     "bulk": 0.32,
+     "x": -486.12,
+     "z": 389.62,
+     "y": 0.0,
+     "yaw": 56.8
+    },
+    {
+     "object": "napkin",
+     "tier": 1,
+     "bulk": 0.32,
+     "x": -482.52,
+     "z": 392.8,
+     "y": 0.0,
+     "yaw": 44.4
     },
     {
      "object": "water_bottle",
      "tier": 1,
      "bulk": 1.05,
-     "x": -485.19,
-     "z": 390.52,
+     "x": -488.66,
+     "z": 386.8,
      "y": 0.0,
-     "yaw": 40.1
+     "yaw": 45.6
+    },
+    {
+     "object": "water_bottle",
+     "tier": 1,
+     "bulk": 1.05,
+     "x": -484.2,
+     "z": 391.21,
+     "y": 0.0,
+     "yaw": 58.3
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -490.59,
-     "z": 389.73,
+     "x": -491.38,
+     "z": 388.88,
      "y": 0.0,
-     "yaw": 52.1
+     "yaw": 37.7
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -488.51,
-     "z": 391.86,
+     "x": -487.8,
+     "z": 392.4,
      "y": 0.0,
-     "yaw": 39.3
+     "yaw": 50.4
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -484.8,
-     "z": 395.4,
+     "x": -485.63,
+     "z": 395.42,
+     "y": 0.0,
+     "yaw": 33.7
+    },
+    {
+     "object": "bench",
+     "tier": 3,
+     "bulk": 3.48,
+     "x": -493.56,
+     "z": 391.25,
      "y": 0.0,
      "yaw": 59.8
     },
@@ -30495,55 +33663,46 @@
      "object": "bench",
      "tier": 3,
      "bulk": 3.48,
-     "x": -492.14,
-     "z": 393.25,
+     "x": -489.14,
+     "z": 395.57,
      "y": 0.0,
-     "yaw": 54.0
-    },
-    {
-     "object": "bench",
-     "tier": 3,
-     "bulk": 3.48,
-     "x": -489.52,
-     "z": 395.9,
-     "y": 0.0,
-     "yaw": 41.3
+     "yaw": 41.6
     },
     {
      "object": "flower_planter",
      "tier": 2,
      "bulk": 2.88,
-     "x": -492.68,
-     "z": 392.03,
-     "y": 0.0,
-     "yaw": 47.8
-    },
-    {
-     "object": "flower_planter",
-     "tier": 2,
-     "bulk": 2.88,
-     "x": -490.06,
-     "z": 394.68,
+     "x": -493.68,
+     "z": 391.24,
      "y": 0.0,
      "yaw": 35.1
     },
     {
-     "object": "bush",
-     "tier": 3,
-     "bulk": 5.24,
-     "x": -493.98,
-     "z": 391.76,
+     "object": "flower_planter",
+     "tier": 2,
+     "bulk": 2.88,
+     "x": -490.36,
+     "z": 395.21,
      "y": 0.0,
-     "yaw": 36.8
+     "yaw": 30.4
     },
     {
      "object": "bush",
      "tier": 3,
      "bulk": 5.24,
-     "x": -489.24,
-     "z": 396.54,
+     "x": -493.19,
+     "z": 392.34,
      "y": 0.0,
-     "yaw": 54.1
+     "yaw": 40.1
+    },
+    {
+     "object": "bush",
+     "tier": 3,
+     "bulk": 5.24,
+     "x": -490.41,
+     "z": 395.08,
+     "y": 0.0,
+     "yaw": 52.9
     }
    ]
   },
@@ -31427,7 +34586,7 @@
    ]
   },
   {
-   "id": "fill_sw_12",
+   "id": "fill_sw_11",
    "kind": "park_kit",
    "zone": "park_sw",
    "x": -485,
@@ -31444,127 +34603,127 @@
      "object": "napkin",
      "tier": 1,
      "bulk": 0.32,
-     "x": -488.41,
-     "z": 476.31,
+     "x": -487.35,
+     "z": 477.7,
      "y": 0.0,
-     "yaw": 47.5
+     "yaw": 32.9
     },
     {
      "object": "napkin",
      "tier": 1,
      "bulk": 0.32,
-     "x": -484.63,
-     "z": 480.14,
+     "x": -485.5,
+     "z": 479.45,
      "y": 0.0,
-     "yaw": 34.8
+     "yaw": 44.7
     },
     {
      "object": "napkin",
      "tier": 1,
      "bulk": 0.32,
-     "x": -482.31,
-     "z": 483.1,
+     "x": -483.29,
+     "z": 482.44,
      "y": 0.0,
-     "yaw": 42.6
+     "yaw": 58.0
     },
     {
      "object": "water_bottle",
      "tier": 1,
      "bulk": 1.05,
-     "x": -487.24,
-     "z": 477.42,
+     "x": -488.99,
+     "z": 477.47,
      "y": 0.0,
-     "yaw": 53.7
+     "yaw": 35.4
     },
     {
      "object": "water_bottle",
      "tier": 1,
      "bulk": 1.05,
-     "x": -483.97,
-     "z": 481.44,
+     "x": -485.19,
+     "z": 480.52,
      "y": 0.0,
-     "yaw": 49.0
+     "yaw": 40.1
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -491.2,
-     "z": 480.11,
+     "x": -490.59,
+     "z": 479.73,
      "y": 0.0,
-     "yaw": 56.4
+     "yaw": 52.1
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -488.97,
-     "z": 482.29,
+     "x": -488.51,
+     "z": 481.86,
      "y": 0.0,
-     "yaw": 39.1
+     "yaw": 39.3
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -485.72,
-     "z": 484.53,
+     "x": -484.8,
+     "z": 485.4,
      "y": 0.0,
-     "yaw": 31.3
+     "yaw": 59.8
     },
     {
      "object": "bench",
      "tier": 3,
      "bulk": 3.48,
-     "x": -493.71,
-     "z": 481.18,
+     "x": -492.14,
+     "z": 483.25,
      "y": 0.0,
-     "yaw": 40.8
+     "yaw": 54.0
     },
     {
      "object": "bench",
      "tier": 3,
      "bulk": 3.48,
-     "x": -488.81,
-     "z": 486.04,
+     "x": -489.52,
+     "z": 485.9,
      "y": 0.0,
-     "yaw": 53.5
+     "yaw": 41.3
     },
     {
      "object": "flower_planter",
      "tier": 2,
      "bulk": 2.88,
-     "x": -492.74,
-     "z": 483.08,
+     "x": -492.68,
+     "z": 482.03,
      "y": 0.0,
-     "yaw": 42.2
+     "yaw": 47.8
     },
     {
      "object": "flower_planter",
      "tier": 2,
      "bulk": 2.88,
-     "x": -490.41,
-     "z": 485.37,
+     "x": -490.06,
+     "z": 484.68,
      "y": 0.0,
-     "yaw": 55.0
+     "yaw": 35.1
     },
     {
      "object": "bush",
      "tier": 3,
      "bulk": 5.24,
-     "x": -491.68,
-     "z": 482.82,
+     "x": -493.98,
+     "z": 481.76,
      "y": 0.0,
-     "yaw": 30.5
+     "yaw": 36.8
     },
     {
      "object": "bush",
      "tier": 3,
      "bulk": 5.24,
-     "x": -489.39,
-     "z": 485.02,
+     "x": -489.24,
+     "z": 486.54,
      "y": 0.0,
-     "yaw": 42.3
+     "yaw": 54.1
     }
    ]
   },
@@ -32608,7 +35767,7 @@
    ]
   },
   {
-   "id": "fill_sw_13",
+   "id": "fill_sw_12",
    "kind": "lawn_games",
    "zone": "park_sw",
    "x": -485,
@@ -32625,287 +35784,305 @@
      "object": "boules_set",
      "tier": 1,
      "bulk": 0.78,
-     "x": -478.58,
-     "z": 139.94,
+     "x": -479.44,
+     "z": 139.25,
      "y": 0.0,
-     "yaw": 90.7
+     "yaw": 104.3
     },
     {
      "object": "boules_set",
      "tier": 1,
      "bulk": 0.78,
-     "x": -478.52,
-     "z": 151.23,
+     "x": -477.5,
+     "z": 151.59,
      "y": 0.0,
-     "yaw": 103.5
+     "yaw": 99.2
     },
     {
      "object": "tennis_ball",
      "tier": 1,
      "bulk": 0.6,
-     "x": -478.13,
-     "z": 139.02,
+     "x": -477.95,
+     "z": 141.09,
      "y": 0.0,
-     "yaw": 85.6
+     "yaw": 90.8
     },
     {
      "object": "tennis_ball",
      "tier": 1,
      "bulk": 0.6,
-     "x": -478.06,
-     "z": 150.31,
+     "x": -478.02,
+     "z": 153.2,
      "y": 0.0,
-     "yaw": 98.4
+     "yaw": 78.1
     },
     {
      "object": "frisbee",
      "tier": 1,
      "bulk": 1.06,
-     "x": -485.02,
-     "z": 142.85,
+     "x": -484.75,
+     "z": 146.16,
      "y": 0.0,
-     "yaw": 98.8
+     "yaw": 82.6
     },
     {
      "object": "football",
      "tier": 2,
      "bulk": 2.0,
-     "x": -486.53,
-     "z": 143.41,
+     "x": -486.03,
+     "z": 146.13,
      "y": 0.0,
-     "yaw": 82.3
+     "yaw": 93.6
     },
     {
      "object": "giant_chess_piece",
      "tier": 2,
      "bulk": 1.55,
-     "x": -486.5,
-     "z": 139.79,
+     "x": -486.21,
+     "z": 141.79,
      "y": 0.0,
-     "yaw": 91.4
+     "yaw": 101.8
     },
     {
      "object": "giant_chess_piece",
      "tier": 2,
      "bulk": 1.55,
-     "x": -484.76,
-     "z": 145.98,
+     "x": -485.07,
+     "z": 147.6,
      "y": 0.0,
-     "yaw": 86.7
+     "yaw": 76.5
     },
     {
      "object": "giant_chess_piece",
      "tier": 2,
      "bulk": 1.55,
-     "x": -484.99,
-     "z": 150.29,
+     "x": -486.38,
+     "z": 153.63,
      "y": 0.0,
-     "yaw": 96.3
+     "yaw": 94.1
     },
     {
      "object": "giant_chess_piece",
      "tier": 2,
      "bulk": 1.55,
-     "x": -484.84,
-     "z": 157.7,
+     "x": -486.44,
+     "z": 158.1,
      "y": 0.0,
-     "yaw": 78.1
+     "yaw": 81.4
     },
     {
      "object": "giant_chess_piece",
      "tier": 2,
      "bulk": 1.55,
-     "x": -484.49,
-     "z": 164.88,
+     "x": -485.87,
+     "z": 165.37,
      "y": 0.0,
-     "yaw": 94.2
+     "yaw": 92.0
     },
     {
      "object": "giant_chess_piece",
      "tier": 2,
      "bulk": 1.55,
-     "x": -484.43,
-     "z": 169.56,
+     "x": -486.03,
+     "z": 169.21,
      "y": 0.0,
-     "yaw": 76.9
+     "yaw": 80.2
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -491.56,
-     "z": 141.78,
+     "x": -493.11,
+     "z": 141.85,
      "y": 0.0,
-     "yaw": 94.7
+     "yaw": 101.4
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -491.62,
-     "z": 152.76,
+     "x": -493.05,
+     "z": 148.88,
      "y": 0.0,
-     "yaw": 82.0
+     "yaw": 84.1
     },
     {
      "object": "picnic_table",
      "tier": 3,
      "bulk": 4.22,
-     "x": -491.53,
-     "z": 144.12,
+     "x": -491.28,
+     "z": 141.12,
      "y": 0.0,
-     "yaw": 84.0
+     "yaw": 97.3
     },
     {
      "object": "picnic_table",
      "tier": 3,
      "bulk": 4.22,
-     "x": -491.4,
-     "z": 149.84,
+     "x": -492.3,
+     "z": 148.96,
      "y": 0.0,
-     "yaw": 95.7
+     "yaw": 102.0
     }
    ]
   },
   {
-   "id": "fill_sw_14",
-   "kind": "park_kit",
+   "id": "fill_sw_13",
+   "kind": "lawn_games",
    "zone": "park_sw",
    "x": -65,
    "z": 355,
    "y": 0.0,
    "yaw": 0,
    "footprint": [
-    20,
-    12
+    36,
+    24
    ],
-   "label": "park kit",
+   "label": "lawn games",
    "items": [
     {
-     "object": "napkin",
+     "object": "boules_set",
      "tier": 1,
-     "bulk": 0.32,
-     "x": -73.48,
-     "z": 352.52,
+     "bulk": 0.78,
+     "x": -80.06,
+     "z": 348.58,
      "y": 0.0,
-     "yaw": 3.5
+     "yaw": 0.7
     },
     {
-     "object": "napkin",
+     "object": "boules_set",
      "tier": 1,
-     "bulk": 0.32,
-     "x": -69.99,
-     "z": 351.77,
+     "bulk": 0.78,
+     "x": -68.77,
+     "z": 348.52,
      "y": 0.0,
-     "yaw": 8.2
+     "yaw": 13.5
     },
     {
-     "object": "napkin",
+     "object": "tennis_ball",
      "tier": 1,
-     "bulk": 0.32,
-     "x": -65.66,
-     "z": 352.55,
+     "bulk": 0.6,
+     "x": -80.98,
+     "z": 348.13,
      "y": 0.0,
-     "yaw": 354.8
+     "yaw": 355.6
     },
     {
-     "object": "water_bottle",
+     "object": "tennis_ball",
      "tier": 1,
-     "bulk": 1.05,
-     "x": -72.19,
-     "z": 352.32,
+     "bulk": 0.6,
+     "x": -69.69,
+     "z": 348.06,
+     "y": 0.0,
+     "yaw": 8.4
+    },
+    {
+     "object": "frisbee",
+     "tier": 1,
+     "bulk": 1.06,
+     "x": -77.15,
+     "z": 355.02,
+     "y": 0.0,
+     "yaw": 8.8
+    },
+    {
+     "object": "football",
+     "tier": 2,
+     "bulk": 2.0,
+     "x": -76.59,
+     "z": 356.53,
+     "y": 0.0,
+     "yaw": 352.3
+    },
+    {
+     "object": "giant_chess_piece",
+     "tier": 2,
+     "bulk": 1.55,
+     "x": -80.21,
+     "z": 356.5,
+     "y": 0.0,
+     "yaw": 1.4
+    },
+    {
+     "object": "giant_chess_piece",
+     "tier": 2,
+     "bulk": 1.55,
+     "x": -74.02,
+     "z": 354.76,
+     "y": 0.0,
+     "yaw": 356.7
+    },
+    {
+     "object": "giant_chess_piece",
+     "tier": 2,
+     "bulk": 1.55,
+     "x": -69.71,
+     "z": 354.99,
      "y": 0.0,
      "yaw": 6.3
     },
     {
-     "object": "water_bottle",
-     "tier": 1,
-     "bulk": 1.05,
-     "x": -68.92,
-     "z": 352.29,
+     "object": "giant_chess_piece",
+     "tier": 2,
+     "bulk": 1.55,
+     "x": -62.3,
+     "z": 354.84,
      "y": 0.0,
-     "yaw": 349.0
+     "yaw": 348.1
+    },
+    {
+     "object": "giant_chess_piece",
+     "tier": 2,
+     "bulk": 1.55,
+     "x": -55.12,
+     "z": 354.49,
+     "y": 0.0,
+     "yaw": 4.2
+    },
+    {
+     "object": "giant_chess_piece",
+     "tier": 2,
+     "bulk": 1.55,
+     "x": -50.44,
+     "z": 354.43,
+     "y": 0.0,
+     "yaw": 346.9
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -72.08,
-     "z": 354.79,
+     "x": -78.22,
+     "z": 361.56,
      "y": 0.0,
-     "yaw": 8.3
+     "yaw": 4.7
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -69.47,
-     "z": 354.76,
+     "x": -67.24,
+     "z": 361.62,
      "y": 0.0,
-     "yaw": 351.0
+     "yaw": 352.0
     },
     {
-     "object": "deckchair",
-     "tier": 2,
-     "bulk": 2.15,
-     "x": -65.48,
-     "z": 355.54,
-     "y": 0.0,
-     "yaw": 3.4
-    },
-    {
-     "object": "bench",
+     "object": "picnic_table",
      "tier": 3,
-     "bulk": 3.48,
-     "x": -73.47,
-     "z": 358.48,
+     "bulk": 4.22,
+     "x": -75.88,
+     "z": 361.53,
      "y": 0.0,
-     "yaw": 10.8
+     "yaw": 354.0
     },
     {
-     "object": "bench",
+     "object": "picnic_table",
      "tier": 3,
-     "bulk": 3.48,
-     "x": -67.2,
-     "z": 358.46,
+     "bulk": 4.22,
+     "x": -70.16,
+     "z": 361.4,
      "y": 0.0,
-     "yaw": 353.6
-    },
-    {
-     "object": "flower_planter",
-     "tier": 2,
-     "bulk": 2.88,
-     "x": -72.37,
-     "z": 359.03,
-     "y": 0.0,
-     "yaw": 10.7
-    },
-    {
-     "object": "flower_planter",
-     "tier": 2,
-     "bulk": 2.88,
-     "x": -68.47,
-     "z": 359.0,
-     "y": 0.0,
-     "yaw": 353.4
-    },
-    {
-     "object": "bush",
-     "tier": 3,
-     "bulk": 5.24,
-     "x": -71.73,
-     "z": 358.12,
-     "y": 0.0,
-     "yaw": 358.3
-    },
-    {
-     "object": "bush",
-     "tier": 3,
-     "bulk": 5.24,
-     "x": -66.08,
-     "z": 358.77,
-     "y": 0.0,
-     "yaw": 353.6
+     "yaw": 5.7
     }
    ]
   },
@@ -33203,7 +36380,7 @@
    ]
   },
   {
-   "id": "fill_sw_15",
+   "id": "fill_sw_14",
    "kind": "park_kit",
    "zone": "park_sw",
    "x": -155,
@@ -33220,127 +36397,127 @@
      "object": "napkin",
      "tier": 1,
      "bulk": 0.32,
-     "x": -164.13,
-     "z": 481.55,
+     "x": -163.48,
+     "z": 482.52,
      "y": 0.0,
-     "yaw": 355.3
+     "yaw": 3.5
     },
     {
      "object": "napkin",
      "tier": 1,
      "bulk": 0.32,
-     "x": -159.11,
-     "z": 481.52,
+     "x": -159.99,
+     "z": 481.77,
      "y": 0.0,
-     "yaw": 8.0
+     "yaw": 8.2
     },
     {
      "object": "napkin",
      "tier": 1,
      "bulk": 0.32,
-     "x": -155.44,
-     "z": 482.08,
+     "x": -155.66,
+     "z": 482.55,
      "y": 0.0,
-     "yaw": 351.4
+     "yaw": 354.8
     },
     {
      "object": "water_bottle",
      "tier": 1,
      "bulk": 1.05,
-     "x": -161.54,
-     "z": 481.87,
+     "x": -162.19,
+     "z": 482.32,
      "y": 0.0,
-     "yaw": 0.2
+     "yaw": 6.3
     },
     {
      "object": "water_bottle",
      "tier": 1,
      "bulk": 1.05,
-     "x": -158.44,
-     "z": 481.9,
+     "x": -158.92,
+     "z": 482.29,
      "y": 0.0,
-     "yaw": 347.5
+     "yaw": 349.0
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -161.94,
-     "z": 485.67,
+     "x": -162.08,
+     "z": 484.79,
      "y": 0.0,
-     "yaw": 10.1
+     "yaw": 8.3
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -158.88,
-     "z": 485.75,
+     "x": -159.47,
+     "z": 484.76,
      "y": 0.0,
-     "yaw": 358.4
+     "yaw": 351.0
     },
     {
      "object": "deckchair",
      "tier": 2,
      "bulk": 2.15,
-     "x": -154.76,
-     "z": 485.03,
+     "x": -155.48,
+     "z": 485.54,
      "y": 0.0,
-     "yaw": 6.2
+     "yaw": 3.4
     },
     {
      "object": "bench",
      "tier": 3,
      "bulk": 3.48,
-     "x": -161.56,
-     "z": 488.7,
+     "x": -163.47,
+     "z": 488.48,
      "y": 0.0,
-     "yaw": 360.0
+     "yaw": 10.8
     },
     {
      "object": "bench",
      "tier": 3,
      "bulk": 3.48,
-     "x": -157.74,
+     "x": -157.2,
+     "z": 488.46,
+     "y": 0.0,
+     "yaw": 353.6
+    },
+    {
+     "object": "flower_planter",
+     "tier": 2,
+     "bulk": 2.88,
+     "x": -162.37,
+     "z": 489.03,
+     "y": 0.0,
+     "yaw": 10.7
+    },
+    {
+     "object": "flower_planter",
+     "tier": 2,
+     "bulk": 2.88,
+     "x": -158.47,
+     "z": 489.0,
+     "y": 0.0,
+     "yaw": 353.4
+    },
+    {
+     "object": "bush",
+     "tier": 3,
+     "bulk": 5.24,
+     "x": -161.73,
+     "z": 488.12,
+     "y": 0.0,
+     "yaw": 358.3
+    },
+    {
+     "object": "bush",
+     "tier": 3,
+     "bulk": 5.24,
+     "x": -156.08,
      "z": 488.77,
      "y": 0.0,
-     "yaw": 348.2
-    },
-    {
-     "object": "flower_planter",
-     "tier": 2,
-     "bulk": 2.88,
-     "x": -161.04,
-     "z": 488.9,
-     "y": 0.0,
-     "yaw": 354.1
-    },
-    {
-     "object": "flower_planter",
-     "tier": 2,
-     "bulk": 2.88,
-     "x": -157.31,
-     "z": 488.93,
-     "y": 0.0,
-     "yaw": 11.3
-    },
-    {
-     "object": "bush",
-     "tier": 3,
-     "bulk": 5.24,
-     "x": -161.99,
-     "z": 488.54,
-     "y": 0.0,
-     "yaw": 2.0
-    },
-    {
-     "object": "bush",
-     "tier": 3,
-     "bulk": 5.24,
-     "x": -158.26,
-     "z": 488.57,
-     "y": 0.0,
-     "yaw": 349.2
+     "yaw": 353.6
     }
    ]
   },
@@ -42301,6 +45478,7 @@
  "rails": [
   {
    "id": "R4",
+   "kind": "rail",
    "name": "Tree House Zipline",
    "points": [
     [
@@ -42321,6 +45499,7 @@
   },
   {
    "id": "R1",
+   "kind": "rail",
    "name": "Fallen Log",
    "points": [
     [
@@ -42341,6 +45520,7 @@
   },
   {
    "id": "R2",
+   "kind": "rail",
    "name": "Drain Pipe",
    "points": [
     [
@@ -42361,6 +45541,7 @@
   },
   {
    "id": "R3a",
+   "kind": "rail",
    "name": "Skate Handrail",
    "points": [
     [
@@ -42381,6 +45562,7 @@
   },
   {
    "id": "R3b",
+   "kind": "rail",
    "name": "Skate Handrail",
    "points": [
     [
@@ -42401,6 +45583,7 @@
   },
   {
    "id": "R3c",
+   "kind": "rail",
    "name": "Skate Handrail",
    "points": [
     [
@@ -42420,7 +45603,92 @@
    "exit": "launch"
   },
   {
+   "id": "P_ne",
+   "kind": "pipe",
+   "name": "Storm Drain Pipe",
+   "points": [
+    [
+     318,
+     -1.5,
+     -318
+    ],
+    [
+     248.0,
+     -1.5,
+     -248.0
+    ]
+   ],
+   "dMin": 1,
+   "dMax": 3,
+   "speed": 30,
+   "exit": "drop"
+  },
+  {
+   "id": "P_se",
+   "kind": "pipe",
+   "name": "Storm Drain Pipe",
+   "points": [
+    [
+     318,
+     -1.5,
+     318
+    ],
+    [
+     248.0,
+     -1.5,
+     248.0
+    ]
+   ],
+   "dMin": 1,
+   "dMax": 3,
+   "speed": 30,
+   "exit": "drop"
+  },
+  {
+   "id": "P_sw",
+   "kind": "pipe",
+   "name": "Storm Drain Pipe",
+   "points": [
+    [
+     -250,
+     -1.5,
+     318
+    ],
+    [
+     -195.0,
+     -1.5,
+     248.0
+    ]
+   ],
+   "dMin": 1,
+   "dMax": 3,
+   "speed": 30,
+   "exit": "drop"
+  },
+  {
+   "id": "P_nw",
+   "kind": "pipe",
+   "name": "Storm Drain Pipe",
+   "points": [
+    [
+     -318,
+     -1.5,
+     -318
+    ],
+    [
+     -248.0,
+     -1.5,
+     -248.0
+    ]
+   ],
+   "dMin": 1,
+   "dMax": 3,
+   "speed": 30,
+   "exit": "drop"
+  },
+  {
    "id": "R6",
+   "kind": "rail",
    "name": "Crane Jib",
    "points": [
     [
@@ -42441,6 +45709,7 @@
   },
   {
    "id": "R5a",
+   "kind": "rail",
    "name": "Washing Lines",
    "points": [
     [
@@ -42461,6 +45730,7 @@
   },
   {
    "id": "R5b",
+   "kind": "rail",
    "name": "Washing Lines",
    "points": [
     [
@@ -42481,6 +45751,7 @@
   },
   {
    "id": "R7a",
+   "kind": "rail",
    "name": "Rail Yard Track",
    "points": [
     [
@@ -42501,6 +45772,7 @@
   },
   {
    "id": "R7b",
+   "kind": "rail",
    "name": "Rail Yard Track",
    "points": [
     [
@@ -42521,6 +45793,7 @@
   },
   {
    "id": "R7c",
+   "kind": "rail",
    "name": "Rail Yard Track",
    "points": [
     [
@@ -42541,6 +45814,7 @@
   },
   {
    "id": "R7d",
+   "kind": "rail",
    "name": "Rail Yard Track",
    "points": [
     [
@@ -42561,6 +45835,7 @@
   },
   {
    "id": "R8",
+   "kind": "rail",
    "name": "Sky Rail",
    "points": [
     [
@@ -43252,17 +46527,10 @@
   },
   {
    "id": "drain_ne",
-   "x": 286.2,
-   "z": -286.2,
-   "kind": "drain 3 wide (small only)",
-   "from": [
-    318,
-    -318
-   ],
-   "to": [
-    248.04000000000002,
-    -248.04000000000002
-   ]
+   "x": 318,
+   "z": -318,
+   "kind": "drain mouth (pipe ride, small only)",
+   "pipe": "P_ne"
   },
   {
    "id": "park_gate_se",
@@ -43272,17 +46540,10 @@
   },
   {
    "id": "drain_se",
-   "x": 286.2,
-   "z": 286.2,
-   "kind": "drain 3 wide (small only)",
-   "from": [
-    318,
-    318
-   ],
-   "to": [
-    248.04000000000002,
-    248.04000000000002
-   ]
+   "x": 318,
+   "z": 318,
+   "kind": "drain mouth (pipe ride, small only)",
+   "pipe": "P_se"
   },
   {
    "id": "park_gate_sw",
@@ -43292,17 +46553,10 @@
   },
   {
    "id": "drain_sw",
-   "x": -225.0,
-   "z": 286.2,
-   "kind": "drain 3 wide (small only)",
-   "from": [
-    -250,
-    318
-   ],
-   "to": [
-    -195.0,
-    248.04000000000002
-   ]
+   "x": -250,
+   "z": 318,
+   "kind": "drain mouth (pipe ride, small only)",
+   "pipe": "P_sw"
   },
   {
    "id": "park_gate_nw",
@@ -43312,26 +46566,19 @@
   },
   {
    "id": "drain_nw",
-   "x": -286.2,
-   "z": -286.2,
-   "kind": "drain 3 wide (small only)",
-   "from": [
-    -318,
-    -318
-   ],
-   "to": [
-    -248.04000000000002,
-    -248.04000000000002
-   ]
+   "x": -318,
+   "z": -318,
+   "kind": "drain mouth (pipe ride, small only)",
+   "pipe": "P_nw"
   }
  ],
  "golden": [
   {
    "id": "gold_roots",
-   "x": -378,
-   "z": -378,
+   "x": -337.25,
+   "z": -337.25,
    "y": 0,
-   "where": "root tunnel stash"
+   "where": "root hollow stash"
   },
   {
    "id": "gold_treehouse",
@@ -43569,6 +46816,342 @@
    "yaw": 0
   },
   {
+   "id": "site_hoarding_n_01",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 171,
+   "z": 40,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_n_02",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 183,
+   "z": 40,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_n_03",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 195,
+   "z": 40,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_n_04",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 207,
+   "z": 40,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_n_05",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 219,
+   "z": 40,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_n_06",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 231,
+   "z": 40,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_n_07",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 243,
+   "z": 40,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_s_01",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 171,
+   "z": 130,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_s_02",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 183,
+   "z": 130,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_s_03",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 195,
+   "z": 130,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_s_04",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 207,
+   "z": 130,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_s_05",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 219,
+   "z": 130,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_s_06",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 231,
+   "z": 130,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_s_07",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 243,
+   "z": 130,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_e_01",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 245,
+   "z": 46,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_e_02",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 245,
+   "z": 58,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_e_03",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 245,
+   "z": 70,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_e_04",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 245,
+   "z": 82,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_e_05",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 245,
+   "z": 94,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_e_06",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 245,
+   "z": 106,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_e_07",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 245,
+   "z": 118,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_e_08",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 245,
+   "z": 130,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_w_01",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 165,
+   "z": 46,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_w_02",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 165,
+   "z": 58,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_w_03",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 165,
+   "z": 70,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_w_06",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 165,
+   "z": 106,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_w_07",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 165,
+   "z": 118,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "site_hoarding_w_08",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 165,
+   "z": 130,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
    "id": "crane_mast",
    "object": "crane_mast",
    "tier": 4,
@@ -43778,13 +47361,1213 @@
    "yaw": 0
   },
   {
+   "id": "hoarding_n_01",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -144,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_02",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -132,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_03",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -120,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_04",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -108,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_05",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -96,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_06",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -84,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_07",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -72,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_08",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -60,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_09",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -48,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_10",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -36,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_11",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -24,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_12",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -12,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_13",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 0,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_14",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 12,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_15",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 24,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_16",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 36,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_17",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 48,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_18",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 60,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_19",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 72,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_20",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 84,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_21",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 96,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_22",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 108,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_23",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 120,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_24",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 132,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_n_25",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 144,
+   "z": -152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_01",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -144,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_02",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -132,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_03",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -120,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_04",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -108,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_05",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -96,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_06",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -84,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_07",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -72,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_08",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -60,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_09",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -48,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_10",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -36,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_11",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -24,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_12",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -12,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_13",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 0,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_14",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 12,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_15",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 24,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_16",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 36,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_17",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 48,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_18",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 60,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_19",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 72,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_20",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 84,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_21",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 96,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_22",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 108,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_23",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 120,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_24",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 132,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_s_25",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 144,
+   "z": 152,
+   "y": 0,
+   "yaw": 0,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_01",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -144,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_02",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -132,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_03",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -120,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_04",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -108,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_05",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -96,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_06",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -84,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_07",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -72,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_08",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -60,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_09",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -48,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_10",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -36,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_11",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -24,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_12",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": -12,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_13",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 0,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_14",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 12,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_15",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 24,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_16",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 36,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_17",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 48,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_18",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 60,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_19",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 72,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_20",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 84,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_21",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 96,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_22",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 108,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_23",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 120,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_24",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 132,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_w_25",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": -152,
+   "z": 144,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_01",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -144,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_02",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -132,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_03",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -120,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_04",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -108,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_05",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -96,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_06",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -84,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_07",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -72,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_08",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -60,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_09",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -48,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_10",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -36,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_11",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -24,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_12",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": -12,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_13",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 0,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_14",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 12,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_15",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 24,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_16",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 36,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_17",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 48,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_18",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 60,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_19",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 72,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_20",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 84,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_21",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 96,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_22",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 108,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_23",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 120,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_24",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 132,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
+   "id": "hoarding_e_25",
+   "object": "hoarding",
+   "tier": 4,
+   "bulk": 8.3,
+   "needsD": 16.6,
+   "x": 152,
+   "z": 144,
+   "y": 0,
+   "yaw": 90,
+   "solid": true
+  },
+  {
    "id": "spoke_truck_1",
    "object": "delivery_truck",
    "tier": 4,
    "bulk": 9.8,
    "needsD": 19.7,
    "x": 0,
-   "z": -150,
+   "z": -162,
    "y": 0.4,
    "yaw": 0
   },
@@ -43795,7 +48578,7 @@
    "bulk": 9.8,
    "needsD": 19.7,
    "x": 0,
-   "z": 150,
+   "z": 162,
    "y": 0.4,
    "yaw": 0
   },
@@ -43805,7 +48588,7 @@
    "tier": 4,
    "bulk": 9.8,
    "needsD": 19.7,
-   "x": -150,
+   "x": -162,
    "z": 0,
    "y": 0.4,
    "yaw": 90
@@ -43816,7 +48599,7 @@
    "tier": 4,
    "bulk": 9.8,
    "needsD": 19.7,
-   "x": 150,
+   "x": 162,
    "z": 0,
    "y": 0.4,
    "yaw": 90
@@ -44280,120 +49063,32 @@
    ]
   }
  ],
- "tunnels": [
-  {
-   "id": "root_tunnel_1",
-   "points": [
-    [
-     -428,
-     -306
-    ],
-    [
-     -386,
-     -386
-    ]
-   ],
-   "width": 3,
-   "height": 3,
-   "note": "small only (D < 3)"
-  },
-  {
-   "id": "root_tunnel_2",
-   "points": [
-    [
-     -424,
-     -328
-    ],
-    [
-     -386,
-     -386
-    ]
-   ],
-   "width": 3,
-   "height": 3,
-   "note": "small only (D < 3)"
-  },
-  {
-   "id": "root_tunnel_3",
-   "points": [
-    [
-     -404,
-     -302
-    ],
-    [
-     -386,
-     -386
-    ]
-   ],
-   "width": 3,
-   "height": 3,
-   "note": "small only (D < 3)"
-  },
-  {
-   "id": "drain_ne",
-   "points": [
-    [
-     318,
-     -318
-    ],
-    [
-     248.04000000000002,
-     -248.04000000000002
-    ]
-   ],
-   "width": 3,
-   "height": 3,
-   "note": "storm drain under the ring road (small only)"
-  },
-  {
-   "id": "drain_se",
-   "points": [
-    [
-     318,
-     318
-    ],
-    [
-     248.04000000000002,
-     248.04000000000002
-    ]
-   ],
-   "width": 3,
-   "height": 3,
-   "note": "storm drain under the ring road (small only)"
-  },
-  {
-   "id": "drain_sw",
-   "points": [
-    [
-     -250,
-     318
-    ],
-    [
-     -195.0,
-     248.04000000000002
-    ]
-   ],
-   "width": 3,
-   "height": 3,
-   "note": "storm drain under the ring road (small only)"
-  },
-  {
-   "id": "drain_nw",
-   "points": [
-    [
-     -318,
-     -318
-    ],
-    [
-     -248.04000000000002,
-     -248.04000000000002
-    ]
-   ],
-   "width": 3,
-   "height": 3,
-   "note": "storm drain under the ring road (small only)"
-  }
- ],
+ "maze": {
+  "origin": [
+   -394,
+   304
+  ],
+  "cell": 6,
+  "wallHeight": 3,
+  "rows": [
+   "###############",
+   "#.....#.......#",
+   "#.###.#.#####.#",
+   "#.#...#.#...#.#",
+   "#.#.###.#.#.#.#",
+   "#.#.....#.#...#",
+   "#.####....###.#",
+   "#......C......#",
+   "#####.....#####",
+   "#.....#...#...#",
+   "#.#########.#.#",
+   "#...#.....#.#.#",
+   "###.#.###.#.#.#",
+   "#.....#.....#.#",
+   "#######.#######"
+  ],
+  "piece": "hedge_piece"
+ },
  "roofRun": {
   "roofs": [
    {
@@ -45382,13 +50077,13 @@
   },
   "hedge_piece": {
    "dims": [
-    3.2,
-    1.5,
+    3.0,
+    3.0,
     3.0
    ],
-   "bulk": 2.43,
+   "bulk": 3.0,
    "tier": 2,
-   "needsD": 4.9
+   "needsD": 6.0
   },
   "helmet": {
    "dims": [
@@ -48360,20 +53055,20 @@
  },
  "summary": {
   "objectsByTier": {
-   "1": 1677,
-   "2": 1430,
-   "3": 691,
-   "4": 191,
+   "1": 1672,
+   "2": 1786,
+   "3": 685,
+   "4": 319,
    "5": 52,
    "6": 8
   },
-  "lightObjects": 3107,
-  "partObjects": 942,
-  "total": 4049,
+  "lightObjects": 3458,
+  "partObjects": 1064,
+  "total": 4522,
   "scenes": 233,
   "trails": 44,
-  "blocks": 190,
-  "hedgePieces": 119,
+  "blocks": 91,
+  "hedgePieces": 476,
   "roofGaps": [
    7,
    9,
@@ -48384,21 +53079,26 @@
    20
   ],
   "parkFill": {
-   "placesAdded": 67,
+   "placesAdded": 66,
    "farFromFoodPctBefore": {
-    "nw": 26.4,
+    "nw": 26.2,
     "ne": 24.8,
     "se": 24.8,
-    "sw": 26.4
+    "sw": 25.6
    },
    "farFromFoodPct": {
     "nw": 0.9,
     "ne": 2.8,
     "se": 1.8,
-    "sw": 2.8
+    "sw": 3.2
    },
    "rule": "share of park cells more than 40 studs from food, by quarter"
   },
-  "overlaps": []
+  "overlaps": [],
+  "limits": {
+   "partObjects": 1200,
+   "lightObjects": 3500,
+   "farFromFoodPct": 5.0
+  }
  }
 }

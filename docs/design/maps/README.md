@@ -11,8 +11,10 @@ coordinates, so they cannot drift apart.
   ```bash
   python3 scripts/park_city_render.py
   ```
-- The layout script prints a summary (objects per tier, light and Part objects) and **fails loudly on overlaps**: a
-  scene or a building on a road, a path, water, the maze or another scene. Keep it at 0.
+- The layout script prints a summary (objects per tier, light and Part objects) and **exits 1** on any overlap (a scene,
+  building or tunnel on a road, a path, water, the maze or another scene), on a park quarter with more than 5 % of its area
+  more than 40 studs from food, or on server objects over 1,200 or light objects over 3,500.
+  `python3 scripts/park_city_layout.py --check` also fails when the committed JSON is stale.
 - Growth numbers come from `scripts/growth-sim.py` (design doc section 5).
 
 ## How to read the maps
@@ -26,7 +28,7 @@ coordinates, so they cannot drift apart.
   and the big thing that explains the scene stands at the back.
 - **Dashed lines** are trails (food with a cause: a squirrel's acorn line, petals blown off the beds) and kerb lines
   (street furniture along a kerb).
-- **Pink lines** are rails and ziplines (the arrow is the exit). **Orange pads** are boost pads (the line points the way
+- **Pink lines** are rails and ziplines (the arrow is the exit). **Dashed blue lines** are drain pipes (small-only pipe rides), and **brown blocks** are the covered root tunnels. **Orange pads** are boost pads (the line points the way
   they push). **Green circles** are bounce pads and lily pads, **blue circles** are spring pads, and **red rings** are
   catapult bullseyes. **Brown triangles** are catapults, with their aiming arc. **Gold dots** are golden-object spots.
   **Purple dashed lines** are hazards.
@@ -57,17 +59,17 @@ coordinates, so they cannot drift apart.
 
 | | Count |
 | --- | --- |
-| Tier 1 Crumb | 1,677 |
-| Tier 2 Pocket | 1,430 (including the maze's 119 hedge pieces) |
-| Tier 3 Picnic | 691 |
+| Tier 1 Crumb | 1,672 |
+| Tier 2 Pocket | 1,786 (including the maze's 476 hedge pieces) |
+| Tier 3 Picnic | 685 |
 | Tier 4 Street | 191, plus 13 cars in traffic |
 | Tier 5 House | 52 |
 | Tier 6 Skyline | 8 |
-| Light objects (Tiers 1 – 2, client-side data) | 3,107 |
-| Part objects (Tiers 3 – 6) | 942 |
-| Scenes, trails and kerb lines | 233 scenes (67 of them park fill), 44 lines |
+| Light objects (Tiers 1 – 2, client-side data) | 3,458 |
+| Part objects (Tiers 3 – 6) | 936 |
+| Scenes, trails and kerb lines | 233 scenes (66 of them park fill), 44 lines |
 | Overlaps | 0 |
-| Park more than 40 studs from food, by quarter | before fill NW 26.4 %, NE 24.8 %, SE 24.8 %, SW 26.4 %; after NW 0.9 %, NE 2.8 %, SE 1.8 %, SW 2.8 % |
+| Park more than 40 studs from food, by quarter | before fill NW 26.2 %, NE 24.8 %, SE 24.8 %, SW 25.6 %; after NW 0.9 %, NE 2.8 %, SE 1.8 %, SW 3.2 % |
 
 **Park fill.** Hand-placed set pieces come first. The layout script then fills any part of the park that is more than
 40 studs from food (about 3 s of rolling for a small ball) with the quarter's own kind of place:

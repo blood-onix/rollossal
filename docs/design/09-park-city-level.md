@@ -257,6 +257,7 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 | **Neighbourhoods** | 150 – 260 | Market Street and the Roof Run (NE), Car Park and Building Site (SE), Terraces and Cottages (SW), Station and Rail Yard (NW) | 4 – 5 |
 | **Downtown** | 0 – 150 | Plaza, four tower blocks, the Sky Rail at y 30, the Glass Tower | 5 – 6 |
 
+- **Park edge**: a 1-stud kerb (a D 1 ball hops it) with gaps at the 8 gates. It marks the edge; it is not a size gate.
 - **Four Spokes**: 40-wide avenues on the x and z axes, from the Plaza to the park edge. In the park they are gravel
   paths, and every spawn sees one.
 - **Why 1,000 studs:** the park ring gives each of 12 small balls about 57,000 square studs for the first 1.5 minutes.
@@ -283,7 +284,7 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 | --- | --- | --- | --- |
 | **Mushroom Glade** | (−430, −300), r 32 | D 1 – 3 | Fairy rings, acorn falls. 4 **bounce caps** (big toadstools, bounce 5 up) lift a ball onto a log with 8 pieces at the top of Tier 2. |
 | **Giant Oak and Tree House** | (−370, −370) | D 2 – 8 | A root ramp spirals twice round the trunk (8 wide, 12°) to a deck at y 22: a *picnic* scene and a **Magnet**. A **zipline** (rail R4) runs 100 studs down to the NW park gate. |
-| **Root Tunnels** | under the oak | D < 3 | Three tunnels 3 wide and high from the glade to the trunk: a squirrel's stash of 12 top-of-tier pieces and a golden spot. |
+| **Root Tunnels** | root hollow at (−337, −337), beside the oak | D < 3 | Two covered passages, 3 wide and 3 high inside, one from the south (z −315) and one from the stream bank (x −326), meet in a roofed root hollow with a squirrel's stash of 12 top-of-tier pieces and a golden spot. |
 | **The Stream** | x = −320, z −500 to −300 | all | 10 wide, shallow, slow (wading water). Crossings: footbridge, stepping stones 2.5 apart, and a **fallen log** that is rail R1 for D 1 – 6. |
 | **Campsite** | (−455, −90) | D 2 – 15 | *Campsite* scene; a camper van at the back (Tier 4). |
 | **Catapult C1** | (−330, −250), by the NW gate | D 2 – 12 | Section 9.5. |
@@ -325,7 +326,7 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 
 | Place | Where | Size window | What happens |
 | --- | --- | --- | --- |
-| **Hedge Maze** | (−349, 349), 90 × 90, centre room 18 × 18 | D 1 – 5, then food | Hedges 3.2 × 1.5 × 3 (bulk 2.4), corridors 6 wide. The centre holds the Gnome King, 15 top-of-tier pieces and a golden spot. **At D 4.8 the walls become food**: about 60 hedge pieces. |
+| **Hedge Maze** | (−349, 349), 90 × 90, centre room 18 × 18 | D 1 – 6, then food | Each 6 × 6 wall cell is four solid hedge pieces of 3 × 3 × 3 (bulk 3.0), with corridors 6 wide. The centre holds the Gnome King, 15 top-of-tier pieces and a golden spot. **At D 6, just as the ball fills a corridor, the walls become food**: 476 hedge pieces. |
 | **Flower Beds and Rose Garden** | (−285, 430) | D 1 – 6 | *Flower bed* scenes, bird baths, a sundial. |
 | **Allotments** | (−440, 270) | D 1 – 40 | *Allotment plot* scenes. A greenhouse with a 2.5-wide door is small-only inside; you eat it whole at D 24. |
 | **Sprinkler Lawn** | (−230, 350) | D 1 – 8 | Wet grass (slick) with rotating sprinklers; the food is beyond it. |
@@ -342,8 +343,9 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 - **4 gate corners** at the Spoke gates (a *gate corner* and an *ice-cream stop* on either side of the path), plus bus
   stops and kerb lines of street furniture along the inner pavement. These are the first Tier 3 field and the first
   place balls meet.
-- **4 diagonal gates**, each with a *bike rack* and a **drain** (3 wide, small-only): a safe crossing under the traffic.
-  The SW one sits at (−250, 318), clear of the maze.
+- **4 diagonal gates**, each with a *bike rack* and a **drain**: a storm-drain pipe ride under the traffic for balls up
+  to D 3 (pipes P_ne, P_se, P_sw, P_nw; a placeholder in 012, a ride in 013). The SW one sits at (−250, 318), clear of
+  the maze.
 
 ### 7.7 Neighbourhoods (Tiers 4 – 5)
 
@@ -357,10 +359,13 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
   - **Down**: the last roof (y 20) ends in a billboard ramp that launches you over the hoardings onto the Plaza. This
     is the early way into Downtown. There is a golden spot on the last roof.
 - **SE, Car Park and Building Site.**
-  - The **car park** at (197, 203) has three decks (y 8, 16, 24) joined by spiral ramps, with *parking row* scenes and
-    a golden spot on the top deck.
+  - The **car park** at (197, 203) has three decks (y 8, 16, 24) with *parking row* scenes and a golden spot on the
+    top deck. Decks are 8 apart, so only balls under about D 7 fit inside; the open top deck is for big balls. The
+    ramps are an open ramp up the east side to the top deck (16°), a west ramp to deck 1, and an inside ramp from
+    deck 1 to deck 2.
   - The **crane jib** over the top deck is rail R6 (D 10 – 35): it carries you 90 studs into Downtown's SE block.
-  - The **Building Site** at (205, 85) is a *building site* scene with a container platform (y 12) and plank ramps.
+  - The **Building Site** at (205, 85) is a *building site* scene with a container platform (y 12) and plank ramps,
+    fenced by hoarding pieces (eaten from D 17) with a 24-stud gate on the west side.
 - **SW, Terraces and Cottages.** Two rows of houses on a street (x −250 to −60, z 170 to 245), with *front garden*,
   *removal van* and *yard sale* scenes. The back alley (3 wide) is small-only.
   - **Cottages** (bulk about 20): eaten from **D 40**.
@@ -372,8 +377,8 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 
 ### 7.8 Downtown (Tiers 5 – 6)
 
-- **Hoardings** round the `m` 150 square (concrete barrier and panel, bulk 8.3) and delivery trucks across the Spokes
-  (bulk 9.8): **Downtown opens at about D 17 to 20.** Before that you get in over the Roof Run, the crane, a catapult or
+- **Hoardings** round the `m` 150 square: 100 hoarding pieces (12 × 4 × 12, bulk 8.3), across the Spokes too, with
+  delivery trucks (bulk 9.8) parked in front of them: **Downtown opens at about D 17.** Before that you get in over the Roof Run, the crane, a catapult or
   the Sky Rail.
 - **The Plaza** (r 50): a *fountain plaza* scene and the theme landmark on a pedestal (the Giant Duck in `city`, the
   Mega Tree in `winter`).
@@ -396,7 +401,7 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
   - The park keeps its Tier 3 – 5 objects all run, so a slow starter still has a route.
 - **Golden object**: one per day, seeded among 9 spots: Duck Island, the maze centre, the root tunnels, the tree house,
   the skate-shelter roof, the last roof of the Roof Run, the car park top deck, the Glass Tower helipad and one
-  catapult target (section 9.5).
+  catapult target (section 9.5). The layout holds the first 8; the catapult target joins when catapults work (013).
 
 ## 9. Mechanics this map needs (approved 2026-11-04)
 
@@ -473,8 +478,9 @@ Each is a pure, data-driven rule (Constitution III and VII), behind its own flag
 
 | Gate | Bulk | Opens at D | Unlocks |
 | --- | --- | --- | --- |
-| Root tunnels, drains, back alley, greenhouse door | 2.5 – 3 wide | closes above it | small-only places |
-| Hedge maze, court fences, park railings | 2.4 | 4.8 | the maze becomes food |
+| Root tunnels, drain pipes, back alley, greenhouse door | 2.5 – 3 wide | closes above it | small-only places |
+| Hedge maze (476 pieces of 3 × 3 × 3) | 3.0 | 6 | the maze becomes food |
+| Court fences | 2.4 | 4.8 | the fences become food |
 | Pond depth | 5 deep | 10 | wading |
 | Downtown hoardings | 8.3 | 17 | Downtown |
 | Delivery trucks on the Spokes | 9.8 | 20 | the Spokes to the Plaza |
@@ -590,30 +596,35 @@ polisher (winter), ducks on the pond (4). They move on a path or a spin, never w
 
 ## 13. Budgets
 
-The model needs about **2,250 food objects** for 12 players (each player's share × 12, with respawns counted). That is
-more than today's 1,500-placement cap, so this design needs one engine change:
+The approved layout ([maps/README.md](maps/README.md)) holds **4,394 food objects**. That is more than the
+2,000-part server budget could carry as Parts, so this design needs one engine change:
 
-- **Light objects (Tiers 1 – 2) become data-only.** The server keeps their state in a table and checks an absorb against
-  the data position. It makes no Part. Each client builds only the light objects within 120 studs of its camera, from a
-  pool, and hides them for balls two tiers past them (the `StuckVisuals` placement lookup already works this way).
-  These are about 1,100 objects.
-- **Server Parts** are the Tiers 3 – 6 food, about 1,150 placements, plus at most 250 blocks, 17 pads, 6 catapults,
-  rails and the hub. That keeps active parts at about 1,500 or less, under the 2,000 budget.
+- **Light objects (Tiers 1 – 2) become data-only.** The server keeps their state in a table and checks every absorb
+  against the data position. It makes no Part. Each client builds only the light objects within 120 studs of its
+  camera, from a pool, and hides them for balls two tiers past them. The maze's hedge pieces are light objects too,
+  marked solid.
+- **Server Parts** are the Tier 3 – 6 food, plus the blocks, placeholders, balls and runtime parts, about 1,250 in all
+  with 12 balls.
 
-| Tier | Park | Ring Road | Neighbourhoods | Downtown | Total | Kind |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1 Crumb | 560 | – | – | – | 560 | light (client) |
-| 2 Pocket | 500 | 20 | 20 | – | 540 | light (client) |
-| 3 Picnic | 360 | 120 | 140 | 20 | 640 | Part |
-| 4 Street | 40 | 13 moving + 60 | 230 | 40 | 383 | Part |
-| 5 House | 4 | – | 70 | 30 | 104 | Part |
-| 6 Skyline | – | – | 2 | 24 | 26 | Part |
-| **Total** | | | | | **2,253** | 1,153 Parts |
+| Tier | Objects | Kind |
+| --- | --- | --- |
+| 1 Crumb | 1,672 | light (client) |
+| 2 Pocket | 1,786 (476 of them hedge pieces) | light (client) |
+| 3 Picnic | 685 | Part |
+| 4 Street | 191, plus 13 cars in traffic | Part |
+| 5 House | 52 | Part |
+| 6 Skyline | 8 | Part |
+| **Total** | **4,394** | 3,458 light, 936 Parts |
 
-- **The first-pass layout** ([maps/README.md](maps/README.md)) holds T1 1,677, T2 1,430, T3 691, T4 191 + 13 traffic,
-  T5 52, T6 8: 3,107 light objects and 942 Parts, with 0 overlaps. It has more small food than the table above and fewer
-  Tier 5 – 6 buildings (60 against about 130), so the 012 pace test tunes both. Expect a lower ceiling for the top
-  players until it does.
+**Limits** (the layout script fails above them):
+- server objects (Tiers 3 – 6) at most 1,200;
+- light objects at most 3,500;
+- in each park quarter, at most 5 % of the area more than 40 studs from food;
+- 0 overlaps.
+
+The growth model of section 5 assumed about 130 Tier 5 – 6 objects, and the layout has 60, so expect a lower ceiling for
+the top players until the 012 pace report and tuning settle it. More small food than the model assumed makes the early
+game easier. If the report shows that, the fill places' crumbs are the first thing to cut.
 - `cullTierDelta` 2 stays: a Tier 4 ball renders no Tier 1 or 2 food.
 - Triangles: as in 03, the whole scene ≤ 550,000 in `winter`, and what a Tier 6 player sees ≤ 290,000. The light
   objects count only near the camera.

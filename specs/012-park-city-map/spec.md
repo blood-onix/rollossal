@@ -42,7 +42,7 @@ Compare the world with the overview and zone maps in `docs/design/maps/`.
 1. **Given** the Park City flag is off (the default), **When** a server starts, **Then** Downtown "Inside Out" loads
    exactly as today.
 2. **Given** the Park City flag is on, **When** a server starts, **Then** the world built is the layout: its zones,
-   ground, roads, paths, buildings, roofs, ramps, decks, maze, tunnels, drains, water areas, 12 spawns, and every scene,
+   ground, roads, paths, buildings, roofs, ramps, decks, the maze's hedge pieces, root tunnels, water areas, 12 spawns, and every scene,
    trail, kerb line and landmark object at its layout position, height and facing.
 3. **Given** a new player in Park City, **When** they spawn, **Then** they start at D 1 on one of the 12 spawns, facing
    the city, with the 20 doorstep crumbs of that spawn around them, all edible at D 1.
@@ -95,11 +95,11 @@ eat a long thin object that the old rule refused, bump a too-big object, and wat
 
 ### User Story 3 - Twelve players on the full map without the server choking (Priority: P2)
 
-Twelve players can play Park City together at a steady frame rate. The roughly 3,100 smallest objects (Tiers 1 and 2) do
+Twelve players can play Park City together at a steady frame rate. The roughly 3,460 smallest objects (Tiers 1 and 2, including the maze's 476 hedge pieces) do
 not each cost the server a part: the server keeps their state as data and checks every absorb against their data
 position, and each player's device draws only the ones near them. Bigger objects work as they do today.
 
-**Why this priority**: the layout holds about 4,000 food objects, over the 2,000-part server budget if every object
+**Why this priority**: the layout holds about 4,400 food objects, over the 2,000-part server budget if every object
 were a part. Without this, the map cannot ship at its approved density. It is P2 because P1 can be shown with fewer
 crumbs, but the feature is not done without it.
 
@@ -177,7 +177,7 @@ rejected. It is P2 only because it follows from P1.
   small ball cannot get stuck or drown. The island is reachable by the lily pads (jumping) and by rolling.
 - **Inert rails, pads and catapults**: a ball touching them is treated like ordinary static geometry (or rolls
   through a pad), so they never trap a ball or throw it.
-- **Small-only tunnels and drains**: a ball too big for a tunnel is stopped at its mouth and never wedged inside. A
+- **Small-only tunnels**: a ball too big for a root tunnel is stopped at its mouth and never wedged inside. A
   ball that grows while inside is pushed out of the nearer end.
 - **A light object a client has not drawn yet**: absorbs are judged by the server's data, not by what the client drew.
   A client that never drew an object can still eat it if it is genuinely touching it.
@@ -201,7 +201,7 @@ rejected. It is P2 only because it follows from P1.
   map means changing the layout script, regenerating the layout, and regenerating the world data, never editing the
   world data by hand.
 - **FR-003**: The built world MUST contain every element of the layout at its position, height and facing:
-  - ground, roads, paths, buildings, roofs, ramps and spiral ramps, decks, the maze hedges, tunnels and drains, water
+  - ground, roads, paths, buildings, roofs, ramps and spiral ramps, decks, the root tunnels (covered passages), water
     surfaces;
   - 12 spawns;
   - every scene object, trail object, kerb-line object and landmark.
@@ -213,7 +213,7 @@ rejected. It is P2 only because it follows from P1.
   anything.
 - **FR-006**: Size gates (hoardings, delivery trucks on the Spokes, hedges, fences, railings) MUST be ordinary objects
   that block smaller balls and are eaten by balls big enough for them.
-- **FR-007**: Small-only tunnels and drains MUST admit balls up to their size (3 studs) and stop bigger balls at the
+- **FR-007**: The small-only root tunnels MUST admit balls up to their size (3 studs) and stop bigger balls at the
   mouth without wedging them.
 - **FR-008**: Spawns MUST follow the layout. A new ball starts at D 1 on its spawn, facing the city.
 - **FR-009a**: The park MUST have no empty lawn: in each park quarter, at most 5 % of the area may be more than 40 studs
@@ -345,4 +345,6 @@ The growth pace (sizes and tier times) is **reported, never gated** in this feat
   check stays on `docs/release-candidate.md`.
 - **Owner-only checks** go to `docs/release-candidate.md`: phone frame rate, feel and tuning values, and the people
   round.
+- **Size tool**: before light objects exist (plan Stage B), a Studio-only size tool behind a flag, off in anything
+  published, lets the owner and the route check set the ball's diameter to tour each ring at the size it was built for.
 - **Hub**: the hub moves to x = −760, outside Park City's 620-stud scenery bound, while Park City is active.
