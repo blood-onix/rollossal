@@ -31,6 +31,27 @@ switched back off afterwards.
   with the owner (release-candidate). T047 stays open for them. Driving the ball across the map tripped the server
   displacement check once (the ball was returned to a spawn); the size tool only offers 1, 3, 6, 15, 35 and 80.
 
+### Round 3 (T047): cues measured numerically, Downtown with `ReadableRules` and `DebugSize` on, put back off afterwards
+
+Client `execute_luau` sampled part CFrames around the live ball in Play (no eyes needed for these lines).
+
+- Bob (FR-015), D 1 and D 6: every edible object within 4 D that can be touched moved (5 of 5 at D 1; all 8 touchable
+  edible objects of the nearest 27 at D 6, up to 0.26 studs). The 19 that did not move have `CanTouch` false (doorstep
+  objects dropped by `Doorstep.clear`), which the cue skips by design. Too-big objects near the ball (2 at D 6): 0 moved.
+- Reduce motion: with the `ReduceMotion` attribute on, the 5 bobbing objects at D 1 stopped (0 moved in 3 s). With
+  the attribute back off the cue resumed. At D 15 with reduce on, a tier 5 and tier 4 `TierUnlocked` produced no wobble
+  (the one part that moved, `dt_b1_0_ib_1`, also moves with no cue and no reduce motion: it is a part another script moves).
+- New-tier wobble: a `TierUnlocked` for tier 5 sent from the server wobbled 8 of 8 tier 5 objects within 6 D of the ball
+  (roll above 0.02 rad) and 0 of the 15 objects of tiers 3, 4 and 6. A tier 2 event found no tier 2 objects near.
+  (`DebugSize` does not send `TierUnlocked`, so the event was sent by hand through the real remote.)
+- Bump cooldown with a non-empty stuck list (FR-017): 7 objects stuck at D 6.8, ball held against `dt_b1_3_ia_2`
+  (a too-big building). Knocks: 10 to 7 at 1.80 s, 7 to 4 at 2.83 s, 4 to 1 at 3.82 s, 1 to 0 at 4.85 s. Each is 3
+  objects (`knockOffCount`) and they are 0.99 to 1.03 s apart (`bumpCooldown` 1.0) despite continuous rubbing.
+  The diameter fell on each knock. This closes the inconclusive part of round 2.
+- No text banner showed (round 2 capture; the Hud code path is gated by the flag).
+- **Still not verified:** the thud sound and the camera nudge by ear and eye. They stay with the owner
+  (release-candidate).
+
 ## Stage B and C: Park City (T026, T035, T036)
 
 - T026: world present at its layout coordinates. 91 blocks (no missing id), 1,392 placements before Stage C, all 12 spawns,

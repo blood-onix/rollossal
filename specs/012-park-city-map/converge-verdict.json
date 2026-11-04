@@ -1,16 +1,14 @@
 {
   "verdict": "incomplete",
-  "remaining": [
-    "T047 Numerically verify the bob and new-tier wobble cues on Downtown with ReadableRules on (sample part CFrames near a live ball: edible objects move, too-big ones do not, reduce motion stops them) and the bump cooldown with a non-empty stuck list, then record each line in playtest.md and switch the flag back off"
-  ],
+  "remaining": [],
   "human": [
-    {
-      "item": "T047 the bump thud sound and the by-eye feel of the bob and wobble cues",
-      "reason": "Needs eyes and ears on a live ball; already listed in docs/release-candidate.md as an owner check."
-    },
     {
       "item": "T048 D 3 Giant Oak spiral ramp to the deck (US1 scenario 4)",
       "reason": "The tree house deck lies inside the oak_trunk block and the giant_oak object, and the ramp ends 9 studs short of it. Fixing it changes the owner-approved layout (constitution VII), so the owner must decide first. The other T048 routes were run and pass."
+    },
+    {
+      "item": "T016 / T047 thud sound and camera nudge by ear and eye, by-eye feel of the bob and wobble cues",
+      "reason": "Needs eyes and ears on a live ball. The cues were measured numerically in T047 and the rest is listed in docs/release-candidate.md as an owner check."
     },
     {
       "item": "T045 Gate 6: owner approval of the shots and of the played build",
@@ -21,5 +19,5 @@
       "reason": "Needs two connected Studio clients; only one is available here. The outbox spec covers the server side."
     }
   ],
-  "summary": "T046 is fixed and the T048 routes other than the oak pass; the agent can still verify the T047 bob, wobble and bump-cooldown cues by numbers, while the Giant Oak deck layout, the by-eye cue checks and gate 6 need the owner."
+  "summary": "T047 is done and verified by numbers and scripts/check.sh passes (545 tests); no agent-doable work remains, and what is left (Giant Oak deck layout, by-ear and by-eye cue checks, two-client check, gate 6) needs the owner."
 }
