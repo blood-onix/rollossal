@@ -57,17 +57,28 @@ coordinates, so they cannot drift apart.
 
 | | Count |
 | --- | --- |
-| Tier 1 Crumb | 1,102 |
-| Tier 2 Pocket | 989 (including the maze's 119 hedge pieces) |
-| Tier 3 Picnic | 494 |
-| Tier 4 Street | 166, plus 13 cars in traffic |
+| Tier 1 Crumb | 1,677 |
+| Tier 2 Pocket | 1,430 (including the maze's 119 hedge pieces) |
+| Tier 3 Picnic | 691 |
+| Tier 4 Street | 191, plus 13 cars in traffic |
 | Tier 5 House | 52 |
 | Tier 6 Skyline | 8 |
-| Light objects (Tiers 1 – 2, client-side data) | 2,091 |
-| Part objects (Tiers 3 – 6) | 720 |
-| Scenes, trails and kerb lines | 157 scenes, 44 lines |
+| Light objects (Tiers 1 – 2, client-side data) | 3,107 |
+| Part objects (Tiers 3 – 6) | 942 |
+| Scenes, trails and kerb lines | 233 scenes (67 of them park fill), 44 lines |
 | Overlaps | 0 |
+| Park more than 40 studs from food, by quarter | before fill NW 26.4 %, NE 24.8 %, SE 24.8 %, SW 26.4 %; after NW 0.9 %, NE 2.8 %, SE 1.8 %, SW 2.8 % |
 
-These counts are the first pass. The growth model assumed about 130 Tier 5 – 6 objects, and the layout has 60, so the
-top players' ceiling will be lower until feature 012's pace test tunes it (more towers, taller variants, or more
-houses).
+**Park fill.** Hand-placed set pieces come first. The layout script then fills any part of the park that is more than
+40 studs from food (about 3 s of rolling for a small ball) with the quarter's own kind of place:
+- NW: groves, log piles and meadows;
+- NE: meadows, orchards, lawn games and groves;
+- SE: lawn games, a football pitch, meadows and orchards;
+- SW: orchards, meadows, lawn games and groves;
+- benches and bushes where nothing bigger fits.
+
+Fill places stay 45 studs clear of spawns. Two places of the same kind are never within 70 studs of each other. Fill
+places carry few crumbs: they fill space and add trees and furniture, and do not feed small balls more.
+
+These counts are a first pass. The growth model assumed about 130 Tier 5 – 6 objects, and the layout has 60, so the
+top players' ceiling will be lower until feature 012's pace report and tuning settle it.

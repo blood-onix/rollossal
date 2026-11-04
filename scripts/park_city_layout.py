@@ -75,7 +75,8 @@ OBJECTS: dict[str, tuple[float, float, float]] = {
     "pedal_car": (3.4, 2.0, 2.0), "bin_large": (3.0, 3.0, 4.0), "luggage_trolley": (6.0, 3.0, 3.0),
     "ticket_machine": (2.0, 2.0, 6.0), "paddling_pool": (4.6, 4.6, 1.0), "kennel": (3.0, 3.0, 3.0),
     "bouncy_castle": (10.0, 10.0, 7.0), "catapult": (8.0, 5.0, 6.0), "shelter_bench": (6.0, 2.0, 2.5),
-    "bush": (6.0, 6.0, 4.0), "flower_planter": (6.0, 2.0, 2.0), "life_ring_stand": (2.0, 1.0, 4.0),
+    "bush": (6.0, 6.0, 4.0), "goal": (7.0, 2.0, 2.5), "log": (6.0, 1.2, 1.2), "fruit_tree": (7.0, 7.0, 11.0),
+    "boules_set": (1.0, 0.8, 0.6), "giant_chess_piece": (1.2, 1.2, 2.6), "hammock": (6.0, 2.0, 3.0), "flower_planter": (6.0, 2.0, 2.0), "life_ring_stand": (2.0, 1.0, 4.0),
     # Tier 4 Street (bulk 7.5 - 17.5)
     "hatchback": (14.0, 6.0, 5.0), "taxi": (14.0, 6.0, 5.0), "van": (17.0, 7.0, 8.0), "camper_van": (16.0, 7.0, 8.0),
     "city_bus": (25.0, 8.0, 10.0), "minibus": (16.0, 7.0, 7.0), "digger": (16.0, 7.0, 9.0), "parade_float": (18.0, 8.0, 9.0),
@@ -159,6 +160,12 @@ SCENE_KINDS: dict[str, dict] = {
     "island_stash": {"fp": (24, 24), "items": [("rubber_duck", 6, "f"), ("cupcake", 3, "f"), ("sandwich", 3, "m"), ("watermelon", 2, "m"), ("cool_box", 2, "m"), ("picnic_basket", 2, "b"), ("inflatable_flamingo", 1, "b"), ("golden_acorn", 1, "m")]},
     "squirrel_stash": {"fp": (10, 10), "items": [("acorn", 4, "f"), ("conker", 4, "m"), ("mushroom_cluster", 2, "b"), ("birds_nest", 2, "b")]},
     "maze_centre": {"fp": (16, 16), "items": [("gnome_hat", 3, "f"), ("garden_gnome", 6, "m"), ("watering_can", 3, "m"), ("bird_bath", 2, "b"), ("gnome_king", 1, "b")]},
+    "grove": {"fp": (36, 36), "items": [("leaf", 4, "f"), ("acorn", 3, "f"), ("pine_cone", 2, "f"), ("mushroom_cluster", 2, "m"), ("birds_nest", 1, "m"), ("bush", 3, "m"), ("big_tree", 3, "b")]},
+    "meadow": {"fp": (40, 26), "items": [("daisy", 5, "f"), ("ladybird", 1, "f"), ("tulip", 5, "m"), ("rose", 3, "m"), ("bird_bath", 1, "b"), ("deckchair", 2, "b")]},
+    "orchard": {"fp": (44, 30), "items": [("strawberry", 3, "f"), ("apple", 6, "f"), ("picnic_basket", 1, "m"), ("wheelbarrow", 1, "m"), ("fruit_tree", 5, "b")]},
+    "lawn_games": {"fp": (36, 24), "items": [("boules_set", 2, "f"), ("tennis_ball", 2, "f"), ("frisbee", 1, "m"), ("football", 1, "m"), ("giant_chess_piece", 6, "m"), ("deckchair", 2, "b"), ("picnic_table", 2, "b")]},
+    "football_pitch": {"fp": (40, 60), "items": [("bottle_cap", 2, "f"), ("football", 2, "m"), ("traffic_cone", 6, "m"), ("water_bottle", 2, "m"), ("goal", 2, "b"), ("bench", 2, "b")]},
+    "log_pile": {"fp": (24, 16), "items": [("pine_cone", 2, "f"), ("snail_shell", 2, "f"), ("mushroom_cluster", 1, "m"), ("log", 6, "m"), ("wheelbarrow", 1, "b"), ("hammock", 1, "b")]},
     "roof_stash": {"fp": (14, 14), "items": [("helmet", 2, "f"), ("skateboard", 3, "m"), ("cool_box", 2, "m"), ("deckchair", 2, "b"), ("barbecue_small", 1, "b")]},
 }
 
@@ -463,18 +470,22 @@ for r, row in enumerate(MAZE):
             block(f"hedge_{r:02d}_{c:02d}", "hedge", mx0 + c * 6, mz0 + r * 6, mx0 + c * 6 + 6, mz0 + r * 6 + 6, 0, 3, None)
 scene("maze_centre", "maze_centre", mx0 + 7 * 6 + 3, mz0 + 7 * 6 + 3, 0, Z, label="Gnome King")
 golden("gold_maze", mx0 + 7 * 6 + 3, mz0 + 7 * 6 + 3, 0, "maze centre")
-scene("sw_flowers_1", "flower_bed", -300, 420, 0, Z, label="flower bed")
-scene("sw_flowers_2", "flower_bed", -270, 440, 0, Z, label="flower bed")
-scene("sw_flowers_3", "flower_bed", -300, 455, 180, Z, label="rose garden")
-for k, (ax, az) in enumerate(((-455, 245), (-425, 245), (-455, 285), (-425, 285))):
-    scene(f"allotment_{k + 1}", "allotment_plot", ax, az, 90 if ax < -440 else 270, Z, label="allotment")
-block("greenhouse", "glass", -478, 300, -460, 310, 0, 10, "greenhouse, door 2.5 wide")
+for k, (fx, fz) in enumerate([(x, z) for z in (420, 436) for x in (-326, -298, -270)]):
+    scene(f"sw_flowers_{k + 1}", "flower_bed", fx, fz, 0, Z, label="formal flower garden" if k == 1 else None)
+scene("sw_roses_1", "flower_bed", -312, 454, 180, Z, label="rose garden")
+scene("sw_roses_2", "flower_bed", -284, 454, 180, Z, label=None)
+ALLOT = [(x, z) for z in (232, 252, 272, 292) for x in (-470, -440)]
+for k, (ax, az) in enumerate(ALLOT):
+    scene(f"allotment_{k + 1}", "allotment_plot", ax, az, 90 if ax < -455 else 270, Z, label="allotment" if k < 2 else None,
+          fp=(16, 24))
+block("allotment_path", "gravel", -458, 222, -452, 302, 0, 0.05, None)
+block("greenhouse", "glass", -478, 306, -460, 316, 0, 10, "greenhouse, door 2.5 wide")
 layout["water"].append({"id": "sprinklers", "kind": "slick", "rect": [-260, 320, -200, 380]})
 scene("sprinkler_reward", "picnic", -170, 350, 270, Z, label="picnic past the sprinklers", scale=0.8)
 layout["hazards"].append({"id": "lawnmower", "kind": "sweeper", "object": "lawnmower",
                           "path": [[-290, 312], [-195, 312], [-195, 388], [-290, 388]], "speed": 8, "eatenFromD": 6.2})
 scene("sw_party", "birthday_party", -440, 360, 90, Z, label="birthday party")
-scene("sw_kit_1", "park_kit", -330, 440, 180, Z, label="benches by the loop")
+scene("sw_kit_1", "park_kit", -360, 470, 0, Z, label="benches")
 scene("sw_kit_2", "park_kit", -440, 320, 90, Z, label="benches by the loop")
 scene("sw_ice", "ice_cream_stop", -40, 420, 0, Z, label="ice-cream stop")
 landmark("windmill", "windmill", -290, 470)
@@ -734,8 +745,7 @@ def overlap(a, b, shrink=0.5):
     return a[0] + shrink < b[2] and b[0] + shrink < a[2] and a[1] + shrink < b[3] and b[1] + shrink < a[3]
 
 
-def check_overlaps() -> list[str]:
-    """Scenes and buildings must not sit on roads, paths, water or each other (ground level only)."""
+def _thing_boxes():
     things = []
     for sc in layout["scenes"]:
         if sc["kind"] == "floating" or sc["y"] > 0.5:
@@ -746,6 +756,14 @@ def check_overlaps() -> list[str]:
             continue
         dims = OBJECTS[lm["object"]]
         things.append((lm["id"], footprint_box(lm["x"], lm["z"], dims[0], dims[1], lm.get("yaw", 0))))
+    return things
+
+
+SOLID_KINDS = {"bowl", "ramp", "box", "roof", "tower", "sand", "glass", "island", "jetty", "log_platform", "spiral",
+               "tree_trunk", "deck", "building", "bridge", "stone"}
+
+
+def _forbidden_boxes(include_solids: bool = True):
     forbidden = []
     for b in layout["blocks"]:
         if b["kind"] in ("gravel",) or b["id"] in ("market_street", "terrace_street") or b["id"].startswith("spoke_") \
@@ -760,6 +778,24 @@ def check_overlaps() -> list[str]:
             forbidden.append((w["id"], (cx - rx, cz - rz, cx + rx, cz + rz)))
         elif w["kind"] != "slick":
             forbidden.append((w["id"], tuple(w["rect"])))
+    if include_solids:
+        forbidden += [(b["id"], tuple(b["rect"])) for b in layout["blocks"] if b["kind"] in SOLID_KINDS]
+        forbidden += [(pd["id"], (pd["x"] - 4, pd["z"] - 4, pd["x"] + 4, pd["z"] + 4)) for pd in layout["pads"]]
+        forbidden += [(c["id"], (c["x"] - 6, c["z"] - 6, c["x"] + 6, c["z"] + 6)) for c in layout["catapults"]]
+        for h in layout["hazards"]:
+            if "path" in h:
+                xs = [pt[0] for pt in h["path"]]
+                zs = [pt[1] for pt in h["path"]]
+                forbidden.append((h["id"], (min(xs) - 3, min(zs) - 3, max(xs) + 3, max(zs) + 3)))
+            elif "radius" in h:
+                forbidden.append((h["id"], (h["x"] - h["radius"], h["z"] - h["radius"], h["x"] + h["radius"], h["z"] + h["radius"])))
+    return forbidden
+
+
+def check_overlaps() -> list[str]:
+    """Scenes and buildings must not sit on roads, paths, water or each other (ground level only)."""
+    things = _thing_boxes()
+    forbidden = _forbidden_boxes(include_solids=False)
     allowed_pairs = {("root_stash", "giant_oak"), ("playground", "sandpit_toys")}
     street_ok = {"market_street": ("market_",), "terrace_street": ("sw_removal",)}
     problems = []
@@ -780,13 +816,135 @@ def check_overlaps() -> list[str]:
     return problems
 
 
+# ---------------- Park fill: themed natural places wherever the park is still empty ----------------
+# Design rule (09-park-city-level.md, section 7): every point of the park is within FILL_RADIUS studs of food (about
+# 3 s of rolling for a small ball). Hand-placed set pieces come first; this fills the rest with each quarter's own kind
+# of place (groves in the Woods, meadows and orchards by the Pond, games and a pitch in the Playground quarter, orchards
+# and meadows in the Gardens). Deterministic: same input, same output.
+FILL_RADIUS = 40
+FILL_THEMES = {"nw": ["grove", "log_pile", "meadow", "park_kit"], "ne": ["meadow", "orchard", "lawn_games", "park_kit", "grove"],
+               "se": ["lawn_games", "football_pitch", "meadow", "orchard", "park_kit"],
+               "sw": ["orchard", "meadow", "lawn_games", "park_kit", "grove"]}
+SPAWN_CLEAR = 45  # nothing from the fill within this many studs of a spawn
+
+
+def _food_points():
+    pts = []
+    for sc in layout["scenes"]:
+        pts += [(i["x"], i["z"]) for i in sc["items"]]
+    for t in layout["trails"]:
+        pts += [(i["x"], i["z"]) for i in t["items"]]
+    return pts
+
+
+def _food_grid():
+    from collections import defaultdict
+    grid = defaultdict(list)
+    for x, z in _food_points():
+        grid[(int(x // 20), int(z // 20))].append((x, z))
+    return grid
+
+
+def _nearest(grid, x, z, r=FILL_RADIUS + 20):
+    best = 1e9
+    for i in range(int((x - r) // 20), int((x + r) // 20) + 1):
+        for j in range(int((z - r) // 20), int((z + r) // 20) + 1):
+            for px, pz in grid.get((i, j), ()):
+                best = min(best, math.hypot(px - x, pz - z))
+    return best
+
+
+def _quarter(x, z):
+    return ("n" if z < 0 else "s") + ("w" if x < 0 else "e")
+
+
+def _in_park(box) -> bool:
+    x0, z0, x1, z1 = box
+    if max(abs(x0), abs(x1), abs(z0), abs(z1)) > 497:
+        return False
+    nx = 0 if x0 <= 0 <= x1 else min(abs(x0), abs(x1))
+    nz = 0 if z0 <= 0 <= z1 else min(abs(z0), abs(z1))
+    return max(nx, nz) >= 306  # the nearest point of the box is still outside the park edge
+
+
+def _blocked(box) -> bool:
+    for _, fbox in _forbidden_boxes():
+        if overlap(box, fbox, 0.0):
+            return True
+    for _, tbox in _thing_boxes():
+        if overlap(box, tbox, -2.0):  # keep a 2-stud gap between places
+            return True
+    return False
+
+
+def fill_park() -> int:
+    grid = _food_grid()
+    placed = 0
+    counters = {q: 0 for q in FILL_THEMES}
+    cells = [(gx, gz) for gx in range(-495, 500, 10) for gz in range(-495, 500, 10) if max(abs(gx), abs(gz)) >= 310]
+    for _ in range(3):  # later passes fill what is left between new places
+        cells.sort(key=lambda c: (-_nearest(grid, *c), c))
+        for (cx, cz) in cells:
+            if _nearest(grid, cx, cz) <= FILL_RADIUS:
+                continue
+            if any(math.hypot(cx - sp["x"], cz - sp["z"]) < SPAWN_CLEAR for sp in layout["spawns"]):
+                continue
+            q = _quarter(cx, cz)
+            kinds = FILL_THEMES[q]
+            yaw = round(math.degrees(math.atan2(-cx, cz)) % 360 / 45) * 45 % 360  # front faces the city
+            done = False
+            for attempt in range(len(kinds)):
+                kind = kinds[(counters[q] + attempt) % len(kinds)]
+                # Variety: no two places of the same kind within 70 studs of each other.
+                if any(sc["kind"] == kind and math.hypot(sc["x"] - cx, sc["z"] - cz) < 70 for sc in layout["scenes"]):
+                    continue
+                w, d = SCENE_KINDS[kind]["fp"]
+                for turn in (0, 90):
+                    box = footprint_box(cx, cz, w, d, (yaw + turn) % 360)
+                    if _in_park(box) and not _blocked(box):
+                        break
+                else:
+                    continue
+                yaw = (yaw + turn) % 360
+                done = True
+                scene(f"fill_{q}_{counters[q] + 1:02d}", kind, cx, cz, yaw, f"park_{q}", label=kind.replace("_", " "))
+                for it in layout["scenes"][-1]["items"]:
+                    grid[(int(it["x"] // 20), int(it["z"] // 20))].append((it["x"], it["z"]))
+                counters[q] += 1
+                placed += 1
+                break
+            if not done:
+                continue
+    return placed
+
+
+def coverage() -> dict:
+    grid = _food_grid()
+    out = {}
+    for q, (sx, sz) in {"nw": (-1, -1), "ne": (1, -1), "se": (1, 1), "sw": (-1, 1)}.items():
+        tot = far = 0
+        for gx in range(5, 500, 10):
+            for gz in range(5, 500, 10):
+                x, z = sx * gx, sz * gz
+                if max(abs(x), abs(z)) < 305:
+                    continue
+                tot += 1
+                far += _nearest(grid, x, z) > FILL_RADIUS
+        out[q] = round(100 * far / tot, 1)
+    return out
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     layout["objects"] = {k: {"dims": list(v), "bulk": round(bulk(k), 2), "tier": tier(k), "needsD": round(needs_d(k), 1)}
                          for k, v in sorted(OBJECTS.items())}
     layout["sceneKinds"] = {k: {"footprint": list(v["fp"]), "items": [{"object": o, "count": c, "band": b} for o, c, b in v["items"]]}
                             for k, v in SCENE_KINDS.items()}
+    before = coverage()
+    filled = fill_park()
     layout["summary"] = summary()
+    layout["summary"]["parkFill"] = {"placesAdded": filled, "farFromFoodPctBefore": before, "farFromFoodPct": coverage(),
+                                     "rule": f"share of park cells more than {FILL_RADIUS} studs from food, by quarter"}
     problems = check_overlaps()
     layout["summary"]["overlaps"] = problems
     (OUT / "park-city-layout.json").write_text(json.dumps(layout, indent=1))

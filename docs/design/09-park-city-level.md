@@ -271,6 +271,11 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 - From each spawn you see the trail, the quarter's set piece, a park landmark and the Glass Tower. Nothing taller than
   1 stud stands within 15 studs of a spawn.
 - The four quarters carry the same food by volume per tier (±10 %). Only the set pieces differ.
+- **No empty lawn.** Every point of the park is within 40 studs of food (about 3 s of rolling at D 1). After the set
+  pieces are placed, the layout script fills any gap with the quarter's own kind of place (groves, log piles, meadows,
+  orchards, lawn games, a football pitch, benches and bushes). Fill places carry few crumbs, so they fill space without
+  making the early game easier. The Gardens have an 8-plot allotment block and a formal flower garden of six beds and a
+  rose garden by the windmill.
 
 ### 7.2 NW quarter: Woods and Campsite
 
@@ -605,8 +610,8 @@ more than today's 1,500-placement cap, so this design needs one engine change:
 | 6 Skyline | – | – | 2 | 24 | 26 | Part |
 | **Total** | | | | | **2,253** | 1,153 Parts |
 
-- **The first-pass layout** ([maps/README.md](maps/README.md)) holds T1 1,102, T2 989, T3 494, T4 166 + 13 traffic,
-  T5 52, T6 8: 2,091 light objects and 720 Parts, with 0 overlaps. It has more small food than the table above and fewer
+- **The first-pass layout** ([maps/README.md](maps/README.md)) holds T1 1,677, T2 1,430, T3 691, T4 191 + 13 traffic,
+  T5 52, T6 8: 3,107 light objects and 942 Parts, with 0 overlaps. It has more small food than the table above and fewer
   Tier 5 – 6 buildings (60 against about 130), so the 012 pace test tunes both. Expect a lower ceiling for the top
   players until it does.
 - `cullTierDelta` 2 stays: a Tier 4 ball renders no Tier 1 or 2 food.
