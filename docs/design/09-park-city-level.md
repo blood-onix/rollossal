@@ -1,6 +1,6 @@
 # Level design: Park City
 
-Status: **v2, 2026-11-04.** A level design written from scratch after feature 010 (Main-Street slice). The owner
+Status: **v2, approved 2026-11-04.** A level design written from scratch after feature 010 (Main-Street slice). The owner
 approved the map, the speed cap and the four new mechanics on 2026-11-04 (section 15). v2 adds the owner's review of
 v1:
 - a smaller start and a new size rule (sections 3 and 4);
@@ -640,10 +640,12 @@ Constitution I (grey box first) and gate 6 (the owner sees the images and plays 
 - Two more modes: Biggest Ball, and Feast (PvP after a 1-minute grace).
 - The ice pond must be challenging.
 
-**Still open for the owner:**
-1. The new size rule (bulk ≤ 0.5 D, longest side ≤ 1.5 D) and the start at D 1.
+**Also approved by the owner on 2026-11-04** (the six items left open in v2):
+1. The size rule: bulk ≤ 0.5 D and longest side ≤ 1.5 D, with the start at D 1.
 2. Stars at 20 / 50 / 90.
 3. Catapults and Big Slingshots as specified in 9.5.
-4. Feast's numbers: grace 1:00, the eat ratio 0.75, the eater gains 50 %, the victim respawns at 60 %.
-5. The winter thin-ice rule (the island is for small balls only in winter).
-6. Light objects as client-only data (section 13). It is an engine change, not a new tool or package.
+4. Feast's numbers: grace 1:00, eat ratio 0.75, the eater gains 50 %, the victim respawns at 60 %.
+5. The winter thin-ice rule.
+6. Light objects as client-only data (section 13).
+
+Nothing in this document is waiting for the owner. Tuning values (tune) are settled by play.
