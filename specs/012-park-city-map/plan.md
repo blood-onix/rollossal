@@ -53,26 +53,25 @@ Tier 2 object of scenes tagged park fill", recorded when used.
 
 ## Constitution Check
 
-Constitution on disk is **4.0.0**. The brief mentions a 4.1.0 amendment "if it has landed". It has not: neither
-`.specify/memory/constitution.md` nor its sync report mentions 4.1.0. The only mention is the owner's prompt
-(`docs/design/speckit-prompts-012.md`) asking for it as a MINOR bump. The remote branches
-`constitution-4.0.0-visual-gate` and `constitution-playtest-timing` were checked: the second holds an older text
-(pre-3.0) and neither is a 4.1.0. This plan is
-checked against 4.0.0 and notes where a 4.1.0 might matter (nothing known). Re-check when it lands.
+Constitution on disk is **4.1.0** (landed on this branch on 2026-11-04, after this planning pass began; this plan was
+re-checked against it). 4.1.0 is a MINOR amendment: it adds the light-objects permission (II), the layout-file rules
+(VII), the three pace floors and playable-first staging (I), and names the Python design scripts as existing toolchain
+(XII). Its sync report says 012 must adopt them, and that the layout script must "fail on a problem" and check budgets
+(it now exits 0 on overlaps and coverage and checks no budgets). That work is in the plan (Stage B, first task).
 
 | Principle / gate | Status |
 | --- | --- |
-| I Grey box first; gate 6 | Met. Every stage ends in a playable build; Stage D produces fixed shots and waits for owner approval before merge. |
-| II Server authority | Met. Light absorbs are validated on the server from its data: existence, taken, distance to the data position, size rule, rate limit. The client sends only an id string. `LightDelta` is server to client and carries indices only. |
+| I Grey box first; pace; staging; gate 6 | Met. The layout was owner-approved on 2026-11-04. Every stage ends in a playable build (the SHOULD of 4.1.0). Pace is reported; the pace test fails only on the three floors: first pickup within 3 s of every spawn, no gap in the open-route ladder, and the park coverage rule (G2, G4, G5). Stage D produces fixed shots and waits for owner approval before merge. |
+| II Server authority; light objects | Met. Light objects are the new MAY of 4.1.0. Light absorbs are validated on the server from its data: existence, taken, distance to the data position, size rule, rate limit. The client sends only an id string. `LightDelta` is server to client and carries indices only. |
 | III Pure tested rules | Met. New pure rules `Absorb.canEat`, `Growth.growByBulk`, `Movement.speedCap`, `HeapFit`, `Light` each get a Lune test of fixed values. No Roblox APIs in `Rules`. |
 | IV Safe | Met. No text added; names are common nouns. Hedge, fence and hoarding gates are objects, not people or animals. |
 | V, VIII Monetization, data | Not touched. No schema change. |
 | VI Mobile first | The first pickup within 3 s (stricter than 5 s) is a gate (G4). Text-free cues (the rule is colour-and-motion; reduce-motion turns the bob off). Phone fps is on the RC list. |
-| VII Content is data; flags; tests | Met. The map is generated content data. `Flags.ParkCity`, `Flags.HeapFix`, `Flags.ReadableRules`, all off. Lune tests validate ids, dims, tiers. |
+| VII Content is data; one layout file | Met. The map is generated from the single layout file by a script, and a Lune test checks the world data against it. The layout script is made to fail on overlaps, coverage and budgets and print objects per tier (4.1.0), and the pictures already come from `park_city_render.py`. Flags and tests as before. `Flags.ParkCity`, `Flags.HeapFix`, `Flags.ReadableRules`, all off. Lune tests validate ids, dims, tiers. |
 | IX Localised strings | Met. 219 object name keys in English and Spanish (generated). Cues have no text. The tier banner and star-target text are not shown in Park City and Stage A. Spanish names are a first pass (RC list). |
 | X Multi-agent | One agent drives Studio at a time; the claim goes on the Studio tasks in `tasks.md`. |
 | XI Asset pipeline | Grey box: stand-in parts only, no new meshes, no transparency (water is an opaque slab). |
-| XII Lean | No new package or tool. New modules, each with at least two current users or no alternative: `Rules/Light` (client draw query, server verdict and pace test), `Rules/HeapFit` (StuckVisuals and its test, and the Stage A and B heaps), `LightField` (the one client module; nothing existing can host a pool). Existing modules change in place. |
+| XII Lean | No new package or tool. The new `park_city_world.py` uses the standard library only (4.1.0), like the layout script (`json`, `math`, `pathlib`). New modules, each with at least two current users or no alternative: `Rules/Light` (client draw query, server verdict and pace test), `Rules/HeapFit` (StuckVisuals and its test, and the Stage A and B heaps), `LightField` (the one client module; nothing existing can host a pool). Existing modules change in place. |
 | Gates 1–5 | Gate 1 by `scripts/check.sh`. Gate 2 by the Stage D playtest and console read. Gates 3 (no asset) and 4 (strings in tables) as above. Gate 5 by `tasks.md`. |
 | Gate 6 | Stage D, as above. |
 
@@ -102,7 +101,7 @@ specs/012-park-city-map/
 
 ```text
 scripts/
-├── park_city_layout.py        # existing; gains --check
+├── park_city_layout.py        # existing; gains --check, exit 1 on overlaps / coverage / budgets
 ├── park_city_world.py         # NEW: JSON → Luau world data (+ --check)
 └── capture-export.luau        # extended: --world parkcity
 
@@ -161,6 +160,8 @@ Behind `Flags.ParkCity` (off). The light objects are not built yet, so Tier 1–
 areas Stage B needs, and thinned if the part count would exceed 1,800 (drop every second Tier 2 object of park-fill
 scenes; recorded where used). The doorstep crumbs, trails and all Tier 3–6 objects are complete.
 
+- First task: make `park_city_layout.py` fail (exit 1) on overlaps, on a park quarter with more than 5 % of its area over
+  40 studs from food, and on the part and light budgets, and add `--check`; wire it into `scripts/check.sh`.
 - `park_city_world.py` and its `--check`; the three generated modules and the strings; `ParkCity.test` (match to the
   layout, ids, dims, tiers, spawns, placeholders).
 - `Worlds.luau` picks ParkCity. Blocks, ramps, decks, maze, tunnels and drains built by the existing builder; the hub is
@@ -203,7 +204,7 @@ scenes; recorded where used). The doorstep crumbs, trails and all Tier 3–6 obj
 
 With all three flags off, these existing tests are not edited and must pass: `Absorb`, `Growth`, `Tiers`, `Stars`,
 `StuckStack`, `Movement`, `BallGuard`, `Config` (new keys are added; no existing pin changes), `Downtown`,
-`SnowVillage`, `Pace` (the Downtown and Snow Village pace model, still asserting its 008 and 004 targets), `Layout`,
+`SnowVillage`, `Pace` (the Downtown and Snow Village pace model, still asserting its 008 and 004 targets; 4.1.0 says those should become reports, which is a separate change this feature does not make), `Layout`,
 `Themes`, `ThemeResolve`, `Strings` (the new strings table is merged and its keys are balanced), `CaptureCameras`
 (`art/capture/cameras.json` is not touched) and the Jest specs `AbsorbService`, `WorldSpawner`, `WorldCuller`,
 `BallService`, `RunManager`, `ObjectTemplates` and `ThemeSwitch`, run on Downtown. A change to an existing function

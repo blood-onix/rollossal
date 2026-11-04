@@ -18,14 +18,16 @@ press Connect in the Rojo plugin and re-run the probe every 30 to 60 s for up to
 python3 scripts/park_city_layout.py
 ```
 
-Prints the summary and fails on overlaps. Expect `overlaps: []` and the park coverage table of the README (G2).
+Prints the objects per tier and fails (exit 1) on overlaps, on a park quarter over the 5 % coverage rule, or on a part or
+light budget. Expect `overlaps: []` and the coverage table of the README (G2). (Today the script exits 0 on these; the
+first Stage B task changes that, as constitution 4.1.0 requires.)
 
 ```bash
 python3 scripts/park_city_layout.py --check
 ```
 
-The layout script has no `--check` flag today (no argument parsing was found in it); the first task adds one that exits
-non-zero when the committed JSON differs from a fresh run. Expect exit 0.
+The layout script has no `--check` flag today; the first Stage B task adds one that exits non-zero when the committed JSON
+differs from a fresh run. Expect exit 0.
 
 ```bash
 python3 scripts/park_city_world.py
