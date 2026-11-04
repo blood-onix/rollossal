@@ -26,6 +26,7 @@ BLOCK_STYLE = {
     "hoarding": ("#e0662f", None), "sand": ("#f1dfa4", "#c2a95a"), "glass": ("#bfe3f2", "#5a8aa0"), "tower": ("#d98b5f", "#7a3f20"),
     "log_platform": ("#8a5a2b", None), "stone": ("#9a9a9a", None), "bridge": ("#9b7146", None), "box": ("#b9b9c4", "#666"),
     "tree_trunk": ("#5a3b22", "#2e1d10"), "railing": (None, "#2e5d2a"), "wall": (None, None),
+    "tunnel_wall": ("#5a3b22", None), "tunnel_roof": ("#8a6a4a", "#3a2a1a"), "kerb": ("#8f9a7a", None),
 }
 
 
@@ -167,6 +168,14 @@ def draw(v: View):
             cx, cz = (x0 + x1) / 2, (z0 + z1) / 2
             if v.inside(cx, cz):
                 v.text(cx, cz + 3, b["label"], 9 if v.s < 5 else 11, "#3a2a1a")
+    # Maze wall cells (each holds four hedge pieces, drawn as dots with the scenes)
+    mz = L.get("maze")
+    if mz:
+        (ox, oz), cell = mz["origin"], mz["cell"]
+        for r, row in enumerate(mz["rows"]):
+            for c, ch in enumerate(row):
+                if ch == "#":
+                    v.rect(ox + c * cell, oz + r * cell, ox + c * cell + cell, oz + r * cell + cell, "#3f7d3a", "#25501f", 0.6, op=0.55)
     # Water
     for w in L["water"]:
         if "ellipse" in w:
@@ -199,7 +208,8 @@ def draw(v: View):
         l, w = dims[0], dims[1]
         v.rot_rect(lm["x"], lm["z"], l, w, lm.get("yaw", 0), fill=TIER_COLOR[lm["tier"]], stroke="#1d2433", sw=1, op=0.35)
         key = {"glass_tower", "giant_oak", "giant_duck", "ferris_wheel", "windmill", "car_park", "station_hall"}
-        if v.labels and (v.s >= 2 or lm["object"] in key):
+        repeated = lm["id"].startswith(("hoarding_", "site_hoarding")) and not lm["id"].endswith("_01")
+        if v.labels and not repeated and (v.s >= 2 or lm["object"] in key):
             name = lm["object"].replace("_", " ")
             if name.startswith("roof building"):
                 name = "roof building"
@@ -240,6 +250,13 @@ def draw(v: View):
     # Rails
     for r in L["rails"]:
         pts = [(p[0], p[2]) for p in r["points"]]
+        if r.get("kind") == "pipe":
+            v.poly(pts, stroke="#3a5a7a", sw=max(2, 1.5 * v.s ** 0.5), closed=False, dash="4 3", op=0.85)
+            for (px, pz) in (pts[0], pts[-1]):
+                v.circle(px, pz, max(1.5 * v.s, 3), "#3a5a7a", "#1d2433", 1)
+            if v.labels and v.s >= 2 and v.inside(*pts[0]):
+                v.text(pts[0][0], pts[0][1] + 8, f"{r['id']} drain pipe (D <= {r['dMax']})", 10, "#3a5a7a")
+            continue
         v.poly(pts, stroke="#d6246e", sw=max(2, 1.2 * v.s ** 0.5), closed=False, marker=r["exit"] == "launch" and len(pts) == 2)
         mx, mz = pts[0]
         grouped = r["id"][-1] in "bcd" and r["id"][:-1] in ("R7", "R3", "R5")
@@ -360,7 +377,7 @@ VIEWS = [
     View("detail-doorstep", "Close-up: spawn 1 doorstep (acorn fall), first 10 seconds", -480, -480, -410, -410, 12.0),
     View("detail-glade-oak", "Close-up: Mushroom Glade, Giant Oak, root tunnels, stream", -480, -480, -295, -260, 4.5),
     View("detail-duck-island", "Close-up: Duck Island and its three routes", 255, -410, 425, -265, 5.0),
-    View("detail-hedge-maze", "Close-up: Hedge Maze (corridors 6 wide; walls are food from D 4.8)", -392, 288, -288, 392, 8.0),
+    View("detail-hedge-maze", "Close-up: Hedge Maze (corridors 6 wide; 476 hedge pieces, food from D 6)", -392, 288, -288, 392, 8.0),
     View("detail-skate-playground", "Close-up: Playground and Skate Park", 290, 195, 410, 400, 4.5),
 ]
 

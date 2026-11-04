@@ -46,7 +46,7 @@ OBJECTS: dict[str, tuple[float, float, float]] = {
     "toy_car": (1.4, 0.7, 0.6), "football": (2.0, 2.0, 2.0), "frisbee": (2.0, 2.0, 0.3), "helmet": (1.8, 1.4, 1.2),
     "skateboard": (2.6, 0.8, 0.4), "kick_scooter": (2.8, 1.0, 3.0), "trainer": (1.8, 0.7, 0.6), "lantern": (1.3, 1.3, 1.6),
     "watering_can": (2.0, 0.8, 1.4), "picnic_basket": (2.2, 1.4, 1.4), "cool_box": (2.6, 1.6, 1.6),
-    "garden_gnome": (1.2, 1.0, 2.2), "violin": (3.0, 1.1, 0.4), "hedge_piece": (3.2, 1.5, 3.0),
+    "garden_gnome": (1.2, 1.0, 2.2), "violin": (3.0, 1.1, 0.4), "hedge_piece": (3.0, 3.0, 3.0),
     "fence_panel": (3.2, 0.4, 3.0), "party_hat": (1.0, 1.0, 1.4), "present": (1.6, 1.6, 1.4), "lifebuoy": (2.0, 2.0, 0.5),
     "oar": (3.5, 0.5, 0.3), "cushion": (1.8, 1.8, 0.6), "table_lamp": (1.2, 1.2, 2.2), "book_stack": (1.4, 1.0, 1.2),
     "record_box": (1.6, 1.2, 1.0), "mug": (0.9, 0.7, 0.9), "croissant": (1.2, 0.6, 0.5), "coffee_cup": (0.8, 0.8, 1.2),
@@ -185,8 +185,25 @@ def zone(zid, name, x0, z0, x1, z1, tiers):
     layout["zones"].append({"id": zid, "name": name, "rect": [x0, z0, x1, z1], "tiers": tiers})
 
 
-def block(bid, kind, x0, z0, x1, z1, y0=0.0, y1=0.2, label=None):
-    layout["blocks"].append({"id": bid, "kind": kind, "rect": [x0, z0, x1, z1], "y": [y0, y1], "label": label})
+def block(bid, kind, x0, z0, x1, z1, y0=0.0, y1=0.2, label=None, **extra):
+    """Every block is built literally: a box over rect from y0 to y1. Ramps add `up` (the side that is high: north,
+    south, east or west; north is -z). Spirals add `turns` and `width` (a spiral ramp inside the rect, rising y0 -> y1)."""
+    layout["blocks"].append({"id": bid, "kind": kind, "rect": [x0, z0, x1, z1], "y": [y0, y1], "label": label, **extra})
+
+
+def hoarding_line(prefix, x0, z0, x1, z1, gaps=()):
+    """Hoarding pieces (12 x 4 x 12, bulk 8.3, eaten from D 17) along a straight line, skipping (lo, hi) gaps."""
+    horiz = z0 == z1
+    a, b = (x0, x1) if horiz else (z0, z1)
+    n = int(round(abs(b - a) / 12))
+    for k in range(n):
+        c = min(a, b) + 6 + k * 12
+        if any(lo <= c <= hi for lo, hi in gaps):
+            continue
+        x, z = (c, z0) if horiz else (x0, c)
+        layout["landmarks"].append({"id": f"{prefix}_{k + 1:02d}", "object": "hoarding", "tier": tier("hoarding"),
+                                    "bulk": round(bulk("hoarding"), 1), "needsD": round(needs_d("hoarding"), 1),
+                                    "x": x, "z": z, "y": 0, "yaw": 0 if horiz else 90, "solid": True})
 
 
 def _hash(*vals) -> float:
@@ -255,8 +272,9 @@ def trail(tid, cause, pts, objs, spacing, zone_id="", y=0.0):
     layout["trails"].append({"id": tid, "cause": cause, "zone": zone_id, "points": pts, "items": items})
 
 
-def rail(rid, name, pts3, dmin, dmax, speed, exit_="launch"):
-    layout["rails"].append({"id": rid, "name": name, "points": pts3, "dMin": dmin, "dMax": dmax, "speed": speed, "exit": exit_})
+def rail(rid, name, pts3, dmin, dmax, speed, exit_="launch", kind="rail"):
+    layout["rails"].append({"id": rid, "kind": kind, "name": name, "points": pts3, "dMin": dmin, "dMax": dmax, "speed": speed,
+                            "exit": exit_})
 
 
 def pad(pid, kind, x, z, yaw, w, d, y=0.0, **extra):
@@ -308,8 +326,24 @@ for sid, (x0, z0, x1, z1) in {
     "loop_w": (-405, -405, -395, 405), "loop_e": (395, -405, 405, 405),
 }.items():
     block(sid, "gravel", x0, z0, x1, z1, 0, 0.05)
-block("park_edge", "railing", -302, -302, 302, 302, 0, 3, "railing + hedge line, 8 gates")
-block("boundary", "wall", -500, -500, 500, 500, 0, 200, "invisible boundary")
+# Park edge: a 1-stud kerb with gaps at the 8 gates (Spokes at 0, diagonal gates near the corners; the SW one at x -250).
+for side, (horiz, fixed) in {"n": (True, -302), "s": (True, 302), "w": (False, -302), "e": (False, 302)}.items():
+    gaps = [(-14, 14), (-302, -288), (288, 302)]
+    if side == "s":
+        gaps = [(-14, 14), (-262, -238), (288, 302)]
+    if side == "w":
+        gaps = [(-14, 14), (-302, -288), (288, 302)]
+    cuts = sorted(gaps)
+    pos = -302
+    for k, (lo, hi) in enumerate(cuts + [(302, 302)]):
+        if lo > pos:
+            if horiz:
+                block(f"park_kerb_{side}{k}", "kerb", pos, fixed - 1, lo, fixed + 1, 0, 1, None)
+            else:
+                block(f"park_kerb_{side}{k}", "kerb", fixed - 1, pos, fixed + 1, lo, 0, 1, None)
+        pos = max(pos, hi)
+for side, r in {"n": (-500, -501, 500, -500), "s": (-500, 500, 500, 501), "w": (-501, -500, -500, 500), "e": (500, -500, 501, 500)}.items():
+    block(f"boundary_{side}", "wall", *r, 0, 200, "invisible boundary")
 
 # Spawns and doorsteps
 SPAWNS = [(-450, -450, "nw"), (-180, -440, "nw"), (-440, -180, "nw"),
@@ -353,16 +387,43 @@ block("glade_log", "log_platform", -420, -318, -400, -310, 0, 5, "log platform y
 scene("glade_log_stash", "squirrel_stash", -410, -314, 180, Z, y=5, label="log stash (bounce up)")
 block("oak_trunk", "tree_trunk", -382, -382, -358, -358, 0, 40, "Giant Oak trunk")
 block("oak_deck", "deck", -382, -382, -358, -358, 22, 23, "tree house deck y 22")
-block("oak_ramp", "spiral", -396, -396, -344, -344, 0, 22, "root ramp: 2 turns round the trunk, 8 wide, 12 deg")
+block("oak_ramp", "spiral", -396, -396, -344, -344, 0, 22, "root ramp: 2 turns round the trunk, 8 wide, 12 deg", turns=2, width=8)
 scene("oak_deck_picnic", "picnic", -370, -370, 135, Z, y=23, label="tree house picnic + Magnet", scale=0.8)
 scene("oak_fall_1", "acorn_fall", -342, -380, 135, Z, label="acorn fall")
 scene("oak_fall_2", "acorn_fall", -380, -342, 315, Z, label="acorn fall")
-layout["tunnels"] = []
-for k, (ax, az) in enumerate(((-428, -306), (-424, -328), (-404, -302))):
-    layout["tunnels"].append({"id": f"root_tunnel_{k + 1}", "points": [[ax, az], [-386, -386]], "width": 3, "height": 3,
-                              "note": "small only (D < 3)"})
-scene("root_stash", "squirrel_stash", -378, -378, 45, Z, label="root tunnel stash (under the oak)")
-golden("gold_roots", -378, -378, 0, "root tunnel stash")
+# Root tunnels: two covered passages (3 wide, 3 high inside) from the gate side to a root hollow beside the oak, clear
+# of the spiral ramp. Walls 0.6 thick, roof 3 - 3.6. Small balls (D < 3) fit; bigger ones are stopped at the mouth.
+HX, HZ = -342.0, -342.0  # root hollow, inner 9.5 x 9.5 from (HX, HZ)
+T, H = 0.6, 3.0
+
+
+def wall(wid, x0, z0, x1, z1):
+    block(wid, "tunnel_wall", x0, z0, x1, z1, 0, H + T, None)
+
+
+def roof(rid, x0, z0, x1, z1, label=None):
+    block(rid, "tunnel_roof", x0, z0, x1, z1, H, H + T, label)
+
+
+hx1, hz1 = HX + 9.5, HZ + 9.5
+roof("root_hollow_roof", HX - T, HZ - T, hx1 + T, hz1 + T, "root hollow (stash)")
+wall("root_hollow_n", HX - T, HZ - T, hx1 + T, HZ)
+wall("root_hollow_w", HX - T, HZ - T, HX, hz1 + T)
+# south side: opening for tunnel A at x HX+3 .. HX+6
+wall("root_hollow_s1", HX - T, hz1, HX + 3, hz1 + T)
+wall("root_hollow_s2", HX + 6, hz1, hx1 + T, hz1 + T)
+# east side: opening for tunnel B at z HZ+3 .. HZ+6
+wall("root_hollow_e1", hx1, HZ - T, hx1 + T, HZ + 3)
+wall("root_hollow_e2", hx1, HZ + 6, hx1 + T, hz1 + T)
+# tunnel A runs south to z -315; tunnel B runs east to the stream's west bank (x -326)
+roof("root_tunnel_a_roof", HX + 3 - T, hz1 + T, HX + 6 + T, -315, "root tunnel (small only)")
+wall("root_tunnel_a_w", HX + 3 - T, hz1 + T, HX + 3, -315)
+wall("root_tunnel_a_e", HX + 6, hz1 + T, HX + 6 + T, -315)
+roof("root_tunnel_b_roof", hx1 + T, HZ + 3 - T, -326, HZ + 6 + T, "root tunnel (small only)")
+wall("root_tunnel_b_n", hx1 + T, HZ + 3 - T, -326, HZ + 3)
+wall("root_tunnel_b_s", hx1 + T, HZ + 6, -326, HZ + 6 + T)
+scene("root_stash", "squirrel_stash", HX + 4.75, HZ + 4.75, 135, Z, label="root hollow stash", fp=(8, 8))
+golden("gold_roots", HX + 4.75, HZ + 4.75, 0, "root hollow stash")
 golden("gold_treehouse", -370, -370, 23, "tree house deck")
 rail("R4", "Tree House Zipline", [[-370, 24, -370], [-305, 2, -305]], 2, 8, 34)
 layout["water"].append({"id": "stream", "kind": "wading", "rect": [-325, -500, -315, -300], "depth": 1.5})
@@ -419,10 +480,10 @@ scene("sandpit_toys", "sandpit", 342, 220, 270, Z, label="sandpit")
 pad("slide_launch", "bounce", 360, 255, 270, 4, 6, 4, up=6, forward=16, dMax=12, note="end of the slide")
 layout["hazards"].append({"id": "roundabout", "kind": "spinner", "x": 320, "z": 250, "radius": 4.5, "flingsBelowD": 5, "object": "roundabout"})
 block("skate_bowl", "bowl", 310, 315, 350, 365, -6, 0, "bowl 6 deep")
-block("quarter_pipe_1", "ramp", 358, 305, 390, 313, 0, 5, "quarter pipe")
-block("quarter_pipe_2", "ramp", 358, 367, 390, 375, 0, 5, "quarter pipe")
+block("quarter_pipe_1", "ramp", 358, 305, 390, 313, 0, 5, "quarter pipe", up="north")
+block("quarter_pipe_2", "ramp", 358, 367, 390, 375, 0, 5, "quarter pipe", up="south")
 block("funbox", "box", 358, 330, 372, 350, 0, 2, "funbox")
-block("kicker", "ramp", 378, 335, 388, 345, 0, 3, "kicker")
+block("kicker", "ramp", 378, 335, 388, 345, 0, 3, "kicker", up="west")
 block("skate_shelter_roof", "roof", 306, 378, 326, 392, 0, 14, "skate shelter roof y 14 (stash)")
 scene("skate_roof_stash", "roof_stash", 316, 385, 0, Z, y=14, label="shelter roof stash")
 golden("gold_skate_roof", 318, 386, 14, "skate shelter roof")
@@ -462,12 +523,20 @@ MAZE = [
     "#######.#######",
 ]
 mx0, mz0 = -394, 304
-hedges = 0
+# Each wall cell (6 x 6) is four hedge pieces of 3 x 3 x 3 (bulk 3.0, Tier 2): solid, eaten from D 6, when the ball
+# fills a 6-wide corridor. The pieces are ordinary (light) objects, so the maze is food, not blocks.
+layout["maze"] = {"origin": [mx0, mz0], "cell": 6, "wallHeight": 3, "rows": MAZE, "piece": "hedge_piece"}
+maze_items = []
 for r, row in enumerate(MAZE):
     for c, ch in enumerate(row):
         if ch == "#":
-            hedges += 1
-            block(f"hedge_{r:02d}_{c:02d}", "hedge", mx0 + c * 6, mz0 + r * 6, mx0 + c * 6 + 6, mz0 + r * 6 + 6, 0, 3, None)
+            for qx in (1.5, 4.5):
+                for qz in (1.5, 4.5):
+                    maze_items.append({"object": "hedge_piece", "tier": tier("hedge_piece"), "bulk": round(bulk("hedge_piece"), 2),
+                                       "x": mx0 + c * 6 + qx, "z": mz0 + r * 6 + qz, "y": 0, "yaw": 0, "solid": True})
+hedges = len(maze_items)
+layout["scenes"].append({"id": "maze_walls", "kind": "hedge_maze", "zone": Z, "x": mx0 + 45, "z": mz0 + 45, "y": 0,
+                         "yaw": 0, "footprint": [90, 90], "label": None, "items": maze_items})
 scene("maze_centre", "maze_centre", mx0 + 7 * 6 + 3, mz0 + 7 * 6 + 3, 0, Z, label="Gnome King")
 golden("gold_maze", mx0 + 7 * 6 + 3, mz0 + 7 * 6 + 3, 0, "maze centre")
 for k, (fx, fz) in enumerate([(x, z) for z in (420, 436) for x in (-326, -298, -270)]):
@@ -513,10 +582,9 @@ DIAG_GATES = {"ne": (318, -318, (322, -330)), "se": (318, 318, (296, 330)), "sw"
 for g, (x, z, (bx, bz)) in DIAG_GATES.items():
     scene(f"gate_{g}_bikes", "bike_rack", bx, bz, 0, "ring_road", label="bike rack")
     layout["gates"].append({"id": f"park_gate_{g}", "x": x, "z": z, "kind": "open gate in the railing (diagonal)"})
-    layout["gates"].append({"id": f"drain_{g}", "x": x * 0.9, "z": z * 0.9, "kind": "drain 3 wide (small only)",
-                            "from": [x, z], "to": [x * 0.78, z * 0.78]})
-    layout.setdefault("tunnels", []).append({"id": f"drain_{g}", "points": [[x, z], [x * 0.78, z * 0.78]], "width": 3,
-                                             "height": 3, "note": "storm drain under the ring road (small only)"})
+    # The drain under the ring road is a pipe ride for small balls (D <= 3): a placeholder until 013 gives it behaviour.
+    rail(f"P_{g}", "Storm Drain Pipe", [[x, -1.5, z], [round(x * 0.78, 1), -1.5, round(z * 0.78, 1)]], 1, 3, 30, "drop", "pipe")
+    layout["gates"].append({"id": f"drain_{g}", "x": x, "z": z, "kind": "drain mouth (pipe ride, small only)", "pipe": f"P_{g}"})
 layout["hazards"].append({"id": "traffic", "kind": "traffic_loop", "loop_m": 280, "speed": 24,
                           "convoy": ["hatchback", "hatchback", "van", "taxi", "hatchback", "hatchback", "city_bus",
                                      "hatchback", "taxi", "van", "hatchback", "hatchback", "hatchback"],
@@ -541,10 +609,10 @@ gaps = [round((ROOFS[k][0] - 9) - (ROOFS[k + 1][0] + 9), 1) for k in range(len(R
 layout["roofRun"] = {"roofs": [{"id": f"roof_{k}", "x": cx, "width": 18, "depth": 26, "y": h} for k, (cx, h) in enumerate(ROOFS, 1)],
                      "gaps": gaps, "braveGap": 7, "up": ["delivery ramp at the east end", "jump pad at (165, -205)"],
                      "down": "billboard ramp on roof 8, launching south over the hoardings to the Plaza"}
-block("delivery_ramp", "ramp", 254, -245, 275, -219, 0, 10, "delivery ramp up to roof 1")
+block("delivery_ramp", "ramp", 254, -245, 275, -219, 0, 10, "delivery ramp up to roof 1", up="west")
 pad("roof_jump_pad", "spring", 165, -205, 0, 6, 6, 0.35, up=16, dMin=6, dMax=20)
 pad("boost_brave_gap", "boost", 76, -232, 270, 8, 12, 18)
-block("billboard_ramp", "ramp", 38, -245, 56, -228, 20, 26, "billboard ramp: launch south to the Plaza")
+block("billboard_ramp", "ramp", 38, -245, 56, -228, 20, 26, "billboard ramp: launch south to the Plaza", up="south")
 golden("gold_roof8", 47, -238, 20, "last roof of the Roof Run")
 for k, cx in enumerate((230, 160, 125, 55)):
     layout["landmarks"].append({"id": f"market_shop_{k + 1}", "object": "corner_shop", "tier": tier("corner_shop"),
@@ -559,12 +627,17 @@ scene("market_cafe_2", "cafe_terrace", 90, -172, 0, Z, label="café terrace")
 Z = "nbh_se"
 for k, y in enumerate((8, 16, 24), 1):
     block(f"carpark_deck_{k}", "deck", 160, 160, 235, 245, y - 1, y, f"car park deck {k}, y {y}")
-    scene(f"carpark_row_{k}a", "parking_row", 197, 175, 0, Z, y=y, label=None)
-    scene(f"carpark_row_{k}b", "parking_row", 197, 230, 180, Z, y=y, label=None)
-block("carpark_ramp_1", "ramp", 236, 160, 248, 245, 0, 24, "spiral ramp, 12 deg")
-block("carpark_ramp_2", "ramp", 148, 160, 160, 245, 0, 24, "spiral ramp, 12 deg")
+    scene(f"carpark_row_{k}a", "parking_row", 205, 175, 0, Z, y=y, label=None, fp=(48, 8))
+    scene(f"carpark_row_{k}b", "parking_row", 205, 230, 180, Z, y=y, label=None, fp=(48, 8))
+# Decks are 8 apart, so inside the car park only balls under about D 7 fit; the open top deck is for the big ones.
+block("carpark_ramp_1", "ramp", 236, 160, 256, 245, 0, 24, "open ramp to the top deck (16 deg)", up="south")
+block("carpark_ramp_2", "ramp", 140, 160, 160, 245, 0, 8, "ramp to deck 1 (5 deg)", up="north")
+block("carpark_ramp_3", "ramp", 162, 165, 174, 240, 8, 16, "inside ramp, deck 1 to deck 2 (6 deg)", up="south")
 golden("gold_carpark", 220, 200, 24, "car park top deck")
-block("site_hoarding", "hoarding", 165, 40, 245, 130, 0, 8, "site hoardings")
+hoarding_line("site_hoarding_n", 165, 40, 245, 40)
+hoarding_line("site_hoarding_s", 165, 130, 245, 130)
+hoarding_line("site_hoarding_e", 245, 40, 245, 130)
+hoarding_line("site_hoarding_w", 165, 40, 165, 130, gaps=[(73, 97)])
 scene("building_site", "building_site", 205, 85, 270, Z, label="Building Site")
 block("container_platform", "deck", 220, 100, 240, 120, 11, 12, "container platform y 12")
 landmark("crane_mast", "crane_mast", 205, 125)
@@ -620,9 +693,12 @@ for k, (x, z, y, own) in enumerate(((125, -170, 16, False), (160, -170, 16, Fals
 
 # ---------------- Downtown ----------------
 Z = "downtown"
-for side, r in (("n", (-150, -152, 150, -148)), ("s", (-150, 148, 150, 152)), ("w", (-152, -150, -148, 150)), ("e", (148, -150, 152, 150))):
-    block(f"hoarding_{side}", "hoarding", *r, 0, 12, "hoardings (bulk 8.3, food from D 17)")
-for k, (x, z, yaw) in enumerate(((0, -150, 0), (0, 150, 0), (-150, 0, 90), (150, 0, 90))):
+# Downtown hoardings: pieces all round (across the Spokes too), eaten from D 17. Trucks stand in front at the Spokes.
+hoarding_line("hoarding_n", -150, -152, 150, -152)
+hoarding_line("hoarding_s", -150, 152, 150, 152)
+hoarding_line("hoarding_w", -152, -150, -152, 150)
+hoarding_line("hoarding_e", 152, -150, 152, 150)
+for k, (x, z, yaw) in enumerate(((0, -162, 0), (0, 162, 0), (-162, 0, 90), (162, 0, 90))):
     layout["landmarks"].append({"id": f"spoke_truck_{k + 1}", "object": "delivery_truck", "tier": tier("delivery_truck"),
                                 "bulk": round(bulk("delivery_truck"), 1), "needsD": round(needs_d("delivery_truck"), 1),
                                 "x": x, "z": z, "y": 0.4, "yaw": yaw})
@@ -725,8 +801,6 @@ def summary() -> dict:
     by_tier = {t: 0 for t in range(1, 7)}
     for it in all_items():
         by_tier[it["tier"]] += 1
-    # Hedges are blocks that are food from D 4.8: count them as Tier 2 objects.
-    by_tier[tier("hedge_piece")] += hedges
     light = by_tier[1] + by_tier[2]
     parts = sum(by_tier[t] for t in range(3, 7))
     return {"objectsByTier": by_tier, "lightObjects": light, "partObjects": parts, "total": light + parts,
@@ -748,11 +822,11 @@ def overlap(a, b, shrink=0.5):
 def _thing_boxes():
     things = []
     for sc in layout["scenes"]:
-        if sc["kind"] == "floating" or sc["y"] > 0.5:
+        if sc["kind"] in ("floating", "hedge_maze") or sc["y"] > 0.5:
             continue
         things.append((sc["id"], footprint_box(sc["x"], sc["z"], *sc["footprint"], sc["yaw"])))
     for lm in layout["landmarks"]:
-        if lm.get("y", 0) > 0.5 or lm["id"].startswith("spoke_truck") or lm["id"].startswith("roof_building"):
+        if lm.get("y", 0) > 0.5 or lm["id"].startswith(("spoke_truck", "roof_building", "hoarding_", "site_hoarding")):
             continue
         dims = OBJECTS[lm["object"]]
         things.append((lm["id"], footprint_box(lm["x"], lm["z"], dims[0], dims[1], lm.get("yaw", 0))))
@@ -767,8 +841,15 @@ def _forbidden_boxes(include_solids: bool = True):
     forbidden = []
     for b in layout["blocks"]:
         if b["kind"] in ("gravel",) or b["id"] in ("market_street", "terrace_street") or b["id"].startswith("spoke_") \
-                or b["id"].startswith("track_") or b["id"].startswith("hedge_"):
+                or b["id"].startswith("track_"):
             forbidden.append((b["id"], tuple(b["rect"])))
+    mz = layout.get("maze")
+    if mz:
+        (ox, oz), cell = mz["origin"], mz["cell"]
+        for r, row in enumerate(mz["rows"]):
+            for c, ch in enumerate(row):
+                if ch == "#":
+                    forbidden.append((f"maze_{r}_{c}", (ox + c * cell, oz + r * cell, ox + c * cell + cell, oz + r * cell + cell)))
     # ring road carriageway (m 262 - 300) as four strips
     forbidden += [("ring_n", (-300, -300, 300, -262)), ("ring_s", (-300, 262, 300, 300)),
                   ("ring_w", (-300, -300, -262, 300)), ("ring_e", (262, -300, 300, 300))]
@@ -796,7 +877,11 @@ def check_overlaps() -> list[str]:
     """Scenes and buildings must not sit on roads, paths, water or each other (ground level only)."""
     things = _thing_boxes()
     forbidden = _forbidden_boxes(include_solids=False)
-    allowed_pairs = {("root_stash", "giant_oak"), ("playground", "sandpit_toys")}
+    # Built structures (tunnels) must not sit in water or on a road either.
+    for b in layout["blocks"]:
+        if b["kind"].startswith("tunnel"):
+            things.append((b["id"], tuple(b["rect"])))
+    allowed_pairs = {("playground", "sandpit_toys"), ("root_stash", "root_hollow_roof")}
     street_ok = {"market_street": ("market_",), "terrace_street": ("sw_removal",)}
     problems = []
     for tid, box in things:
@@ -934,7 +1019,13 @@ def coverage() -> dict:
     return out
 
 
+LIMITS = {"partObjects": 1200, "lightObjects": 3500, "farFromFoodPct": 5.0}
+
+
 def main() -> None:
+    import sys
+
+    check_only = "--check" in sys.argv
     OUT.mkdir(parents=True, exist_ok=True)
     layout["objects"] = {k: {"dims": list(v), "bulk": round(bulk(k), 2), "tier": tier(k), "needsD": round(needs_d(k), 1)}
                          for k, v in sorted(OBJECTS.items())}
@@ -947,12 +1038,28 @@ def main() -> None:
                                      "rule": f"share of park cells more than {FILL_RADIUS} studs from food, by quarter"}
     problems = check_overlaps()
     layout["summary"]["overlaps"] = problems
-    (OUT / "park-city-layout.json").write_text(json.dumps(layout, indent=1))
+    layout["summary"]["limits"] = LIMITS
+    text = json.dumps(layout, indent=1)
+    target = OUT / "park-city-layout.json"
     summ = dict(layout["summary"])
     summ["overlaps"] = len(problems)
     print(json.dumps(summ, indent=1))
-    for pr in problems:
-        print("OVERLAP:", pr)
+    failures = [f"OVERLAP: {pr}" for pr in problems]
+    for q, pct in layout["summary"]["parkFill"]["farFromFoodPct"].items():
+        if pct > LIMITS["farFromFoodPct"]:
+            failures.append(f"COVERAGE: park {q} has {pct} % of its area more than {FILL_RADIUS} studs from food")
+    for key in ("partObjects", "lightObjects"):
+        if layout["summary"][key] > LIMITS[key]:
+            failures.append(f"BUDGET: {key} {layout['summary'][key]} > {LIMITS[key]}")
+    if check_only:
+        if not target.exists() or target.read_text() != text:
+            failures.append("STALE: docs/design/maps/park-city-layout.json differs from a fresh run; run the script")
+    else:
+        target.write_text(text)
+    for f in failures:
+        print(f)
+    if failures:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -8,10 +8,10 @@ Six decisions, one per real unknown. Everything else follows the existing code. 
 
 - **Decision**: a script, `scripts/park_city_world.py`, reads `docs/design/maps/park-city-layout.json` and writes three
   generated Luau modules under `src/shared/Content/Worlds/`:
-  - `ParkCity.luau`: the `WorldDef` (palette, 71 non-hedge blocks, spawns, hub, lighting, tiers, stars, rules,
+  - `ParkCity.luau`: the `WorldDef` (palette, 91 blocks, spawns, hub, lighting, tiers, stars, rules,
     object definitions, placeholders, fixed shots) and the Part placements as `fixedPlacements`.
-  - `ParkCityParts.luau`: the 942 Tier 3–6 placements as compact rows.
-  - `ParkCityLight.luau`: the 3,107 light objects (Tiers 1–2, including the maze's 119 hedge pieces) as one flat
+  - `ParkCityParts.luau`: the 1,064 Tier 3–6 placements as compact rows (126 of them hoarding pieces, `solid`).
+  - `ParkCityLight.luau`: the 3,458 light objects (Tiers 1–2, including the maze's 476 hedge pieces) as one flat
     number array plus a kind list (stride 5: kind index, x, y, z, yaw; x, y, z rounded to 0.01).
   Each file starts with a "generated, do not edit" line. `python3 scripts/park_city_world.py --check` fails when the
   files differ from what the JSON would produce, and `scripts/check.sh` runs it (the same pattern as
@@ -20,19 +20,23 @@ Six decisions, one per real unknown. Everything else follows the existing code. 
   Lune tests (`Downtown.test`, `Pace.test`). A JSON module would make `Worlds` unloadable in Lune.
 - **Size**: the layout JSON is 726 KB because every scene and trail item carries its own tier, bulk and name. The game
   needs only kind, position, height and facing per object, and one row per kind for the rest. Expected output is
-  about 150 KB for the light file and 50 KB for the parts file. A flat number array avoids 3,107 nested table
+  about 150 KB for the light file and 50 KB for the parts file. A flat number array avoids 3,458 nested table
   constructors (slow to parse, and near Luau's constant limits).
 - **How the test proves the match** (`tests/unit/ParkCity.test.luau`): the test reads the JSON with `serde` and checks
   the generated modules against it:
   - the object count per tier equals `summary.objectsByTier`;
   - every JSON object (scene items, trail items, kerb items, landmarks) is found in the generated data at its
-    position within 0.01 and the same kind; the counts of blocks, spawns, rails, pads, catapults, water and tunnels
+    position within 0.01 and the same kind; the counts of blocks, spawns, rails and drain pipes, pads, catapults and water
     are equal;
   - every kind has `dims` equal to the JSON's, and its tier equals `Tiers.lookup(needsD)` for the six park tiers.
   This is G1 (world data) and G2 (world matches layout) in one test.
-- **Hedges**: the layout lists the maze's hedge pieces both as blocks and as Tier 2 objects (119 each). The generator
-  drops the hedge blocks and emits the objects only, with `solid = true`, so a hedge stops a small ball and is eaten by
-  a big one. This keeps 119 parts off the server.
+- **Hedges**: the layout emits the maze as 476 hedge pieces (3 × 3 × 3, four per 6 × 6 wall cell) in the `maze_walls`
+  scene, each with `solid = true`, and no hedge blocks. A hedge stops a small ball and is eaten from D 6. The layout's
+  `maze` record (origin, cell size, rows) is for drawing and checks only. (The first layout had 119 hedge blocks of
+  6 × 6 × 3 and no hedge objects; fixed in the layout before tasks.)
+- **Blocks are literal**: every layout block is a box over `rect` from `y[0]` to `y[1]`. Ramps carry `up` (the high
+  side), the two spirals carry `turns` and `width`, the root tunnels are wall and roof blocks, the park edge is a 1-stud
+  kerb in segments, and the boundary is four thin walls. The generator copies them; the builder needs no layout logic.
 - **Object names (Principle IX)**: the world has 219 kinds, so each needs a name key. The generator writes
   `object.park.<id>` keys with English and Spanish text into `src/shared/Localization/ParkCityStrings.luau`, which
   `Strings.luau` merges. English comes from the id (`pine_cone` → "Pine cone"). Spanish comes from a name table in the
@@ -42,9 +46,9 @@ Six decisions, one per real unknown. Everything else follows the existing code. 
 
 ## R2 Light objects (Tiers 1–2 as data)
 
-- **Server state** (in `WorldSpawner`, no new module): parallel arrays indexed by light index (1..3,107) read from
+- **Server state** (in `WorldSpawner`, no new module): parallel arrays indexed by light index (1..3,458) read from
   `ParkCityLight`: `state` (0 available, 1 taken), `respawnAt`, `takenAt`. A `pendingLight` set (as `pending` today)
-  holds the taken indices, so the tick never walks 3,107 entries. Respawn uses the same `Respawn.canRespawn` sight
+  holds the taken indices, so the tick never walks 3,458 entries. Respawn uses the same `Respawn.canRespawn` sight
   rule, delays and starvation ceiling as parts. Nothing is a Part, so FR-021 holds by construction.
 - **Light id**: the string `"L" .. index`. The existing `Absorb` remote already takes a string id, so no new request
   remote is needed. `tryAbsorb` and `tryBump` branch on the prefix. Both check the same things as today: run accepts
@@ -73,7 +77,7 @@ Six decisions, one per real unknown. Everything else follows the existing code. 
   `Worlds.placementById`; for ids starting with `L` it takes the kind from the light data instead
   (`Worlds.lightKind(id)`), then builds the visual through the same template path.
 - **Alternatives**: one RemoteEvent per object (rejected by the brief). A per-client replicated folder of attributes
-  (rejected: 3,107 instances). Server Parts with streaming (rejected: counts against the 2,000 budget before streaming
+  (rejected: 3,458 instances). Server Parts with streaming (rejected: counts against the 2,000 budget before streaming
   helps, and the server still simulates them).
 
 ## R3 Per-world rules
@@ -152,7 +156,8 @@ Six decisions, one per real unknown. Everything else follows the existing code. 
   | Boost, bounce, spring, bullseye, lily pad (40 pads) | flat disc or square at `size`; lily pad is a slab at `y` | pads and bullseyes no; lily pads yes (they are the route) |
   | Catapult / slingshot (6) | base block plus an arm block at `restYaw` | base yes, arm no |
   | Water (stream, pond, sprinklers) | opaque blue slab 0.05 above the ground, over the ground block | no |
-  | Tunnels (7), drains | already blocks with an opening in the layout | yes |
+  | Drain pipes (4) | a pipe mouth at each end (short cylinder), on the park side and the city side; inert until 013 makes them a small-only pipe ride | mouth rim yes |
+  | Root tunnels | not placeholders: wall and roof blocks in the layout, built as blocks | yes |
 
   Deep water: the ground block is one slab under the whole park, so the pond is already a floor. The water surface
   only paints it. Ice is a winter item and is not built.
@@ -160,7 +165,7 @@ Six decisions, one per real unknown. Everything else follows the existing code. 
   `dMin`, `dMax`, `speed`, `exit`; pad `up`, `forward`, `dMax`; catapult `aimArc`, `range`, `apex`; water `depth`,
   `wadeFromD`). 013 reads the world data, not the Parts, so adding behaviour moves nothing. Each Part carries its
   placeholder id as `Name` and a `Placeholder` tag so 013 can find it. A test asserts counts and ids equal the layout.
-- **Part cost**: about 14 × 3 + 40 + 6 × 2 + 3 ≈ 100 Parts, inside the budget in `plan.md`.
+- **Part cost**: about 14 × 3 + 4 × 2 + 40 + 6 × 2 + 3 ≈ 105 Parts, inside the budget in `plan.md`.
 - **Alternatives**: no drawing at all (rejected by FR-005). Meshes (rejected: grey box, art is 015).
 
 ## R6 Fixed shots and the capture route
