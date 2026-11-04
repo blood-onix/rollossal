@@ -146,6 +146,17 @@ local Config = {
 	},
 	DefaultWorldsUnlocked = { greybox = true, snow_village = true, downtown = true },
 
+	-- Main-Street slice (010, specs/010-main-street-slice/data-model.md). Provisional playtest inputs.
+	billboardTextureCap = 6,
+	maxPublishedStuck = 60,
+	heapLocalCap = 40,
+	heapRemoteCap = 12,
+	heapScaleExponent = 1.0,
+	heapCoverageTargetD = 5,
+	heapCoverageTarget = 0.6,
+	tooLargeBumpCooldown = 0.4,
+	tooLargeBumpImpulse = 18,
+
 	-- Flags (AvatarPusher, BigBallMode and RewardedAds exist, unused, off)
 	Flags = {
 		AvatarPusher = false,
@@ -159,6 +170,12 @@ local Config = {
 		SnowVillage = true,
 		-- Downtown (007): the launch world. Off falls back to Snow Village, then the grey-box room.
 		Downtown = true,
+		-- Main-Street slice (010). All off: Downtown stays the default world. MainStreetSlice outranks Downtown.
+		MainStreetSlice = false,
+		-- Slice HUD (no Next:, star row or tier banner) and the immediate too-large bump.
+		SliceHud = false,
+		-- Heap ball (StuckVisuals via Rules/Heap) and the longer published Stuck tail.
+		HeapRedesign = false,
 		-- Theme system (005). On: the active theme's lighting, weather and music apply. Off: the theme's
 		-- palette, slots and textures still apply (the base zones need them), with no lighting, weather or music.
 		ThemeSystem = true,

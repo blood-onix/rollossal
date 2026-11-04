@@ -15,6 +15,12 @@
 -- `HeavySceneReport` attribute of Workspace when the last step ends. It starts only when `HeavySceneStart` is unset,
 -- so cloning it twice does nothing.
 --
+-- Feature 010 slice mode (specs/010-main-street-slice/research.md R-16): set the Workspace attribute `HeavyMode` to
+-- "slice" before cloning this script. It then builds no scene. It starts BotRun with 11 playerless balls (the player's
+-- own ball makes 12) in the world the flags pick, and writes the server's BasePart count every 5 seconds into the
+-- `HeavySliceServer` attribute (JSON list of { at, parts, balls }). HeavySampler in the same mode records the client
+-- side. The player's ball is driven by the sampler.
+--
 -- The scene sits high above the world, a grid of meshes in one plane. The sampler points the camera straight at it,
 -- so every triangle is inside the view frustum: the worst case, an upper bound on what a street shows.
 
@@ -22,6 +28,7 @@ local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 
+local Config = require(ReplicatedStorage.Shared.Config)
 local ObjectVisual = require(ReplicatedStorage.Shared.ObjectVisual)
 
 -- Asset key and triangle count (art/export/manifest.json), most triangles first.
@@ -57,6 +64,72 @@ local CULLED_SHARE = 994000 / 1894200
 
 if Workspace:GetAttribute("HeavySceneStart") ~= nil then
 	script:Destroy()
+	return
+end
+
+if Workspace:GetAttribute("HeavyMode") == "slice" then
+	Workspace:SetAttribute("HeavySceneStart", os.clock())
+	local SLICE_SECONDS = Workspace:GetAttribute("HeavySliceSeconds") or 240
+	local ServerScriptService = game:GetService("ServerScriptService")
+	local ServerStorage = game:GetService("ServerStorage")
+	local samples: { { at: number, parts: number, balls: number } } = {}
+	Workspace:SetAttribute("BotRunCount", BALL_COUNT - 1)
+	local bots = ServerStorage.Tests.BotRun:Clone()
+	bots.Parent = ServerScriptService
+	local startedAt = os.clock()
+	Workspace:SetAttribute("HeavyStep", 1)
+	-- `HeavyLoad` = a diameter (for example 30): after a short wait every ball is grown to it and given a full stuck
+	-- stack, which is the late-game heap load (D 12 to 80) that an eater driver cannot reach inside one benchmark.
+	local loadDiameter = Workspace:GetAttribute("HeavyLoad")
+	if typeof(loadDiameter) == "number" then
+		task.wait(5)
+		local BallService = require(ServerScriptService.BallService)
+		local Worlds = require(ReplicatedStorage.Shared.Worlds)
+		local ids: { string } = {}
+		for id in Worlds.placementById do
+			table.insert(ids, id)
+		end
+		table.sort(ids)
+		local rng = Random.new(10)
+		for _, session in BallService.allSessions() do
+			local stack = {}
+			for index = 1, Config.maxTrackedStuck do
+				local id = ids[rng:NextInteger(1, #ids)]
+				local def = Worlds.objectById[Worlds.placementById[id].objectId]
+				local direction =
+					Vector3.new(rng:NextNumber(-1, 1), rng:NextNumber(-1, 1), rng:NextNumber(-1, 1))
+				direction = if direction.Magnitude < 0.1 then Vector3.yAxis else direction.Unit
+				table.insert(stack, {
+					key = `{id}#{900000 + index}`,
+					id = id,
+					size = def.size,
+					tier = def.tier,
+					dir = { x = direction.X, y = direction.Y, z = direction.Z },
+				})
+			end
+			session.stuckStack = stack
+			session.physicalDiameter = loadDiameter
+			BallService.setDiameter(session, loadDiameter)
+			BallService.publishStuck(session)
+		end
+	end
+	while os.clock() - startedAt < SLICE_SECONDS do
+		local parts = 0
+		for _, descendant in Workspace:GetDescendants() do
+			if descendant:IsA("BasePart") then
+				parts += 1
+			end
+		end
+		local balls = #Workspace.Balls:GetChildren()
+		table.insert(
+			samples,
+			{ at = math.floor(os.clock() - startedAt), parts = parts, balls = balls }
+		)
+		Workspace:SetAttribute("HeavySliceServer", HttpService:JSONEncode(samples))
+		task.wait(5)
+	end
+	Workspace:SetAttribute("HeavyStep", -1)
+	print("HeavyScene: slice mode done")
 	return
 end
 Workspace:SetAttribute("HeavySceneStart", os.clock())

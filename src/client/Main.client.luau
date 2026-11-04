@@ -18,6 +18,7 @@ local TrafficController = require(script.Parent.TrafficController)
 
 local Shared = game:GetService("ReplicatedStorage"):WaitForChild("Shared")
 local Config = require(Shared.Config)
+local Worlds = require(Shared.Worlds)
 
 CameraController.start()
 StuckVisuals.start()
@@ -33,9 +34,9 @@ Feedback.start()
 WeatherController.start()
 FpsReadout.start()
 HazardClient.start()
--- 007: ambient pigeons, client-only decoration read from the active world (Downtown). A world with no
--- ambient list, and the Downtown flag being off, start nothing.
-if Config.Flags.Downtown then
+-- 007: ambient pigeons and traffic, client-only decoration read from the active world. A world with no `ambient`
+-- table starts nothing; each controller starts only what the table lists (the slice lists pigeons and no traffic).
+if Worlds.active.ambient ~= nil then
 	PigeonController.start()
 	TrafficController.start()
 end

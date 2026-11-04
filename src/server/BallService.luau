@@ -112,7 +112,11 @@ local function healthiestSlot(except: Session?): number
 end
 
 function BallService.publishStuck(session: Session)
-	local visible = StuckStack.visibleTail(session.stuckStack, Config.maxVisibleStuck)
+	-- HeapRedesign (010) publishes a longer tail; the client picks the outer shell with Rules/Heap.
+	local published = if Config.Flags.HeapRedesign
+		then Config.maxPublishedStuck
+		else Config.maxVisibleStuck
+	local visible = StuckStack.visibleTail(session.stuckStack, published)
 	local entries = {}
 	for _, entry in visible do
 		table.insert(

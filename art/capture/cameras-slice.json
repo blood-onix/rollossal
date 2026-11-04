@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "world": "main_street_slice",
+  "theme": "city",
+  "fov": 70,
+  "resolution": [
+    1280,
+    720
+  ],
+  "bounds": {
+    "minX": -100,
+    "maxX": 100,
+    "minZ": -250,
+    "maxZ": 250
+  },
+  "shots": [
+    {
+      "name": "01_spawn_d2",
+      "diameter": 2,
+      "position": [
+        -8,
+        5.0,
+        -244.9282
+      ],
+      "lookAt": [
+        -8,
+        1,
+        -238
+      ],
+      "lighting": {
+        "brightness": 3,
+        "clockTime": 13,
+        "fogStart": 200,
+        "fogEnd": 1000,
+        "atmosphere": 0.25
+      }
+    },
+    {
+      "name": "02_street_d5",
+      "diameter": 5,
+      "position": [
+        0,
+        10.9524,
+        -38.1262
+      ],
+      "lookAt": [
+        0,
+        2.5,
+        -20
+      ],
+      "lighting": {
+        "brightness": 3,
+        "clockTime": 13,
+        "fogStart": 200,
+        "fogEnd": 1000,
+        "atmosphere": 0.25
+      }
+    },
+    {
+      "name": "03_midgame_d12_30",
+      "diameter": 12,
+      "position": [
+        0,
+        30.0,
+        18.4308
+      ],
+      "lookAt": [
+        0,
+        6,
+        60
+      ],
+      "lighting": {
+        "brightness": 3,
+        "clockTime": 13,
+        "fogStart": 200,
+        "fogEnd": 1000,
+        "atmosphere": 0.25
+      }
+    },
+    {
+      "name": "04_lategame_d80",
+      "diameter": 80,
+      "position": [
+        0,
+        223.5445,
+        -92.1287
+      ],
+      "lookAt": [
+        0,
+        40,
+        170
+      ],
+      "lighting": {
+        "brightness": 3,
+        "clockTime": 13,
+        "fogStart": 200,
+        "fogEnd": 1000,
+        "atmosphere": 0.25
+      }
+    },
+    {
+      "name": "05_overhead_map",
+      "diameter": null,
+      "position": [
+        0,
+        440,
+        -90
+      ],
+      "lookAt": [
+        0,
+        0,
+        0
+      ],
+      "lighting": {
+        "brightness": 3,
+        "clockTime": 13,
+        "fogStart": 200,
+        "fogEnd": 1000,
+        "atmosphere": 0.25
+      }
+    }
+  ]
+}

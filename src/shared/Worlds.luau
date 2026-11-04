@@ -1,6 +1,7 @@
 --!strict
 -- The active world and indexes over its content. Table building only, done once at require time.
--- Config.Flags.Downtown picks Downtown; with it off Config.Flags.SnowVillage picks Snow Village; with both off
+-- 010: Config.Flags.MainStreetSlice picks the Main-Street slice and outranks everything else. Otherwise
+-- Config.Flags.Downtown picks Downtown; with it off Config.Flags.SnowVillage picks Snow Village; with all off
 -- the game is the grey-box room (rollback).
 -- 005: the active theme resolves once, here. Worlds.resolved carries the themed palette, slot objects
 -- and overlays; Worlds.active stays the base world (specs/005-theme-art-pipeline/data-model.md §6).
@@ -18,6 +19,14 @@ local Themes = require(Content.Themes)
 local GreyBoxRoom = require(Content.GreyBoxRoom)
 local SnowVillage = require(Content.Worlds.SnowVillage)
 local Downtown = require(Content.Worlds.Downtown)
+-- The slice is a build step over the pure rules; the dependencies are handed in so the content module needs no requires.
+local MainStreetSlice = require(Content.Worlds.MainStreetSlice).build({
+	StreetRules = require(script.Parent.Rules.StreetRules),
+	SceneKit = require(script.Parent.Rules.SceneKit),
+	SceneKits = require(Content.SceneKits),
+	Signs = require(Content.Signs),
+	Downtown = Downtown,
+})
 
 export type WorldDef = GreyBoxRoom.WorldDef
 export type ObjectDef = GreyBoxRoom.ObjectDef
@@ -29,8 +38,9 @@ export type ThemePageWithObjects = ThemeBookPage & {
 	objects: { ObjectDef },
 }
 
-local active: WorldDef = if Config.Flags.Downtown
-	then Downtown :: any
+local active: WorldDef = if Config.Flags.MainStreetSlice
+	then MainStreetSlice :: any
+	elseif Config.Flags.Downtown then Downtown :: any
 	elseif Config.Flags.SnowVillage then SnowVillage :: any
 	else GreyBoxRoom
 

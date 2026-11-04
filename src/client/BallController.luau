@@ -43,6 +43,7 @@ local COLLIDE_INTERVAL = 0.1
 local BallController = {}
 
 local pendingUntil: { [string]: number } = {}
+local lastTooLargeBump = -math.huge
 local sendTimes: { number } = {}
 local collideTimer = 0
 local surfaceNow = { slick = false, slow = false }
@@ -323,6 +324,24 @@ function BallController.start()
 				AbsorbRemote:FireServer(part.Name)
 			else
 				BumpRemote:FireServer(part.Name)
+				-- 010 SliceHud: an immediate push away from the object and a sound, no text. The client owns the
+				-- ball's physics, so there is no server round trip.
+				if
+					Config.Flags.SliceHud
+					and now - lastTooLargeBump >= Config.tooLargeBumpCooldown
+				then
+					local away = flatten(ball.Position - part.Position)
+					if away.Magnitude > 0 then
+						lastTooLargeBump = now
+						local velocity = ball.AssemblyLinearVelocity
+						ball.AssemblyLinearVelocity = Vector3.new(
+							velocity.X + away.X * Config.tooLargeBumpImpulse,
+							velocity.Y,
+							velocity.Z + away.Z * Config.tooLargeBumpImpulse
+						)
+						Feedback.tooLargeBump()
+					end
+				end
 			end
 		end
 	end

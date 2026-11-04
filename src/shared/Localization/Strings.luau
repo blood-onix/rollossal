@@ -233,6 +233,13 @@ local Strings: { [string]: { en: string, es: string? } } = {
 	["world.trap.slow.city"] = { en = "Wet sand", es = "Arena mojada" },
 	["world.trap.sweeper.winter"] = { en = "Salt sweeper", es = "Barredora de sal" },
 	["world.trap.sweeper.city"] = { en = "Street sweeper", es = "Barredora de calle" },
+	-- Feature 010 (Main-Street slice): six slice-only objects.
+	["object.slice.shop_front"] = { en = "Shop front", es = "Fachada de tienda" },
+	["object.slice.fruit_crate"] = { en = "Fruit crate", es = "Caja de fruta" },
+	["object.slice.flower_pot"] = { en = "Flower pot", es = "Maceta" },
+	["object.slice.picnic_blanket"] = { en = "Picnic blanket", es = "Manta de picnic" },
+	["object.slice.awning"] = { en = "Shop awning", es = "Toldo de tienda" },
+	["object.slice.road_barrier"] = { en = "Road barrier", es = "Valla de obras" },
 	-- Feature 007 (Downtown): 99 object names, 10 tier texts and 4 book-page texts.
 	["tier.downtown.1.name"] = { en = "Pocket", es = "Bolsillo" },
 	["tier.downtown.1.headline"] = { en = "POCKET STUFF", es = "COSAS DE BOLSILLO" },

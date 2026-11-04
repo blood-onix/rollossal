@@ -85,6 +85,20 @@ constitution amendment is needed before signage or a CC0 import is *authored* (n
 - [ ] Approve or decline any `generate_3d` credit spend, only if the generators are turned on (they are off today).
 - [ ] Confirm the plan's deviations D1 to D9 (`plan.md`) and the benchmark deviation (`playtest.md` "Benchmark").
 
+### Main-Street slice (010)
+
+Source: `specs/010-main-street-slice/` (`plan.md`, "Release-candidate hand-off items"). Only the first item holds the
+pull request.
+
+- [ ] Gate 6: owner approval of `specs/010-main-street-slice/captures/` and of playing the build, before merge.
+- [ ] Phone frame rate with 12 balls in the slice, against 30 fps (the Studio half is in `playtest.md`).
+- [ ] Upload the shared facade/sign atlas and at most 6 billboard textures; set the ids in `Assets.luau`
+  (`facadeAtlas`, `billboards.b1` to `b6`).
+- [ ] Swap the real 004h meshes in by `assetKey` data (stand-ins: `shop_front`, fruit crates, flowers).
+- [ ] Owner look-and-feel review, and sign-off that the size limit reads without text.
+- [ ] Decide whether `MainStreetSlice`, `SliceHud` and `HeapRedesign` default to `true` (they ship `false`).
+- [ ] Confirm the plan defaults D1 to D11 (`specs/010-main-street-slice/plan.md`).
+
 ### Phone
 
 Source: `specs/004-snow-village/playtest.md` (SC-004 phone half, not met and not waived).
@@ -127,3 +141,9 @@ Neither does Gate 2's Studio playtest and console read, which must run before th
   be committed; the offline Blender set is the committed baseline, and composition was compared by eye.
 - Procedural EditableMesh benchmark scene (009 T022, T023): the API is off in Play and a mesh made in Edit mode loses its
   content when Play starts. The benchmark ran on the game's own uploaded meshes instead (up to 700k triangles).
+
+### Main-Street slice (010): open Studio gates
+- T027: rerun the 12-ball benchmark at 640x360 with a driver that reaches D 12 to 80, and compare heap candidates 1, 2, 3 and 5 (round 2 measured only the default A+B+C at D 2.2: median 60 fps, 1 s at 22.6 fps, 1,079 parts).
+- T028: confirm the three BotRun "Displacement violation" warnings are bot-only and pre-existing, and listen for the bump sound.
+- T029 captures are Blender fallback renders (specs/010-main-street-slice/captures/); Gate 6 owner approval is still needed before merge.
+- The slice flags (MainStreetSlice, SliceHud, HeapRedesign) are false in Config; the owner decides the defaults.

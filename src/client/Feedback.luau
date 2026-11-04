@@ -172,6 +172,11 @@ local function followReducedMotion()
 	GuiService:GetPropertyChangedSignal("ReducedMotionEnabled"):Connect(applyReduceMotion)
 end
 
+-- 010: the sound half of the too-large bump (the physical half is in BallController). No text, no HUD.
+function Feedback.tooLargeBump()
+	play(Assets.sounds.bump)
+end
+
 function Feedback.start()
 	followReducedMotion()
 	createMusic()

@@ -38,6 +38,17 @@ local Assets = {
 		toon = "rbxassetid://119324797322203",
 		neon = "rbxassetid://88161628123428",
 	} :: { [string]: string },
+	-- Main-Street slice (010): one shared facade/sign atlas and at most Config.billboardTextureCap billboard
+	-- textures. "" until the owner uploads them; the renderer then uses flat palette colours.
+	facadeAtlas = "" :: string,
+	billboards = { b1 = "", b2 = "", b3 = "", b4 = "", b5 = "", b6 = "" } :: {
+		b1: string,
+		b2: string,
+		b3: string,
+		b4: string,
+		b5: string,
+		b6: string,
+	},
 	-- One key per ObjectDef.assetKey, plus the hub.
 	meshes = {
 		gumdrop = "rbxassetid://119269604885219",

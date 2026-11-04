@@ -2,6 +2,7 @@
 -- Client-only visuals for the stuck objects of every ball. Driven by the server's Stuck attribute.
 -- "Weld" re-seats the visuals through Weld.C1 on growth; "Follower" sets their CFrame each frame.
 
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
@@ -9,17 +10,27 @@ local Workspace = game:GetService("Workspace")
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
 local ObjectVisual = require(Shared.ObjectVisual)
+local Heap = require(Shared.Rules.Heap)
 local Worlds = require(Shared.Worlds)
+
+-- HeapRedesign (010): a buried item shrinks into the core over this many seconds instead of popping.
+local BURY_SECONDS = 0.25
 
 type Visual = {
 	part: BasePart,
 	dir: Vector3,
 	weld: Weld?,
+	-- Heap only: the template size at scale 1, the entry's tier, and when burying started (nil while outer).
+	baseSize: Vector3,
+	buriedAt: number?,
 }
 
 type BallRecord = {
 	ball: BasePart,
 	visuals: { [string]: Visual },
+	-- Heap only: the colour the ball had before the core tint, and whether this is the local player's ball.
+	baseColor: Color3?,
+	isLocal: boolean,
 }
 
 local StuckVisuals = {}
@@ -56,12 +67,23 @@ local function parseStuck(text: string): { { key: string, id: string, dir: Vecto
 			table.insert(entries, { key = key, id = id, dir = Vector3.new(x, y, z) })
 		end
 	end
-	local first = math.max(1, #entries - Config.maxVisibleStuck + 1)
+	local limit = if Config.Flags.HeapRedesign
+		then Config.maxPublishedStuck
+		else Config.maxVisibleStuck
+	local first = math.max(1, #entries - limit + 1)
 	local visible = {}
 	for index = first, #entries do
 		table.insert(visible, entries[index])
 	end
 	return visible
+end
+
+-- Attachments grow with the ball: (D / start diameter) ^ heapScaleExponent. 1 when the heap is off.
+local function heapScale(ball: BasePart): number
+	if not Config.Flags.HeapRedesign then
+		return 1
+	end
+	return math.max(ball.Size.X / Config.startDiameter, 1) ^ Config.heapScaleExponent
 end
 
 local function offsetFor(ball: BasePart, visual: Visual, size: number): Vector3
@@ -92,7 +114,12 @@ local function createVisual(record: BallRecord, key: string, id: string, dir: Ve
 	part.Massless = true
 	part.Parent = folder
 
-	local visual: Visual = { part = part, dir = dir, weld = nil }
+	local visual: Visual =
+		{ part = part, dir = dir, weld = nil, baseSize = template.Size, buriedAt = nil }
+	if Config.Flags.HeapRedesign then
+		part.Size = template.Size * heapScale(record.ball)
+		size = math.max(part.Size.X, part.Size.Y, part.Size.Z)
+	end
 	if Config.stuckVisualMode == "Weld" then
 		local weld = Instance.new("Weld")
 		weld.Part0 = record.ball
@@ -112,21 +139,115 @@ local function sizeOf(visual: Visual): number
 	return math.max(size.X, size.Y, size.Z)
 end
 
+-- Size of a visual now: scaled with the ball and, while burying, shrunk towards nothing.
+local function applyHeapScale(record: BallRecord, visual: Visual, now: number)
+	local scale = heapScale(record.ball)
+	if visual.buriedAt ~= nil then
+		scale *= 1 - Heap.buryProgress(now - visual.buriedAt, BURY_SECONDS)
+	end
+	visual.part.Size = visual.baseSize * math.max(scale, 0.001)
+end
+
 local function reseat(record: BallRecord)
+	local now = os.clock()
 	for _, visual in record.visuals do
+		if Config.Flags.HeapRedesign then
+			applyHeapScale(record, visual, now)
+		end
 		if visual.weld then
 			visual.weld.C1 = CFrame.new(-offsetFor(record.ball, visual, sizeOf(visual)))
 		end
 	end
 end
 
+local function paletteOf(entry: Heap.HeapEntry): Heap.Colour
+	local template = templates[entry.id]
+	local colour = if template then template.Color else Color3.new(0.5, 0.5, 0.5)
+	return { r = colour.R, g = colour.G, b = colour.B }
+end
+
+-- HeapRedesign: the outer shell keeps welded visuals, everything else is buried (shrunk, then destroyed) and its
+-- colour tints the core. Entries are `{ key, id, dir }` oldest first.
+local function syncHeap(record: BallRecord, parsed: { { key: string, id: string, dir: Vector3 } })
+	local now = os.clock()
+	local count = #parsed
+	local entries: { Heap.HeapEntry } = {}
+	local dirs: { [string]: Vector3 } = {}
+	local ids: { [string]: string } = {}
+	for index, entry in parsed do
+		local placement = Worlds.placementById[entry.id]
+		local def = if placement then Worlds.objectById[placement.objectId] else nil
+		if def then
+			-- templateFor caches the colour source for paletteOf.
+			templateFor(def.id)
+			table.insert(entries, {
+				key = entry.key,
+				id = def.id,
+				size = def.size,
+				tier = def.tier,
+				age = count - index,
+			})
+			dirs[entry.key] = entry.dir
+			ids[entry.key] = entry.id
+		end
+	end
+
+	local cap = if record.isLocal then Config.heapLocalCap else Config.heapRemoteCap
+	local result = Heap.select(entries, { cap = cap, protectTier = 4 })
+
+	local present: { [string]: boolean } = {}
+	for _, entry in result.outer do
+		present[entry.key] = true
+		local visual = record.visuals[entry.key]
+		if visual then
+			visual.buriedAt = nil
+		else
+			local created = createVisual(record, entry.key, ids[entry.key], dirs[entry.key])
+			if created then
+				record.visuals[entry.key] = created
+			end
+		end
+	end
+	for key, visual in record.visuals do
+		if not present[key] then
+			if ids[key] ~= nil then
+				-- Still held, just buried: shrink it.
+				if visual.buriedAt == nil then
+					visual.buriedAt = now
+				end
+			else
+				-- Knocked off: gone at once, as before.
+				visual.part:Destroy()
+				record.visuals[key] = nil
+			end
+		end
+	end
+
+	-- Core tint: the mean colour of the buried items; the original colour once nothing is buried.
+	if record.baseColor == nil then
+		record.baseColor = record.ball.Color
+	end
+	if #result.buried > 0 then
+		local tint = Heap.coreColor(result.buried, paletteOf)
+		record.ball.Color = Color3.new(tint.r, tint.g, tint.b)
+	else
+		record.ball.Color = record.baseColor :: Color3
+	end
+end
+
 local function sync(record: BallRecord)
 	local raw = record.ball:GetAttribute("Stuck")
+	local parsed: { { key: string, id: string, dir: Vector3 } } = if typeof(raw) == "string"
+		then parseStuck(raw)
+		else {}
+	if Config.Flags.HeapRedesign then
+		syncHeap(record, parsed)
+		return
+	end
+
 	local wanted: { [string]: { id: string, dir: Vector3 } } = {}
-	if typeof(raw) == "string" then
-		for _, entry in parseStuck(raw) do
-			wanted[entry.key] = { id = entry.id, dir = entry.dir }
-		end
+	for _, entry in parsed do
+		wanted[entry.key] = { id = entry.id, dir = entry.dir }
 	end
 
 	for key, visual in record.visuals do
@@ -160,7 +281,12 @@ local function track(instance: Instance)
 	if not instance:IsA("BasePart") or records[instance] then
 		return
 	end
-	local record: BallRecord = { ball = instance, visuals = {} }
+	local record: BallRecord = {
+		ball = instance,
+		visuals = {},
+		baseColor = nil,
+		isLocal = instance.Name == `Ball_{Players.LocalPlayer.UserId}`,
+	}
 	records[instance] = record
 	instance:GetAttributeChangedSignal("Stuck"):Connect(function()
 		sync(record)
@@ -189,6 +315,26 @@ function StuckVisuals.start()
 	end
 
 	RunService.RenderStepped:Connect(function()
+		if Config.Flags.HeapRedesign then
+			local now = os.clock()
+			for _, record in records do
+				for key, visual in record.visuals do
+					local buriedAt = visual.buriedAt
+					if buriedAt ~= nil then
+						if now - buriedAt >= BURY_SECONDS then
+							visual.part:Destroy()
+							record.visuals[key] = nil
+						else
+							applyHeapScale(record, visual, now)
+							if visual.weld then
+								visual.weld.C1 =
+									CFrame.new(-offsetFor(record.ball, visual, sizeOf(visual)))
+							end
+						end
+					end
+				end
+			end
+		end
 		if Config.stuckVisualMode ~= "Follower" then
 			return
 		end

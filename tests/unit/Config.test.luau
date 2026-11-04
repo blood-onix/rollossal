@@ -354,24 +354,46 @@ test("Config: ScaledJump and BallToBallBumps are independent of the master flags
 	expect.falsy(Boosters.enabled(flags, "dash"))
 end)
 
-test("Config: rolling Downtown back falls to Snow Village, then to the grey-box room", function()
-	-- Worlds reads the flags once at require time, so the fallback chain is checked on its source: Downtown
-	-- first, then Snow Village, then the grey box, and nothing else in src/shared branches on the Downtown flag.
-	local text = fs.readFile("src/shared/Worlds.luau")
-	local chain = string.match(text, "local active: WorldDef = (.-)\n\n")
-	expect.truthy(chain ~= nil)
-	local flat = string.gsub(chain :: string, "%s+", " ")
-	expect.equal(
-		flat,
-		"if Config.Flags.Downtown then Downtown :: any elseif Config.Flags.SnowVillage then SnowVillage :: any else GreyBoxRoom"
-	)
-	-- Both fallbacks stay unlocked and loadable with the Downtown flag off.
-	expect.equal(Config.Flags.SnowVillage, true)
-	expect.equal(Config.DefaultWorldsUnlocked.greybox, true)
-	expect.equal(Config.DefaultWorldsUnlocked.snow_village, true)
-	local SnowVillage = require("../../src/shared/Content/Worlds/SnowVillage")
-	local GreyBoxRoom = require("../../src/shared/Content/GreyBoxRoom")
-	expect.truthy(#SnowVillage.objects > 0 and #GreyBoxRoom.objects > 0)
+test(
+	"Config: the slice outranks Downtown, and rolling Downtown back falls to Snow Village, then to the grey-box room",
+	function()
+		-- Worlds reads the flags once at require time, so the fallback chain is checked on its source: the slice
+		-- first, then Downtown, then Snow Village, then the grey box, and nothing else in src/shared branches on the Downtown flag.
+		local text = fs.readFile("src/shared/Worlds.luau")
+		local chain = string.match(text, "local active: WorldDef = (.-)\n\n")
+		expect.truthy(chain ~= nil)
+		local flat = string.gsub(chain :: string, "%s+", " ")
+		expect.equal(
+			flat,
+			"if Config.Flags.MainStreetSlice then MainStreetSlice :: any elseif Config.Flags.Downtown then Downtown :: any elseif Config.Flags.SnowVillage then SnowVillage :: any else GreyBoxRoom"
+		)
+		-- Both fallbacks stay unlocked and loadable with the Downtown flag off.
+		expect.equal(Config.Flags.SnowVillage, true)
+		expect.equal(Config.DefaultWorldsUnlocked.greybox, true)
+		expect.equal(Config.DefaultWorldsUnlocked.snow_village, true)
+		local SnowVillage = require("../../src/shared/Content/Worlds/SnowVillage")
+		local GreyBoxRoom = require("../../src/shared/Content/GreyBoxRoom")
+		expect.truthy(#SnowVillage.objects > 0 and #GreyBoxRoom.objects > 0)
+	end
+)
+
+test("Config: Main-Street slice (010) flags default off and the limits are pinned", function()
+	expect.equal(Config.Flags.MainStreetSlice, false)
+	expect.equal(Config.Flags.SliceHud, false)
+	expect.equal(Config.Flags.HeapRedesign, false)
+	expect.equal(Config.billboardTextureCap, 6)
+	expect.equal(Config.maxPublishedStuck, 60)
+	expect.equal(Config.heapLocalCap, 40)
+	expect.equal(Config.heapRemoteCap, 12)
+	expect.equal(Config.heapScaleExponent, 1.0)
+	expect.equal(Config.heapCoverageTargetD, 5)
+	expect.equal(Config.heapCoverageTarget, 0.6)
+	expect.equal(Config.tooLargeBumpCooldown, 0.4)
+	expect.equal(Config.tooLargeBumpImpulse, 18)
+	-- The published tail must cover the tracked and visible counts it extends.
+	expect.truthy(Config.maxPublishedStuck > Config.maxVisibleStuck)
+	expect.truthy(Config.maxPublishedStuck <= Config.maxTrackedStuck)
+	expect.truthy(Config.heapRemoteCap < Config.heapLocalCap)
 end)
 
 return {}

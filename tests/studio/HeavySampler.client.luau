@@ -11,6 +11,102 @@ local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 
+-- Feature 010 slice mode: when the Workspace attribute `HeavyMode` is "slice" (set by HeavyScene), the sampler leaves the
+-- camera alone, drives the player's ball like an eater (nearest absorbable object, up to 18 * sqrt(D / 2) studs/s,
+-- capped at 32) and writes one { fps, draw, tris, stuck, parts, d } record per second into the attribute
+-- `HeavySliceFps` (JSON) until HeavyStep is -1. draw and tris come from Stats.SceneDrawcallCount and
+-- SceneTriangleCount; stuck is the number of client stuck visuals; parts counts BaseParts outside StuckVisuals.
+if Workspace:GetAttribute("HeavyMode") == "slice" then
+	local CollectionService = game:GetService("CollectionService")
+	local Players = game:GetService("Players")
+	local Stats = game:GetService("Stats")
+	local samples: { { [string]: number } } = {}
+	Workspace:SetAttribute("HeavySliceFps", "[]")
+	local ball: BasePart? = nil
+	local frames, windowStart, retargetAt = 0, os.clock(), 0
+	local target: BasePart? = nil
+	local sliceConnection: RBXScriptConnection
+	sliceConnection = RunService.Heartbeat:Connect(function()
+		frames += 1
+		local now = os.clock()
+		if Workspace:GetAttribute("HeavyStep") == -1 then
+			sliceConnection:Disconnect()
+			Workspace:SetAttribute("HeavySliceDone", true)
+			return
+		end
+		if ball == nil or ball.Parent == nil then
+			local balls = Workspace:FindFirstChild("Balls")
+			ball = if balls
+				then balls:FindFirstChild(`Ball_{Players.LocalPlayer.UserId}`) :: BasePart?
+				else nil
+		end
+		local mine = ball
+		if mine ~= nil then
+			local diameter = mine.Size.X
+			if target == nil or target:GetAttribute("Taken") == true or now >= retargetAt then
+				target = nil
+				retargetAt = now + 0.4
+				local best = math.huge
+				for _, instance in CollectionService:GetTagged("WorldObject") do
+					local part = instance :: BasePart
+					local size = part:GetAttribute("Size")
+					if
+						part:GetAttribute("Taken") ~= true
+						and typeof(size) == "number"
+						and size <= 0.4 * diameter
+					then
+						local distance = (part.Position - mine.Position).Magnitude
+						if distance < best then
+							best, target = distance, part
+						end
+					end
+				end
+			end
+			if target ~= nil then
+				local flat = target.Position - mine.Position
+				flat = Vector3.new(flat.X, 0, flat.Z)
+				if flat.Magnitude > 0.05 then
+					local speed = math.min(18 * math.sqrt(diameter / 2), 32)
+					local velocity = mine.AssemblyLinearVelocity
+					mine.AssemblyLinearVelocity =
+						Vector3.new(flat.Unit.X * speed, velocity.Y, flat.Unit.Z * speed)
+				end
+			end
+		end
+		if now - windowStart >= 1 then
+			local stuckFolder = Workspace:FindFirstChild("StuckVisuals")
+			local stuck = if stuckFolder then #stuckFolder:GetChildren() else 0
+			local parts = 0
+			for _, descendant in Workspace:GetDescendants() do
+				if
+					descendant:IsA("BasePart")
+					and (stuckFolder == nil or not descendant:IsDescendantOf(stuckFolder))
+				then
+					parts += 1
+				end
+			end
+			local okDraw, draw = pcall(function()
+				return Stats.SceneDrawcallCount
+			end)
+			local okTris, tris = pcall(function()
+				return Stats.SceneTriangleCount
+			end)
+			table.insert(samples, {
+				fps = math.floor(frames / (now - windowStart) * 10 + 0.5) / 10,
+				draw = if okDraw then draw else -1,
+				tris = if okTris then tris else -1,
+				stuck = stuck,
+				parts = parts,
+				d = if mine then math.floor(mine.Size.X * 10) / 10 else 0,
+			})
+			frames, windowStart = 0, now
+			Workspace:SetAttribute("HeavySliceFps", HttpService:JSONEncode(samples))
+		end
+	end)
+	print("HeavySampler: slice mode, recording")
+	return
+end
+
 local WARMUP_SECONDS = 10
 local SAMPLE_SECONDS = 60
 local CAMERA_HEIGHT = 330

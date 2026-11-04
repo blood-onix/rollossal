@@ -1040,7 +1040,15 @@ test("Downtown: the active world is picked in priority order and the flag is on"
 	expect.equal(Config.Flags.Downtown, true)
 	expect.equal(Config.DefaultWorldsUnlocked.downtown, true)
 	local text = fs.readFile("src/shared/Worlds.luau")
+	-- 010: the slice flag comes first, Downtown second, Snow Village third.
+	local sliceAt = string.find(text, "if Config.Flags.MainStreetSlice", 1, true)
 	local downtownAt = string.find(text, "Config.Flags.Downtown", 1, true)
+	local downtownBranchAt = string.find(text, "elseif Config.Flags.Downtown", 1, true)
+	expect.truthy(
+		sliceAt ~= nil
+			and downtownBranchAt ~= nil
+			and (sliceAt :: number) < (downtownBranchAt :: number)
+	)
 	local snowAt = string.find(text, "Config.Flags.SnowVillage", 1, true)
 	expect.truthy(
 		downtownAt ~= nil and snowAt ~= nil and (downtownAt :: number) < (snowAt :: number)

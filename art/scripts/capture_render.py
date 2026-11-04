@@ -4,6 +4,7 @@
 # (execute_blender_code), never from the shell:
 #
 #   PARAMS = {"root": "<repo root>", "world": "art/render/world-city.json", "out": "<dir>", "commit": "<sha>"}
+#   (optional "cameras": "art/capture/cameras-slice.json" for the Main-Street slice, 010)
 #   exec(open(PARAMS["root"] + "/art/scripts/capture_render.py").read()); run(PARAMS)
 #
 # Roblox (x east, y up, z south) maps to Blender (x, -z, y): a proper rotation, so yaw about Roblox +Y is the same
@@ -142,7 +143,8 @@ def set_camera(camera, shot, fov):
 def run(params):
     root = params["root"]
     world = json.load(open(os.path.join(root, params["world"])))
-    cameras = json.load(open(os.path.join(root, "art", "capture", "cameras.json")))
+    # 010: params["cameras"] picks another shot file (the slice uses art/capture/cameras-slice.json).
+    cameras = json.load(open(os.path.join(root, params.get("cameras", "art/capture/cameras.json"))))
     out_dir = params["out"]
     os.makedirs(out_dir, exist_ok=True)
     theme = world["theme"]

@@ -1,14 +1,21 @@
 --!strict
--- Resolves the Downtown world for one theme into a deterministic JSON file for the offline Blender renderer
+-- Resolves the Downtown world (or, with --world slice, the 010 Main-Street slice) for one theme into a deterministic JSON file for the offline Blender renderer
 -- (specs/009-style-bible-bakeoff/contracts/capture-route.md). Run from the repo root:
 --   lune run scripts/capture-export -- --theme city --out art/render/world-city.json
+--   lune run scripts/capture-export -- --world slice --out art/render/world-slice.json
+-- With --world slice the theme is city and the shots are art/capture/cameras-slice.json.
 
 local fs = require("@lune/fs")
 local process = require("@lune/process")
 local stdio = require("@lune/stdio")
 
 local Config = require("../src/shared/Config")
-local Downtown = require("../src/shared/Content/Worlds/Downtown")
+local DowntownWorld = require("../src/shared/Content/Worlds/Downtown")
+local MainStreetSlice = require("../src/shared/Content/Worlds/MainStreetSlice")
+local SceneKit = require("../src/shared/Rules/SceneKit")
+local SceneKits = require("../src/shared/Content/SceneKits")
+local Signs = require("../src/shared/Content/Signs")
+local StreetRules = require("../src/shared/Rules/StreetRules")
 local Layout = require("../src/shared/Rules/Layout")
 local ThemeResolve = require("../src/shared/Rules/ThemeResolve")
 local Themes = require("../src/shared/Content/Themes")
@@ -19,6 +26,7 @@ local function fail(message: string): never
 end
 
 local themeId = "city"
+local worldName = "downtown"
 local outPath: string? = nil
 local index = if process.args[1] == "--" then 2 else 1
 while index <= #process.args do
@@ -26,6 +34,8 @@ while index <= #process.args do
 	local value = process.args[index + 1]
 	if flag == "--theme" and value ~= nil then
 		themeId = value
+	elseif flag == "--world" and (value == "slice" or value == "downtown") then
+		worldName = value
 	elseif flag == "--out" and value ~= nil then
 		outPath = value
 	else
@@ -33,7 +43,23 @@ while index <= #process.args do
 	end
 	index += 2
 end
-local output = outPath or `art/render/world-{themeId}.json`
+local output = outPath
+	or (
+		if worldName == "slice"
+			then "art/render/world-slice.json"
+			else `art/render/world-{themeId}.json`
+	)
+
+-- The world under export: Downtown as written, or the slice built from the same pure rules the game uses.
+local Downtown: any = if worldName == "slice"
+	then MainStreetSlice.build({
+		StreetRules = StreetRules,
+		SceneKit = SceneKit,
+		SceneKits = SceneKits,
+		Signs = Signs,
+		Downtown = DowntownWorld,
+	})
+	else DowntownWorld
 
 local theme = (Themes :: any)[themeId]
 if theme == nil then
@@ -125,6 +151,9 @@ local function addBlocks(list: { any }?)
 end
 addBlocks(Downtown.environment.blocks)
 local binding = (Downtown.themeBindings :: any)[themeId]
+if binding == nil then
+	fail(`world {Downtown.worldId} has no binding for theme {themeId}`)
+end
 addBlocks(binding.blocks)
 
 local objectById: { [string]: ThemeResolve.ObjectLike } = {}
@@ -169,9 +198,11 @@ local dir = string.match(output, "^(.*)/[^/]+$")
 if dir ~= nil and dir ~= "" then
 	fs.writeDir(dir)
 end
-fs.writeFile(
-	output,
-	encode({ theme = themeId, blocks = blocks, placements = placements, spawns = spawns }, "")
-		.. "\n"
-)
+fs.writeFile(output, encode({
+	theme = themeId,
+	world = Downtown.worldId,
+	blocks = blocks,
+	placements = placements,
+	spawns = spawns,
+}, "") .. "\n")
 print(`wrote {output}: {#blocks} blocks, {#placements} placements, {#spawns} spawns`)

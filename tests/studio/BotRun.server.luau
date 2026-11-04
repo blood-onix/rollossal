@@ -24,7 +24,9 @@ local BallService = require(ServerScriptService.BallService)
 local RunManager = require(ServerScriptService.RunManager)
 local WorldSpawner = require(ServerScriptService.WorldSpawner)
 
-local BOT_COUNT = 12
+-- Feature 010: the slice benchmark (HeavyScene in slice mode) sets the `BotRunCount` attribute of Workspace to 11, so
+-- the player's own ball makes twelve. Unset keeps the twelve playerless balls of the original quickstart.
+local BOT_COUNT: number = (Workspace:GetAttribute("BotRunCount") :: number?) or 12
 local FIRST_BOT_USER_ID = 700000
 local RETARGET_SECONDS = 0.4
 local STUCK_SECONDS = 2

@@ -95,7 +95,12 @@ function Hud.start()
 	local markers: { TextLabel } = {}
 	local thresholds = Worlds.starThresholds
 	local centre = (#thresholds + 1) / 2
+	-- 010 SliceHud: no Next:, star row or tier banner. Size is read from the ball itself.
+	local sliceHud = Config.Flags.SliceHud
 	for index in thresholds do
+		if sliceHud then
+			break
+		end
 		local offset = (index - centre) * MARKER_WIDTH
 		markers[index] = UiKit.label({
 			parent = root,
@@ -151,14 +156,17 @@ function Hud.start()
 	barFill.BorderSizePixel = 0
 	barFill.Size = UDim2.fromScale(0, 1)
 	barFill.Parent = barBack
-	local nextTier = UiKit.label({
-		parent = meter,
-		name = "NextTier",
-		text = "",
-		size = UDim2.fromOffset(METER_WIDTH, METER_HEIGHT - METER_NEXT_TOP),
-		position = UDim2.fromOffset(0, METER_NEXT_TOP),
-		xAlign = Enum.TextXAlignment.Left,
-	})
+	local nextTier: TextLabel? = nil
+	if not sliceHud then
+		nextTier = UiKit.label({
+			parent = meter,
+			name = "NextTier",
+			text = "",
+			size = UDim2.fromOffset(METER_WIDTH, METER_HEIGHT - METER_NEXT_TOP),
+			position = UDim2.fromOffset(0, METER_NEXT_TOP),
+			xAlign = Enum.TextXAlignment.Left,
+		})
+	end
 
 	-- One-line messages in the middle of the screen.
 	local function message(
@@ -183,14 +191,17 @@ function Hud.start()
 		return label
 	end
 	local pop = message("PickupPop", POP_WIDTH, POP_HEIGHT, UDim2.new(0.5, 0, 0, POP_TOP), 0, nil)
-	local banner = message(
-		"TierBanner",
-		BANNER_WIDTH,
-		BANNER_HEIGHT,
-		UDim2.new(0.5, 0, 0, BANNER_TOP),
-		0,
-		BANNER_TEXT_SIZE
-	)
+	local banner: TextLabel? = nil
+	if not sliceHud then
+		banner = message(
+			"TierBanner",
+			BANNER_WIDTH,
+			BANNER_HEIGHT,
+			UDim2.new(0.5, 0, 0, BANNER_TOP),
+			0,
+			BANNER_TEXT_SIZE
+		)
+	end
 	local bump =
 		message("BumpFlash", BUMP_WIDTH, BUMP_HEIGHT, UDim2.fromScale(0.5, BUMP_Y), 0.5, nil)
 
@@ -208,6 +219,9 @@ function Hud.start()
 	end
 
 	local function renderStars()
+		if sliceHud then
+			return
+		end
 		local current = diameter()
 		for index, threshold in thresholds do
 			local reached = current >= threshold
@@ -223,15 +237,19 @@ function Hud.start()
 		local current = diameter()
 		sizeValue.Text = Localizer.t("ui.hud.size_value", { size = string.format("%.1f", current) })
 		barFill.Size = UDim2.fromScale(Tiers.progress(current, Worlds.tierLikes), 1)
+		local label = nextTier
+		if label == nil then
+			return
+		end
 		local index, nextMin = Tiers.lookup(current, Worlds.tierLikes)
 		local following = Worlds.sizeTiers[index + 1]
 		if nextMin ~= nil and following ~= nil then
-			nextTier.Text = Localizer.t("ui.hud.next_tier", {
+			label.Text = Localizer.t("ui.hud.next_tier", {
 				icon = Icons.arrow,
 				headline = Localizer.t(following.headlineKey),
 			})
 		else
-			nextTier.Text = Localizer.t("ui.hud.max_tier")
+			label.Text = Localizer.t("ui.hud.max_tier")
 		end
 	end
 
@@ -296,10 +314,10 @@ function Hud.start()
 	end)
 	RunClient.tierUnlocked:Connect(function(tier: number)
 		local def = Worlds.sizeTiers[tier]
-		if def then
+		if def and banner ~= nil then
 			local headline = Localizer.t(def.headlineKey)
 			show(
-				banner,
+				banner :: TextLabel,
 				`{Icons[def.headlineIcon]} {Localizer.t(
 					"ui.banner.tier_unlock",
 					{ headline = headline }
