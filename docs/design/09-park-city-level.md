@@ -15,8 +15,10 @@ It replaces the Downtown "Inside Out" layout in [03-city-level.md](03-city-level
 The art direction ([08-style-bible.md](08-style-bible.md)) is unchanged. Every number marked **(tune)** is a starting
 value for playtests.
 
-- Map: [maps/park-city.svg](maps/park-city.svg), drawn by `scripts/park-city-map.py`. Run it after you change a
-  coordinate here, so the picture and the text agree.
+- **Layout data** (authoritative for every coordinate): [maps/park-city-layout.json](maps/park-city-layout.json), written
+  by `scripts/park_city_layout.py`. Where a coordinate in this text and the JSON disagree, the JSON wins.
+- **Maps**: the overview, one map per zone, close-ups of the set pieces and a Roof Run side view, all drawn from the
+  JSON by `scripts/park_city_render.py`. See [maps/README.md](maps/README.md) for the list and how to read them.
 - Growth model: `scripts/growth-sim.py`. Run it after you change a food count or a size rule; section 5 quotes its
   output.
 
@@ -286,14 +288,14 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 
 | Place | Where | Size window | What happens |
 | --- | --- | --- | --- |
-| **The Pond** | (340, −340), 140 × 110 | — | **Deep for D < 10** (sink and come back on the shore). From D 10 you wade (bed 5 down, slow). |
+| **The Pond** | (180, −350), 140 × 84, in the band between the park edge and the Park Loop | — | **Deep for D < 10** (sink and come back on the shore). From D 10 you wade (bed 5 down, slow). |
 | **Duck Island** | the middle, r 15 | D 1.5 – 8 | A duck house, a rubber-duck pile, a *picnic* scene washed ashore: 20 pieces at the top of Tiers 2 – 3, and a golden spot. |
-| Route: **Lily pads** | west shore → island | D 1.5 – 6 | 7 pads, 4 wide, gaps 2.5 (D 1 must hold-jump). |
+| Route: **Lily pads** | west shore → island | D 1.5 – 6 | 8 pads, 4 wide, gaps 2.5 (D 1 must hold-jump). |
 | Route: **Jetty and diving board** | south shore | D 1 – 6 | A diving board (a bounce, 8 up and 14 forward) onto the island. |
-| Route: **Drain pipe** | north shore | D 1 – 5 | Rail R2, 40 studs to the island. |
+| Route: **Drain pipe** | north shore | D 1 – 5 | Rail R2, 29 studs to the island. |
 | **Rubber duck flotilla** | on the water | D 1 – 5 | 12 floating ducks between the pads, reachable only by a jump from a pad. |
-| **Boathouse** | east shore (418, −345) | D 9 – 30 | *Boat hire* scene. Boats are Tier 3 to 4; the boathouse is bulk 13 (D 26). |
-| **Picnic Lawn** | (230, −305) | D 1 – 15 | *Picnic* and *birthday party* scenes. |
+| **Boathouse** | east shore (262, −350) | D 9 – 30 | *Boat hire* scene. Boats are Tier 3 to 4; the boathouse is bulk 13 (D 26). |
+| **Picnic Lawn** | (360, −200) and (360, −150) | D 1 – 15 | *Picnic* and *birthday party* scenes. |
 | **Catapult C2** | (330, −250) | D 2 – 12 | |
 | Landmark | **Giant Inflatable Duck** at (250, −430) (bulk 25) | D 50+ | It bobs. |
 
@@ -308,17 +310,17 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 
 | Place | Where | Size window | What happens |
 | --- | --- | --- | --- |
-| **Playground** | (345, 235), 90 × 70 | D 1 – 12 | **Slide tower**: up to y 10, and the slide launches you over the sandpit. **Roundabout**: spins and flings balls under D 5, and is food from D 10. **Trampolines** bounce until D 8 eats them. **Sandpit**: slow ground with buried toys. |
-| **Skate Park** | (350, 340), 100 × 80 | D 2 – 15 | A 6-deep bowl, two quarter pipes, a funbox, a kicker with a handrail (rail R3). Boost pads at both bowl entries. Pumping the bowl into the kicker launches a D 5+ ball onto the skate-shelter roof stash (14 up). |
+| **Playground** | (349, 235), 90 × 70 | D 1 – 12 | **Slide tower**: up to y 10, and the slide launches you over the sandpit. **Roundabout**: spins and flings balls under D 5, and is food from D 10. **Trampolines** bounce until D 8 eats them. **Sandpit**: slow ground with buried toys. |
+| **Skate Park** | (350, 340), 90 × 80 | D 2 – 15 | A 6-deep bowl, two quarter pipes, a funbox, a kicker with a handrail (rail R3). Boost pads at both bowl entries. Pumping the bowl into the kicker launches a D 5+ ball onto the skate-shelter roof stash (14 up). |
 | **Courts** | (275, 430), 80 × 90 | D 1 – 8 | *Tennis court* (40 tennis balls), a basketball half-court, a five-a-side pitch. Fences 3 high are food at D 5. |
-| **Catapult C3** | (330, 250) | D 2 – 12 | |
+| **Catapult C3** | (260, 330) | D 2 – 12 | |
 | Landmark | **Ferris Wheel** at (450, 330) (bulk 29) | D 58+ | It turns. Seen from half the map. |
 
 ### 7.5 SW quarter: Gardens and Hedge Maze
 
 | Place | Where | Size window | What happens |
 | --- | --- | --- | --- |
-| **Hedge Maze** | (−340, 340), 90 × 90 | D 1 – 5, then food | Hedges 3.2 × 1.5 × 3 (bulk 2.4), corridors 6 wide. The centre holds the Gnome King, 15 top-of-tier pieces and a golden spot. **At D 4.8 the walls become food**: about 60 hedge pieces. |
+| **Hedge Maze** | (−349, 349), 90 × 90, centre room 18 × 18 | D 1 – 5, then food | Hedges 3.2 × 1.5 × 3 (bulk 2.4), corridors 6 wide. The centre holds the Gnome King, 15 top-of-tier pieces and a golden spot. **At D 4.8 the walls become food**: about 60 hedge pieces. |
 | **Flower Beds and Rose Garden** | (−285, 430) | D 1 – 6 | *Flower bed* scenes, bird baths, a sundial. |
 | **Allotments** | (−440, 270) | D 1 – 40 | *Allotment plot* scenes. A greenhouse with a 2.5-wide door is small-only inside; you eat it whole at D 24. |
 | **Sprinkler Lawn** | (−230, 350) | D 1 – 8 | Wet grass (slick) with rotating sprinklers; the food is beyond it. |
@@ -332,14 +334,17 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
   clockwise.
 - **Traffic**: 10 cars, 2 vans and 1 bus at 24 studs/s, in convoys. A car bumps a ball under D 15 (and knocks off 3
   objects). From D 15 the cars are food, so the road changes from danger to buffet.
-- **8 gate corners** (the four Spokes and the four diagonals): *gate corner*, *ice-cream stop* and *bike rack* scenes.
-  These are the first Tier 3 field and the first place balls meet.
-- **Drains** under the diagonal gates (3 wide, small-only): a safe crossing under the traffic.
+- **4 gate corners** at the Spoke gates (a *gate corner* and an *ice-cream stop* on either side of the path), plus bus
+  stops and kerb lines of street furniture along the inner pavement. These are the first Tier 3 field and the first
+  place balls meet.
+- **4 diagonal gates**, each with a *bike rack* and a **drain** (3 wide, small-only): a safe crossing under the traffic.
+  The SW one sits at (−250, 318), clear of the maze.
 
 ### 7.7 Neighbourhoods (Tiers 4 – 5)
 
 - **NE, Market Street and the Roof Run.** *Market stall* and *café terrace* scenes down Market Street (z −200, x 40 to
-  250). The north row is **8 flat roofs** (22 × 26), heights 10 to 20, from (240, −232) west to (45, −232).
+  250). The north row is **8 flat roofs** (18 × 26), heights 10 to 20, centres at x 245, 220, 193, 168, 140, 113, 85,
+  47 (z −232). The roofs are walkable; the buildings under them are Tier 5 food.
   - **Up**: a delivery ramp at the east end, or a jump pad in the alley at (165, −205).
   - **Gaps**: 7, 9, 7, 10, 9, 10 studs (each within 70 % of a D 8 tap). Gap 7 is the **brave gap**, 20 studs, with a
     boost pad before it.
@@ -367,8 +372,8 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
   the Sky Rail.
 - **The Plaza** (r 50): a *fountain plaza* scene and the theme landmark on a pedestal (the Giant Duck in `city`, the
   Mega Tree in `winter`).
-- **Four tower blocks**, 80 × 80:
-  - NE: **the Glass Tower** (bulk 48, D 96), the finale, with a helipad.
+- **Four tower blocks**, 80 × 80, each a 2 × 2 grid of plots at 80 and 120 studs from the axes:
+  - NE: **the Glass Tower** (bulk 48, D 96) at (120, −120), the finale, with a helipad.
   - NW: offices and a cinema.
   - SE: apartment blocks and a hotel.
   - SW: the Town Hall with its clock tower, and a library.
@@ -600,6 +605,10 @@ more than today's 1,500-placement cap, so this design needs one engine change:
 | 6 Skyline | – | – | 2 | 24 | 26 | Part |
 | **Total** | | | | | **2,253** | 1,153 Parts |
 
+- **The first-pass layout** ([maps/README.md](maps/README.md)) holds T1 1,102, T2 989, T3 494, T4 166 + 13 traffic,
+  T5 52, T6 8: 2,091 light objects and 720 Parts, with 0 overlaps. It has more small food than the table above and fewer
+  Tier 5 – 6 buildings (60 against about 130), so the 012 pace test tunes both. Expect a lower ceiling for the top
+  players until it does.
 - `cullTierDelta` 2 stays: a Tier 4 ball renders no Tier 1 or 2 food.
 - Triangles: as in 03, the whole scene ≤ 550,000 in `winter`, and what a Tier 6 player sees ≤ 290,000. The light
   objects count only near the camera.
