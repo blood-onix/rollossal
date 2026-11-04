@@ -95,11 +95,11 @@ eat a long thin object that the old rule refused, bump a too-big object, and wat
 
 ### User Story 3 - Twelve players on the full map without the server choking (Priority: P2)
 
-Twelve players can play Park City together at a steady frame rate. The roughly 2,100 smallest objects (Tiers 1 and 2) do
+Twelve players can play Park City together at a steady frame rate. The roughly 3,100 smallest objects (Tiers 1 and 2) do
 not each cost the server a part: the server keeps their state as data and checks every absorb against their data
 position, and each player's device draws only the ones near them. Bigger objects work as they do today.
 
-**Why this priority**: the layout holds about 2,800 food objects, over the 2,000-part server budget if every object
+**Why this priority**: the layout holds about 4,000 food objects, over the 2,000-part server budget if every object
 were a part. Without this, the map cannot ship at its approved density. It is P2 because P1 can be shown with fewer
 crumbs, but the feature is not done without it.
 
@@ -216,6 +216,8 @@ rejected. It is P2 only because it follows from P1.
 - **FR-007**: Small-only tunnels and drains MUST admit balls up to their size (3 studs) and stop bigger balls at the
   mouth without wedging them.
 - **FR-008**: Spawns MUST follow the layout. A new ball starts at D 1 on its spawn, facing the city.
+- **FR-009a**: The park MUST have no empty lawn: in each park quarter, at most 5 % of the area may be more than 40 studs
+  from the nearest food (the layout reports this).
 - **FR-009**: The layout's golden-object spots MUST be available to the existing daily golden-object rule.
 
 **Size and readability**
@@ -275,7 +277,7 @@ rejected. It is P2 only because it follows from P1.
 | Gate | Check |
 | --- | --- |
 | G1 | `scripts/check.sh` passes, including new unit tests for: bulk and edibility, garnish, growth by bulk, the speed cap, the heap placement bound, light-object absorb validation, and the world data (unique ids, every object has dims, positions inside the map). |
-| G2 | The layout regenerates with **0 overlaps**, and the world data matches the layout (same objects, same positions). |
+| G2 | The layout regenerates with **0 overlaps**, no park quarter has more than 5 % of its area more than 40 studs from food, and the world data matches the layout (same objects, same positions). |
 | G3 | Budgets: server part count under 2,000 with 12 balls; placement and triangle budgets as in the design document. |
 | G4 | Every spawn: 20 doorstep crumbs edible at D 1; first pickup within 3 s. |
 | G5 | The open-route ladder has no gap (FR-023). |
