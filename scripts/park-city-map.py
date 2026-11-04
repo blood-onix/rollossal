@@ -207,7 +207,7 @@ text(0, 4, "Plaza", 11)
 circle(0, -14, 8, WATER)
 rect(-145, -145, 145, 145, "none", stroke=RAIL, sw=3, rx=8, dash="10 6")
 text(0, -128, "Sky Rail (y 30)", 9, RAIL)
-text(0, 172, "Hoardings close Downtown until D 30", 9, "#b0401a")
+text(0, 172, "Hoardings close Downtown until D 17", 9, "#b0401a")
 
 # Spawns
 spawns = []
