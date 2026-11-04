@@ -1,11 +1,17 @@
 {
   "verdict": "incomplete",
   "remaining": [
-    "T046 Fix Downtown doorstep so a D 1 ball is not boxed in under Flags.ReadableRules, with a Lune check",
-    "T047 Re-run the open T016 Stage A checks on Downtown (violin, bump, bob/wobble cues, no text) and record in playtest.md",
-    "T048 Run the route checks left out of T027 (doorstep to loop, root hollow, oak spiral, car park ramp, hoardings, Spoke to Plaza) and record in playtest.md"
+    "T047 Numerically verify the bob and new-tier wobble cues on Downtown with ReadableRules on (sample part CFrames near a live ball: edible objects move, too-big ones do not, reduce motion stops them) and the bump cooldown with a non-empty stuck list, then record each line in playtest.md and switch the flag back off"
   ],
   "human": [
+    {
+      "item": "T047 the bump thud sound and the by-eye feel of the bob and wobble cues",
+      "reason": "Needs eyes and ears on a live ball; already listed in docs/release-candidate.md as an owner check."
+    },
+    {
+      "item": "T048 D 3 Giant Oak spiral ramp to the deck (US1 scenario 4)",
+      "reason": "The tree house deck lies inside the oak_trunk block and the giant_oak object, and the ramp ends 9 studs short of it. Fixing it changes the owner-approved layout (constitution VII), so the owner must decide first. The other T048 routes were run and pass."
+    },
     {
       "item": "T045 Gate 6: owner approval of the shots and of the played build",
       "reason": "Needs the owner's judgement and recorded approval in playtest.md; the agent cannot give it."
@@ -15,5 +21,5 @@
       "reason": "Needs two connected Studio clients; only one is available here. The outbox spec covers the server side."
     }
   ],
-  "summary": "Checks pass and most of the feature is built, but the Downtown doorstep boxes in a D 1 ball, T016 is only partly run, and several T027 routes were never run; owner approval (gate 6) is still pending."
+  "summary": "T046 is fixed and the T048 routes other than the oak pass; the agent can still verify the T047 bob, wobble and bump-cooldown cues by numbers, while the Giant Oak deck layout, the by-eye cue checks and gate 6 need the owner."
 }

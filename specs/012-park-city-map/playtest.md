@@ -15,6 +15,22 @@ switched back off afterwards.
 - Not run: eating a violin-like object, the bump thud, the bob and wobble cues by eye, the `BallService` spec case for
   the speed cap (it ran green in the flags-off Jest run below). T016 stays open.
 
+### Round 2 re-run (T046, T047), Downtown with `ReadableRules` and `DebugSize` on, put back off afterwards
+
+- T046 doorstep fix: `Rules/Doorstep.clear` drops spawn-slot objects within 7 studs of a spawn that need more than D 1
+  (`Downtown.readableRules.doorstepClearRadius`); flags-off data untouched. Lune check (`Downtown.test`, "open way
+  out for a D 1 ball", both themes, all 12 spawns) fails with radius 0 and passes with 7. In Play the D 1 ball rolled
+  29 studs out of its spawn in 10 s and grew from 1 to 1.63 (before: boxed in for 30 s).
+- Violin-like object: at D 6 the ball ate an `acoustic_guitar` (3 x 1.1 x 0.4, bulk 1.10); the old rule needed D 7.5.
+  The server accepted it (Stuck entry `#9`, the object Taken).
+- Bump: at D 6 rolling into a wheelie bin (3.5, too big) knocked the one stuck object off; the diameter fell
+  6.02 to 5.59. A second hit within the 1 s cooldown changed nothing, but the stuck list was empty, so that part is
+  inconclusive.
+- No text banner: a capture mid-play shows only the Size HUD, stars and the timer.
+- **Not verified:** the bob and new-tier wobble cues, and the thud sound, need eyes and ears on a live ball. They stay
+  with the owner (release-candidate). T047 stays open for them. Driving the ball across the map tripped the server
+  displacement check once (the ball was returned to a spawn); the size tool only offers 1, 3, 6, 15, 35 and 80.
+
 ## Stage B and C: Park City (T026, T035, T036)
 
 - T026: world present at its layout coordinates. 91 blocks (no missing id), 1,392 placements before Stage C, all 12 spawns,
@@ -48,8 +64,27 @@ kerbs and the 0.05 thick spoke floor slabs are floor, not obstacles). Ball centr
 - Maze, all 118 open cell-to-cell edges, D 2.5, 3 and 4: none blocked. Caveat: the hedge pieces are light objects (client
   `LightField`), not server parts, so a server cast cannot see them (a control cast through a wall cell also hit nothing).
   This shows that no static geometry sits in the corridors; the hedge walls themselves are for the owner to judge by playing.
-- Not run: the car park ramps and the jump gaps by driving the ball; the size tool was exercised in T036 (`DebugSize` to 15).
+- Not run (round 1): the car park ramps and the jump gaps by driving the ball; the size tool was exercised in T036 (`DebugSize` to 15).
 - Flags were switched on in the working copy for the run and put back to `false` afterwards.
+
+## Route checks, round 2 (T048)
+
+`Flags.ParkCity` on, server `Spherecast` against `Workspace.World.Geometry` (floors, ramps, decks and kerbs excluded;
+objects and placeholders excluded, they are checked by the absorb rule). Ball centre 0.6 above the surface.
+
+- D 1 doorstep (spawn 1) to the Park Loop: clear along the acorn trail, round the glade log and the oak (the straight
+  line is blocked by the oak trunk and the glade log, by design of the trail).
+- D 2 into the root hollow: clear through the south mouth. D 4 stopped at the mouth (hits `root_hollow_s2`); D 3 also
+  stops, because the mouth is exactly 3 wide. FR-007 holds.
+- D 12 car park open ramp to the top deck (y 24), on to deck 3: clear.
+- D 17 hoardings: `hoarding` needs D 16.6; `canEat` is false at D 16 and true at D 17. OK.
+- D 25 Spoke N from the gate (z -330) to the Plaza centre: clear. A radius 12.5 sphere reaches the first Spoke object
+  (an ordinary part).
+- **D 3 oak spiral: FAILS.** The 32 ramp pieces cast clear, but the ramp ends at x -348.8 and the tree house deck
+  (-382 to -358, y 22 to 23) is 9 studs away. The deck also lies inside both the 24 x 24 x 40 `oak_trunk` block and the
+  30 x 30 x 40 `giant_oak` object (needs D 66, collidable). So the deck cannot be reached or stood on. The fix is a
+  layout change (move or shrink the trunk and oak footprint, extend the deck to the ramp end, move the picnic scene),
+  which touches an approved map, so it waits for the owner. T048 stays open for this.
 
 ## Not run
 - Everything the owner decides: gate 6 below.

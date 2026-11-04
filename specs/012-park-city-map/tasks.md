@@ -382,13 +382,13 @@ The layout was also fixed so that it can be built literally:
 - T036: `ParkHeavyScene.server.luau` and `ParkHeavySampler.client.luau` are new Park City versions of the benchmark.
 - T039: `scripts/park-capture-export.luau` and `art/scripts/park_capture_render.py` (the research R6 fallback).
 - T041: not needed, the offline route worked.
-- Open: T016 (cues, violin and bump by eye; Downtown doorstep boxed in), T045 (gate 6).
+- Open: T016 and T047 (bob/wobble cues and bump thud by eye), T048 (oak deck unreachable: layout change needs the owner), T045 (gate 6).
 
 
 ---
 
 ## Phase 8: Convergence
 
-- [ ] T046 [US2] Fix the Downtown doorstep so a D 1 ball can roll out of its spawn with `Flags.ReadableRules` on (the Tier 2 doorstep objects of size 1.0 to 1.2 box it in; `playtest.md` Stage A finding). Edit `readableRules` in `src/shared/Content/Worlds/Downtown.luau` (or the doorstep data it reads) without touching the flags-off numbers or any existing test file, and add a Lune check in `tests/unit/Downtown.test.luau` that every spawn has an open way out at D 1 per US2 (Stage A playable) and T009 (partial)
+- [X] T046 [US2] Fix the Downtown doorstep so a D 1 ball can roll out of its spawn with `Flags.ReadableRules` on (the Tier 2 doorstep objects of size 1.0 to 1.2 box it in; `playtest.md` Stage A finding). Edit `readableRules` in `src/shared/Content/Worlds/Downtown.luau` (or the doorstep data it reads) without touching the flags-off numbers or any existing test file, and add a Lune check in `tests/unit/Downtown.test.luau` that every spawn has an open way out at D 1 per US2 (Stage A playable) and T009 (partial)
 - [ ] T047 🔒 [US2] Re-run the open parts of T016 on Downtown with `Flags.ReadableRules` on, after T046: grow to about D 10, eat a violin-like long thin object the old rule refused, bump a lamp post (thud, nudge, bounce, cooldown), check the bob and new-tier wobble cues and that no text banner shows, then switch the flag back off and record each line in `playtest.md` per FR-010, FR-015, FR-016, FR-017 and T016 (partial)
 - [ ] T048 🔒 [US1] Run the route checks left out of T027 by Spherecast or by driving the ball, and record one line each in `playtest.md`: D 1 doorstep to Park Loop, D 2 into the root hollow and D 4 stopped at the mouth (FR-007), D 3 the oak spiral ramp to the deck, D 12 the car park open ramp to the top deck, D 17 the Downtown hoardings eaten, D 25 Spoke to Plaza, per US1 scenario 4 and T027 (partial)
