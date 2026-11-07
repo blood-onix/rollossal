@@ -3,8 +3,8 @@
   "remaining": [],
   "human": [
     {
-      "item": "T048 D 3 Giant Oak spiral ramp to the deck (US1 scenario 4)",
-      "reason": "The tree house deck lies inside the oak_trunk block and the giant_oak object, and the ramp ends 9 studs short of it. Fixing it changes the owner-approved layout (constitution VII), so the owner must decide first. The other T048 routes were run and pass."
+      "item": "T048 driving a real D 3 ball up the Giant Oak ramp and over the Roof Run and cottage lanes",
+      "reason": "The oak deck now sits at the ramp end and a D 3 sphere walks it; a driven ball trips the anti-teleport check, so the owner's play is the check."
     },
     {
       "item": "T016 / T047 thud sound and camera nudge by ear and eye, by-eye feel of the bob and wobble cues",
@@ -19,5 +19,5 @@
       "reason": "Needs two connected Studio clients; only one is available here. The outbox spec covers the server side."
     }
   ],
-  "summary": "T047 is done and verified by numbers and scripts/check.sh passes (545 tests); no agent-doable work remains, and what is left (Giant Oak deck layout, by-ear and by-eye cue checks, two-client check, gate 6) needs the owner."
+  "summary": "scripts/check.sh passes. The Giant Oak deck is fixed in round 5 and no agent-doable work remains; what is left (driven-ball route checks, by-ear and by-eye cue checks, two-client check, gate 6) needs the owner."
 }

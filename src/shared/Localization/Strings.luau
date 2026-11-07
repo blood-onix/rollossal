@@ -244,6 +244,9 @@ local Strings: { [string]: { en: string, es: string? } } = {
 	["tier.downtown.4.headline"] = { en = "BLOCK STUFF", es = "COSAS DE LA MANZANA" },
 	["tier.downtown.5.name"] = { en = "Skyline", es = "Horizonte" },
 	["tier.downtown.5.headline"] = { en = "SKYLINE", es = "EL HORIZONTE" },
+	-- Sixth tier of Downtown's readable-rules table (012, Flags.ReadableRules).
+	["tier.downtown.6.name"] = { en = "Giant", es = "Gigante" },
+	["tier.downtown.6.headline"] = { en = "GIANT STUFF", es = "COSAS GIGANTES" },
 	["object.downtown.bottle_cap"] = { en = "Bottle cap", es = "Chapa" },
 	["object.downtown.aa_battery"] = { en = "AA battery", es = "Pila AA" },
 	["object.downtown.earbud_case"] = { en = "Earbud case", es = "Estuche de auriculares" },

@@ -68,6 +68,48 @@ local function staticPart(name: string, size: Vector3, cframe: CFrame, tint: Col
 	return part
 end
 
+local SPIRAL_STEPS_PER_TURN = 16
+local SPIRAL_THICKNESS = 0.8
+
+-- A spiral ramp (012): `turns` turns up inside the block's footprint, `width` wide, rising over size.y from the
+-- block's bottom. Built from short planks along the helix, each tilted to the climb; the outer edge touches the
+-- footprint. Counter-clockwise seen from above.
+local function buildSpiral(block: Worlds.BlockDef, parent: Folder, tint: Color3): number
+	local at = block.cframe
+	local turns = block.turns or 2
+	local width = block.width or 8
+	local outer = math.min(block.size.x, block.size.z) / 2
+	local radius = outer - width / 2
+	local steps = math.max(1, math.floor(turns * SPIRAL_STEPS_PER_TURN + 0.5))
+	local bottom = at.y - block.size.y / 2
+	local rise = block.size.y
+	local centre = Vector3.new(at.x, 0, at.z)
+	local function pointAt(step: number): Vector3
+		local angle = step / SPIRAL_STEPS_PER_TURN * math.pi * 2
+		return centre
+			+ Vector3.new(
+				math.cos(angle) * radius,
+				bottom + rise * step / steps,
+				math.sin(angle) * radius
+			)
+	end
+	for step = 0, steps - 1 do
+		local from, to = pointAt(step), pointAt(step + 1)
+		local middle = (from + to) / 2
+		local plank = staticPart(
+			`{block.id}_{step + 1}`,
+			Vector3.new(width, SPIRAL_THICKNESS, (to - from).Magnitude * 1.08),
+			CFrame.lookAt(
+				middle - Vector3.new(0, SPIRAL_THICKNESS / 2, 0),
+				to - Vector3.new(0, SPIRAL_THICKNESS / 2, 0)
+			),
+			tint
+		)
+		plank.Parent = parent
+	end
+	return steps
+end
+
 local function buildGeometry(world: WorldDef, parent: Folder, themeId: string): number
 	local palette = world.environment.palette
 	local count = 0
@@ -103,7 +145,10 @@ local function buildGeometry(world: WorldDef, parent: Folder, themeId: string): 
 		local cframe = CFrame.new(at.x, at.y, at.z) * CFrame.Angles(0, math.rad(at.yaw), 0)
 		local size = Vector3.new(block.size.x, block.size.y, block.size.z)
 		local part: BasePart
-		if block.kind == "Wedge" then
+		if block.kind == "Spiral" then
+			count += buildSpiral(block, parent, colour(swatch))
+			continue
+		elseif block.kind == "Wedge" then
 			local wedge = Instance.new("WedgePart")
 			wedge.Name = block.id
 			wedge.Anchored = true
@@ -293,6 +338,170 @@ local function buildHub(world: WorldDef, parent: Folder)
 	pad.Parent = parent
 end
 
+-- Inert grey-box stand-ins for the mechanics a later feature makes real (012 research R5): rails, drain pipes, pads,
+-- catapults and water. No scripts, no touch handlers, no attributes the game reads. Each Part is named with its
+-- placeholder id and tagged "Placeholder" so the later feature can find it.
+local PLACEHOLDER_TAG = "Placeholder"
+local PAD_COLOURS: { [string]: Color3 } = {
+	boost = Color3.fromRGB(255, 160, 40),
+	bounce = Color3.fromRGB(90, 200, 110),
+	spring = Color3.fromRGB(70, 140, 235),
+	bullseye = Color3.fromRGB(230, 60, 60),
+	platform = Color3.fromRGB(70, 170, 90),
+}
+local RAIL_COLOUR = Color3.fromRGB(255, 120, 200)
+local PIPE_COLOUR = Color3.fromRGB(90, 120, 150)
+local CATAPULT_COLOUR = Color3.fromRGB(140, 100, 60)
+local WATER_COLOUR = Color3.fromRGB(70, 140, 200)
+local SLICK_COLOUR = Color3.fromRGB(150, 200, 230)
+
+local function placeholderPart(
+	name: string,
+	size: Vector3,
+	cframe: CFrame,
+	tint: Color3,
+	solid: boolean,
+	parent: Folder
+): Part
+	local part = staticPart(name, size, cframe, tint)
+	part.CanCollide = solid
+	part.CanTouch = false
+	part.CanQuery = solid
+	CollectionService:AddTag(part, PLACEHOLDER_TAG)
+	part.Parent = parent
+	return part
+end
+
+local function buildPlaceholders(world: WorldDef, parent: Folder): number
+	local count = 0
+	for _, item in (world.placeholders or {}) :: { any } do
+		local id: string = item.id
+		local kind: string = item.kind
+		if kind == "rail" or kind == "pipe" then
+			local points: { { number } } = item.points
+			local tint = if kind == "rail" then RAIL_COLOUR else PIPE_COLOUR
+			local thickness = if kind == "rail" then 0.4 else 1
+			for index = 1, #points - 1 do
+				local from = Vector3.new(points[index][1], points[index][2], points[index][3])
+				local to =
+					Vector3.new(points[index + 1][1], points[index + 1][2], points[index + 1][3])
+				if kind == "pipe" then
+					-- The run is under the ground: only the beam's ends are drawn, as the mouths below.
+					continue
+				end
+				local part = placeholderPart(
+					if index == 1 then id else `{id}_{index}`,
+					Vector3.new(thickness, thickness, (to - from).Magnitude),
+					CFrame.lookAt((from + to) / 2, to),
+					tint,
+					false,
+					parent
+				)
+				part.Material = Enum.Material.Neon
+				count += 1
+			end
+			for end_, point in { points[1], points[#points] } do
+				local at = Vector3.new(point[1], point[2], point[3])
+				if kind == "rail" then
+					-- A post under each end of a rail.
+					local height = math.max(at.Y, 0.5)
+					placeholderPart(
+						`{id}_post{end_}`,
+						Vector3.new(0.8, height, 0.8),
+						CFrame.new(at.X, height / 2, at.Z),
+						tint,
+						false,
+						parent
+					)
+				else
+					-- A pipe mouth: a short cylinder lying along the pipe, rim solid.
+					local other = if end_ == 1 then points[#points] else points[1]
+					local heading = Vector3.new(other[1] - at.X, 0, other[3] - at.Z)
+					local facing = if heading.Magnitude > 0 then heading.Unit else Vector3.xAxis
+					local mouth = placeholderPart(
+						`{id}_mouth{end_}`,
+						Vector3.new(2, 4, 4),
+						CFrame.lookAt(
+							Vector3.new(at.X, 2, at.Z),
+							Vector3.new(at.X, 2, at.Z) + facing
+						) * CFrame.Angles(0, math.pi / 2, 0),
+						tint,
+						true,
+						parent
+					)
+					mouth.Shape = Enum.PartType.Cylinder
+				end
+				count += 1
+			end
+		elseif PAD_COLOURS[kind] then
+			local size: { number } = item.size
+			local thick = if kind == "platform" then 0.2 else 0.4
+			local part = placeholderPart(
+				id,
+				Vector3.new(size[1], thick, size[2]),
+				CFrame.new(item.x, item.y - thick / 2, item.z)
+					* CFrame.Angles(0, math.rad(item.yaw), 0),
+				PAD_COLOURS[kind],
+				kind == "platform",
+				parent
+			)
+			if kind ~= "platform" then
+				part.Shape = Enum.PartType.Block
+			end
+			count += 1
+		elseif kind == "catapult" or kind == "big_slingshot" then
+			local scale = if kind == "big_slingshot" then 2 else 1
+			local yaw = CFrame.Angles(0, math.rad(item.restYaw), 0)
+			placeholderPart(
+				`{id}_base`,
+				Vector3.new(4, 1.5, 4) * scale,
+				CFrame.new(item.x, 0.75 * scale, item.z),
+				CATAPULT_COLOUR,
+				true,
+				parent
+			)
+			placeholderPart(
+				`{id}_arm`,
+				Vector3.new(1, 0.8, 8) * scale,
+				CFrame.new(item.x, 2 * scale, item.z) * yaw * CFrame.new(0, 0, -3 * scale),
+				CATAPULT_COLOUR,
+				false,
+				parent
+			)
+			count += 2
+		elseif kind == "wading" or kind == "slick" or kind == "deep_until" then
+			local tint = if kind == "slick" then SLICK_COLOUR else WATER_COLOUR
+			local slab: Part
+			if item.ellipse ~= nil then
+				local e: { number } = item.ellipse
+				slab = placeholderPart(
+					id,
+					Vector3.new(0.05, e[4] * 2, e[3] * 2),
+					CFrame.new(e[1], 0.1, e[2]) * CFrame.Angles(0, 0, math.pi / 2),
+					tint,
+					false,
+					parent
+				)
+				slab.Shape = Enum.PartType.Cylinder
+			else
+				local r: { number } = item.rect
+				slab = placeholderPart(
+					id,
+					Vector3.new(r[3] - r[1], 0.05, r[4] - r[2]),
+					CFrame.new((r[1] + r[3]) / 2, 0.1, (r[2] + r[4]) / 2),
+					tint,
+					false,
+					parent
+				)
+			end
+			count += 1
+		else
+			error(`WorldBuilder: placeholder {id} has unknown kind {kind}`)
+		end
+	end
+	return count
+end
+
 function WorldBuilder.applyLighting(lighting: LightingDef)
 	Lighting.Ambient = colour(lighting.ambient)
 	Lighting.OutdoorAmbient = colour(lighting.outdoorAmbient)
@@ -357,11 +566,13 @@ function WorldBuilder.start(
 	local objectsFolder = folder("Objects", root)
 	local hub = folder("Hub", root)
 	local markers = folder("Markers", root)
+	local placeholders = folder("Placeholders", root)
 
 	local buildThemeId = themeId or world.activeThemeId or "winter"
 	local geometryCount = buildGeometry(world, geometry, buildThemeId)
 	buildHub(world, hub)
 	local markerCount = buildMarkers(world, markers, buildThemeId)
+	local placeholderCount = buildPlaceholders(world, placeholders)
 
 	local defs: { [string]: ObjectDef } = {}
 	for _, def in world.objects do
@@ -421,6 +632,8 @@ function WorldBuilder.start(
 		part.CFrame = CFrame.new(placement.x, placement.y + part.Size.Y / 2, placement.z)
 			* CFrame.Angles(0, placement.yaw, 0)
 		part:SetAttribute("Size", def.size)
+		part:SetAttribute("Bulk", def.bulk or def.size)
+		part:SetAttribute("Longest", def.size)
 		part:SetAttribute("Tier", def.tier)
 		part:SetAttribute("ObjectId", def.id)
 		part:SetAttribute("Taken", false)
@@ -434,7 +647,7 @@ function WorldBuilder.start(
 	if world.lighting and RunService:IsRunning() then
 		WorldBuilder.applyLighting(world.lighting)
 	end
-	builtParts = geometryCount + #objects + markerCount
+	builtParts = geometryCount + #objects + markerCount + placeholderCount
 	return { objects = objects, geometryCount = geometryCount }
 end
 

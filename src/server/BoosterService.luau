@@ -345,7 +345,7 @@ local function scanMagnet(session: Session, state: State, now: number)
 		diameter,
 		candidates,
 		{
-			absorbRatio = Config.absorbRatio,
+			absorbRatio = Worlds.rules.absorb.ratio,
 			radiusFactor = Config.magnetRadiusFactor,
 			maxPulled = Config.magnetMaxPulled,
 		}

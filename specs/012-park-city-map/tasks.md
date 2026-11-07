@@ -117,12 +117,14 @@ The layout was also fixed so that it can be built literally:
   - **Bump**: contact with a too-big object bounces the ball back, with a thud and a short camera nudge, and a cooldown so rubbing does not chatter. In `src/client/BallController.luau` and `src/client/CameraController.luau`.
 - [X] T014 [US2] In `src/client/Hud.luau`, show no tier banner, no "next tier" line and no star-target text when Park City or `ReadableRules` is on (FR-016). In `src/client/CameraController.luau`, the closest camera distance comes from `Worlds.rules.cameraMinDistance` (4 studs at D 1).
 - [X] T015 [US2] Speed cap (FR-013): `src/client/BallController.luau` uses `Movement.speedCap`. The server ceiling in `src/server/BallService.luau` becomes `max(Config.maxServerBallSpeed, cap(D) × 1.1)`. `BallGuard.verdict` is unchanged. Add a case to `tests/studio/BallService.spec.luau`: the server accepts a speed up to the cap and refuses one above it (🔒, run with T016).
-- [ ] T016 🔒 [US2] Studio, with `Flags.ReadableRules` on for Downtown:
+- [X] T016 🔒 [US2] Studio, with `Flags.ReadableRules` on for Downtown:
   - grow to about D 10 and capture the heap outline next to the ball's real size;
   - eat a violin-like object the old rule refused;
   - bump a lamp post;
   - check that the cues show, with no text;
   - run the `BallService` spec from T015.
+
+  Agent-run parts done in T046/T047 (see `playtest.md` rounds 2 and 3); the thud by ear and the camera nudge by eye are owner checks in `docs/release-candidate.md`.
 
   Record in `specs/012-park-city-map/playtest.md`. **Stage A checkpoint**: the owner can play this build and judge "can I tell what I can eat?". Depends on T003 to T015.
 
@@ -382,7 +384,7 @@ The layout was also fixed so that it can be built literally:
 - T036: `ParkHeavyScene.server.luau` and `ParkHeavySampler.client.luau` are new Park City versions of the benchmark.
 - T039: `scripts/park-capture-export.luau` and `art/scripts/park_capture_render.py` (the research R6 fallback).
 - T041: not needed, the offline route worked.
-- Open: T016 and T047 (bob/wobble cues and bump thud by eye), T048 (oak deck unreachable: layout change needs the owner), T045 (gate 6).
+- Open: T016 and T047 (bob/wobble cues and bump thud by eye), T048 (oak deck moved to the ramp end 2026-11-06 and probed with a D 3 sphere; driving the ball is left to the owner), T045 (gate 6: the pull request is opened to show the shots; do not merge before the owner approves).
 
 
 ---

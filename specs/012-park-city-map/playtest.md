@@ -107,12 +107,95 @@ objects and placeholders excluded, they are checked by the absorb rule). Ball ce
   layout change (move or shrink the trunk and oak footprint, extend the deck to the ramp end, move the picnic scene),
   which touches an approved map, so it waits for the owner. T048 stays open for this.
 
+## Round 4: maze reward and exit (owner request)
+
+Owner feedback: walls cost size, the maze centre paid too little. Change (layout script, regenerated): the centre is now a
+Gnome Feast of 42 light pieces in a food ladder (9 tennis balls up to cupcakes and a toadstool). First version (51 pieces, ended
+near D 5.6) stalled at D 1.9 for the owner, who missed some pieces, and was also too big a jump, so it was rebuilt: a greedy
+eater from D 1 reaches D 3.35 with every piece, 2.7 to 3.0 with 70% of them. Row 6 col 13 became a wall, which seals the east lane off, and a ramp
+(y 0 to 4) plus a bridge over the east wall (4 stud drop) lead out of the maze. In Play, server `Spherecast` along the lane
+from the centre to the drop: clear at D 1, 3, 5 and 6. Light budget 3,489 of 3,500. `scripts/check.sh` passes (545).
+Not played by eye: whether the feast and the exit feel right. Wall bump cost is unchanged.
+
+Round 4b (owner screenshots): the owner's ball stayed at D 1.0 to 1.9 in the centre, boxed in by the mixed-size pile. The
+feast was rebuilt as four rings round the centre (smallest outside: tennis balls, then acorns, grapes and cups, then hats and
+small kitchen things, then ducks, apples and cupcakes). In Play a bot ball from spawn 11 drove the maze route into the room at
+D 1.00, chased the nearest edible piece and ended at D 3.36 in about 8 s (greedy-eater simulation: 3.35). Studio-only debug
+settings added in `Config.Debug`: `spawnSlot` (1 to 12 forces a spawn) and `quietAudio` (music off, effects cap 0.2);
+both are on the publish checklist and are set to 11 and true in the working copy for now.
+
+Round 4c (owner: "how did I lose everything?"): bumping a hedge piece knocked off 3 stuck objects per second. Hedge pieces
+are now soft obstacles (`Config.softObstacles`, checked in `AbsorbService.tryBump`): the ball still bounces, nothing is knocked
+off. In Play at D 3 with 25 stuck objects, 18 s of driving into the maze's outer wall: with the exemption D 3.00 and 25 stuck
+throughout; with it switched off (control) D 2.80 and 0 stuck. Buildings, lamp posts and other too-big objects still knock off.
+
+Round 4d (owner: "touched a big cube at about D 5.6 and became 1.0", also at the maze centre when small): a real bug. Growth
+on a pickup adds `1.6 * bulk^3`, but a knock-off took back `1.6 * size^3` of each popped piece, with `size` the LONGEST side.
+A long thin piece (a 6 stud plank of bulk 1.1) gives 1.6 * 1.3 and loses 1.6 * 216. Three such pieces take D 5.6 to the floor,
+and so do three trainers or violins in the maze feast at D 2 to 3. Fixed: each stuck entry now stores `gain` (the bulk the pickup
+added, 0 under the garnish) and `KnockOff` shrinks by it; size mode (Downtown with flags off) is unchanged. Covered by a Lune
+round-trip test (`Growth.test`); not reproduced in live Play (needs a stack of long pieces), so the owner should repeat the
+"big cube at D 5 or 6" case.
+
+Shots re-rendered 2026-11-06 (Blender, world data at 5d7b827 plus the uncommitted maze work, 4778 boxes) so `hedge_maze.png` and
+`overview.png` show the Gnome Feast ring and the maze exit ramp. The other nine shots are unchanged in content.
+
+## Round 5: owner feedback on the map (2026-11-06)
+
+All changes are in `scripts/park_city_layout.py` (regenerated, 547 tests pass, layout/world in sync, 0 overlaps, 3475 light /
+1139 part objects against 3500 / 1200). Checked in Studio Play with sphere probes, not by driving a ball.
+- **Roof Run kicking:** the roof kits sat in the centre lane. Now the lane (z -237 to -227) holds only tier 2 food a D 4.3 ball
+  eats; the big props (AC unit, water tank, pigeon coop, solar panel, dish, chimney) sit one per long edge. Also found and fixed:
+  a street tree from the east ring-road kerb line stood on the delivery ramp (new `prune_trails` drops trail objects that land
+  inside ramps, decks, roofs, water, maze walls, pads). Probe: D 8 ball along each roof's centre line, clear on roofs 1 to 7; roof 8
+  meets only the billboard launch ramp, by design.
+- **Cottages:** 6 houses a side (was 7) with a 16 stud lane between neighbours (was 3), and a food trail through each lane. Probe:
+  D 12 ball down each lane, clear apart from the street kerb at the lane's street end.
+- **Roof still bumping (owner, same day, D 6.6 on a roof):** a bug in the bump test, not in the layout. The client sent a bump
+  for any too-big object within ball radius + longest side / 2 of the object's centre, and the server accepted the same loose
+  range. For a roof building (18 x 26, flush with the roof) that is every ball on the roof, and for a 30 x 16 terrace house a
+  ball 7 studs from the wall counted as touching it (the "cottages: cannot squeeze past" report). Now a bump needs real contact
+  with the object's own box on both sides (`touchesBox` on the client, `nearBox` with `Config.bumpContactTolerance` 2.5 on the
+  server), and the 8 `roof_building_k` objects are soft obstacles like the hedge pieces (no bump, no thud). Size mode (Downtown)
+  is unchanged. Not driven live: moving the ball to a roof trips the anti-teleport check, so the owner's run is the check.
+- **Road still empty (owner, same day):** cause found. `prune_trails` also deleted every trail object that landed on a gravel
+  path (loops and the four paths to the city), and the four paths (200 long each) had almost nothing on them (1.5 to 3.5 objects
+  per 100 studs). Pruning now leaves gravel alone, and each path to the city gets groups of Tier 2 and 3 street objects
+  (`pathdrop_*`). To stay inside the light budget the loop trail is sparser (every 56 studs). Every spawn's ladder is now
+  checked by an "ideal eater" (`_ideal_diameter`) while it is built, and rungs get extra food until the next rung is reachable.
+  The pace model still shows spawns 11 and 12 near D 2 until about 150 s although the ideal eater climbs them: that is the
+  greedy model's travel order, not a missing rung; the owner's live run is the check.
+- **Road of objects:** the loop lines are now groups of 4 that wander across the road (spread 10, one group a stretch), so the road
+  is neither a tidy line nor empty (owner: a first version with a clear strip down the middle left the road bare). Loop kit and
+  kerb lines are scattered too. The spawn crumb trails stay straight on purpose (tutorial).
+- **Empty space:** a second fill pass puts a Tier 3+ place within 38 studs of every park cell (60 places, bigger objects only).
+- **Slow spawns, and the maze must not be needed (owner):** a "starter ladder" of 5 groups per spawn (6, 7, 6, 6, 4 items, 34 to
+  134 studs out) climbs needs-D 1 to 4.5 on the way to the Park Loop. Pace model, median profile, D at 90 s / 120 s: spawn 11 was
+  1.6 / 1.8, now 5.2 / 10.7; most spawns are 4 to 8 at 90 s. Median final size went from 25.8 to about 60: faster than before, so
+  the star and growth tuning in the release-candidate list matters more. Spawn 12 (D 2 at 150 s) and spawn 6 are still slow.
+  The model is chaotic: a small layout change moved spawn 11 from 4.9 to 1.8 once, so re-read the report after any layout edit.
+- **Giant Oak (T048):** the tree house deck is now a landing at y 21 to 22 at the top of the root ramp, outside the trunk, with the
+  picnic on it. Probe: a D 3 sphere walks the whole ramp (no blockers) and onto the deck; the picnic table sits near the ramp
+  end, so the ball steers round it.
+Shots re-rendered again (4711 boxes). Not done: driving a real ball over the roofs, the oak ramp and the cottage lanes; feel is
+the owner's check.
+
 ## Not run
 - Everything the owner decides: gate 6 below.
+- Driving a real ball over the roofs, the oak ramp and the cottage lanes after the round 5 rework (the anti-teleport check
+  respawns a moved ball); the owner's next play is the check. `Config.Debug` was put back to spawn 0 and loud audio.
 
 ## Gate 6: owner approval of the shots and the build
 
 Shots: `specs/012-park-city-map/shots/` (11 PNGs and `shots-manifest.json`, offline Blender render of the world data).
 
 - [ ] Owner approval of the fixed shots: _pending_
-- [ ] Owner has played the build: _pending_
+- [ ] Owner has played the build: played 2026-11-06, **not approved** (feedback below)
+
+Owner feedback after playing (2026-11-06), in the owner's words, tidied:
+- Knock-off collapse (D 5.6 to 1.0): not seen again. Maze: reachable and passable.
+- Object placement: the road of objects needs no steering, you just roll along it.
+- Roof Run: unusable, it kicked the ball off ("started to kick me").
+- Cottage area (Terraces and Cottages, SW): odd, you cannot squeeze around without hitting a cottage.
+- Lots of empty space between things.
+These are map design problems, not code bugs. Gate 6 stays open until they are reworked and the owner approves a new round.

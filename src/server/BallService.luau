@@ -12,6 +12,7 @@ local BallGuard = require(Shared.Rules.BallGuard)
 local Jump = require(Shared.Rules.Jump)
 local JumpTuning = require(Shared.JumpTuning)
 local Layout = require(Shared.Rules.Layout)
+local Movement = require(Shared.Rules.Movement)
 local Respawn = require(Shared.Rules.Respawn)
 local StuckStack = require(Shared.Rules.StuckStack)
 local Worlds = require(Shared.Worlds)
@@ -23,6 +24,9 @@ export type StuckEntry = {
 	key: string,
 	id: string,
 	size: number,
+	-- The bulk this pickup added to the ball's volume (0 under the garnish), set in bulk mode. A knock-off takes
+	-- back exactly this much; without it (size mode) the shrink uses size, as growth does.
+	gain: number?,
 	tier: number,
 	dir: { x: number, y: number, z: number },
 }
@@ -98,6 +102,10 @@ local function horizontal(vector: Vector3): Vector3
 end
 
 local function healthiestSlot(except: Session?): number
+	local forced = Config.Debug.spawnSlot
+	if forced >= 1 and forced <= #Worlds.active.spawnPoints then
+		return forced
+	end
 	local available: { number } = {}
 	for slot = 1, #Worlds.active.spawnPoints do
 		available[slot] = WorldSpawner.availableInCluster(slot)
@@ -167,9 +175,9 @@ function BallService.newSession(userId: number, player: Player?): Session
 	local part = Instance.new("Part")
 	part.Name = `Ball_{userId}`
 	part.Shape = Enum.PartType.Ball
-	part.Size = Vector3.one * Config.startDiameter
+	part.Size = Vector3.one * Worlds.rules.startDiameter
 	part.CustomPhysicalProperties = PhysicalProperties.new(1, 0.8, 0, 1, 1)
-	part:SetAttribute("Diameter", Config.startDiameter)
+	part:SetAttribute("Diameter", Worlds.rules.startDiameter)
 	part:SetAttribute("Stuck", "")
 
 	local attachment = Instance.new("Attachment")
@@ -190,8 +198,8 @@ function BallService.newSession(userId: number, player: Player?): Session
 		ownerUserId = userId,
 		part = part,
 		slot = slot,
-		authoritativeDiameter = Config.startDiameter,
-		physicalDiameter = Config.startDiameter,
+		authoritativeDiameter = Worlds.rules.startDiameter,
+		physicalDiameter = Worlds.rules.startDiameter,
 		stuckStack = {},
 		absorbWindow = {},
 		bumpWindow = {},
@@ -335,7 +343,7 @@ function BallService.respawn(session: Session, now: number)
 		WorldSpawner.scatter(cube, spots[index], now)
 	end
 	session.stuckStack = {}
-	BallService.setDiameter(session, Config.startDiameter)
+	BallService.setDiameter(session, Worlds.rules.startDiameter)
 	placeAtSpawn(session)
 	WorldSpawner.refreshCluster(session.slot, now)
 	BallService.publishStuck(session)
@@ -364,9 +372,9 @@ function BallService.resetBall(session: Session)
 		WorldSpawner.returnToSpawn(cube)
 	end
 	session.stuckStack = {}
-	session.physicalDiameter = Config.startDiameter
-	session.part.Size = Vector3.one * Config.startDiameter
-	BallService.setDiameter(session, Config.startDiameter)
+	session.physicalDiameter = Worlds.rules.startDiameter
+	session.part.Size = Vector3.one * Worlds.rules.startDiameter
+	BallService.setDiameter(session, Worlds.rules.startDiameter)
 	local room = session.zone == "Room"
 	if room then
 		session.slot = healthiestSlot(session)
@@ -435,7 +443,12 @@ end
 local function ceilingFor(session: Session, now: number): number
 	local boosted = now < session.boostUntil or now < session.springUntil
 	local inGrace = now < session.boostGraceUntil
-	return BallGuard.speedCeiling(Config.maxServerBallSpeed, Config.boostSpeedCap, boosted, inGrace)
+	-- Park City raises the roll cap with size (012 FR-013); 10 % slack on top, never below today's ceiling.
+	local base = math.max(
+		Config.maxServerBallSpeed,
+		Movement.speedCap(session.authoritativeDiameter, Worlds.rules.speedCap) * 1.1
+	)
+	return BallGuard.speedCeiling(base, Config.boostSpeedCap, boosted, inGrace)
 end
 
 -- Vertical movement guard (R-03). Clamps an upward speed over the limit, zeroes the rise of a mid-air re-jump

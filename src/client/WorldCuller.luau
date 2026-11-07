@@ -167,7 +167,7 @@ function WorldCuller.start()
 		local function refresh()
 			local diameter = ball:GetAttribute("Diameter")
 			if typeof(diameter) ~= "number" then
-				diameter = Config.startDiameter
+				diameter = Worlds.rules.startDiameter
 			end
 			local tier = Tiers.lookup(diameter :: number, Worlds.tierLikes)
 			if tier ~= playerTier or next(culledTiers) == nil then

@@ -326,7 +326,7 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 
 | Place | Where | Size window | What happens |
 | --- | --- | --- | --- |
-| **Hedge Maze** | (−349, 349), 90 × 90, centre room 18 × 18 | D 1 – 6, then food | Each 6 × 6 wall cell is four solid hedge pieces of 3 × 3 × 3 (bulk 3.0), with corridors 6 wide. The centre holds the Gnome King, 15 top-of-tier pieces and a golden spot. **At D 6, just as the ball fills a corridor, the walls become food**: 476 hedge pieces. |
+| **Hedge Maze** | (−349, 349), 90 × 90, centre room 18 × 18 | D 1 – 6, then food | Each 6 × 6 wall cell is four solid hedge pieces of 3 × 3 × 3 (bulk 3.0), with corridors 6 wide. The centre is the Gnome Feast: 42 pieces in a food ladder that a D 1 ball can eat on from the first rung. It ends near D 3.3 (about D 2.7 to 3 if the player misses some), a boost and not a shortcut, plus a golden spot. A private exit lane east of the centre (ramp, then a bridge over the east wall, 4 stud drop) leads out, so the prize never traps a ball. **At D 6, just as the ball fills a corridor, the walls become food**: 480 hedge pieces. |
 | **Flower Beds and Rose Garden** | (−285, 430) | D 1 – 6 | *Flower bed* scenes, bird baths, a sundial. |
 | **Allotments** | (−440, 270) | D 1 – 40 | *Allotment plot* scenes. A greenhouse with a 2.5-wide door is small-only inside; you eat it whole at D 24. |
 | **Sprinkler Lawn** | (−230, 350) | D 1 – 8 | Wet grass (slick) with rotating sprinklers; the food is beyond it. |
@@ -479,7 +479,7 @@ Each is a pure, data-driven rule (Constitution III and VII), behind its own flag
 | Gate | Bulk | Opens at D | Unlocks |
 | --- | --- | --- | --- |
 | Root tunnels, drain pipes, back alley, greenhouse door | 2.5 – 3 wide | closes above it | small-only places |
-| Hedge maze (476 pieces of 3 × 3 × 3) | 3.0 | 6 | the maze becomes food |
+| Hedge maze (480 pieces of 3 × 3 × 3) | 3.0 | 6 | the maze becomes food |
 | Court fences | 2.4 | 4.8 | the fences become food |
 | Pond depth | 5 deep | 10 | wading |
 | Downtown hoardings | 8.3 | 17 | Downtown |
@@ -609,7 +609,7 @@ The approved layout ([maps/README.md](maps/README.md)) holds **4,394 food object
 | Tier | Objects | Kind |
 | --- | --- | --- |
 | 1 Crumb | 1,672 | light (client) |
-| 2 Pocket | 1,786 (476 of them hedge pieces) | light (client) |
+| 2 Pocket | many (480 of them hedge pieces) | light (client) |
 | 3 Picnic | 685 | Part |
 | 4 Street | 191, plus 13 cars in traffic | Part |
 | 5 House | 52 | Part |

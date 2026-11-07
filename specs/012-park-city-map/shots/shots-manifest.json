@@ -1,15 +1,15 @@
 {
-  "generated": "2026-11-04",
+  "generated": "2026-11-06",
   "blender": "5.2.3 LTS",
   "engine": "BLENDER_EEVEE",
-  "worldCommit": "cc5c0d4",
-  "objects": 4745,
+  "worldCommit": "5d7b827+wip5",
+  "objects": 4839,
   "images": [
     {
       "name": "spawn_nw",
       "file": "spawn_nw.png",
       "source": "blender-offline",
-      "sha256": "964a5b3214e61a6859d0af77ea2410d3dd38900d0a02043361d7c87dd9a8f54f",
+      "sha256": "de6a228902150b7bdbec65d3b3f35f3259b4d93a132c1cc76d4b79ff7461946c",
       "position": [
         -450,
         2.5,
@@ -25,7 +25,7 @@
       "name": "spawn_ne",
       "file": "spawn_ne.png",
       "source": "blender-offline",
-      "sha256": "0250b5cc9f528e702804224bed49263e6b353433d8e2f526e84130351d2afb70",
+      "sha256": "2c8a42999d5876d1645cb9a080e78fc42eb81114664c0e13849670e2895fba55",
       "position": [
         180,
         2.5,
@@ -41,7 +41,7 @@
       "name": "spawn_se",
       "file": "spawn_se.png",
       "source": "blender-offline",
-      "sha256": "da5a79dea3525d31030bf14088534229d969caf212820ba12f983c99078e90a4",
+      "sha256": "ef63a2eea81ed90bdbd894cd9333c6b8830a261435562372c1b93ca8a3938e75",
       "position": [
         450,
         2.5,
@@ -57,7 +57,7 @@
       "name": "spawn_sw",
       "file": "spawn_sw.png",
       "source": "blender-offline",
-      "sha256": "b9a8a760de7c69340fa022e1e54546b3be8f0ccc436de42cf99a4f0386411966",
+      "sha256": "37ace00d603f82c758b5350c6faa794a8e7d29b0e998fd5b828e9bdd53320bc0",
       "position": [
         -180,
         2.5,
@@ -73,7 +73,7 @@
       "name": "duck_island",
       "file": "duck_island.png",
       "source": "blender-offline",
-      "sha256": "d1966219790e0030f47c96c0214d498e25b103c6148667a72bd22534c57443ed",
+      "sha256": "a57334e964b2157cf86fefb016e6cc7208821b19754f562dd21944f9bc3e8122",
       "position": [
         90,
         30,
@@ -89,7 +89,7 @@
       "name": "hedge_maze",
       "file": "hedge_maze.png",
       "source": "blender-offline",
-      "sha256": "7a1e87070c2bee9957b08f4068ad41215627db5bccda93231e846c35f12503e5",
+      "sha256": "5e759ae3c21aa4d7aa3dd32a23d9768f7543242071e39f5d4f102fcea6a323e0",
       "position": [
         -279,
         70,
@@ -105,7 +105,7 @@
       "name": "roof_run",
       "file": "roof_run.png",
       "source": "blender-offline",
-      "sha256": "f242b1558407c695f58dd570e0c9dade9767239628a50019af73e0e75e5c23a9",
+      "sha256": "341ddc657e993924d40f085d1093c526265c0052c6dc3b072488fae81d2b9d08",
       "position": [
         146,
         45,
@@ -121,7 +121,7 @@
       "name": "car_park",
       "file": "car_park.png",
       "source": "blender-offline",
-      "sha256": "87c71ecb0bf96c9b693c19fe2767f1f27d9b1f78ce485ff9a98df66d45dcb9e1",
+      "sha256": "e502362390df52e2ae9d24d31c9dc36ea781f6f185021f735ae87b10deda6ce8",
       "position": [
         107,
         55,
@@ -137,7 +137,7 @@
       "name": "plaza",
       "file": "plaza.png",
       "source": "blender-offline",
-      "sha256": "83f9c1d99fdbfad3a3fb02372d1363aa37fdd62f46d4848e4a3c45e1932d7ca3",
+      "sha256": "4419e6daa11f82d08323ad94ef7a0aca20ef91bd7b0c9667e37f098eecc6f5d4",
       "position": [
         0,
         40,
@@ -153,7 +153,7 @@
       "name": "giant_oak",
       "file": "giant_oak.png",
       "source": "blender-offline",
-      "sha256": "8004477e63140885c602a8c0ff1463c4e8473efd604f628a7a3a807c68df6bba",
+      "sha256": "a6256851b2400d3e1a3eda4e17e90a39b4e07bd675b28abe0d87de163cb7cfd7",
       "position": [
         -300,
         35,
@@ -169,7 +169,7 @@
       "name": "overview",
       "file": "overview.png",
       "source": "blender-offline",
-      "sha256": "79759a65f0063f7698914f55124b77d70a7c7a36cc5f99ca080767d4b58b57b6",
+      "sha256": "566515bde5195229a4437cd43ec71056cfe0025c4557ec418ea721bc7ec583f4",
       "position": [
         0,
         600,

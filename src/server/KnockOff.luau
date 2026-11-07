@@ -49,7 +49,7 @@ function KnockOff.apply(session: Session, source: Source, now: number): Knock.De
 	session.stuckStack = remaining
 	local sizes: { number } = {}
 	for _, entry in popped do
-		table.insert(sizes, entry.size)
+		table.insert(sizes, entry.gain or entry.size)
 	end
 	BallService.setDiameter(
 		session,
@@ -57,7 +57,7 @@ function KnockOff.apply(session: Session, source: Source, now: number): Knock.De
 			session.authoritativeDiameter,
 			sizes,
 			Worlds.growthK,
-			Config.startDiameter
+			Worlds.rules.startDiameter
 		)
 	)
 

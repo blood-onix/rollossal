@@ -9,6 +9,8 @@ local serde = require("@lune/serde")
 local harness = require("./harness")
 local Config = require("../../src/shared/Config")
 local Downtown = require("../../src/shared/Content/Worlds/Downtown")
+local Absorb = require("../../src/shared/Rules/Absorb")
+local Doorstep = require("../../src/shared/Rules/Doorstep")
 local Hazards = require("../../src/shared/Content/Hazards")
 local Layout = require("../../src/shared/Rules/Layout")
 local Markers = require("../../src/shared/Rules/Markers")
@@ -1498,5 +1500,104 @@ test(
 		end
 	end
 )
+
+test(
+	"Downtown readableRules (012): six tiers, stars 20 / 50 / 90, bulk rule, at most 30 dims",
+	function()
+		local readable = Downtown.readableRules
+		expect.equal(#readable.sizeTiers, 6)
+		local minimums = { 1, 2.5, 6, 15, 35, 80 }
+		for index, tier in readable.sizeTiers do
+			expect.equal(tier.minDiameter, minimums[index])
+		end
+		expect.same(readable.starThresholds, { 20, 50, 90 })
+		expect.equal(readable.rules.startDiameter, 1)
+		expect.equal(readable.rules.absorb.mode, "bulk")
+		expect.equal(readable.rules.absorb.ratio, 0.5)
+		expect.equal(readable.rules.absorb.longestRatio, 1.5)
+		expect.equal(readable.rules.absorb.garnish, 0.08)
+		expect.equal(readable.rules.cameraMinDistance, 4)
+		local count = 0
+		for id, dims in readable.dims do
+			count += 1
+			expect.truthy(objectById[id], `dims names unknown object {id}`)
+			expect.equal(
+				math.max(dims[1], dims[2], dims[3]),
+				objectById[id].size,
+				`longest side of {id}`
+			)
+		end
+		expect.truthy(count <= 30, `{count} dims entries`)
+	end
+)
+
+test("Downtown readableRules (012): every spawn has an open way out for a D 1 ball", function()
+	local readable = Downtown.readableRules
+	local rule = readable.rules.absorb
+	local start = readable.rules.startDiameter
+	local needs: { [string]: number } = {}
+	local sizes: { [string]: number } = {}
+	for _, object in Downtown.objects do
+		local dims = readable.dims[object.id]
+		local bulk = if dims then Absorb.bulkOf(dims) else object.size
+		needs[object.id] = Absorb.needsDiameter(rule, bulk, object.size)
+		sizes[object.id] = object.size
+	end
+	for _, themeId in Downtown.supportedThemes do
+		local placements = Doorstep.clear(
+			resolved[themeId].placements,
+			Downtown.spawnPoints,
+			needs,
+			start,
+			readable.doorstepClearRadius
+		)
+		for _, point in Downtown.spawnPoints do
+			-- Walls: placements a D 1 ball cannot eat, as discs of the object's half size plus the ball radius.
+			local walls = {}
+			for _, placement in placements do
+				local need = needs[placement.objectId]
+				local dx, dz = placement.x - point.x, placement.z - point.z
+				if need ~= nil and need > start and dx * dx + dz * dz < 20 * 20 then
+					local reach = sizes[placement.objectId] / 2 + start / 2
+					table.insert(walls, { placement.x, placement.z, reach * reach })
+				end
+			end
+			local function free(x: number, z: number): boolean
+				for _, wall in walls do
+					local dx, dz = x - wall[1], z - wall[2]
+					if dx * dx + dz * dz < wall[3] then
+						return false
+					end
+				end
+				return true
+			end
+			-- Flood fill on a 0.5 grid out to 12 studs from the spawn: it must get 10 studs away.
+			local seen = { ["0,0"] = true }
+			local queue = { { 0, 0 } }
+			local head = 1
+			local escaped = false
+			while head <= #queue and not escaped do
+				local cell = queue[head]
+				head += 1
+				for _, step in { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } } do
+					local i, j = cell[1] + step[1], cell[2] + step[2]
+					local key = `{i},{j}`
+					if not seen[key] and math.abs(i) <= 24 and math.abs(j) <= 24 then
+						local dx, dz = i * 0.5, j * 0.5
+						if free(point.x + dx, point.z + dz) then
+							seen[key] = true
+							if dx * dx + dz * dz >= 100 then
+								escaped = true
+								break
+							end
+							table.insert(queue, { i, j })
+						end
+					end
+				end
+			end
+			expect.truthy(escaped, `{themeId} slot {point.slot}: a D 1 ball is boxed in`)
+		end
+	end
+end)
 
 return {}
