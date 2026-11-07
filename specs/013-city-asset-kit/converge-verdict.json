@@ -1,0 +1,20 @@
+{
+  "verdict": "incomplete",
+  "remaining": [
+    "T061: make audit_report.py --check pass against the post-rebuild manifest (currently 86 'triangles differ' errors)",
+    "T062: fix stale docs/release-candidate.md (says 8 clear shop names and dt_* not in batch; actual is 22 clear and 86 rebuilt dt_* meshes)",
+    "T063: rebuild dt_kiosk (still 96 tris, verdict replace) to the most detail that fits the N10 ceilings, or record the reached count",
+    "T064: re-render the zone, signage and meme contact sheets (city and winter) after the dt_* rebuild and the 22-name atlas"
+  ],
+  "human": [
+    {
+      "item": "Gate 6: owner approval of the 18 contact sheets and the look of the rebuilt dt_* meshes (SC-005)",
+      "reason": "Needs the owner's taste review of the images; it holds the merge, not the agent's work."
+    },
+    {
+      "item": "Owner mesh upload batch: 84 ck_* FBX files, the rebuilt dt_* FBX files and the fronts atlas PNGs (FR-011, T033, T045, T060)",
+      "reason": "Roblox asset upload needs the owner's account credentials; stand-ins hold until then."
+    }
+  ],
+  "summary": "Tests and scripts/check.sh pass and all 84 ck_* objects, signage, memes and the Gate 2 smoke test are done, but audit_report.py --check fails, the release-candidate notes are stale, dt_kiosk is not rebuilt, and the contact sheets predate the final meshes and atlas."
+}
