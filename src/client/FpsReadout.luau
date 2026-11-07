@@ -23,7 +23,37 @@ local READOUT_FORMAT = "%d | avg %d | min %d | size %.1f"
 
 local FpsReadout = {}
 
+-- Park City tour sizes (012 T025): Studio only, behind Flags.DebugSize. Asks the server to set the ball's diameter.
+local TOUR_SIZES = { 1, 3, 6, 15, 35, 80 }
+
+local function startSizeTool()
+	if not Config.Flags.DebugSize or not RunService:IsStudio() then
+		return
+	end
+	local remote =
+		ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("DebugSize") :: RemoteEvent
+	local gui = UiKit.screen("DebugSizeTool", DISPLAY_ORDER)
+	for index, size in TOUR_SIZES do
+		local button = Instance.new("TextButton")
+		button.Name = `Size{size}`
+		button.AnchorPoint = Vector2.new(0.5, 1)
+		button.Position = UDim2.new(0.5, (index - 3.5) * 52, 1, -(BOTTOM_MARGIN + HEIGHT + 4))
+		button.Size = UDim2.fromOffset(48, HEIGHT)
+		button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+		button.BackgroundTransparency = 0.3
+		button.Font = Enum.Font.GothamMedium
+		button.TextSize = Config.minTextSize
+		button.TextColor3 = Color3.new(1, 1, 1)
+		button.Text = tostring(size)
+		button.Parent = gui
+		button.Activated:Connect(function()
+			remote:FireServer(size)
+		end)
+	end
+end
+
 function FpsReadout.start()
+	startSizeTool()
 	local player = Players.LocalPlayer
 	if not FpsStats.visibleTo(Config.Flags.DebugFps, game.CreatorId, player.UserId) then
 		return

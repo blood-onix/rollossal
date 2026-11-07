@@ -44,6 +44,12 @@ python3 art/scripts/palette.py --check
 step "Lune unit tests"
 lune run tests/unit/run
 
+step "Park City layout in sync"
+python3 scripts/park_city_layout.py --check >/dev/null
+
+step "Park City world data in sync"
+python3 scripts/park_city_world.py --check
+
 step "World-agnostic guard (no GreyBoxRoom in src/server or src/client)"
 if grep -rn "GreyBoxRoom" src/server src/client --include='*.luau'; then
   echo "FAIL: server and client code must read Worlds, not GreyBoxRoom (see lines above)" >&2

@@ -13,8 +13,36 @@ local Config = {
 	bumpSpeedThreshold = 15,
 	bumpSpeedWindow = 0.35,
 	bumpCooldown = 1.0,
+	-- Too-big objects (by id) that a ball can bump without losing anything: nothing is knocked off. Hedge pieces make
+	-- up the Park City maze, and the Roof Run buildings have a flat top the ball rolls on.
+	softObstacles = {
+		hedge_piece = true,
+		roof_building_1 = true,
+		roof_building_2 = true,
+		roof_building_3 = true,
+		roof_building_4 = true,
+		roof_building_5 = true,
+		roof_building_6 = true,
+		roof_building_7 = true,
+		roof_building_8 = true,
+	} :: { [string]: boolean },
 	scatterDistance = 6,
 	scatterGrace = 1.0,
+
+	-- Park City map (specs/012-park-city-map). Starting points; tuning is owner work.
+	heapNewestGrace = 3,
+	heapFitMaxScale = 0.45,
+	heapFitBound = 1.25,
+	heapFitNewestBound = 0.25,
+	bobCount = 24,
+	bobRadiusDiameters = 4,
+	wobbleRadiusDiameters = 6,
+	lightPoolCap = 450,
+	lightDrawRadius = 120,
+	lightCellSize = 64,
+	lightRefreshSeconds = 0.2,
+	lightRefreshStuds = 10,
+	lightDeltaSeconds = 0.25,
 
 	-- Snow Village world (specs/004-snow-village/contracts/world-content.md)
 	respawnDelayMin = 60,
@@ -32,6 +60,8 @@ local Config = {
 	absorbRateLimit = 10,
 	rateLimitWindow = 1,
 	absorbDistanceTolerance = 6.0,
+	-- A bump needs the ball to be within this many studs of the object's box (not of its centre plus half its longest side).
+	bumpContactTolerance = 2.5,
 	maxServerBallSpeed = 56,
 	displacementSlack = 4,
 	fallRespawnY = -50,
@@ -177,6 +207,22 @@ local Config = {
 		TrapSlow = true,
 		TrapSweeper = true,
 		BallToBallBumps = true,
+		-- Park City map (012). All off until the owner approves. ParkCity implies HeapFix.
+		ParkCity = true,
+		HeapFix = false,
+		ReadableRules = false,
+		-- Studio-only size tool. Must be off in anything published.
+		DebugSize = false,
+	},
+
+	-- Studio-only: Debug.spawnSlot 0 is off. A number from 1 to the world's spawn count puts every new ball and every respawn on
+	-- that spawn slot (Park City has 12; the maze is next to 10, 11 and 12). Must be 0 in anything published.
+	Debug = {
+		spawnSlot = 0,
+		-- Studio-only: true mutes the music and cuts the sound effects to quietEffectsVolume. Must be false in anything
+		-- published.
+		quietAudio = false,
+		quietEffectsVolume = 0.2,
 	},
 
 	-- Budgets. meshTriangles is indexed by tier. Theme budgets: weather particles, dressing slot share
@@ -184,6 +230,8 @@ local Config = {
 	Budgets = {
 		maxActivePartsPerServer = 2000,
 		meshTriangles = { 500, 700, 1500, 3500, 5000 },
+		-- Park City and readable Downtown have six tiers; Tier 6 (Skyline) reuses the top budget (012 T009).
+		meshTrianglesSix = { 500, 700, 1500, 3500, 5000, 5000 },
 		maxWeatherParticles = 40,
 		maxDressingSlotShare = 0.15,
 		defaultMaxPlacements = 1500,

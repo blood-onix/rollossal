@@ -207,10 +207,18 @@ function Hud.start()
 		return if typeof(value) == "number" then value else 0
 	end
 
+	-- Park City and readable Downtown teach by colour and motion, not text (012 FR-016): no star-target text,
+	-- no next-tier line and no tier banner.
+	local textFree = Worlds.rules.absorb.mode == "bulk"
+
 	local function renderStars()
 		local current = diameter()
 		for index, threshold in thresholds do
 			local reached = current >= threshold
+			if textFree then
+				markers[index].Text = if reached then Icons.star else Icons.star_empty
+				continue
+			end
 			local target = Localizer.t("ui.hud.star_target", {
 				stars = index,
 				size = string.format("%.1f", threshold),
@@ -223,6 +231,10 @@ function Hud.start()
 		local current = diameter()
 		sizeValue.Text = Localizer.t("ui.hud.size_value", { size = string.format("%.1f", current) })
 		barFill.Size = UDim2.fromScale(Tiers.progress(current, Worlds.tierLikes), 1)
+		if textFree then
+			nextTier.Text = ""
+			return
+		end
 		local index, nextMin = Tiers.lookup(current, Worlds.tierLikes)
 		local following = Worlds.sizeTiers[index + 1]
 		if nextMin ~= nil and following ~= nil then
@@ -295,6 +307,9 @@ function Hud.start()
 		popMeterNumber()
 	end)
 	RunClient.tierUnlocked:Connect(function(tier: number)
+		if textFree then
+			return
+		end
 		local def = Worlds.sizeTiers[tier]
 		if def then
 			local headline = Localizer.t(def.headlineKey)

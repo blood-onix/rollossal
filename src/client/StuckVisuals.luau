@@ -9,18 +9,37 @@ local Workspace = game:GetService("Workspace")
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
 local ObjectVisual = require(Shared.ObjectVisual)
+local HeapFit = require(Shared.Rules.HeapFit)
 local Worlds = require(Shared.Worlds)
 
 type Visual = {
 	part: BasePart,
 	dir: Vector3,
 	weld: Weld?,
+	-- The part's template size, before the heap fit scales it.
+	baseSize: Vector3,
+	-- Set while an old small item is being buried: when the bury started (seconds).
+	buryAt: number?,
 }
 
 type BallRecord = {
 	ball: BasePart,
 	visuals: { [string]: Visual },
+	-- The largest item of the latest catch may stick out further for Config.heapNewestGrace.
+	newestKey: string?,
+	newestAt: number,
 }
+
+-- 012 R4: items sit within a 1.25 D box of the ball. Park City always has it; Downtown behind its own flags.
+local heapFix = Config.Flags.HeapFix or Config.Flags.ParkCity or Config.Flags.ReadableRules
+local fitParams: HeapFit.Params = {
+	maxScale = Config.heapFitMaxScale,
+	bound = Config.heapFitBound,
+	newestBound = Config.heapFitNewestBound,
+	embed = Config.stuckEmbed,
+	grace = Config.heapNewestGrace,
+}
+local BURY_SECONDS = 0.3
 
 local StuckVisuals = {}
 
@@ -70,6 +89,25 @@ local function offsetFor(ball: BasePart, visual: Visual, size: number): Vector3
 	return direction * (radius + size * Config.stuckEmbed)
 end
 
+-- Pose of a fitted item in the ball's space: thin axis along the normal, long axis tangent. Sets the part size.
+local function fittedPose(record: BallRecord, key: string, visual: Visual): CFrame
+	local ball = record.ball
+	local newestAge = if record.newestKey == key then os.clock() - record.newestAt else nil
+	local base = visual.baseSize
+	local fit = HeapFit.fit({ base.X, base.Y, base.Z }, ball.Size.X, fitParams, newestAge)
+	visual.part.Size = base * fit.scale
+	local normal = if visual.dir.Magnitude > 0 then visual.dir.Unit else Vector3.yAxis
+	local reference = if math.abs(normal.Y) < 0.9 then Vector3.yAxis else Vector3.xAxis
+	local tangent = normal:Cross(reference).Unit
+	local axes: { Vector3 } = { Vector3.xAxis, Vector3.yAxis, Vector3.zAxis }
+	axes[fit.thinAxis] = normal
+	axes[fit.longAxis] = tangent
+	axes[fit.midAxis] = normal:Cross(tangent)
+	-- A box has no handedness: flip the third axis if the assignment came out left-handed.
+	axes[3] = axes[1]:Cross(axes[2])
+	return CFrame.fromMatrix(normal * fit.centerDistance, axes[1], axes[2], axes[3])
+end
+
 local function createVisual(record: BallRecord, key: string, id: string, dir: Vector3): Visual?
 	local folder = visualFolder
 	if not folder then
@@ -77,7 +115,8 @@ local function createVisual(record: BallRecord, key: string, id: string, dir: Ve
 	end
 	-- The placement is shared data, so the visual never depends on the pooled part being streamed in.
 	local placement = Worlds.placementById[id]
-	local template = if placement then templateFor(placement.objectId) else nil
+	local kind = if placement then placement.objectId else Worlds.lightKind(id)
+	local template = if kind then templateFor(kind) else nil
 	if not template then
 		return nil
 	end
@@ -92,15 +131,20 @@ local function createVisual(record: BallRecord, key: string, id: string, dir: Ve
 	part.Massless = true
 	part.Parent = folder
 
-	local visual: Visual = { part = part, dir = dir, weld = nil }
+	local visual: Visual =
+		{ part = part, dir = dir, weld = nil, baseSize = template.Size, buryAt = nil }
 	if Config.stuckVisualMode == "Weld" then
 		local weld = Instance.new("Weld")
 		weld.Part0 = record.ball
 		weld.Part1 = part
 		weld.C0 = CFrame.identity
-		weld.C1 = CFrame.new(-offsetFor(record.ball, visual, size))
+		weld.C1 = if heapFix
+			then fittedPose(record, key, visual):Inverse()
+			else CFrame.new(-offsetFor(record.ball, visual, size))
 		weld.Parent = part
 		visual.weld = weld
+	elseif heapFix then
+		part.CFrame = record.ball.CFrame * fittedPose(record, key, visual)
 	else
 		part.CFrame = record.ball.CFrame * CFrame.new(offsetFor(record.ball, visual, size))
 	end
@@ -113,9 +157,14 @@ local function sizeOf(visual: Visual): number
 end
 
 local function reseat(record: BallRecord)
-	for _, visual in record.visuals do
+	for key, visual in record.visuals do
+		if visual.buryAt ~= nil then
+			continue
+		end
 		if visual.weld then
-			visual.weld.C1 = CFrame.new(-offsetFor(record.ball, visual, sizeOf(visual)))
+			visual.weld.C1 = if heapFix
+				then fittedPose(record, key, visual):Inverse()
+				else CFrame.new(-offsetFor(record.ball, visual, sizeOf(visual)))
 		end
 	end
 end
@@ -131,17 +180,31 @@ local function sync(record: BallRecord)
 
 	for key, visual in record.visuals do
 		if not wanted[key] then
-			visual.part:Destroy()
-			record.visuals[key] = nil
+			if heapFix and visual.weld and visual.buryAt == nil and record.ball.Parent ~= nil then
+				-- Older items sink into the ball instead of popping out (stepped in the render loop).
+				visual.buryAt = os.clock()
+			elseif visual.buryAt == nil then
+				visual.part:Destroy()
+				record.visuals[key] = nil
+			end
 		end
 	end
+	local largest, largestSize = nil, 0
 	for key, entry in wanted do
 		if not record.visuals[key] then
 			local visual = createVisual(record, key, entry.id, entry.dir)
 			if visual then
 				record.visuals[key] = visual
+				local size = math.max(visual.baseSize.X, visual.baseSize.Y, visual.baseSize.Z)
+				if size > largestSize then
+					largest, largestSize = key, size
+				end
 			end
 		end
+	end
+	if largest ~= nil then
+		record.newestKey = largest
+		record.newestAt = os.clock()
 	end
 end
 
@@ -160,7 +223,7 @@ local function track(instance: Instance)
 	if not instance:IsA("BasePart") or records[instance] then
 		return
 	end
-	local record: BallRecord = { ball = instance, visuals = {} }
+	local record: BallRecord = { ball = instance, visuals = {}, newestKey = nil, newestAt = 0 }
 	records[instance] = record
 	instance:GetAttributeChangedSignal("Stuck"):Connect(function()
 		sync(record)
@@ -189,13 +252,36 @@ function StuckVisuals.start()
 	end
 
 	RunService.RenderStepped:Connect(function()
-		if Config.stuckVisualMode ~= "Follower" then
-			return
-		end
+		local now = os.clock()
 		for _, record in records do
-			for _, visual in record.visuals do
-				visual.part.CFrame = record.ball.CFrame
-					* CFrame.new(offsetFor(record.ball, visual, sizeOf(visual)))
+			-- The newest large catch eases from its allowance to the normal fit, then settles once.
+			local newest = if record.newestKey then record.visuals[record.newestKey] else nil
+			if newest and newest.weld and newest.buryAt == nil then
+				local age = now - record.newestAt
+				if heapFix and age < Config.heapNewestGrace + 0.1 then
+					newest.weld.C1 =
+						fittedPose(record, record.newestKey :: string, newest):Inverse()
+				end
+			end
+			for key, visual in record.visuals do
+				local buryAt = visual.buryAt
+				if buryAt ~= nil then
+					local t = (now - buryAt) / BURY_SECONDS
+					if t >= 1 or visual.weld == nil then
+						visual.part:Destroy()
+						record.visuals[key] = nil
+					else
+						local pose = fittedPose(record, key, visual)
+						visual.weld.C1 = (pose - pose.Position + pose.Position * (1 - t)):Inverse()
+					end
+				elseif Config.stuckVisualMode == "Follower" then
+					visual.part.CFrame = record.ball.CFrame
+						* (
+							if heapFix
+								then fittedPose(record, key, visual)
+								else CFrame.new(offsetFor(record.ball, visual, sizeOf(visual)))
+						)
+				end
 			end
 		end
 	end)

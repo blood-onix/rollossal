@@ -10,17 +10,23 @@
 
 local Config = require(script.Parent.Config)
 local Content = script.Parent.Content
+local Absorb = require(script.Parent.Rules.Absorb)
+local Doorstep = require(script.Parent.Rules.Doorstep)
 local Layout = require(script.Parent.Rules.Layout)
 local Tiers = require(script.Parent.Rules.Tiers)
+local Movement = require(script.Parent.Rules.Movement)
 local ThemeResolve = require(script.Parent.Rules.ThemeResolve)
 local Themes = require(Content.Themes)
 
 local GreyBoxRoom = require(Content.GreyBoxRoom)
 local SnowVillage = require(Content.Worlds.SnowVillage)
 local Downtown = require(Content.Worlds.Downtown)
+-- Park City (012) is generated data; required only when its flag is on.
+local ParkCity = if Config.Flags.ParkCity then require(Content.Worlds.ParkCity) else nil
 
 export type WorldDef = GreyBoxRoom.WorldDef
 export type ObjectDef = GreyBoxRoom.ObjectDef
+export type BlockDef = GreyBoxRoom.BlockDef
 export type SizeTierDef = GreyBoxRoom.SizeTierDef
 export type LightingDef = GreyBoxRoom.LightingDef
 export type ThemeBookPage = GreyBoxRoom.ThemeBookPage
@@ -33,6 +39,13 @@ local active: WorldDef = if Config.Flags.Downtown
 	then Downtown :: any
 	elseif Config.Flags.SnowVillage then SnowVillage :: any
 	else GreyBoxRoom
+
+-- Park City (012) replaces whichever world the chain above picked.
+if ParkCity ~= nil then
+	local park = table.clone(ParkCity)
+	park.fixedPlacements = require(Content.Worlds.ParkCityParts) :: any
+	active = park :: any
+end
 
 local function sizeMap(objects: { ObjectDef }): { [string]: number }
 	local sizes: { [string]: number } = {}
@@ -75,6 +88,70 @@ else
 	end
 end
 
+-- Park City light objects (Tiers 1 and 2) are data: row i of the flat array is the light id "L"..i.
+export type LightData = {
+	stride: number,
+	count: number,
+	kinds: { string },
+	ranges: { [string]: { number } },
+	data: { number },
+}
+local light: LightData? = if ParkCity ~= nil then require(Content.Worlds.ParkCityLight) else nil
+
+-- The kind (ObjectDef id) of a light id such as "L12", or nil.
+local function lightKind(id: string): string?
+	local current = light
+	if current == nil then
+		return nil
+	end
+	local digits = string.match(id, "^L(%d+)$")
+	local index = if digits then tonumber(digits) else nil
+	if index == nil or index < 1 or index > current.count then
+		return nil
+	end
+	return current.kinds[current.data[(index - 1) * current.stride + 1]]
+end
+
+-- 012 Stage A: Downtown's readable-rules table (six tiers, bulk rule, dims) replaces its numbers.
+local readable = if Config.Flags.ReadableRules then active.readableRules else nil
+if readable ~= nil then
+	local rule: Absorb.Rule = (readable.rules.absorb :: any) :: Absorb.Rule
+	local tiersForLookup: { Tiers.TierLike } = {}
+	for _, tier in readable.sizeTiers do
+		table.insert(tiersForLookup, tier)
+	end
+	local objects: { ObjectDef } = {}
+	local needs: { [string]: number } = {}
+	for _, object in resolved.objects do
+		local copy = table.clone(object)
+		local dims = readable.dims[object.id]
+		local bulk = object.size
+		if dims ~= nil then
+			copy.dims = dims
+			bulk = Absorb.bulkOf(dims)
+			copy.bulk = bulk
+			copy.size = math.max(dims[1], dims[2], dims[3])
+		end
+		needs[object.id] = Absorb.needsDiameter(rule, bulk, copy.size)
+		copy.tier = Tiers.lookup(needs[object.id], tiersForLookup)
+		table.insert(objects, copy)
+	end
+	local overlay = table.clone(resolved)
+	overlay.objects = objects
+	overlay.sizeTiers = readable.sizeTiers
+	overlay.starThresholds = readable.starThresholds
+	overlay.growthK = readable.rules.growthK
+	overlay.rules = readable.rules
+	worldPlacements = Doorstep.clear(
+		worldPlacements,
+		(active.spawnPoints :: any) :: { Doorstep.Spawn },
+		needs,
+		readable.rules.startDiameter or Config.startDiameter,
+		readable.doorstepClearRadius
+	)
+	resolved = overlay
+end
+
 local objectById: { [string]: ObjectDef } = {}
 local objectByBookId: { [string]: ObjectDef } = {}
 local objectsByTier: { [number]: { ObjectDef } } = {}
@@ -98,7 +175,7 @@ end
 
 -- Array invariance: a list of SizeTierDef is not accepted where a list of TierLike is expected.
 local tierLikes: { Tiers.TierLike } = {}
-for _, tier in active.sizeTiers do
+for _, tier in resolved.sizeTiers do
 	table.insert(tierLikes, tier)
 end
 
@@ -149,7 +226,35 @@ for _, themeId in supportedList do
 	end
 end
 
-local growthK: number = active.growthK or Config.growthK
+local worldRules: GreyBoxRoom.RulesDef = resolved.rules or {}
+local growthK: number = worldRules.growthK or resolved.growthK or Config.growthK
+
+-- The rules every gameplay read goes through (012 R3). With no `rules` table each field is today's Config value.
+export type Rules = {
+	startDiameter: number,
+	growthK: number,
+	absorb: Absorb.Rule,
+	speedCap: Movement.SpeedCapRule,
+	cameraMinDistance: number,
+}
+local rules: Rules = {
+	startDiameter = worldRules.startDiameter or Config.startDiameter,
+	growthK = growthK,
+	absorb = (worldRules.absorb :: any) or { mode = "size", ratio = Config.absorbRatio },
+	speedCap = (worldRules.speedCap :: any) or {
+		base = Config.speedCap,
+		fromDiameter = math.huge,
+		slope = 0,
+		max = Config.speedCap,
+	},
+	cameraMinDistance = worldRules.cameraMinDistance or Config.cameraMinDistance,
+}
+table.freeze(rules)
+
+-- Bulk and longest side of an object def; a def without dims is a cube of its size.
+local function bulkOf(def: ObjectDef): number
+	return def.bulk or def.size
+end
 
 local Worlds = {
 	active = active,
@@ -172,10 +277,14 @@ local Worlds = {
 	end,
 	baseObjects = active.objects,
 	themeBookPages = themeBookPages,
-	sizeTiers = active.sizeTiers,
+	sizeTiers = resolved.sizeTiers,
 	tierLikes = tierLikes,
-	starThresholds = active.starThresholds or Config.starThresholds,
+	starThresholds = resolved.starThresholds or Config.starThresholds,
 	growthK = growthK,
+	rules = rules,
+	bulkOf = bulkOf,
+	light = light,
+	lightKind = lightKind,
 	objectById = objectById,
 	objectByBookId = objectByBookId,
 	objectsByTier = objectsByTier,

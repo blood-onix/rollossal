@@ -21,6 +21,7 @@ local TIER_COLOURS: { Color3 } = {
 	Color3.fromRGB(130, 180, 235),
 	Color3.fromRGB(235, 140, 140),
 	Color3.fromRGB(200, 160, 235),
+	Color3.fromRGB(235, 220, 130),
 }
 
 local ObjectVisual = {}
@@ -73,7 +74,8 @@ local function standIn(def: ObjectDef): Part
 		then Enum.PartType.Ball
 		elseif shape == "Cylinder" then Enum.PartType.Cylinder
 		else Enum.PartType.Block
-	part.Size = Vector3.one * def.size
+	local dims = def.dims
+	part.Size = if dims then Vector3.new(dims[1], dims[3], dims[2]) else Vector3.one * def.size
 	part.Color = colourFor(def)
 	part.Material = Enum.Material.SmoothPlastic
 	part.Transparency = 0

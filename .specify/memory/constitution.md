@@ -1,5 +1,71 @@
 <!--
 Sync Impact Report (temporary; remove before commit)
+Version change: 4.0.0 -> 4.1.0 (owner request, 2026-11-04; approval on the PR still needed)
+Bump reason: MINOR. Every change adds a rule, adds a permission with conditions, or narrows when
+  the pace test can fail a feature. Nothing is removed or redefined incompatibly:
+  - Pace windows were already tuning values that MUST NOT block a feature before the RC (I). The
+    new text says the same for the pace test and names the only floors it may fail on. Gate 6 and
+    the RC list are unchanged.
+  - Light objects (II) are a new MAY. The absorb checks are unchanged and apply to them as well;
+    "the object exists" now reads "exists in the server's data".
+  - Map layout (VII) and design-before-build (I) are new MUSTs for new map work, in the same way
+    4.0.0's IV and XI additions were MINOR. A map feature planned under 4.0.0 that is still open
+    (012) has to adopt them, but no rule it met is taken away.
+  - The Python scripts (XII) are named as existing toolchain, which they already were in practice.
+  Same test as 3.0.0 and 4.0.0 (is an old rule redefined?), and the answer is no.
+Why: features 008 and 010 failed as maps, and the owner could not test either, because their
+  gates demanded pace proof from maps that were not ready to play.
+Modified principles:
+  - I (title unchanged): growth pace measured and reported, not gated, before the RC; the pace test
+    fails only on three playability floors; map features start from an owner-approved layout;
+    playable-first staging (SHOULD). One rationale line added.
+  - II (title unchanged): light objects (data-only absorbables with no server Part) allowed; the
+    server owns their state and validates absorbs against data position and size; the tests/studio
+    rule names them.
+  - VII (title unchanged): a world map comes from one layout file written by a script in scripts/;
+    the script checks overlaps, coverage and budgets and prints objects per tier; map pictures are
+    rendered from it; the world module is generated from it and tested against it.
+  - XII (title unchanged): Python 3 standard-library design-data scripts are named as existing
+    toolchain and MUST NOT use third-party packages.
+Modified sections:
+  - Quality Gates: the "Pacing is checked by the Lune pace test" line now points at I's floors.
+Added sections: none. Removed sections: none.
+Unchanged: III, IV, V, VI, VIII, IX, X, XI, Human Approval Required, Governance, gates 1 to 6.
+Drafting choices the request did not spell out (overrule on the PR):
+  - Playable-first staging sits in Principle I, not Governance, so Governance stays as it was.
+  - "The tests/studio absorb-validation rule covers them" is written into II's last bullet.
+  - VII says the layout script "MUST check the layout and fail on a problem". The request said
+    "check"; a check that only prints does not stop anything, so it is written as a failure.
+  - The floors are written as the only grounds the pace test may fail on; the eater's sizes and
+    tier times are reported, for example in the feature's playtest.md or the PR.
+  - The coverage floor uses the request's numbers (5 %, 40 studs, per park quarter) with the map's
+    design document allowed to set an equivalent rule. docs/design/09-park-city-level.md line 274
+    says "every point of the park is within 40 studs of food", stricter than 5 %; the
+    layout script measures the 5 % form ("farFromFoodPct" per quarter).
+Files checked:
+  - .specify/templates/{plan,spec,tasks,checklist,constitution}-template.md: no change needed. The
+    plan template reads gates from the constitution at run time; none repeats pace, layout, light
+    objects, tools or staging.
+  - .claude/skills/speckit-* (all 18): no change needed; a search for pace, pacing, layout, world
+    module, absorb, Python, third-party, playable, grey box and gate 6 found only generic text.
+  - CLAUDE.md (just "@AGENTS.md") and .github/copilot-instructions.md (points to AGENTS.md): no change.
+  - AGENTS.md: updated. "Design system" names the map layout and its scripts; a new "Maps and pace"
+    paragraph after the visual gate states the layout-first, playable-first and pace rules.
+Not checked: docs/design/* beyond the maps README and 09-park-city-level.md lines quoted here;
+  specs/012-* (open feature, its plan follows on its own pass); Conveyor's prompts.
+Follow-up TODOs (code and docs this amendment does not change; see Next Actions in the PR):
+  - tests/unit/Pace.test.luau asserts the 004 and 008 pace targets as pass/fail. Under 4.1.0 those
+    become reports; only the floors may fail.
+  - scripts/park_city_layout.py prints overlaps and coverage but exits 0 on either, and does not
+    check budgets. VII now requires it to fail on them.
+  - No world module is generated from park-city-layout.json yet, and no test compares the two.
+    Feature 012 should add both.
+  - Existing Snow Village and Downtown world modules predate the layout rule. They are not world
+    maps being built now; apply VII when either is next changed as a map.
+  - 008 and 010 specs and the 011 and 013 backlog items still state pace windows as gates (history
+    for 008 and 010; 011 and 013 to be corrected when specified).
+
+Carried over from the 4.0.0 report, still open unless marked:
 Version change: 3.0.0 -> 4.0.0 (owner-approved request, 2026-11-02; approval on the PR still needed)
 Bump reason: MAJOR. "Owner taste MUST NOT hold a feature" and "only the Human Approval list can
   stop a feature" are redefined incompatibly: for a map, world-art or ball-look feature the owner's
@@ -163,10 +229,24 @@ it.
   later, the owner decides whether it needs its own round.
 - Feel and tuning values (pace windows, `growthK`, star thresholds, jump, booster and trap
   values) are judged on the RC. They MUST NOT block a feature before then.
+- Growth pace (sizes and tier times against the pace windows) MUST be measured and reported by the
+  Lune pace test, and MUST NOT fail a feature before the RC. The pace test MAY fail a feature only
+  on these playability floors:
+  - every spawn reaches a first pickup within 3 s;
+  - the open-route food ladder has no gap: each zone's smallest food is at most 1.25 × the
+    previous zone's largest;
+  - the map's coverage rule: no park quarter has more than 5 % of its area more than 40 studs from
+    food, or the equivalent rule the map's design document sets.
+- A feature whose main output is a world map MUST start from a layout (Principle VII) whose
+  rendered maps the owner has approved, as Park City's were on 2026-11-04. Gate 6 still applies at
+  the end.
 - A feature whose main output is a world map, world art or the look of the player's ball is not
   finished until images of it exist and the owner has approved them, from fixed shots and by
   playing the build (Quality Gates, gate 6). Automated tests are a floor for these features and
   never prove that the look is good.
+- A large feature SHOULD be staged so that its first stage is a build the owner can play: its rules
+  and look on an existing map, or a grey box with fewer objects. Each later stage SHOULD end
+  playable as well.
 - Each agent run and the RC round MUST be recorded in the feature's spec folder
   (`specs/<feature>/playtest.md`) with the date, the build or commit, participant counts per age
   group (when people take part), findings, and, for the RC round, the owner's sign-off. Children
@@ -178,13 +258,19 @@ depends on the final map, and neither children nor the owner get useful signal f
 does not yet read as a game. People therefore judge it once, on the RC, and always before launch.
 The look is different again: tests cannot see it, and a map feature once closed as done with no
 images taken and was then rejected. It is seen and approved before the feature is finished.
+The owner could not test 008 and 010 because their gates demanded pace proof from maps that were
+not ready to play.
 
 ### II. Server Authority
 
 - The client MAY own the ball's physics (network ownership) for smooth control.
 - The server alone MUST decide absorption, size, score, coins, unlocks and run results.
-- The server MUST validate every absorb request:
-  - the object exists and has not already been taken;
+- Absorbable objects MAY exist on the server as data only, with no server Part ("light objects",
+  for example Tier 1 and 2 food). Clients draw them near their camera. The server MUST still own
+  their state (available, taken, respawn).
+- The server MUST validate every absorb request, for a Part or a light object alike, against the
+  object's server-side position and size:
+  - the object exists in the server's data and has not already been taken;
   - the distance from ball to object is within the allowed limit;
   - the size rule (from `src/shared/Rules`) passes;
   - the player has made at most N absorbs per second, where N is defined in
@@ -195,7 +281,7 @@ images taken and was then rejected. It is seen and approved before the feature i
   intents, the ID of a target object) and MUST type-check every argument. They MUST NOT
   accept sizes, scores, coin amounts, unlocks or results from the client.
 - Nothing the client sends is trusted for any change to progress. Absorb validation MUST be
-  covered by tests in `tests/studio`.
+  covered by tests in `tests/studio`, including absorbs of light objects.
 
 Rationale: a client-owned rolling ball invites speed and absorb exploits; progress must only
 ever come from the server.
@@ -297,8 +383,18 @@ Rationale: most of the audience plays on phones, and the first minute decides re
 - New features MUST ship behind flags in `src/shared/Config`.
 - Content data MUST be validated by Lune tests in `tests/unit` (for example: sizes ascend
   by tier, IDs are unique).
+- A world map MUST come from a single layout data source written by a script in `scripts/` (for
+  Park City: `docs/design/maps/park-city-layout.json` from `scripts/park_city_layout.py`).
+- The layout script MUST check the layout and fail on a problem: no scene or building on a road,
+  path, water or another scene (0 overlaps), the map's coverage rule (Principle I), and the
+  budgets. It MUST print the objects per tier.
+- The map pictures (overview, zone maps, close-ups) MUST be rendered from the same layout data,
+  never drawn by hand.
+- The game's world module MUST be generated from the layout, never edited by hand. A test MUST
+  check that the world data matches the layout.
 
-Rationale: monthly worlds and weekly object drops are only affordable if they are data.
+Rationale: monthly worlds and weekly object drops are only affordable if they are data. A map
+read from one file cannot drift between its pictures, its design and the game.
 
 ### VIII. Player Data and Privacy
 
@@ -380,6 +476,9 @@ security risk.
 - Prefer Roblox built-ins and the existing toolchain: Rokit, Wally, ProfileStore, StyLua,
   Selene, luau-lsp in strict mode, Lune, Jest-Lua, Rojo 7.7.1, the Roblox Studio MCP server
   and GitHub Actions.
+- Python 3 standard-library scripts in `scripts/` for design data (`design-tokens.py`,
+  `park_city_layout.py`, `park_city_render.py`, `growth-sim.py`) are part of the existing
+  toolchain, not a new tool. They MUST NOT use third-party packages.
 - A new tool, package or external service MUST have: a concrete problem it solves, a pinned
   version, a justification line in the feature's `plan.md`, and owner approval.
 - No abstractions for hypothetical needs; an abstraction needs at least two current users.
@@ -415,8 +514,9 @@ Each pull request description MUST state which gates applied and how each was me
 What a feature may require, and what waits for the RC:
 
 - A feature's gates and its `tasks.md` MAY require only what an agent can run: `scripts/check.sh`,
-  Lune, Jest-Lua and the Studio MCP server. Pacing is checked by the Lune pace test, and timed
-  live bot runs are not required. Gate 6's owner approval is the one exception, and it is a gate,
+  Lune, Jest-Lua and the Studio MCP server. Pacing is measured and reported by the Lune pace test,
+  which fails a feature only on Principle I's playability floors. Timed live bot runs are not
+  required. Gate 6's owner approval is the one exception, and it is a gate,
   not a task.
 - Apart from gate 6, anything that needs a person, a real device, the final map or owner taste goes
   in the release-candidate list, `docs/release-candidate.md`. It MUST NOT be a task in `tasks.md` or
@@ -463,4 +563,4 @@ Agents MUST stop and get owner approval before any of the following:
   flag conflicts in the plan or analysis instead of working around them. A conflict is
   resolved by changing the work or by amending the constitution, never by ignoring it.
 
-**Version**: 4.0.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-11-02
+**Version**: 4.1.0 | **Ratified**: 2026-10-24 | **Last Amended**: 2026-11-04

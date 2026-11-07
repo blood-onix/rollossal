@@ -1930,7 +1930,62 @@ local traffic = {
 	},
 }
 
+-- 012 Stage A: read only when Config.Flags.ReadableRules is on (Worlds.luau). Six tiers from a D 1 start, stars
+-- 20 / 50 / 90, the bulk rule, and dims for the long thin objects (docs/design/09-park-city-level.md section 3.2).
+local readableMinDiameters = { 1, 2.5, 6, 15, 35, 80 }
+local readableSizeTiers = {}
+for tier = 1, 6 do
+	table.insert(readableSizeTiers, {
+		tier = tier,
+		nameKey = `tier.downtown.{tier}.name`,
+		minDiameter = readableMinDiameters[tier],
+		maxDiameter = readableMinDiameters[tier + 1] or 150,
+		headlineKey = `tier.downtown.{tier}.headline`,
+		headlineIcon = "cube",
+		reward = nil,
+	})
+end
+
+local readableRules = {
+	sizeTiers = readableSizeTiers,
+	starThresholds = { 20, 50, 90 },
+	-- Doorstep objects within this many studs of a spawn that a D 1 ball cannot eat are left out (Rules/Doorstep).
+	doorstepClearRadius = 7,
+	rules = {
+		startDiameter = 1,
+		growthK = 1.6,
+		absorb = { mode = "bulk", ratio = 0.5, longestRatio = 1.5, garnish = 0.08 },
+		speedCap = { base = 32, fromDiameter = 12, slope = 0.4, max = 56 },
+		cameraMinDistance = 4,
+	},
+	-- {l, w, h}; the longest side equals the object's `size`.
+	dims = {
+		acoustic_guitar = { 3, 1.1, 0.4 },
+		pizza_slice = { 0.9, 0.8, 0.15 },
+		water_bottle = { 0.9, 0.3, 0.3 },
+		parking_meter = { 3.8, 0.5, 0.5 },
+		e_scooter = { 3.8, 0.6, 3.2 },
+		moped = { 6, 1.5, 3.5 },
+		bicycle = { 6.5, 0.6, 3.5 },
+		picnic_table = { 6, 3, 2.5 },
+		street_lamp = { 9.5, 0.5, 0.5 },
+		traffic_light = { 9.8, 0.8, 0.8 },
+		bus_shelter = { 10, 3, 3 },
+		hatchback = { 14, 6, 5 },
+		taxi = { 14, 6, 5 },
+		billboard = { 18, 1.2, 10 },
+		shipping_container = { 20, 4, 4 },
+		city_bus = { 25, 8, 10 },
+		corner_shop_row = { 26, 6, 10 },
+		rocket_water_tower = { 8, 8, 34 },
+		apartment_block = { 40, 20, 30 },
+		ferris_wheel = { 50, 6, 50 },
+		tower_crane = { 4, 4, 55 },
+	},
+}
+
 local Downtown = {
+	readableRules = readableRules,
 	worldId = "downtown",
 	starThresholds = { 20, 45, 80 },
 	-- PROVISIONAL, owner to confirm: solved with the pace model (tests/unit/Pace.test, 008 research R-07).
