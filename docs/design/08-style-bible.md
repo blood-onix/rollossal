@@ -133,6 +133,10 @@ so there is no side-by-side comparison. **Owner decision, 2026-11-02:**
 - `generate_3d` output and Creator Store models are not used unless they pass the same five-prop comparison.
 - Bevel only the main silhouettes; small details stay flat. Per-class overrides measured so far: hydrant 210 to 385
   (the tier 2 floor and target already suit it).
+- **Class floors (013 audit, plan D3).** A class floor replaces the tier floor where a mesh cannot spend it: pocket
+  floor 40 (size <= 0.8 studs), flat floor 24 (road marking, path, kerb, crossing, blanket, snow pile, ice rink),
+  panel floor 150 (billboard and sign panels). Tier floors stay 150, 210, 450, 1050, 1500 for tiers 1 to 5. Targets
+  stay at the tier target or 60 % of the budget, whichever is lower. The audit's `fillRatio` is triangles / floor.
 
 ## 12. Concept reference
 

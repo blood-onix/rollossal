@@ -226,6 +226,100 @@ test("slot mapped to the wrong tier: error", function()
 	end, "slot.small is tier 1")
 end)
 
+-- ---------------------------------------------------------------- 013: slot.meme.t2 to t5
+
+local function deepEqual(a: unknown, b: unknown): boolean
+	if type(a) ~= type(b) then
+		return false
+	end
+	if type(a) ~= "table" then
+		return a == b
+	end
+	local left, right = a :: { [unknown]: unknown }, b :: { [unknown]: unknown }
+	for key, value in left do
+		if not deepEqual(value, right[key]) then
+			return false
+		end
+	end
+	for key in right do
+		if left[key] == nil then
+			return false
+		end
+	end
+	return true
+end
+
+-- A toy world with one fixed placement of slot.meme.t4 and a tier 3 object to mis-bind.
+local function makeMemeWorld(): ThemeResolve.WorldLike
+	return {
+		worldId = "meme_world",
+		objects = {
+			makeObject("gag_a", 4, 12, "m_gag_a"),
+			makeObject("gag_b", 4, 14, "m_gag_b"),
+			makeObject("gag_small", 3, 5, "m_gag_small"),
+		},
+		zones = {},
+		fixedPlacements = {
+			{ id = "fp_meme", objectId = "slot.meme.t4", x = 10, y = 1, z = 0, yaw = 0 },
+		},
+		environment = { palette = {} },
+		themeBindings = {
+			city = { slots = { ["slot.meme.t4"] = "gag_a" } },
+			winter = { slots = { ["slot.meme.t4"] = "gag_b" } },
+		},
+	}
+end
+
+test("slot.meme.t2 to t5 map to tiers 2 to 5", function()
+	expect.equal(ThemeResolve.SLOT_TIERS["slot.meme.t2"], 2)
+	expect.equal(ThemeResolve.SLOT_TIERS["slot.meme.t3"], 3)
+	expect.equal(ThemeResolve.SLOT_TIERS["slot.meme.t4"], 4)
+	expect.equal(ThemeResolve.SLOT_TIERS["slot.meme.t5"], 5)
+	expect.truthy(ThemeResolve.isSlot("slot.meme.t4"))
+end)
+
+test("slot.meme swap is data only: the binding changes the object, nothing else", function()
+	local world = makeMemeWorld()
+	local before = makeMemeWorld()
+	local cityResolved = resolve(world, CITY)
+	local winterResolved = resolve(world, WINTER)
+	expect.equal(#cityResolved.placements, 1)
+	expect.equal(#winterResolved.placements, 1)
+	expect.equal(cityResolved.placements[1].objectId, "gag_a")
+	expect.equal(winterResolved.placements[1].objectId, "gag_b")
+	expect.equal(cityResolved.placements[1].id, winterResolved.placements[1].id)
+	expect.equal(cityResolved.placements[1].x, winterResolved.placements[1].x)
+	expect.truthy(deepEqual(world, before))
+end)
+
+test("slot.meme.t4 mapped to a tier 3 object: error", function()
+	local world = makeMemeWorld()
+	world.themeBindings = { city = { slots = { ["slot.meme.t4"] = "gag_small" } } }
+	expectError(function()
+		resolve(world, CITY)
+	end, "slot.meme.t4 is tier 4")
+end)
+
+test("a zone mixing slot.meme.t4 with plain ids is rejected", function()
+	local world = makeMemeWorld()
+	world.zones = {
+		{
+			id = "mixed",
+			x = 0,
+			z = 0,
+			w = 40,
+			d = 40,
+			y = 0,
+			mix = { { objectId = "slot.meme.t4", weight = 1 }, { objectId = "gag_b", weight = 1 } },
+			count = 4,
+			seed = 1,
+		},
+	}
+	expectError(function()
+		resolve(world, CITY)
+	end, "mixes slot and non-slot ids")
+end)
+
 -- ---------------------------------------------------------------- behaviour 5: no mutation
 
 test("inputs are not mutated: the base world survives both themes", function()

@@ -924,6 +924,10 @@ def build_file(tier_file: str, object_ids: list, recipes: dict, sizes: dict,
         for part in recipes[object_id]:
             emit(builder, part)
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        if UPGRADE_FLOORS.get(object_id):
+            import dt_upgrade
+            tags = dt_upgrade.apply(bm, tags, UPGRADE_FLOORS[object_id],
+                                    int(0.6 * budgets["meshTriangles"][budgets["tiers"][object_id] - 1]))
 
         # Normalise: uniform scale so the longest bounding side equals the ObjectDef size, then origin at
         # the bottom centre of the footprint. The hub has no size rule and keeps its authored scale.
@@ -989,6 +993,9 @@ def main() -> None:
     core_ids = set()
     if world == "downtown":
         recipes, core_ids = downtown_recipes()
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import dt_upgrade
+        UPGRADE_FLOORS.update(dt_upgrade.load_floors(art_dir()))
         core_ids = {"dt_" + name for name in core_ids}
     else:
         recipes = all_recipes()
@@ -1015,5 +1022,8 @@ def main() -> None:
 
 
 UV_MARGIN = 0.05
+# 013 T025: dt_ id -> triangle floor for the meshes the audit upgrades or replaces (set by main in downtown mode).
+UPGRADE_FLOORS = {}
 
-main()
+if __name__ == "__main__":
+    main()

@@ -7,6 +7,8 @@ local fs = require("@lune/fs")
 local harness = require("./harness")
 local Strings = require("../../src/shared/Localization/Strings")
 local Downtown = require("../../src/shared/Content/Worlds/Downtown")
+local CityKit = require("../../src/shared/Content/CityKit")
+local CityKitStrings = require("../../src/shared/Localization/CityKitStrings")
 
 local test, expect = harness.test, harness.expect
 
@@ -438,5 +440,24 @@ test("Strings: no Downtown text names a person, an animal to absorb, a brand or 
 		end
 	end
 end)
+
+-- 013: every city kit nameKey has en and es, and the two differ unless the word is the same in both.
+local SAME_IN_BOTH = { Bungalow = true }
+
+test(
+	"Strings: every CityKit name has both languages and no key clashes with Strings.luau",
+	function()
+		for _, object in CityKit.objects do
+			local texts = (CityKitStrings :: any)[object.nameKey]
+			expect.truthy(texts ~= nil, object.nameKey)
+			expect.truthy(#texts.en > 0 and #texts.es > 0, object.nameKey)
+			expect.falsy(
+				(Strings :: any)[object.nameKey],
+				`{object.nameKey} is also in Strings.luau`
+			)
+			expect.truthy(texts.en ~= texts.es or SAME_IN_BOTH[texts.en], object.nameKey)
+		end
+	end
+)
 
 return {}

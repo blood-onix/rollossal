@@ -109,7 +109,36 @@ values).
 Batch these. The feature has already shipped with its stand-in or fallback. Each entry: what is needed, which feature,
 and what stands in until then.
 
-None yet.
+### 013 City asset kit: mesh upload batch 1 and fronts atlas
+
+Needs: (1) upload the 84 FBX files and put each id in `src/shared/Assets.luau` (`meshes.ck_<id>`, now `""`);
+(2) upload `art/atlases/fronts/city.png` and `art/atlases/fronts/winter.png` and put the ids in
+`Assets.frontsAtlases.city` and `.winter` (now `""`). Stand-in until then: each object draws as its palette-coloured
+block part (one warning per key); a fronts object with an empty atlas id has no `TextureID`, with no extra warning.
+
+- 84 meshes in `art/export/ck_*.fbx`, rows in `art/export/manifest.json` (Blender 5.2.3, one `Palette` material each):
+  building 25 (6 houses, 9 shops and shop rows, 6 mid-rise, 4 towers), street 11, park 16, suburbs 7, main street 5,
+  downtown 6, signage 7, meme 7. The 17 shop, billboard and buffering-billboard meshes use the fronts atlas; the other
+  67 use the theme atlas.
+- Shop names are final: `docs/design/shop-names.json` has 22 `clear` names in cells `sign_00` to `sign_21` (the rest
+  were dropped as close to real businesses). Both fronts atlas PNGs were regenerated with them
+  (`python3 art/scripts/fronts_atlas.py`), so upload the regenerated PNGs, not an earlier copy.
+- Also re-upload the 87 rebuilt `dt_*` FBX files (`art/export/dt_*.fbx`, see the next section); they keep their keys, so
+  replace the ids in `Assets.meshes.dt_<id>` in the same pass. `dt_kiosk` is among them, at 184 triangles (see the next section).
+- Gate 6 images: `specs/013-city-asset-kit/contact-sheets/<city|winter>/` (building, street, park, suburbs, mainstreet,
+  downtown, signage, meme, audit up to three pages). The pull request does not merge before the owner approves them.
+
+### 013 Rebuilt `dt_*` meshes (T025, T031)
+
+- All 87 audit "upgrade" and "replace" meshes were rebuilt by `art/scripts/dt_upgrade.py` (one bevel segment on
+  hard edges plus window and panel reveals), keeping key, size and bottom-centre origin: 86 up to their class floor,
+  `dt_kiosk` to 184 triangles. Their FBX files and manifest hashes changed; the 12 "keep" meshes are byte-identical. The
+  old asset ids stay in `Assets.luau` until the owner re-uploads (plan D5).
+- `dt_kiosk` stops at 184 of its 1,050 floor: at the floor the winter city's Downtown N10 sum was 580,302 unculled and
+  302,436 culled against 550,000 and 290,000. With the other 86 rebuilt the sum is 546,702, so 35 placements leave room
+  for 94 more triangles each; the built sum is 549,782 unculled and 271,916 culled. Ceilings are not raised; revisit
+  when 009 raises one (`CAPPED` in `dt_upgrade.py`).
+- The look of the rebuilt meshes is an automated finish on the old silhouettes; owner taste check (gate 6) is open.
 
 ## Defaults taken
 

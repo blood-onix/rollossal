@@ -42,6 +42,10 @@ export type ObjectDef = {
 	solid: boolean?,
 	-- Tier 1-2 object kept as server data, drawn by the client (not a server Part).
 	light: boolean?,
+	-- City asset kit (013). "fronts" draws the mesh with the fronts and signs atlas instead of the theme atlas.
+	atlas: string?,
+	-- Contact-sheet and catalogue grouping: building, street, park, suburbs, mainstreet, downtown, signage, meme.
+	zone: string?,
 }
 -- Per-world size and readability rules (012 research R3). Every field falls back to Config.
 export type AbsorbRuleDef = { mode: string, ratio: number, longestRatio: number?, garnish: number? }

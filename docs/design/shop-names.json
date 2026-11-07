@@ -1,0 +1,818 @@
+{
+  "version": 1,
+  "disclaimer": "Search records are evidence for the owner, not legal clearance. 'clear' means the searches in this file found no business or brand with the same or a near name in a similar trade on the date shown.",
+  "bannedTerms": {
+    "platform": [
+      "roblox",
+      "robux",
+      "blox"
+    ],
+    "alcohol": [
+      "alcohol",
+      "ale",
+      "bar",
+      "beer",
+      "brewery",
+      "cider",
+      "cocktail",
+      "gin",
+      "lager",
+      "liquor",
+      "pub",
+      "rum",
+      "saloon",
+      "spirits",
+      "tavern",
+      "vodka",
+      "whiskey",
+      "whisky",
+      "wine"
+    ],
+    "gambling": [
+      "bet",
+      "betting",
+      "bingo",
+      "casino",
+      "gamble",
+      "gambling",
+      "jackpot",
+      "lottery",
+      "odds",
+      "poker",
+      "raffle",
+      "roulette",
+      "slots"
+    ]
+  },
+  "names": [
+    {
+      "name": "Blocky Mart",
+      "trade": "grocer",
+      "lines": [
+        "Blocky",
+        "Mart"
+      ],
+      "searches": [
+        "\"Blocky Mart\" grocer",
+        "\"Blocky Mart\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no grocery of that name; BLOCKY BITES (toy figurines, clothing) and BLOCKY (vehicles) marks on trademark aggregators; Block's Fresh Market (Illinois) differs"
+      ],
+      "verdict": "clear",
+      "note": "",
+      "cell": "sign_00"
+    },
+    {
+      "name": "Cafe Cube",
+      "trade": "cafe",
+      "lines": [
+        "Cafe",
+        "Cube"
+      ],
+      "searches": [
+        "\"Cafe Cube\" cafe",
+        "\"Cafe Cube\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "Cafe Cube, Kyoto station complex; Cube Cafe, Seoul and Los Angeles; COFFEE CUBE and CUBE COFFEE marks for coffee shops"
+      ],
+      "verdict": "close",
+      "note": "real cafes and live coffee marks share the name",
+      "cell": null
+    },
+    {
+      "name": "Stud Pizza",
+      "trade": "pizzeria",
+      "lines": [
+        "Stud",
+        "Pizza"
+      ],
+      "searches": [
+        "\"Stud Pizza\" pizzeria",
+        "\"Stud Pizza\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no match; Studio Pizza and Pizza Studio are different names; STUDS (education class 41) unrelated"
+      ],
+      "verdict": "clear",
+      "note": "",
+      "cell": "sign_01"
+    },
+    {
+      "name": "Crumb Corner",
+      "trade": "bakery",
+      "lines": [
+        "Crumb",
+        "Corner"
+      ],
+      "searches": [
+        "\"Crumb Corner\" bakery",
+        "\"Crumb Corner\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "logo.com brand page for a bakery named Crumb Corner; Crumbs Corner cafe, High Wycombe"
+      ],
+      "verdict": "close",
+      "note": "a bakery brand of the same name exists",
+      "cell": null
+    },
+    {
+      "name": "Noodle Nook",
+      "trade": "noodles",
+      "lines": [
+        "Noodle",
+        "Nook"
+      ],
+      "searches": [
+        "\"Noodle Nook\" noodles",
+        "\"Noodle Nook\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "several restaurants named Noodle Nook (Notre Dame, Halifax, 12 Points Public Market); NOODLENOOK mark pending"
+      ],
+      "verdict": "close",
+      "note": "real restaurants share the name",
+      "cell": null
+    },
+    {
+      "name": "Spoke & Chain",
+      "trade": "bike shop",
+      "lines": [
+        "Spoke &",
+        "Chain"
+      ],
+      "searches": [
+        "\"Spoke & Chain\" bike shop",
+        "\"Spoke & Chain\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no match; Spoke & Dagger (Buffalo), Spoke & Piston, Spoke & Pedal are different names"
+      ],
+      "verdict": "clear",
+      "note": "",
+      "cell": "sign_02"
+    },
+    {
+      "name": "Plum Books",
+      "trade": "bookshop",
+      "lines": [
+        "Plum",
+        "Books"
+      ],
+      "searches": [
+        "\"Plum Books\" bookshop",
+        "\"Plum Books\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "Wild Plum Books (St. Helena), Plumfield Books, PLUM TREE BOOKS and PLUMSHELF marks are different names"
+      ],
+      "verdict": "clear",
+      "note": "",
+      "cell": "sign_03"
+    },
+    {
+      "name": "Lamp & Lens",
+      "trade": "optician",
+      "lines": [
+        "Lamp &",
+        "Lens"
+      ],
+      "searches": [
+        "\"Lamp & Lens\" optician",
+        "\"Lamp & Lens\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no optician or mark of that name; Lens & Frame Opticals (Khobar) differs"
+      ],
+      "verdict": "clear",
+      "note": "",
+      "cell": "sign_04"
+    },
+    {
+      "name": "Daily Stack",
+      "trade": "newsagent",
+      "lines": [
+        "Daily",
+        "Stack"
+      ],
+      "searches": [
+        "\"Daily Stack\" newsagent",
+        "\"Daily Stack\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "THE DAILY STACK registered mark (class 9, Reg. 6797209) and a supplement product The Daily Stack"
+      ],
+      "verdict": "close",
+      "note": "a registered mark of near identical name exists",
+      "cell": null
+    },
+    {
+      "name": "Pocket Records",
+      "trade": "music",
+      "lines": [
+        "Pocket",
+        "Records"
+      ],
+      "searches": [
+        "\"Pocket Records\" music",
+        "\"Pocket Records\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "POCKETS FILLED RECORDS (retail record stores), OUTTA POCKET RECORDS, historic Hip Pocket Records"
+      ],
+      "verdict": "close",
+      "note": "near marks in the same trade",
+      "cell": null
+    },
+    {
+      "name": "Tin Can Toys",
+      "trade": "toys",
+      "lines": [
+        "Tin Can",
+        "Toys"
+      ],
+      "searches": [
+        "\"Tin Can Toys\" toys",
+        "\"Tin Can Toys\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no toy shop of that name; TIN CAN INTERNATIONAL (class 41) and TIN CUP PRODUCTS (toys) differ"
+      ],
+      "verdict": "clear",
+      "note": "",
+      "cell": "sign_05"
+    },
+    {
+      "name": "Fern & Fig",
+      "trade": "florist",
+      "lines": [
+        "Fern &",
+        "Fig"
+      ],
+      "searches": [
+        "\"Fern & Fig\" florist",
+        "\"Fern & Fig\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "Fig and Fern Floral (Lincolnshire wedding florist), Fig & Fern Marketplace (Florida)"
+      ],
+      "verdict": "close",
+      "note": "a florist with the reversed name exists",
+      "cell": null
+    },
+    {
+      "name": "Corner Scoop",
+      "trade": "ice cream",
+      "lines": [
+        "Corner",
+        "Scoop"
+      ],
+      "searches": [
+        "\"Corner Scoop\" ice cream",
+        "\"Corner Scoop\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "The Corner Scoop, Newberry; Corner Scoop, Sonoita; Corner Scoops, Petoskey"
+      ],
+      "verdict": "close",
+      "note": "real ice cream shops share the name",
+      "cell": null
+    },
+    {
+      "name": "Gadget Garage",
+      "trade": "electronics",
+      "lines": [
+        "Gadget",
+        "Garage"
+      ],
+      "searches": [
+        "\"Gadget Garage\" electronics",
+        "\"Gadget Garage\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "Gadget Garage repair shop (Thane), Illinois Gadget Garage, Garage Gadget (Alor Setar)"
+      ],
+      "verdict": "close",
+      "note": "electronics and repair businesses share the name",
+      "cell": null
+    },
+    {
+      "name": "Mitten Market",
+      "trade": "clothes",
+      "lines": [
+        "Mitten",
+        "Market"
+      ],
+      "searches": [
+        "\"Mitten Market\" clothes",
+        "\"Mitten Market\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "The Mitten Market, Royal Oak (vendor event); MITTEN marks in class 25"
+      ],
+      "verdict": "close",
+      "note": "a retail market of the same name exists",
+      "cell": null
+    },
+    {
+      "name": "Cobble Cobbler",
+      "trade": "shoe repair",
+      "lines": [
+        "Cobble",
+        "Cobbler"
+      ],
+      "searches": [
+        "\"Cobble Cobbler\" shoe repair",
+        "\"Cobble Cobbler\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no match; COBBLE and COBBLER marks exist alone but not the pair; shoe repair shops use The Cobbler names"
+      ],
+      "verdict": "clear",
+      "note": "",
+      "cell": "sign_06"
+    },
+    {
+      "name": "Button Tailor",
+      "trade": "tailor",
+      "lines": [
+        "Button",
+        "Tailor"
+      ],
+      "searches": [
+        "\"Button Tailor\" tailor",
+        "\"Button Tailor\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no match; Button Up Tailors (Bangkok), Button Stance Tailoring (Aberdeen) differ"
+      ],
+      "verdict": "clear",
+      "note": "",
+      "cell": "sign_07"
+    },
+    {
+      "name": "Wick & Wax",
+      "trade": "candles",
+      "lines": [
+        "Wick &",
+        "Wax"
+      ],
+      "searches": [
+        "\"Wick & Wax\" candles",
+        "\"Wick & Wax\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "W WICK & WAX live registration (candles, Reg. 6435842); Wick & Wax Co (Stamford UK); Wick & Wax Candles (Tamworth)"
+      ],
+      "verdict": "close",
+      "note": "a live candle mark and shops share the name",
+      "cell": null
+    },
+    {
+      "name": "Sunny Side Diner",
+      "trade": "diner",
+      "lines": [
+        "Sunny Side",
+        "Diner"
+      ],
+      "searches": [
+        "\"Sunny Side Diner\" restaurant"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "Sunnyside Diner, Oklahoma City, Edmond, Kahnawake, Fresno, Lawrence MA"
+      ],
+      "verdict": "close",
+      "note": "real diners with the same name in a different spelling; dropped after one search",
+      "cell": null
+    },
+    {
+      "name": "Rivet Hardware",
+      "trade": "hardware",
+      "lines": [
+        "Rivet",
+        "Hardware"
+      ],
+      "searches": [
+        "\"Rivet Hardware\" store",
+        "\"Rivet Hardware\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "RIVET marks (Delta Faucet, class 11 and 21; Rivet Industries); Levi's Rivet store; Rivet Hardware Assortment product listing"
+      ],
+      "verdict": "close",
+      "note": "RIVET is a live brand in home goods",
+      "cell": null
+    },
+    {
+      "name": "Toast Lab",
+      "trade": "breakfast",
+      "lines": [
+        "Toast",
+        "Lab"
+      ],
+      "searches": [
+        "\"Toast Lab\" breakfast cafe",
+        "\"Toast Lab\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "TOAST LAB is a program page of Toast Inc, the restaurant software company; TOAST and TOAST & JAM LAB marks"
+      ],
+      "verdict": "close",
+      "note": "a restaurant-industry brand uses the name",
+      "cell": null
+    },
+    {
+      "name": "Dumpling Den",
+      "trade": "dumplings",
+      "lines": [
+        "Dumpling",
+        "Den"
+      ],
+      "searches": [
+        "\"Dumpling Den\" restaurant"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "Dumpling Den, Fort Lee NJ; M.A's Dumpling Den, Carlton"
+      ],
+      "verdict": "close",
+      "note": "real restaurants share the name; dropped after one search",
+      "cell": null
+    },
+    {
+      "name": "Hat Trick Barber",
+      "trade": "barber",
+      "lines": [
+        "Hat Trick",
+        "Barber"
+      ],
+      "searches": [
+        "\"Hat Trick Barber\" barbershop",
+        "\"Hat Trick Barber\" trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no barbershop of that name; HAT TRICK marks exist for beverages (Colony Craft), clothing (abandoned), hockey apparel retail, business consulting"
+      ],
+      "verdict": "clear",
+      "note": "HAT TRICK alone is used in other trades",
+      "cell": "sign_08"
+    },
+    {
+      "name": "Tidy Laundry",
+      "trade": "laundrette",
+      "lines": [
+        "Tidy",
+        "Laundry"
+      ],
+      "searches": [
+        "\"Tidy Laundry\" laundrette"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "Tidy Laundry listing, Arlington TX (Laundryheap); Clean and Tidy Laundry, Abu Dhabi; TIDY property software"
+      ],
+      "verdict": "close",
+      "note": "a laundry business of the same name is listed; dropped after one search",
+      "cell": null
+    },
+    {
+      "name": "Brick & Bean",
+      "trade": "cafe",
+      "lines": [
+        "Brick &",
+        "Bean"
+      ],
+      "searches": [
+        "\"Brick & Bean\" cafe"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "Brick n Bean Cafe Kitchen, Gurugram; Brick and Bean Cafe, St Lucia Brisbane; Bean and Brick, Puerto Vallarta"
+      ],
+      "verdict": "close",
+      "note": "cafes of the same name; dropped after one search",
+      "cell": null
+    },
+    {
+      "name": "Tuck Shop",
+      "trade": "sweets",
+      "lines": [
+        "Tuck",
+        "Shop"
+      ],
+      "searches": [
+        "\"Tuck Shop\" sweets trademark brand"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "TUCK SHOP pending mark (class 35 retail); Booker own-label Tuck Shop sweets; Fudge Kitchen Tuck Shop selection"
+      ],
+      "verdict": "close",
+      "note": "generic term and a retail mark; dropped after one search",
+      "cell": null
+    },
+    {
+      "name": "Kettle Lamp",
+      "trade": "cafe",
+      "lines": [
+        "Kettle",
+        "Lamp"
+      ],
+      "searches": [
+        "\"Kettle Lamp\" cafe",
+        "\"Kettle Lamp\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Kettle Cafe (Perth), Kettle's Yard cafe (Cambridge), The Lamp Cafe (Gateshead) differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_09"
+    },
+    {
+      "name": "Loaf Lantern",
+      "trade": "bakery",
+      "lines": [
+        "Loaf",
+        "Lantern"
+      ],
+      "searches": [
+        "\"Loaf Lantern\" bakery",
+        "\"Loaf Lantern\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; The Lantern Bakery (Ringwood) and several bakeries named Loaf differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_10"
+    },
+    {
+      "name": "Slurp Harbour",
+      "trade": "noodles",
+      "lines": [
+        "Slurp",
+        "Harbour"
+      ],
+      "searches": [
+        "\"Slurp Harbour\" noodles restaurant",
+        "\"Slurp Harbour\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Slurp Slurp Noodles, Slurp Noodle Bar, Slurp Mee differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_11"
+    },
+    {
+      "name": "Paper Heron",
+      "trade": "newsagent",
+      "lines": [
+        "Paper",
+        "Heron"
+      ],
+      "searches": [
+        "\"Paper Heron\" newsagent OR shop",
+        "\"Paper Heron\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Heron Books (Bristol, bookshop) differs",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_12"
+    },
+    {
+      "name": "Vinyl Pebble",
+      "trade": "music",
+      "lines": [
+        "Vinyl",
+        "Pebble"
+      ],
+      "searches": [
+        "\"Vinyl Pebble\" record store",
+        "\"Vinyl Pebble\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Pebble Records (Eastbourne) differs",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_13"
+    },
+    {
+      "name": "Thistle & Thumb",
+      "trade": "florist",
+      "lines": [
+        "Thistle &",
+        "Thumb"
+      ],
+      "searches": [
+        "\"Thistle & Thumb\" florist",
+        "\"Thistle & Thumb\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Thistle & Twig, Thistle & Vine, Thistle & String differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_14"
+    },
+    {
+      "name": "Scoop Orchard",
+      "trade": "ice cream",
+      "lines": [
+        "Scoop",
+        "Orchard"
+      ],
+      "searches": [
+        "\"Scoop Orchard\" ice cream",
+        "\"Scoop Orchard\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Overscoop (Orchard Central, Singapore), The Scoop, Scoop (Richmond) differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_15"
+    },
+    {
+      "name": "Wire Whale",
+      "trade": "electronics",
+      "lines": [
+        "Wire",
+        "Whale"
+      ],
+      "searches": [
+        "\"Wire Whale\" electronics shop",
+        "\"Wire Whale\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Wirefyshop and Whale Store differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_16"
+    },
+    {
+      "name": "Mitt & Muffler",
+      "trade": "clothes",
+      "lines": [
+        "Mitt &",
+        "Muffler"
+      ],
+      "searches": [
+        "\"Mitt & Muffler\" clothing",
+        "\"Mitt & Muffler\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Mitch & Son and a Muffle Hat & Mitts knitting pattern differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_17"
+    },
+    {
+      "name": "Tallow Tulip",
+      "trade": "candles",
+      "lines": [
+        "Tallow",
+        "Tulip"
+      ],
+      "searches": [
+        "\"Tallow Tulip\" candles",
+        "\"Tallow Tulip\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Tallow Company, Summer Solace Tallow, Calico tulip candle differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_18"
+    },
+    {
+      "name": "Bolt Burrow",
+      "trade": "hardware",
+      "lines": [
+        "Bolt",
+        "Burrow"
+      ],
+      "searches": [
+        "\"Bolt Burrow\" hardware store",
+        "\"Bolt Burrow\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Bolt Depot, Bolt Supply House differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_19"
+    },
+    {
+      "name": "Egg Atlas",
+      "trade": "breakfast",
+      "lines": [
+        "Egg",
+        "Atlas"
+      ],
+      "searches": [
+        "\"Egg Atlas\" breakfast restaurant",
+        "\"Egg Atlas\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Atlas Cafe (Woodingdean), Atlas Pancakes (Berlin), Egg (St. Louis) differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_20"
+    },
+    {
+      "name": "Dough Dock",
+      "trade": "bakery",
+      "lines": [
+        "Dough",
+        "Dock"
+      ],
+      "searches": [
+        "\"Dough Dock\" OR \"Dock & Dough\" bakery",
+        "\"Dough Dock\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Dough Bakery (NZ), Dough Dough Bakery (Oregon), Docker Bakery differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "clear",
+      "note": "replacement candidate added after 17 of the first 26 came back close",
+      "cell": "sign_21"
+    },
+    {
+      "name": "Soup Sparrow",
+      "trade": "soup",
+      "lines": [
+        "Soup",
+        "Sparrow"
+      ],
+      "searches": [
+        "\"Soup Sparrow\" restaurant",
+        "\"Soup Sparrow\" trademark"
+      ],
+      "date": "2026-11-07",
+      "seen": [
+        "no business or mark of that name found; Sparrow restaurants (London, Houston, Peoria) differ",
+        "trademark query: no record of the exact name on USPTO aggregators (Justia, Markinton, TrademarkDir); only other-word marks"
+      ],
+      "verdict": "close",
+      "note": "SPARROW RESTAURANT is a registered restaurant mark (Sparrow Restaurants, Inc.); dropped",
+      "cell": null
+    }
+  ]
+}
