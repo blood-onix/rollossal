@@ -52,6 +52,15 @@ local watcherSource: () -> { Respawn.Watcher } = function()
 	return {}
 end
 
+-- Light objects (012 Stage C): Tiers 1 and 2 of Park City are server data, never Parts. Parallel tables by light
+-- index; `pendingLight` holds the taken indices so the tick never walks the whole field.
+local lightData = Worlds.light
+local lightState: { [number]: number } = {}
+local lightTakenAt: { [number]: number } = {}
+local lightRespawnAt: { [number]: number } = {}
+local pendingLight: { [number]: boolean } = {}
+local outbox: { taken: { number }, restored: { number } } = { taken = {}, restored = {} }
+
 local function setTaken(object: PooledWorldObject, taken: boolean)
 	local part = object.part
 	part:SetAttribute("Taken", taken)
@@ -103,6 +112,83 @@ function WorldSpawner.start()
 	end
 end
 
+-- What the server knows about one light object, or nil for a bad index.
+export type LightInfo = {
+	index: number,
+	kind: string,
+	x: number,
+	y: number,
+	z: number,
+	size: number,
+	bulk: number,
+	tier: number,
+	taken: boolean,
+}
+
+function WorldSpawner.getLight(index: number): LightInfo?
+	if lightData == nil or index < 1 or index > lightData.count then
+		return nil
+	end
+	local at = (index - 1) * lightData.stride
+	local kind = lightData.kinds[lightData.data[at + 1]]
+	local def = Worlds.objectById[kind]
+	return {
+		index = index,
+		kind = kind,
+		x = lightData.data[at + 2],
+		y = lightData.data[at + 3],
+		z = lightData.data[at + 4],
+		size = def.size,
+		bulk = Worlds.bulkOf(def),
+		tier = def.tier,
+		taken = lightState[index] == 1,
+	}
+end
+
+function WorldSpawner.takeLight(index: number, now: number)
+	lightState[index] = 1
+	lightTakenAt[index] = now
+	lightRespawnAt[index] = now
+		+ Respawn.delayFrom(random:NextNumber(), Config.respawnDelayMin, Config.respawnDelayMax)
+	pendingLight[index] = true
+	table.insert(outbox.taken, index)
+end
+
+local function restoreLight(index: number)
+	lightState[index] = 0
+	lightTakenAt[index] = nil
+	lightRespawnAt[index] = nil
+	pendingLight[index] = nil
+	table.insert(outbox.restored, index)
+end
+
+-- Changes since the last call, as two index lists (nil, nil when there are none).
+function WorldSpawner.flushLight(): ({ number }?, { number }?)
+	if #outbox.taken == 0 and #outbox.restored == 0 then
+		return nil, nil
+	end
+	local taken, restored = outbox.taken, outbox.restored
+	outbox = { taken = {}, restored = {} }
+	return taken, restored
+end
+
+-- Every taken index, for a join or periodic snapshot.
+function WorldSpawner.takenLightIndices(): { number }
+	local list: { number } = {}
+	for index in pendingLight do
+		table.insert(list, index)
+	end
+	return list
+end
+
+-- The doorstep rows of spawn slot `slot` (first, last), or nil.
+local function doorstepRange(slot: number): { number }?
+	if lightData == nil then
+		return nil
+	end
+	return lightData.ranges[string.format("doorstep_%02d", slot)]
+end
+
 -- The spawner reads ball positions through this function so it never requires BallService (which requires
 -- the spawner).
 function WorldSpawner.setWatcherSource(source: () -> { Respawn.Watcher })
@@ -117,7 +203,7 @@ end
 function WorldSpawner.getSpawnSlot(index: number): Vector3
 	local points = Worlds.active.spawnPoints
 	local point = points[(index - 1) % #points + 1]
-	return Vector3.new(point.x, point.y + Config.startDiameter / 2 + 0.5, point.z)
+	return Vector3.new(point.x, point.y + Worlds.rules.startDiameter / 2 + 0.5, point.z)
 end
 
 -- Where a ball rests on the hub plaza: the hub centre plus the data offset, just above the floor.
@@ -125,7 +211,7 @@ function WorldSpawner.getHubSpawn(): Vector3
 	local hub = Worlds.active.hub
 	return Vector3.new(
 		hub.center.x + hub.spawn.x,
-		Config.startDiameter / 2 + 0.5,
+		Worlds.rules.startDiameter / 2 + 0.5,
 		hub.center.z + hub.spawn.z
 	)
 end
@@ -238,6 +324,34 @@ end
 -- while a ball still shows it: stack entries are visual-only records, so the world refills.
 function WorldSpawner.update(now: number)
 	local watchers: { Respawn.Watcher }? = nil
+	if lightData ~= nil then
+		for index in pendingLight do
+			local respawnAt, takenAt = lightRespawnAt[index], lightTakenAt[index]
+			if
+				respawnAt
+				and takenAt
+				and (now >= respawnAt or now >= takenAt + Config.respawnForceAfterSeconds)
+			then
+				if watchers == nil then
+					watchers = watcherSource()
+				end
+				local at = (index - 1) * lightData.stride
+				if
+					Respawn.canRespawn(
+						now,
+						takenAt,
+						respawnAt,
+						{ x = lightData.data[at + 2], z = lightData.data[at + 4] },
+						watchers :: { Respawn.Watcher },
+						sightParams,
+						Config.respawnForceAfterSeconds
+					)
+				then
+					restoreLight(index)
+				end
+			end
+		end
+	end
 	for object in pending do
 		if object.state == "Scattered" then
 			local availableAt = object.availableAt
@@ -279,6 +393,14 @@ end
 -- Run start at a spawn point: its Taken or Scattered cluster objects come straight back, with no sight check,
 -- so the first pickup is always within reach (spec edge case "Spawn Cluster Availability").
 function WorldSpawner.refreshCluster(slot: number, _now: number)
+	local range = doorstepRange((slot - 1) % #Worlds.active.spawnPoints + 1)
+	if range ~= nil then
+		for index = range[1], range[2] do
+			if lightState[index] == 1 then
+				restoreLight(index)
+			end
+		end
+	end
 	local cluster = clusters[(slot - 1) % #Worlds.active.spawnPoints + 1]
 	if cluster == nil then
 		return
@@ -291,6 +413,16 @@ function WorldSpawner.refreshCluster(slot: number, _now: number)
 end
 
 function WorldSpawner.availableInCluster(slot: number): number
+	local range = doorstepRange(slot)
+	if range ~= nil then
+		local free = 0
+		for index = range[1], range[2] do
+			if lightState[index] ~= 1 then
+				free += 1
+			end
+		end
+		return free
+	end
 	local cluster = clusters[slot]
 	if cluster == nil then
 		return 0
@@ -335,6 +467,9 @@ end
 
 -- Test helper: every object back at its spawn point, available, with no timers.
 function WorldSpawner.reset()
+	for index in pendingLight do
+		restoreLight(index)
+	end
 	for _, object in objectList do
 		WorldSpawner.returnToSpawn(object)
 	end

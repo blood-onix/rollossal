@@ -50,4 +50,30 @@ test("shrinkDiameter: empty list leaves diameter unchanged", function()
 	expect.near(Growth.shrinkDiameter(3, {}, 0.6, 2), 3, 1e-9)
 end)
 
+test("growByBulk: matches growDiameter for a cube when garnish is 0", function()
+	expect.near(Growth.growByBulk(2, 0.75, 0.6, 0), Growth.growDiameter(2, 0.75, 0.6), 1e-12)
+end)
+
+test("growByBulk: D 4, bulk 2, k 1.6 -> (64 + 12.8)^(1/3) = 4.25063", function()
+	expect.near(Growth.growByBulk(4, 2, 1.6, 0.08), 4.25063, 1e-4)
+end)
+
+test("growByBulk: under the garnish fraction adds nothing", function()
+	-- 0.08 * 10 = 0.8; bulk 0.79 is under it
+	expect.equal(Growth.growByBulk(10, 0.79, 1.6, 0.08), 10)
+	expect.truthy(Growth.growByBulk(10, 0.8, 1.6, 0.08) > 10)
+end)
+
+test(
+	"bulk mode: a knock-off takes back exactly what the pickup added (a long thin object is not a big loss)",
+	function()
+		-- A 6 stud plank of bulk 1.1: growth uses the bulk, so the shrink must use it too, not the 6 studs.
+		local grown = Growth.growByBulk(5.6, 1.1, 1.6, 0.08)
+		expect.near(Growth.shrinkDiameter(grown, { 1.1 }, 1.6, 1), 5.6, 1e-9)
+		-- Three of them popped with the old size-based numbers would take a D 5.6 ball (volume 176) to the floor.
+		expect.truthy(Growth.shrinkDiameter(5.6, { 1.1, 1.1, 1.1 }, 1.6, 1) > 5.4)
+		expect.equal(Growth.shrinkDiameter(5.6, { 6, 6, 6 }, 1.6, 1), 1)
+	end
+)
+
 return {}

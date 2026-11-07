@@ -26,4 +26,13 @@ function Growth.shrinkDiameter(
 	return cubeRoot(volume)
 end
 
+-- Bulk-mode growth: the volume grows by k times the object's bulk cubed. An object under the garnish
+-- fraction of the ball adds nothing (it still pops).
+function Growth.growByBulk(diameter: number, bulk: number, k: number, garnish: number): number
+	if bulk < garnish * diameter then
+		return diameter
+	end
+	return cubeRoot(diameter ^ 3 + k * bulk ^ 3)
+end
+
 return Growth

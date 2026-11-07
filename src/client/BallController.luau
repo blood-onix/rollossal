@@ -19,6 +19,7 @@ local Jump = require(Shared.Rules.Jump)
 local JumpTuning = require(Shared.JumpTuning)
 local Movement = require(Shared.Rules.Movement)
 local Traps = require(Shared.Rules.Traps)
+local Worlds = require(Shared.Worlds)
 local Feedback = require(script.Parent.Feedback)
 local JumpButton = require(script.Parent.JumpButton)
 local RunClient = require(script.Parent.RunClient)
@@ -31,6 +32,8 @@ local RespawnRemote = Remotes:WaitForChild("RespawnBall") :: RemoteEvent
 local ClaimRemote = Remotes:WaitForChild("ClaimBooster") :: RemoteEvent
 
 local OBJECT_TAG = "WorldObject"
+-- Park City light objects (LightField) are drawn client-side and carry the same attributes.
+local LIGHT_TAG = "LightObject"
 local BOOSTER_TAG = "BoosterSpot"
 local SURFACE_TAG = "TrapSurface"
 -- A surface patch counts only while the ball is this close to it vertically (studs).
@@ -50,9 +53,21 @@ local surfaceNow = { slick = false, slow = false }
 local function readDiameter(ball: BasePart): number
 	local diameter = ball:GetAttribute("Diameter")
 	if typeof(diameter) ~= "number" then
-		return Config.startDiameter
+		return Worlds.rules.startDiameter
 	end
 	return diameter
+end
+
+-- True when the ball touches the part's oriented box (the centre-distance test above is loose for long objects).
+local function touchesBox(ball: BasePart, part: BasePart): boolean
+	local half = part.Size / 2
+	local offset = part.CFrame:PointToObjectSpace(ball.Position)
+	local inside = Vector3.new(
+		math.clamp(offset.X, -half.X, half.X),
+		math.clamp(offset.Y, -half.Y, half.Y),
+		math.clamp(offset.Z, -half.Z, half.Z)
+	)
+	return (offset - inside).Magnitude <= ball.Size.X / 2 + Config.clientContactMargin
 end
 
 local function flatten(vector: Vector3): Vector3
@@ -165,14 +180,16 @@ function BallController.start()
 			objectParts[instance] = true
 		end
 	end
-	CollectionService:GetInstanceAddedSignal(OBJECT_TAG):Connect(trackObject)
-	CollectionService:GetInstanceRemovedSignal(OBJECT_TAG):Connect(function(instance: Instance)
-		if instance:IsA("BasePart") then
-			objectParts[instance] = nil
+	for _, tag in { OBJECT_TAG, LIGHT_TAG } do
+		CollectionService:GetInstanceAddedSignal(tag):Connect(trackObject)
+		CollectionService:GetInstanceRemovedSignal(tag):Connect(function(instance: Instance)
+			if instance:IsA("BasePart") then
+				objectParts[instance] = nil
+			end
+		end)
+		for _, instance in CollectionService:GetTagged(tag) do
+			trackObject(instance)
 		end
-	end)
-	for _, instance in CollectionService:GetTagged(OBJECT_TAG) do
-		trackObject(instance)
 	end
 	local boosterParts: { [BasePart]: boolean } = {}
 	local surfaceParts: { [BasePart]: boolean } = {}
@@ -293,6 +310,17 @@ function BallController.start()
 		end
 	end)
 
+	-- The world's rule on a pooled part's attributes (Bulk and Longest are absent on older parts: a cube of Size).
+	local function canEat(part: BasePart, diameter: number, size: number): boolean
+		local bulk = part:GetAttribute("Bulk")
+		return Absorb.canEat(
+			Worlds.rules.absorb,
+			diameter,
+			if typeof(bulk) == "number" then bulk else size,
+			size
+		)
+	end
+
 	local function contactScan(now: number, radius: number, diameter: number)
 		for part in objectParts do
 			local size = part:GetAttribute("Size")
@@ -310,6 +338,18 @@ function BallController.start()
 			then
 				continue
 			end
+			local edible = canEat(part, diameter, size)
+			if not edible and Worlds.rules.absorb.mode == "bulk" then
+				-- A bump is real contact with the object's own box (the test above is loose for long objects), and
+				-- soft obstacles never bump or thud.
+				local objectId = part:GetAttribute("ObjectId")
+				if
+					(typeof(objectId) == "string" and Config.softObstacles[objectId])
+					or not touchesBox(ball, part)
+				then
+					continue
+				end
+			end
 			local pending = pendingUntil[part.Name]
 			if pending and now < pending then
 				continue
@@ -319,10 +359,13 @@ function BallController.start()
 			end
 			pendingUntil[part.Name] = now + PENDING_SECONDS
 			table.insert(sendTimes, now)
-			if Absorb.canAbsorb(diameter, size, Config.absorbRatio) then
+			if edible then
 				AbsorbRemote:FireServer(part.Name)
 			else
 				BumpRemote:FireServer(part.Name)
+				if Worlds.rules.absorb.mode == "bulk" and touchesBox(ball, part) then
+					Feedback.thud(ball, part.Position)
+				end
 			end
 		end
 	end
@@ -334,7 +377,7 @@ function BallController.start()
 				continue
 			end
 			local taken = part:GetAttribute("Taken") == true
-			part.CanCollide = not (taken or Absorb.canAbsorb(diameter, size, Config.absorbRatio))
+			part.CanCollide = not (taken or canEat(part, diameter, size))
 		end
 	end
 
@@ -349,7 +392,7 @@ function BallController.start()
 			Config.baseSpeed,
 			Config.startDiameter,
 			Config.speedExponent,
-			Config.speedCap
+			Movement.speedCap(diameter, Worlds.rules.speedCap)
 		)
 		-- Dash (server fact BoostDash = the server time it ends): a higher target speed, under the boosted cap.
 		local serverNow = Workspace:GetServerTimeNow()

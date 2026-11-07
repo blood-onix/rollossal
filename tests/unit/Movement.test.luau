@@ -34,4 +34,20 @@ test("cameraDistance: clamps down to the maximum", function()
 	expect.equal(Movement.cameraDistance(30, 4, 8, 80), 80)
 end)
 
+local parkCap: Movement.SpeedCapRule = { base = 32, fromDiameter = 12, slope = 0.4, max = 56 }
+
+test("speedCap: 32 at D 1 and D 12", function()
+	expect.equal(Movement.speedCap(1, parkCap), 32)
+	expect.equal(Movement.speedCap(12, parkCap), 32)
+end)
+
+test("speedCap: D 20 -> 32 + 0.4 * 8 = 35.2, D 30 -> 39.2", function()
+	expect.near(Movement.speedCap(20, parkCap), 35.2, 1e-9)
+	expect.near(Movement.speedCap(30, parkCap), 39.2, 1e-9)
+end)
+
+test("speedCap: capped at 56 (D 80 would give 59.2)", function()
+	expect.near(Movement.speedCap(80, parkCap), 56, 1e-9)
+end)
+
 return {}

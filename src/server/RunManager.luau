@@ -298,7 +298,7 @@ end
 local function endRun(run: RunSession, now: number)
 	run.state = "Ended"
 	local session = BallService.getSessionByUserId(run.userId)
-	local finalDiameter = Config.startDiameter
+	local finalDiameter = Worlds.rules.startDiameter
 	if session then
 		BallService.setFrozen(session, true)
 		-- Boosters, shield and bump immunity end with the run (006 data-model "State summary").

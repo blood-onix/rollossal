@@ -374,4 +374,21 @@ test("Config: rolling Downtown back falls to Snow Village, then to the grey-box 
 	expect.truthy(#SnowVillage.objects > 0 and #GreyBoxRoom.objects > 0)
 end)
 
+test("Config: hedge pieces are soft obstacles (a bump costs nothing in the maze)", function()
+	expect.equal(Config.softObstacles.hedge_piece, true)
+end)
+
+test(
+	"Config: the Roof Run buildings are soft obstacles (a ball rolls on their flat top)",
+	function()
+		for k = 1, 8 do
+			expect.equal(Config.softObstacles[`roof_building_{k}`], true)
+		end
+		expect.truthy(
+			Config.bumpContactTolerance > 0
+				and Config.bumpContactTolerance < Config.absorbDistanceTolerance
+		)
+	end
+)
+
 return {}

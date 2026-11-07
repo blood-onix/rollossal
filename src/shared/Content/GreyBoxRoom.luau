@@ -34,6 +34,32 @@ export type ObjectDef = {
 	-- Palette cell name (a w-* role): the stand-in part takes its Color from theme.palette[role]
 	-- (005). Absent means the tier colour.
 	role: string?,
+	-- Park City (012). Absent: a cube of `size`. dims = {l, w, h}; size stays the longest side.
+	dims: { number }?,
+	-- Cube root of l * w * h. Absent: equal to `size`.
+	bulk: number?,
+	-- Stays collidable until the ball can eat it (hedge and hoarding pieces).
+	solid: boolean?,
+	-- Tier 1-2 object kept as server data, drawn by the client (not a server Part).
+	light: boolean?,
+}
+-- Per-world size and readability rules (012 research R3). Every field falls back to Config.
+export type AbsorbRuleDef = { mode: string, ratio: number, longestRatio: number?, garnish: number? }
+export type SpeedCapDef = { base: number, fromDiameter: number, slope: number, max: number }
+export type RulesDef = {
+	startDiameter: number?,
+	growthK: number?,
+	absorb: AbsorbRuleDef?,
+	speedCap: SpeedCapDef?,
+	cameraMinDistance: number?,
+}
+-- Downtown's table for Flags.ReadableRules (Stage A of 012).
+export type ReadableRulesDef = {
+	sizeTiers: { SizeTierDef },
+	starThresholds: { number },
+	doorstepClearRadius: number,
+	rules: RulesDef,
+	dims: { [string]: { number } },
 }
 export type HubDef = {
 	center: { x: number, z: number },
@@ -66,13 +92,16 @@ export type PlacementSeed = {
 }
 -- y is the surface the ball rests on; the ball sits at y + startDiameter / 2 + 0.5.
 export type SpawnPoint = { slot: number, x: number, y: number, z: number, yaw: number }
--- kind: "Block" (default), "Wedge", "Cylinder" or "Boundary" (an invisible collider: no palette lookup, never drawn).
+-- kind: "Block" (default), "Wedge", "Cylinder", "Spiral" or "Boundary" (an invisible collider: no palette lookup, never drawn).
 export type BlockDef = {
 	id: string,
 	kind: string,
 	cframe: { x: number, y: number, z: number, yaw: number },
 	size: { x: number, y: number, z: number },
 	swatch: string,
+	-- kind "Spiral" (012): a ramp winding up inside the block's footprint, rising over size.y. Absent otherwise.
+	turns: number?,
+	width: number?,
 }
 export type MarkerDef = {
 	id: string,
@@ -180,6 +209,13 @@ export type WorldDef = {
 	keepOutAreas: { KeepOutDef }?,
 	maxPlacements: number?,
 	ambient: AmbientDef?,
+	-- Park City (012): size rules, readable-rules table (Downtown), inert placeholders, fixed shots, golden spots.
+	rules: RulesDef?,
+	readableRules: ReadableRulesDef?,
+	placeholders: { any }?,
+	shots: { any }?,
+	golden: { any }?,
+	hazards: { any }?,
 }
 -- The room's own fields plus every WorldDef field (spelled out: an intersection would stop the data table
 -- below from being checked against its type while it is written).
@@ -209,6 +245,13 @@ export type Room = {
 	keepOutAreas: { KeepOutDef }?,
 	maxPlacements: number?,
 	ambient: AmbientDef?,
+	-- Park City (012): size rules, readable-rules table (Downtown), inert placeholders, fixed shots, golden spots.
+	rules: RulesDef?,
+	readableRules: ReadableRulesDef?,
+	placeholders: { any }?,
+	shots: { any }?,
+	golden: { any }?,
+	hazards: { any }?,
 }
 
 local GreyBoxRoom: Room = {

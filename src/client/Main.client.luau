@@ -20,6 +20,9 @@ local Shared = game:GetService("ReplicatedStorage"):WaitForChild("Shared")
 local Config = require(Shared.Config)
 
 CameraController.start()
+if Config.Flags.ParkCity then
+	require(script.Parent.LightField).start()
+end
 StuckVisuals.start()
 WorldCuller.start()
 BallController.start()

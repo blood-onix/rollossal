@@ -12,7 +12,10 @@ local expect = JestGlobals.expect
 local afterEach = JestGlobals.afterEach
 
 local Config = require(ReplicatedStorage.Shared.Config)
+local Movement = require(ReplicatedStorage.Shared.Rules.Movement)
+local Worlds = require(ReplicatedStorage.Shared.Worlds)
 local BallService = require(game:GetService("ServerScriptService").BallService)
+local AbsorbService = require(game:GetService("ServerScriptService").AbsorbService)
 
 local HEIGHT = 5000
 local DT = 1 / 60
@@ -173,6 +176,54 @@ describe("BallService speed ceiling with a Dash", function()
 		runAt(session, NOW, 100)
 		expect(session.violations).toBe(1)
 		expect(session.violationLog[1].limit).toBe(Config.maxServerBallSpeed)
+	end)
+end)
+
+-- 012 FR-013: the ceiling follows the world's speed cap, never below Config.maxServerBallSpeed.
+describe("BallService speed ceiling follows the world's cap", function()
+	afterEach(function()
+		for _, session in created do
+			BallService.removeSession(session)
+		end
+		table.clear(created)
+	end)
+
+	local function expectedCeiling(session: BallService.Session): number
+		local cap = Movement.speedCap(session.authoritativeDiameter, Worlds.rules.speedCap)
+		return math.max(Config.maxServerBallSpeed, cap * 1.1)
+	end
+
+	it("accepts a speed up to the ceiling", function()
+		local session = airborneSession()
+		session.part.AssemblyLinearVelocity = Vector3.new(expectedCeiling(session), 0, 0)
+		BallService.step(NOW, DT)
+		expect(session.violations).toBe(0)
+	end)
+
+	it("refuses a speed above the ceiling", function()
+		local session = airborneSession()
+		session.part.AssemblyLinearVelocity = Vector3.new(expectedCeiling(session) + 5, 0, 0)
+		BallService.step(NOW, DT)
+		expect(session.violations).toBe(1)
+		expect(session.violationLog[1].kind).toBe("Speed")
+	end)
+end)
+
+-- 012 T025: the Studio-only size tool does nothing unless Flags.DebugSize is on.
+describe("the size tool request", function()
+	afterEach(function()
+		for _, session in created do
+			BallService.removeSession(session)
+		end
+		table.clear(created)
+	end)
+
+	it("is refused outright with the flag off", function()
+		expect(Config.Flags.DebugSize).toBe(false)
+		local session = airborneSession()
+		local before = session.authoritativeDiameter
+		expect(AbsorbService.trySetSize(session, 15)).toBe("Disabled")
+		expect(session.authoritativeDiameter).toBe(before)
 	end)
 end)
 

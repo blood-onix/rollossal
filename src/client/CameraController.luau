@@ -11,6 +11,7 @@ local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
 local Movement = require(Shared.Rules.Movement)
 local CameraLook = require(Shared.Rules.CameraLook)
+local Worlds = require(Shared.Worlds)
 
 local CameraController = {}
 
@@ -92,15 +93,39 @@ function CameraController.start()
 
 	camera.CameraType = Enum.CameraType.Custom
 	camera.CameraSubject = ball
+	-- Park City (012): a new ball starts at one of the 12 spawns, looking towards the city. `yaw` is a compass
+	-- bearing (north 0, east 90; north is -Z), the spawn's facing in the layout.
+	if Worlds.rules.absorb.mode == "bulk" then
+		local nearest: { x: number, z: number, yaw: number }? = nil
+		local best = math.huge
+		for _, point in Worlds.active.spawnPoints do
+			local distance = (Vector3.new(point.x, 0, point.z) - Vector3.new(
+				ball.Position.X,
+				0,
+				ball.Position.Z
+			)).Magnitude
+			if distance < best then
+				best, nearest = distance, point
+			end
+		end
+		if nearest ~= nil and best < 60 then
+			local bearing = math.rad(nearest.yaw)
+			local heading = Vector3.new(math.sin(bearing), 0, -math.cos(bearing))
+			camera.CFrame =
+				CFrame.lookAt(ball.Position - heading * 8 + Vector3.new(0, 4, 0), ball.Position)
+		end
+	end
 	bindLook()
 
 	local function targetDistance(): number
 		local attribute = ball:GetAttribute("Diameter")
-		local diameter = if typeof(attribute) == "number" then attribute else Config.startDiameter
+		local diameter = if typeof(attribute) == "number"
+			then attribute
+			else Worlds.rules.startDiameter
 		return Movement.cameraDistance(
 			diameter,
 			Config.cameraMultiplier,
-			Config.cameraMinDistance,
+			Worlds.rules.cameraMinDistance,
 			Config.cameraMaxDistance
 		)
 	end

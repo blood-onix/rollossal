@@ -127,3 +127,34 @@ Neither does Gate 2's Studio playtest and console read, which must run before th
   be committed; the offline Blender set is the committed baseline, and composition was compared by eye.
 - Procedural EditableMesh benchmark scene (009 T022, T023): the API is off in Play and a mesh made in Edit mode loses its
   content when Play starts. The benchmark ran on the game's own uploaded meshes instead (up to 700k triangles).
+
+## 012 Park City map (owner-only checks)
+
+- [ ] Phone frame rate on a real device (Studio runs gave 55.8 fps minimum on a 1301 x 940 viewport with 12 balls).
+- [ ] `growthK` (1.6) and star (20 / 50 / 90) tuning. The pace report (`specs/012-park-city-map/pace-report.md`) is
+  the input; spawns 1, 4, 5, 6, 9 and 11 are more than 15 % behind the median for the median profile.
+- [ ] Pace sign-off, including the design document's section 5.3 marks (a report in 012, not a gate).
+- [ ] Spanish object names (`ParkCityStrings.luau`, a first pass written by the generator script).
+- [ ] Knock-off difference: a knocked-off light object (Tier 1 or 2) leaves the stack and is not dropped; it stays taken
+  until its normal respawn. Parts (Tier 3 to 6) still scatter.
+- [ ] Hedge-maze walls: the client draws at most 450 light objects (nearest first), so a maze piece far from the ball
+  can be missing at the edge of the 120-stud radius. Check by playing the maze.
+- Publish checklist: `Config.Debug.spawnSlot` must be 0, `Config.Debug.quietAudio` must be false, `Config.Flags.DebugSize` must be false, and `ServerScriptService.LoadStringEnabled` must be off in
+  anything published.
+
+## 012 Park City: items from round 2
+
+- Owner by eye: the bob and new-tier wobble cues and the bump thud with `Flags.ReadableRules` on (T016, T047).
+- Giant Oak deck: fixed in round 5 (the deck is now a landing at the top of the root ramp, outside the trunk). A D 3 sphere
+  walks the ramp onto the deck; driving a real ball up it is still an owner check.
+
+## 012 Park City: items from round 5 (owner feedback of 2026-11-06)
+
+- Owner by play: the Roof Run no longer bumps (bumps now need real contact; the roof buildings are soft obstacles), the
+  Terraces and Cottages lanes are wide enough, the four paths to the city and the Park Loop are neither empty nor a
+  steering line, and spawns 11 and 12 grow without the hedge maze. The agent could not drive a ball onto a roof (the
+  anti-teleport check respawns it).
+- Owner tuning: growth is faster after the starter ladders (pace model, median final size about 60 against 26). Spawns 6
+  and 12 are still slow in the model. `growthK` and the star thresholds are the first tuning knobs.
+- Bump range: `Config.bumpContactTolerance` (2.5 studs) is the server's lag allowance for a bump; tune by feel with the
+  bump thud.
