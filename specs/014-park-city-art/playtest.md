@@ -109,6 +109,35 @@ for p in winter-plaza:703431-cim2lm winter-spawn_nw:706297-oaffe1 winter-spawn_n
 done
 ```
 
+Third pass, 2026-11-08 (T042). The overview murk has a cause now: with Studio's graphics quality on `Automatic`, a
+throttled Studio does not draw distant geometry. `settings().Rendering.QualityLevel = Level21` (put back to `Automatic`
+afterwards) with the HUD and depth of field off shows the whole square. Captured in both themes, so the set is complete
+at 13 views per theme plus `edge_ground`: `overview` (0, 600, 480), `overview_high` (0, 900, 700) and `edge_ground`
+(-200, 3, -535 looking at 200, 10, -575, along the north band). The small plate floating west of the map in the two
+overviews is the Hub at (-760, 0), which is where the layout puts it. Console of both sessions: the same three kinds of
+Studio line, nothing from game scripts.
+
+**Still not in `shots/` (T041, T042 open):** the copy was refused a third time by the session's Bash policy, and
+`screen_capture` has no output path. The 24 older JPGs come from the command above, and the six new ones from this one,
+also run from the repo root:
+
+```bash
+D=~/.claude/projects/-Users-Roman-Tikhonov-Projects-Personal-rollossal/98f16ef8-4174-4e16-bd5c-a64fec03f343/tool-results
+for p in winter-overview_high:166994-uy4isi winter-edge_ground:191460-9z1ldi winter-overview:198509-dnw7vy \
+  city-edge_ground:419926-3xucus city-overview:421841-xcnuqz city-overview_high:423642-y72tfk; do
+  cp "$D/mcp-Roblox_Studio-blob-1794144${p#*:}.jpg" "specs/014-park-city-art/shots/${p%%:*}.jpg"
+done
+```
+
+Fourth pass, 2026-11-08 (T034, T041, T042 still open). The session's Bash policy refused a command that opens with the
+same `~/.claude/projects/...` assignment as the copies above (`not-on-allowlist`), so the copy was not tried again and
+the policy was not worked around. Whether the session folders still hold the JPGs was not checked. The fallbacks in T041
+do not get the images into the repo: `screen_capture` has no output path, so a new capture lands in the session folder
+too, and `store_image` only loads a file into Studio. `art/scripts/park_capture_render.py` can write to the repo but
+draws grey boxes only, which R-12 says these shots must not be, and R-12's condition (a capture failing twice) is not
+met, since the captures work. No grey-box render was saved under the shot names. The two commands above, run by the
+owner from the repo root, are what is left.
+
 What the shots show, for the owner's review:
 
 - Plaza landmark: `mega_tree` in `winter`, `giant_duck` in `city`. Fronts mid-rises, the Glass Tower, memes and street
@@ -116,7 +145,8 @@ What the shots show, for the owner's review:
 - Still grey blocks (stand-ins on the build list): the Giant Oak (a box with two ellipsoids, and its spiral ramp), the
   Roof Run buildings and the car park. These dominate `spawn_nw`, `giant_oak`, `roof_run` and `car_park`.
 - `edge` shows trees and a hedge line in front of plain coloured boxes. The boxes are the most likely part to fail
-  "reads as a place" (FR-009). It was taken at camera height 20 only; the ground-level view is not captured.
+  "reads as a place" (FR-009). `edge` is at camera height 20. `edge_ground` (height 3) shows the same thing more
+  plainly: the silhouette boxes have no windows or roofs and stand on flat ground, next to the mesh trees.
 - Pink lines are the inert rail and post placeholders from 012, kept by this feature.
 - Crumbs appear only near the ball (the light window), so far views have none. Same in play.
 - Console of the `city` capture session: the same three kinds of Studio line as Gate 2, nothing from game scripts.
@@ -147,14 +177,32 @@ Run 2026-11-08 after the second shot pass, `winter` restored (the five generated
 | Every stage | `scripts/check.sh` exit 0 (593 unit tests), layout `--check` and world `--check` exit 0 |
 | 1 Coverage | 219 kinds, all 114 stand-ins have a note, owner build list present |
 | 2 Theme switch | Pass: Studio `activeThemeId` `city`, Parts and Light modules unchanged, landmark swaps; contrast test passes |
-| 3 Light objects | Not rerun this pass: earlier Play and Jest results above; crumbs seen near the ball in both themes |
+| 3 Light objects | Pass (rerun below): MeshParts with atlas, stand-in Parts, at most 232 visible of the 450 cap; Jest 6 of 6; console clean |
 | 4 Spawns | `ParkPace` floors and doorstep test pass |
-| 5 Map edge | **Open**: SVG approval pending; `edge` not yet captured at ground level |
-| 6 Late game | Lune passes; Studio result is the T027 run above, not rerun |
-| 7 Budgets | **Open**: totals print and the benchmark passed, ceilings not set (T032) |
-| 8 Gates | Gate 2 passes. **Open**: shots not in `shots/`, no pull request, no owner approval |
+| 5 Map edge | **Open (owner)**: SVG approval pending; `edge` and `edge_ground` captured |
+| 6 Late game | Pass (rerun below): Lune passes; D 35, 60, 100 reached 26 of 26 waypoints, 0 stuck, Glass Tower eaten |
+| 7 Budgets | **Open (owner, T032)**: totals print and the benchmark passed, ceilings not set |
+| 8 Gates | Gate 2 passes. **Open (owner)**: shots not in `shots/` (the copy above), no pull request, no owner approval |
 
 The T032 ladder could not run this pass: 10 of 10 seconds sampled in Play were throttled (14.7 to 15.8 fps).
+
+Rerun of scenarios 3 and 6 (T043), 2026-11-08, `winter`, sync probe clean, `DebugSize` on for scenario 6 only and back
+off afterwards.
+
+Scenario 3, driving toward the nearest edible light object for 25 s from spawn 1 (D 1.0 to 1.55, 156 studs of travel):
+46 mesh slots of 104 at the start, peaks of 72 mesh slots and 232 visible, 0 meshes without a `TextureID`, 0 missing
+attributes. Jest `LightFieldMeshes` 6 of 6 (Edit).
+
+Scenario 6, client velocity driver in one Play session, stuck = less than 6 studs of travel in 3 s:
+
+| D | Route | Waypoints reached | Stuck | Result |
+| --- | --- | --- | --- | --- |
+| 35 | spawn 1, Ring Road north and east, Spoke east, Plaza | 8 of 8 | 0 | grew to 40.7 |
+| 60 | Plaza, Spoke north, Ring Road north and west, Spoke west, Plaza, Spoke south | 11 of 11 | 0 | grew to 69.9 |
+| 100 | Ring Road south, east and north, Spoke north, core, Glass Tower | 7 of 7 | 0 | Glass Tower `Taken`, grew to 115.7 |
+
+The console of this session had only the three Studio lines, with no `Vertical violation` or `Displacement violation`
+lines. The earlier run's lines did not come back when one driver ran with no respawn.
 
 ## Gate 6: owner approval
 
