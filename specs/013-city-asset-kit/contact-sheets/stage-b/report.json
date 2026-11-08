@@ -1,0 +1,1212 @@
+{
+  "ck_barbecue": {
+    "tier": 2,
+    "triangles": 648,
+    "ceiling": 700,
+    "ceilingUse": 0.926,
+    "mutedShare": 1.0,
+    "smoothShare": 0.98,
+    "size": 3.1,
+    "atlas": "theme"
+  },
+  "ck_bike_rack": {
+    "tier": 2,
+    "triangles": 696,
+    "ceiling": 700,
+    "ceilingUse": 0.994,
+    "mutedShare": 0.928,
+    "smoothShare": 0.376,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_billboard_404": {
+    "tier": 4,
+    "triangles": 2316,
+    "ceiling": 3500,
+    "ceilingUse": 0.662,
+    "mutedShare": 0.737,
+    "smoothShare": 0.196,
+    "size": 20.1,
+    "atlas": "fronts"
+  },
+  "ck_billboard_arrow": {
+    "tier": 4,
+    "triangles": 2316,
+    "ceiling": 3500,
+    "ceilingUse": 0.662,
+    "mutedShare": 0.737,
+    "smoothShare": 0.196,
+    "size": 20.1,
+    "atlas": "fronts"
+  },
+  "ck_billboard_chart": {
+    "tier": 4,
+    "triangles": 2316,
+    "ceiling": 3500,
+    "ceilingUse": 0.662,
+    "mutedShare": 0.737,
+    "smoothShare": 0.196,
+    "size": 20.1,
+    "atlas": "fronts"
+  },
+  "ck_billboard_empty": {
+    "tier": 4,
+    "triangles": 2316,
+    "ceiling": 3500,
+    "ceilingUse": 0.662,
+    "mutedShare": 0.737,
+    "smoothShare": 0.196,
+    "size": 20.1,
+    "atlas": "fronts"
+  },
+  "ck_billboard_loading": {
+    "tier": 4,
+    "triangles": 2316,
+    "ceiling": 3500,
+    "ceilingUse": 0.662,
+    "mutedShare": 0.737,
+    "smoothShare": 0.196,
+    "size": 20.1,
+    "atlas": "fronts"
+  },
+  "ck_billboard_nested": {
+    "tier": 5,
+    "triangles": 3760,
+    "ceiling": 5000,
+    "ceilingUse": 0.752,
+    "mutedShare": 0.703,
+    "smoothShare": 0.186,
+    "size": 39.3,
+    "atlas": "fronts"
+  },
+  "ck_billboard_testcard": {
+    "tier": 5,
+    "triangles": 3760,
+    "ceiling": 5000,
+    "ceilingUse": 0.752,
+    "mutedShare": 0.703,
+    "smoothShare": 0.186,
+    "size": 39.3,
+    "atlas": "fronts"
+  },
+  "ck_bin_street": {
+    "tier": 2,
+    "triangles": 628,
+    "ceiling": 700,
+    "ceilingUse": 0.897,
+    "mutedShare": 1.0,
+    "smoothShare": 0.789,
+    "size": 3.4,
+    "atlas": "theme"
+  },
+  "ck_bird_bath": {
+    "tier": 2,
+    "triangles": 400,
+    "ceiling": 700,
+    "ceilingUse": 0.571,
+    "mutedShare": 1.0,
+    "smoothShare": 1.0,
+    "size": 2.6,
+    "atlas": "theme"
+  },
+  "ck_bistro_chair": {
+    "tier": 2,
+    "triangles": 384,
+    "ceiling": 700,
+    "ceilingUse": 0.549,
+    "mutedShare": 1.0,
+    "smoothShare": 0.819,
+    "size": 2.7,
+    "atlas": "theme"
+  },
+  "ck_bollard": {
+    "tier": 1,
+    "triangles": 236,
+    "ceiling": 500,
+    "ceilingUse": 0.472,
+    "mutedShare": 1.0,
+    "smoothShare": 1.0,
+    "size": 1.5,
+    "atlas": "theme"
+  },
+  "ck_bus_stop_pole": {
+    "tier": 2,
+    "triangles": 464,
+    "ceiling": 700,
+    "ceilingUse": 0.663,
+    "mutedShare": 0.78,
+    "smoothShare": 0.363,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_bush": {
+    "tier": 2,
+    "triangles": 608,
+    "ceiling": 700,
+    "ceilingUse": 0.869,
+    "mutedShare": 1.0,
+    "smoothShare": 1.0,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_cafe_table_parasol": {
+    "tier": 3,
+    "triangles": 1288,
+    "ceiling": 1500,
+    "ceilingUse": 0.859,
+    "mutedShare": 0.442,
+    "smoothShare": 0.9,
+    "size": 9.1,
+    "atlas": "theme"
+  },
+  "ck_car_estate": {
+    "tier": 4,
+    "triangles": 2584,
+    "ceiling": 3500,
+    "ceilingUse": 0.738,
+    "mutedShare": 0.577,
+    "smoothShare": 0.254,
+    "size": 15.5,
+    "atlas": "theme"
+  },
+  "ck_car_sedan": {
+    "tier": 4,
+    "triangles": 2568,
+    "ceiling": 3500,
+    "ceilingUse": 0.734,
+    "mutedShare": 0.569,
+    "smoothShare": 0.292,
+    "size": 15,
+    "atlas": "theme"
+  },
+  "ck_car_sports": {
+    "tier": 4,
+    "triangles": 2780,
+    "ceiling": 3500,
+    "ceilingUse": 0.794,
+    "mutedShare": 0.577,
+    "smoothShare": 0.276,
+    "size": 14.7,
+    "atlas": "theme"
+  },
+  "ck_cardboard_boxes": {
+    "tier": 2,
+    "triangles": 180,
+    "ceiling": 700,
+    "ceilingUse": 0.257,
+    "mutedShare": 1.0,
+    "smoothShare": 0.0,
+    "size": 2.1,
+    "atlas": "theme"
+  },
+  "ck_chip_bag": {
+    "tier": 1,
+    "triangles": 264,
+    "ceiling": 500,
+    "ceilingUse": 0.528,
+    "mutedShare": 0.124,
+    "smoothShare": 0.876,
+    "size": 0.8,
+    "atlas": "theme"
+  },
+  "ck_climbing_frame": {
+    "tier": 3,
+    "triangles": 808,
+    "ceiling": 1500,
+    "ceilingUse": 0.539,
+    "mutedShare": 0.466,
+    "smoothShare": 0.0,
+    "size": 8,
+    "atlas": "theme"
+  },
+  "ck_cooler": {
+    "tier": 2,
+    "triangles": 200,
+    "ceiling": 700,
+    "ceilingUse": 0.286,
+    "mutedShare": 0.651,
+    "smoothShare": 0.025,
+    "size": 2,
+    "atlas": "theme"
+  },
+  "ck_crossing_zebra": {
+    "tier": 3,
+    "triangles": 644,
+    "ceiling": 1500,
+    "ceilingUse": 0.429,
+    "mutedShare": 1.0,
+    "smoothShare": 0.0,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_cupcake": {
+    "tier": 1,
+    "triangles": 264,
+    "ceiling": 500,
+    "ceilingUse": 0.528,
+    "mutedShare": 0.437,
+    "smoothShare": 1.0,
+    "size": 0.3,
+    "atlas": "theme"
+  },
+  "ck_flower_bed": {
+    "tier": 2,
+    "triangles": 588,
+    "ceiling": 700,
+    "ceilingUse": 0.84,
+    "mutedShare": 0.913,
+    "smoothShare": 0.304,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_flower_buckets": {
+    "tier": 2,
+    "triangles": 512,
+    "ceiling": 700,
+    "ceilingUse": 0.731,
+    "mutedShare": 0.891,
+    "smoothShare": 0.546,
+    "size": 2.6,
+    "atlas": "theme"
+  },
+  "ck_flower_pot": {
+    "tier": 1,
+    "triangles": 336,
+    "ceiling": 500,
+    "ceilingUse": 0.672,
+    "mutedShare": 0.938,
+    "smoothShare": 1.0,
+    "size": 1.2,
+    "atlas": "theme"
+  },
+  "ck_flying_disc": {
+    "tier": 1,
+    "triangles": 232,
+    "ceiling": 500,
+    "ceilingUse": 0.464,
+    "mutedShare": 0.127,
+    "smoothShare": 1.0,
+    "size": 0.9,
+    "atlas": "theme"
+  },
+  "ck_food_truck": {
+    "tier": 4,
+    "triangles": 2684,
+    "ceiling": 3500,
+    "ceilingUse": 0.767,
+    "mutedShare": 0.6,
+    "smoothShare": 0.134,
+    "size": 22.2,
+    "atlas": "theme"
+  },
+  "ck_fruit_crates": {
+    "tier": 2,
+    "triangles": 572,
+    "ceiling": 700,
+    "ceilingUse": 0.817,
+    "mutedShare": 0.898,
+    "smoothShare": 0.148,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_garden_fence": {
+    "tier": 3,
+    "triangles": 1100,
+    "ceiling": 1500,
+    "ceilingUse": 0.733,
+    "mutedShare": 1.0,
+    "smoothShare": 0.012,
+    "size": 7,
+    "atlas": "theme"
+  },
+  "ck_garden_gnome": {
+    "tier": 1,
+    "triangles": 372,
+    "ceiling": 500,
+    "ceilingUse": 0.744,
+    "mutedShare": 0.519,
+    "smoothShare": 1.0,
+    "size": 1.2,
+    "atlas": "theme"
+  },
+  "ck_garden_shed": {
+    "tier": 3,
+    "triangles": 860,
+    "ceiling": 1500,
+    "ceilingUse": 0.573,
+    "mutedShare": 0.975,
+    "smoothShare": 0.044,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_grocery_bag": {
+    "tier": 1,
+    "triangles": 256,
+    "ceiling": 500,
+    "ceilingUse": 0.512,
+    "mutedShare": 0.976,
+    "smoothShare": 0.149,
+    "size": 1.5,
+    "atlas": "theme"
+  },
+  "ck_hedge_row": {
+    "tier": 3,
+    "triangles": 1380,
+    "ceiling": 1500,
+    "ceilingUse": 0.92,
+    "mutedShare": 1.0,
+    "smoothShare": 0.439,
+    "size": 7.4,
+    "atlas": "theme"
+  },
+  "ck_house_bungalow": {
+    "tier": 4,
+    "triangles": 2670,
+    "ceiling": 3500,
+    "ceilingUse": 0.763,
+    "mutedShare": 1.0,
+    "smoothShare": 0.043,
+    "size": 25,
+    "atlas": "theme"
+  },
+  "ck_house_corner_bay": {
+    "tier": 4,
+    "triangles": 3172,
+    "ceiling": 3500,
+    "ceilingUse": 0.906,
+    "mutedShare": 1.0,
+    "smoothShare": 0.174,
+    "size": 25,
+    "atlas": "theme"
+  },
+  "ck_house_gable_fence": {
+    "tier": 4,
+    "triangles": 3234,
+    "ceiling": 3500,
+    "ceilingUse": 0.924,
+    "mutedShare": 1.0,
+    "smoothShare": 0.031,
+    "size": 24.5,
+    "atlas": "theme"
+  },
+  "ck_house_semi_garage": {
+    "tier": 4,
+    "triangles": 2314,
+    "ceiling": 3500,
+    "ceilingUse": 0.661,
+    "mutedShare": 1.0,
+    "smoothShare": 0.025,
+    "size": 25,
+    "atlas": "theme"
+  },
+  "ck_house_split_level": {
+    "tier": 4,
+    "triangles": 2104,
+    "ceiling": 3500,
+    "ceilingUse": 0.601,
+    "mutedShare": 1.0,
+    "smoothShare": 0.016,
+    "size": 25,
+    "atlas": "theme"
+  },
+  "ck_house_terrace_pair": {
+    "tier": 4,
+    "triangles": 2922,
+    "ceiling": 3500,
+    "ceilingUse": 0.835,
+    "mutedShare": 1.0,
+    "smoothShare": 0.023,
+    "size": 25,
+    "atlas": "theme"
+  },
+  "ck_kerb_corner": {
+    "tier": 3,
+    "triangles": 1144,
+    "ceiling": 1500,
+    "ceilingUse": 0.763,
+    "mutedShare": 0.993,
+    "smoothShare": 0.001,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_kick_scooter": {
+    "tier": 2,
+    "triangles": 388,
+    "ceiling": 700,
+    "ceilingUse": 0.554,
+    "mutedShare": 0.492,
+    "smoothShare": 0.485,
+    "size": 2.5,
+    "atlas": "theme"
+  },
+  "ck_kids_bike": {
+    "tier": 2,
+    "triangles": 556,
+    "ceiling": 700,
+    "ceilingUse": 0.794,
+    "mutedShare": 0.726,
+    "smoothShare": 0.909,
+    "size": 3.1,
+    "atlas": "theme"
+  },
+  "ck_landmark_arch": {
+    "tier": 5,
+    "triangles": 4700,
+    "ceiling": 5000,
+    "ceilingUse": 0.94,
+    "mutedShare": 1.0,
+    "smoothShare": 0.131,
+    "size": 50,
+    "atlas": "theme"
+  },
+  "ck_landmark_clock_tower": {
+    "tier": 5,
+    "triangles": 4864,
+    "ceiling": 5000,
+    "ceilingUse": 0.973,
+    "mutedShare": 1.0,
+    "smoothShare": 0.169,
+    "size": 60,
+    "atlas": "theme"
+  },
+  "ck_landmark_obelisk": {
+    "tier": 5,
+    "triangles": 3826,
+    "ceiling": 5000,
+    "ceilingUse": 0.765,
+    "mutedShare": 0.995,
+    "smoothShare": 0.189,
+    "size": 60,
+    "atlas": "theme"
+  },
+  "ck_lawn_mower": {
+    "tier": 2,
+    "triangles": 656,
+    "ceiling": 700,
+    "ceilingUse": 0.937,
+    "mutedShare": 0.565,
+    "smoothShare": 0.611,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_leaf_pile": {
+    "tier": 2,
+    "triangles": 380,
+    "ceiling": 700,
+    "ceilingUse": 0.543,
+    "mutedShare": 0.794,
+    "smoothShare": 0.973,
+    "size": 2.6,
+    "atlas": "theme"
+  },
+  "ck_limousine": {
+    "tier": 4,
+    "triangles": 2596,
+    "ceiling": 3500,
+    "ceilingUse": 0.742,
+    "mutedShare": 0.996,
+    "smoothShare": 0.154,
+    "size": 25,
+    "atlas": "theme"
+  },
+  "ck_meme_banana_scale": {
+    "tier": 5,
+    "triangles": 4000,
+    "ceiling": 5000,
+    "ceilingUse": 0.8,
+    "mutedShare": 0.635,
+    "smoothShare": 0.429,
+    "size": 32.9,
+    "atlas": "theme"
+  },
+  "ck_meme_buffering_billboard": {
+    "tier": 4,
+    "triangles": 2316,
+    "ceiling": 3500,
+    "ceilingUse": 0.662,
+    "mutedShare": 0.737,
+    "smoothShare": 0.196,
+    "size": 20.1,
+    "atlas": "fronts"
+  },
+  "ck_meme_cone_statue": {
+    "tier": 4,
+    "triangles": 2588,
+    "ceiling": 3500,
+    "ceilingUse": 0.739,
+    "mutedShare": 0.981,
+    "smoothShare": 0.162,
+    "size": 21.7,
+    "atlas": "theme"
+  },
+  "ck_meme_phone_1pc": {
+    "tier": 4,
+    "triangles": 2160,
+    "ceiling": 3500,
+    "ceilingUse": 0.617,
+    "mutedShare": 0.97,
+    "smoothShare": 0.036,
+    "size": 15.3,
+    "atlas": "theme"
+  },
+  "ck_meme_pond_cart": {
+    "tier": 3,
+    "triangles": 1152,
+    "ceiling": 1500,
+    "ceilingUse": 0.768,
+    "mutedShare": 0.986,
+    "smoothShare": 0.992,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_meme_vacant_lot": {
+    "tier": 5,
+    "triangles": 4444,
+    "ceiling": 5000,
+    "ceilingUse": 0.889,
+    "mutedShare": 0.96,
+    "smoothShare": 0.142,
+    "size": 32.7,
+    "atlas": "theme"
+  },
+  "ck_meme_wet_floor_sign": {
+    "tier": 2,
+    "triangles": 416,
+    "ceiling": 700,
+    "ceilingUse": 0.594,
+    "mutedShare": 0.73,
+    "smoothShare": 0.654,
+    "size": 3.4,
+    "atlas": "theme"
+  },
+  "ck_midrise_brick_8": {
+    "tier": 5,
+    "triangles": 4944,
+    "ceiling": 5000,
+    "ceilingUse": 0.989,
+    "mutedShare": 0.993,
+    "smoothShare": 0.017,
+    "size": 60,
+    "atlas": "theme"
+  },
+  "ck_midrise_corner_clock": {
+    "tier": 5,
+    "triangles": 4848,
+    "ceiling": 5000,
+    "ceilingUse": 0.97,
+    "mutedShare": 1.0,
+    "smoothShare": 0.1,
+    "size": 60,
+    "atlas": "theme"
+  },
+  "ck_midrise_courtyard": {
+    "tier": 5,
+    "triangles": 4888,
+    "ceiling": 5000,
+    "ceilingUse": 0.978,
+    "mutedShare": 1.0,
+    "smoothShare": 0.01,
+    "size": 46.4,
+    "atlas": "theme"
+  },
+  "ck_midrise_mixed": {
+    "tier": 5,
+    "triangles": 4424,
+    "ceiling": 5000,
+    "ceilingUse": 0.885,
+    "mutedShare": 0.99,
+    "smoothShare": 0.003,
+    "size": 56,
+    "atlas": "theme"
+  },
+  "ck_midrise_render_10": {
+    "tier": 5,
+    "triangles": 4808,
+    "ceiling": 5000,
+    "ceilingUse": 0.962,
+    "mutedShare": 1.0,
+    "smoothShare": 0.005,
+    "size": 60,
+    "atlas": "theme"
+  },
+  "ck_midrise_setback": {
+    "tier": 5,
+    "triangles": 4944,
+    "ceiling": 5000,
+    "ceilingUse": 0.989,
+    "mutedShare": 1.0,
+    "smoothShare": 0.006,
+    "size": 58.8,
+    "atlas": "theme"
+  },
+  "ck_motorbike": {
+    "tier": 3,
+    "triangles": 1448,
+    "ceiling": 1500,
+    "ceilingUse": 0.965,
+    "mutedShare": 0.915,
+    "smoothShare": 0.661,
+    "size": 6.9,
+    "atlas": "theme"
+  },
+  "ck_neon_sign": {
+    "tier": 4,
+    "triangles": 2660,
+    "ceiling": 3500,
+    "ceilingUse": 0.76,
+    "mutedShare": 0.861,
+    "smoothShare": 0.324,
+    "size": 14.2,
+    "atlas": "theme"
+  },
+  "ck_newspaper_bundle": {
+    "tier": 1,
+    "triangles": 124,
+    "ceiling": 500,
+    "ceilingUse": 0.248,
+    "mutedShare": 1.0,
+    "smoothShare": 0.0,
+    "size": 1.4,
+    "atlas": "theme"
+  },
+  "ck_padlock": {
+    "tier": 1,
+    "triangles": 176,
+    "ceiling": 500,
+    "ceilingUse": 0.352,
+    "mutedShare": 1.0,
+    "smoothShare": 0.39,
+    "size": 0.3,
+    "atlas": "theme"
+  },
+  "ck_parking_meter": {
+    "tier": 3,
+    "triangles": 1256,
+    "ceiling": 1500,
+    "ceilingUse": 0.837,
+    "mutedShare": 0.997,
+    "smoothShare": 0.52,
+    "size": 5.1,
+    "atlas": "theme"
+  },
+  "ck_path_curve": {
+    "tier": 3,
+    "triangles": 584,
+    "ceiling": 1500,
+    "ceilingUse": 0.389,
+    "mutedShare": 1.0,
+    "smoothShare": 0.0,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_path_straight": {
+    "tier": 3,
+    "triangles": 760,
+    "ceiling": 1500,
+    "ceilingUse": 0.507,
+    "mutedShare": 1.0,
+    "smoothShare": 0.0,
+    "size": 8.2,
+    "atlas": "theme"
+  },
+  "ck_phone_repair_kiosk": {
+    "tier": 3,
+    "triangles": 944,
+    "ceiling": 1500,
+    "ceilingUse": 0.629,
+    "mutedShare": 0.975,
+    "smoothShare": 0.005,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_picnic_basket": {
+    "tier": 1,
+    "triangles": 388,
+    "ceiling": 500,
+    "ceilingUse": 0.776,
+    "mutedShare": 0.975,
+    "smoothShare": 0.061,
+    "size": 1.5,
+    "atlas": "theme"
+  },
+  "ck_picnic_blanket": {
+    "tier": 2,
+    "triangles": 144,
+    "ceiling": 700,
+    "ceilingUse": 0.206,
+    "mutedShare": 0.446,
+    "smoothShare": 0.0,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_planter_box": {
+    "tier": 2,
+    "triangles": 640,
+    "ceiling": 700,
+    "ceilingUse": 0.914,
+    "mutedShare": 1.0,
+    "smoothShare": 0.207,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_pond_edge": {
+    "tier": 3,
+    "triangles": 1292,
+    "ceiling": 1500,
+    "ceilingUse": 0.861,
+    "mutedShare": 1.0,
+    "smoothShare": 1.0,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_post_box": {
+    "tier": 2,
+    "triangles": 500,
+    "ceiling": 700,
+    "ceilingUse": 0.714,
+    "mutedShare": 0.248,
+    "smoothShare": 0.92,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_potted_shrub": {
+    "tier": 2,
+    "triangles": 404,
+    "ceiling": 700,
+    "ceilingUse": 0.577,
+    "mutedShare": 1.0,
+    "smoothShare": 0.431,
+    "size": 2.8,
+    "atlas": "theme"
+  },
+  "ck_railing_section": {
+    "tier": 3,
+    "triangles": 584,
+    "ceiling": 1500,
+    "ceilingUse": 0.389,
+    "mutedShare": 1.0,
+    "smoothShare": 0.717,
+    "size": 7,
+    "atlas": "theme"
+  },
+  "ck_rain_barrel": {
+    "tier": 2,
+    "triangles": 436,
+    "ceiling": 700,
+    "ceilingUse": 0.623,
+    "mutedShare": 1.0,
+    "smoothShare": 1.0,
+    "size": 3,
+    "atlas": "theme"
+  },
+  "ck_recycling_box": {
+    "tier": 1,
+    "triangles": 208,
+    "ceiling": 500,
+    "ceilingUse": 0.416,
+    "mutedShare": 0.193,
+    "smoothShare": 0.067,
+    "size": 1.4,
+    "atlas": "theme"
+  },
+  "ck_road_marking_arrow": {
+    "tier": 2,
+    "triangles": 116,
+    "ceiling": 700,
+    "ceilingUse": 0.166,
+    "mutedShare": 1.0,
+    "smoothShare": 0.0,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_road_marking_dash": {
+    "tier": 2,
+    "triangles": 264,
+    "ceiling": 700,
+    "ceilingUse": 0.377,
+    "mutedShare": 1.0,
+    "smoothShare": 0.03,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_sand_pail": {
+    "tier": 1,
+    "triangles": 308,
+    "ceiling": 500,
+    "ceilingUse": 0.616,
+    "mutedShare": 0.249,
+    "smoothShare": 0.957,
+    "size": 1,
+    "atlas": "theme"
+  },
+  "ck_sandpit": {
+    "tier": 3,
+    "triangles": 92,
+    "ceiling": 1500,
+    "ceilingUse": 0.061,
+    "mutedShare": 0.988,
+    "smoothShare": 0.0,
+    "size": 5,
+    "atlas": "theme"
+  },
+  "ck_sandwich_board": {
+    "tier": 2,
+    "triangles": 304,
+    "ceiling": 700,
+    "ceilingUse": 0.434,
+    "mutedShare": 1.0,
+    "smoothShare": 0.045,
+    "size": 3.4,
+    "atlas": "theme"
+  },
+  "ck_scaffolding": {
+    "tier": 4,
+    "triangles": 2212,
+    "ceiling": 3500,
+    "ceilingUse": 0.632,
+    "mutedShare": 0.963,
+    "smoothShare": 0.327,
+    "size": 22.7,
+    "atlas": "theme"
+  },
+  "ck_scooter_dock": {
+    "tier": 3,
+    "triangles": 1424,
+    "ceiling": 1500,
+    "ceilingUse": 0.949,
+    "mutedShare": 0.856,
+    "smoothShare": 0.179,
+    "size": 9.6,
+    "atlas": "theme"
+  },
+  "ck_seesaw": {
+    "tier": 2,
+    "triangles": 276,
+    "ceiling": 700,
+    "ceilingUse": 0.394,
+    "mutedShare": 0.653,
+    "smoothShare": 0.0,
+    "size": 3.8,
+    "atlas": "theme"
+  },
+  "ck_shop_bakery": {
+    "tier": 4,
+    "triangles": 2164,
+    "ceiling": 3500,
+    "ceilingUse": 0.618,
+    "mutedShare": 0.988,
+    "smoothShare": 0.012,
+    "size": 25,
+    "atlas": "fronts"
+  },
+  "ck_shop_bookshop": {
+    "tier": 4,
+    "triangles": 2598,
+    "ceiling": 3500,
+    "ceilingUse": 0.742,
+    "mutedShare": 0.987,
+    "smoothShare": 0.194,
+    "size": 25,
+    "atlas": "fronts"
+  },
+  "ck_shop_cafe": {
+    "tier": 4,
+    "triangles": 2264,
+    "ceiling": 3500,
+    "ceilingUse": 0.647,
+    "mutedShare": 0.988,
+    "smoothShare": 0.01,
+    "size": 25,
+    "atlas": "fronts"
+  },
+  "ck_shop_grocer": {
+    "tier": 4,
+    "triangles": 2442,
+    "ceiling": 3500,
+    "ceilingUse": 0.698,
+    "mutedShare": 0.985,
+    "smoothShare": 0.007,
+    "size": 25,
+    "atlas": "fronts"
+  },
+  "ck_shop_pharmacy_cross": {
+    "tier": 4,
+    "triangles": 2452,
+    "ceiling": 3500,
+    "ceilingUse": 0.701,
+    "mutedShare": 0.982,
+    "smoothShare": 0.013,
+    "size": 25,
+    "atlas": "fronts"
+  },
+  "ck_shop_pizzeria": {
+    "tier": 4,
+    "triangles": 2756,
+    "ceiling": 3500,
+    "ceilingUse": 0.787,
+    "mutedShare": 0.987,
+    "smoothShare": 0.029,
+    "size": 25,
+    "atlas": "fronts"
+  },
+  "ck_shop_row_arcade": {
+    "tier": 5,
+    "triangles": 4920,
+    "ceiling": 5000,
+    "ceilingUse": 0.984,
+    "mutedShare": 0.988,
+    "smoothShare": 0.016,
+    "size": 45.8,
+    "atlas": "fronts"
+  },
+  "ck_shop_row_corner": {
+    "tier": 5,
+    "triangles": 4856,
+    "ceiling": 5000,
+    "ceilingUse": 0.971,
+    "mutedShare": 0.99,
+    "smoothShare": 0.108,
+    "size": 46.2,
+    "atlas": "fronts"
+  },
+  "ck_shop_row_three": {
+    "tier": 5,
+    "triangles": 4638,
+    "ceiling": 5000,
+    "ceilingUse": 0.928,
+    "mutedShare": 0.989,
+    "smoothShare": 0.014,
+    "size": 44,
+    "atlas": "fronts"
+  },
+  "ck_skip": {
+    "tier": 3,
+    "triangles": 1008,
+    "ceiling": 1500,
+    "ceilingUse": 0.672,
+    "mutedShare": 0.571,
+    "smoothShare": 0.284,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_slide": {
+    "tier": 3,
+    "triangles": 1063,
+    "ceiling": 1500,
+    "ceilingUse": 0.709,
+    "mutedShare": 0.622,
+    "smoothShare": 0.191,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_soccer_ball": {
+    "tier": 1,
+    "triangles": 224,
+    "ceiling": 500,
+    "ceilingUse": 0.448,
+    "mutedShare": 1.0,
+    "smoothShare": 1.0,
+    "size": 0.7,
+    "atlas": "theme"
+  },
+  "ck_street_lamp_double": {
+    "tier": 3,
+    "triangles": 942,
+    "ceiling": 1500,
+    "ceilingUse": 0.628,
+    "mutedShare": 1.0,
+    "smoothShare": 0.927,
+    "size": 9.6,
+    "atlas": "theme"
+  },
+  "ck_street_sign": {
+    "tier": 2,
+    "triangles": 608,
+    "ceiling": 700,
+    "ceilingUse": 0.869,
+    "mutedShare": 0.541,
+    "smoothShare": 0.305,
+    "size": 3.9,
+    "atlas": "theme"
+  },
+  "ck_subway_entrance": {
+    "tier": 4,
+    "triangles": 2344,
+    "ceiling": 3500,
+    "ceilingUse": 0.67,
+    "mutedShare": 0.986,
+    "smoothShare": 0.059,
+    "size": 23.2,
+    "atlas": "theme"
+  },
+  "ck_sunglasses": {
+    "tier": 1,
+    "triangles": 272,
+    "ceiling": 500,
+    "ceilingUse": 0.544,
+    "mutedShare": 0.422,
+    "smoothShare": 0.733,
+    "size": 0.4,
+    "atlas": "theme"
+  },
+  "ck_swing_set": {
+    "tier": 3,
+    "triangles": 932,
+    "ceiling": 1500,
+    "ceilingUse": 0.621,
+    "mutedShare": 0.934,
+    "smoothShare": 0.514,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_taxi": {
+    "tier": 4,
+    "triangles": 2836,
+    "ceiling": 3500,
+    "ceilingUse": 0.81,
+    "mutedShare": 0.585,
+    "smoothShare": 0.276,
+    "size": 15.4,
+    "atlas": "theme"
+  },
+  "ck_toolbox": {
+    "tier": 2,
+    "triangles": 152,
+    "ceiling": 700,
+    "ceilingUse": 0.217,
+    "mutedShare": 0.073,
+    "smoothShare": 0.035,
+    "size": 1.6,
+    "atlas": "theme"
+  },
+  "ck_tower_crown": {
+    "tier": 5,
+    "triangles": 3326,
+    "ceiling": 5000,
+    "ceilingUse": 0.665,
+    "mutedShare": 1.0,
+    "smoothShare": 0.005,
+    "size": 60,
+    "atlas": "theme"
+  },
+  "ck_tower_slab": {
+    "tier": 5,
+    "triangles": 4564,
+    "ceiling": 5000,
+    "ceilingUse": 0.913,
+    "mutedShare": 0.995,
+    "smoothShare": 0.016,
+    "size": 52,
+    "atlas": "theme"
+  },
+  "ck_tower_stepped": {
+    "tier": 5,
+    "triangles": 3268,
+    "ceiling": 5000,
+    "ceilingUse": 0.654,
+    "mutedShare": 1.0,
+    "smoothShare": 0.002,
+    "size": 60,
+    "atlas": "theme"
+  },
+  "ck_tower_twin": {
+    "tier": 5,
+    "triangles": 3660,
+    "ceiling": 5000,
+    "ceilingUse": 0.732,
+    "mutedShare": 1.0,
+    "smoothShare": 0.004,
+    "size": 60,
+    "atlas": "theme"
+  },
+  "ck_traffic_cone": {
+    "tier": 2,
+    "triangles": 232,
+    "ceiling": 700,
+    "ceilingUse": 0.331,
+    "mutedShare": 0.538,
+    "smoothShare": 0.674,
+    "size": 2.3,
+    "atlas": "theme"
+  },
+  "ck_traffic_lights": {
+    "tier": 4,
+    "triangles": 3200,
+    "ceiling": 3500,
+    "ceilingUse": 0.914,
+    "mutedShare": 0.801,
+    "smoothShare": 0.284,
+    "size": 18.1,
+    "atlas": "theme"
+  },
+  "ck_tram": {
+    "tier": 4,
+    "triangles": 3068,
+    "ceiling": 3500,
+    "ceilingUse": 0.877,
+    "mutedShare": 0.978,
+    "smoothShare": 0.022,
+    "size": 25,
+    "atlas": "theme"
+  },
+  "ck_trampoline": {
+    "tier": 3,
+    "triangles": 1400,
+    "ceiling": 1500,
+    "ceilingUse": 0.933,
+    "mutedShare": 0.699,
+    "smoothShare": 0.955,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_tree_birch": {
+    "tier": 3,
+    "triangles": 1420,
+    "ceiling": 1500,
+    "ceilingUse": 0.947,
+    "mutedShare": 1.0,
+    "smoothShare": 1.0,
+    "size": 9.8,
+    "atlas": "theme"
+  },
+  "ck_tree_oak": {
+    "tier": 4,
+    "triangles": 2552,
+    "ceiling": 3500,
+    "ceilingUse": 0.729,
+    "mutedShare": 1.0,
+    "smoothShare": 0.919,
+    "size": 16,
+    "atlas": "theme"
+  },
+  "ck_tree_pine": {
+    "tier": 4,
+    "triangles": 2204,
+    "ceiling": 3500,
+    "ceilingUse": 0.63,
+    "mutedShare": 1.0,
+    "smoothShare": 1.0,
+    "size": 25,
+    "atlas": "theme"
+  },
+  "ck_water_tank": {
+    "tier": 4,
+    "triangles": 2924,
+    "ceiling": 3500,
+    "ceilingUse": 0.835,
+    "mutedShare": 1.0,
+    "smoothShare": 0.586,
+    "size": 23.6,
+    "atlas": "theme"
+  },
+  "ck_watering_can": {
+    "tier": 1,
+    "triangles": 216,
+    "ceiling": 500,
+    "ceilingUse": 0.432,
+    "mutedShare": 0.02,
+    "smoothShare": 1.0,
+    "size": 1.3,
+    "atlas": "theme"
+  }
+}

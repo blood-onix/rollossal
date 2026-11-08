@@ -1,0 +1,2094 @@
+{
+  "version": 1,
+  "rules": "style bible sections 2 and 3, owner decision 2026-11-07",
+  "blender": "5.2.3 LTS",
+  "headroom": {
+    "unculledCeiling": 550000,
+    "culledCeiling": 290000,
+    "unculled": 549946,
+    "culled": 271916,
+    "atNeedUnculled": 879794,
+    "atNeedCulled": 601764
+  },
+  "meshes": [
+    {
+      "id": "dt_aa_battery",
+      "tier": 1,
+      "triangles": 76,
+      "tierBudget": 500,
+      "ceilingUse": 0.152,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 0.3494,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_aa_battery.png",
+        "winter": "rework/renders/winter/dt_aa_battery.png"
+      }
+    },
+    {
+      "id": "dt_acoustic_guitar",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_acoustic_guitar.png",
+        "winter": "rework/renders/winter/dt_acoustic_guitar.png"
+      }
+    },
+    {
+      "id": "dt_apartment_block",
+      "tier": 5,
+      "triangles": 1500,
+      "tierBudget": 5000,
+      "ceilingUse": 0.3,
+      "role": "building",
+      "need": 3000,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1500 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_apartment_block.png",
+        "winter": "rework/renders/winter/dt_apartment_block.png"
+      }
+    },
+    {
+      "id": "dt_arcade_cabinet",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.1315,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_arcade_cabinet.png",
+        "winter": "rework/renders/winter/dt_arcade_cabinet.png"
+      }
+    },
+    {
+      "id": "dt_basketball",
+      "tier": 1,
+      "triangles": 154,
+      "tierBudget": 500,
+      "ceilingUse": 0.308,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 0.1368,
+      "smoothShare": 1.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_basketball.png",
+        "winter": "rework/renders/winter/dt_basketball.png"
+      }
+    },
+    {
+      "id": "dt_bauble",
+      "tier": 1,
+      "triangles": 76,
+      "tierBudget": 500,
+      "ceilingUse": 0.152,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 0.0,
+      "smoothShare": 1.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_bauble.png",
+        "winter": "rework/renders/winter/dt_bauble.png"
+      }
+    },
+    {
+      "id": "dt_beach_ball",
+      "tier": 2,
+      "triangles": 220,
+      "tierBudget": 700,
+      "ceilingUse": 0.314,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.8139,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_beach_ball.png",
+        "winter": "rework/renders/winter/dt_beach_ball.png"
+      }
+    },
+    {
+      "id": "dt_bench",
+      "tier": 3,
+      "triangles": 456,
+      "tierBudget": 1500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_bench.png",
+        "winter": "rework/renders/winter/dt_bench.png"
+      }
+    },
+    {
+      "id": "dt_bicycle",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.5472,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_bicycle.png",
+        "winter": "rework/renders/winter/dt_bicycle.png"
+      }
+    },
+    {
+      "id": "dt_big_street_tree",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_big_street_tree.png",
+        "winter": "rework/renders/winter/dt_big_street_tree.png"
+      }
+    },
+    {
+      "id": "dt_billboard",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.6142,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_billboard.png",
+        "winter": "rework/renders/winter/dt_billboard.png"
+      }
+    },
+    {
+      "id": "dt_boombox_speaker",
+      "tier": 2,
+      "triangles": 212,
+      "tierBudget": 700,
+      "ceilingUse": 0.303,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.1502,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_boombox_speaker.png",
+        "winter": "rework/renders/winter/dt_boombox_speaker.png"
+      }
+    },
+    {
+      "id": "dt_bottle_cap",
+      "tier": 1,
+      "triangles": 72,
+      "tierBudget": 500,
+      "ceilingUse": 0.144,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 0.3591,
+      "smoothShare": 1.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_bottle_cap.png",
+        "winter": "rework/renders/winter/dt_bottle_cap.png"
+      }
+    },
+    {
+      "id": "dt_bus_shelter",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.9544,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_bus_shelter.png",
+        "winter": "rework/renders/winter/dt_bus_shelter.png"
+      }
+    },
+    {
+      "id": "dt_cinema",
+      "tier": 5,
+      "triangles": 1500,
+      "tierBudget": 5000,
+      "ceilingUse": 0.3,
+      "role": "building",
+      "need": 3000,
+      "mutedShare": 0.7202,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1500 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_cinema.png",
+        "winter": "rework/renders/winter/dt_cinema.png"
+      }
+    },
+    {
+      "id": "dt_city_bus",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.5549,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_city_bus.png",
+        "winter": "rework/renders/winter/dt_city_bus.png"
+      }
+    },
+    {
+      "id": "dt_cocoa_cart",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.3739,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_cocoa_cart.png",
+        "winter": "rework/renders/winter/dt_cocoa_cart.png"
+      }
+    },
+    {
+      "id": "dt_cocoa_truck",
+      "tier": 4,
+      "triangles": 1056,
+      "tierBudget": 3500,
+      "ceilingUse": 0.302,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.4646,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1056 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_cocoa_truck.png",
+        "winter": "rework/renders/winter/dt_cocoa_truck.png"
+      }
+    },
+    {
+      "id": "dt_coffee_cup",
+      "tier": 1,
+      "triangles": 108,
+      "tierBudget": 500,
+      "ceilingUse": 0.216,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 1.0,
+      "smoothShare": 1.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_coffee_cup.png",
+        "winter": "rework/renders/winter/dt_coffee_cup.png"
+      }
+    },
+    {
+      "id": "dt_corner_bakery",
+      "tier": 4,
+      "triangles": 1056,
+      "tierBudget": 3500,
+      "ceilingUse": 0.302,
+      "role": "building",
+      "need": 2100,
+      "mutedShare": 0.9507,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1056 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_corner_bakery.png",
+        "winter": "rework/renders/winter/dt_corner_bakery.png"
+      }
+    },
+    {
+      "id": "dt_corner_shop_row",
+      "tier": 5,
+      "triangles": 1504,
+      "tierBudget": 5000,
+      "ceilingUse": 0.301,
+      "role": "building",
+      "need": 3000,
+      "mutedShare": 0.9656,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1504 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_corner_shop_row.png",
+        "winter": "rework/renders/winter/dt_corner_shop_row.png"
+      }
+    },
+    {
+      "id": "dt_delivery_van",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.9579,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_delivery_van.png",
+        "winter": "rework/renders/winter/dt_delivery_van.png"
+      }
+    },
+    {
+      "id": "dt_donut",
+      "tier": 1,
+      "triangles": 180,
+      "tierBudget": 500,
+      "ceilingUse": 0.36,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 0.6098,
+      "smoothShare": 1.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_donut.png",
+        "winter": "rework/renders/winter/dt_donut.png"
+      }
+    },
+    {
+      "id": "dt_donut_food_truck",
+      "tier": 4,
+      "triangles": 1056,
+      "tierBudget": 3500,
+      "ceilingUse": 0.302,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.4401,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1056 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_donut_food_truck.png",
+        "winter": "rework/renders/winter/dt_donut_food_truck.png"
+      }
+    },
+    {
+      "id": "dt_drum_kit",
+      "tier": 3,
+      "triangles": 460,
+      "tierBudget": 1500,
+      "ceilingUse": 0.307,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.271,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_drum_kit.png",
+        "winter": "rework/renders/winter/dt_drum_kit.png"
+      }
+    },
+    {
+      "id": "dt_e_scooter",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.7041,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_e_scooter.png",
+        "winter": "rework/renders/winter/dt_e_scooter.png"
+      }
+    },
+    {
+      "id": "dt_earbud_case",
+      "tier": 1,
+      "triangles": 40,
+      "tierBudget": 500,
+      "ceilingUse": 0.08,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 1.0,
+      "smoothShare": 0.7231,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_earbud_case.png",
+        "winter": "rework/renders/winter/dt_earbud_case.png"
+      }
+    },
+    {
+      "id": "dt_ev_charging_station",
+      "tier": 5,
+      "triangles": 1504,
+      "tierBudget": 5000,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 3000,
+      "mutedShare": 0.9936,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1504 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_ev_charging_station.png",
+        "winter": "rework/renders/winter/dt_ev_charging_station.png"
+      }
+    },
+    {
+      "id": "dt_fairy_light_bulb",
+      "tier": 1,
+      "triangles": 180,
+      "tierBudget": 500,
+      "ceilingUse": 0.36,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 1.0,
+      "smoothShare": 1.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_fairy_light_bulb.png",
+        "winter": "rework/renders/winter/dt_fairy_light_bulb.png"
+      }
+    },
+    {
+      "id": "dt_ferris_wheel",
+      "tier": 5,
+      "triangles": 1504,
+      "tierBudget": 5000,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 3000,
+      "mutedShare": 0.9832,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1504 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_ferris_wheel.png",
+        "winter": "rework/renders/winter/dt_ferris_wheel.png"
+      }
+    },
+    {
+      "id": "dt_fire_engine",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.3512,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_fire_engine.png",
+        "winter": "rework/renders/winter/dt_fire_engine.png"
+      }
+    },
+    {
+      "id": "dt_fire_hydrant",
+      "tier": 2,
+      "triangles": 220,
+      "tierBudget": 700,
+      "ceilingUse": 0.314,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.1045,
+      "smoothShare": 0.8955,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_fire_hydrant.png",
+        "winter": "rework/renders/winter/dt_fire_hydrant.png"
+      }
+    },
+    {
+      "id": "dt_fountain",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_fountain.png",
+        "winter": "rework/renders/winter/dt_fountain.png"
+      }
+    },
+    {
+      "id": "dt_game_controller",
+      "tier": 1,
+      "triangles": 152,
+      "tierBudget": 500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 0.0144,
+      "smoothShare": 0.9856,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_game_controller.png",
+        "winter": "rework/renders/winter/dt_game_controller.png"
+      }
+    },
+    {
+      "id": "dt_garbage_truck",
+      "tier": 4,
+      "triangles": 1056,
+      "tierBudget": 3500,
+      "ceilingUse": 0.302,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.4886,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1056 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_garbage_truck.png",
+        "winter": "rework/renders/winter/dt_garbage_truck.png"
+      }
+    },
+    {
+      "id": "dt_giant_duck",
+      "tier": 5,
+      "triangles": 1504,
+      "tierBudget": 5000,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 3000,
+      "mutedShare": 0.0323,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1504 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_giant_duck.png",
+        "winter": "rework/renders/winter/dt_giant_duck.png"
+      }
+    },
+    {
+      "id": "dt_gift_box",
+      "tier": 2,
+      "triangles": 212,
+      "tierBudget": 700,
+      "ceilingUse": 0.303,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_gift_box.png",
+        "winter": "rework/renders/winter/dt_gift_box.png"
+      }
+    },
+    {
+      "id": "dt_gingerbread_cookie",
+      "tier": 1,
+      "triangles": 300,
+      "tierBudget": 500,
+      "ceilingUse": 0.6,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 1.0,
+      "smoothShare": 0.7547,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_gingerbread_cookie.png",
+        "winter": "rework/renders/winter/dt_gingerbread_cookie.png"
+      }
+    },
+    {
+      "id": "dt_glass_tower",
+      "tier": 5,
+      "triangles": 1504,
+      "tierBudget": 5000,
+      "ceilingUse": 0.301,
+      "role": "building",
+      "need": 3000,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1504 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_glass_tower.png",
+        "winter": "rework/renders/winter/dt_glass_tower.png"
+      }
+    },
+    {
+      "id": "dt_glass_tower_bow",
+      "tier": 5,
+      "triangles": 1500,
+      "tierBudget": 5000,
+      "ceilingUse": 0.3,
+      "role": "building",
+      "need": 3000,
+      "mutedShare": 0.7033,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1500 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_glass_tower_bow.png",
+        "winter": "rework/renders/winter/dt_glass_tower_bow.png"
+      }
+    },
+    {
+      "id": "dt_hatchback",
+      "tier": 4,
+      "triangles": 1056,
+      "tierBudget": 3500,
+      "ceilingUse": 0.302,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.212,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1056 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_hatchback.png",
+        "winter": "rework/renders/winter/dt_hatchback.png"
+      }
+    },
+    {
+      "id": "dt_headphones",
+      "tier": 1,
+      "triangles": 152,
+      "tierBudget": 500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 0.6138,
+      "smoothShare": 0.9186,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_headphones.png",
+        "winter": "rework/renders/winter/dt_headphones.png"
+      }
+    },
+    {
+      "id": "dt_hot_dog_cart",
+      "tier": 3,
+      "triangles": 456,
+      "tierBudget": 1500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.3279,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_hot_dog_cart.png",
+        "winter": "rework/renders/winter/dt_hot_dog_cart.png"
+      }
+    },
+    {
+      "id": "dt_ice_cream_truck",
+      "tier": 4,
+      "triangles": 1056,
+      "tierBudget": 3500,
+      "ceilingUse": 0.302,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.682,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1056 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_ice_cream_truck.png",
+        "winter": "rework/renders/winter/dt_ice_cream_truck.png"
+      }
+    },
+    {
+      "id": "dt_ice_lolly",
+      "tier": 1,
+      "triangles": 108,
+      "tierBudget": 500,
+      "ceilingUse": 0.216,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 0.109,
+      "smoothShare": 0.891,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_ice_lolly.png",
+        "winter": "rework/renders/winter/dt_ice_lolly.png"
+      }
+    },
+    {
+      "id": "dt_ice_rink",
+      "tier": 5,
+      "triangles": 564,
+      "tierBudget": 5000,
+      "ceilingUse": 0.113,
+      "role": "prop",
+      "need": 24,
+      "mutedShare": 0.9803,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_ice_rink.png",
+        "winter": "rework/renders/winter/dt_ice_rink.png"
+      }
+    },
+    {
+      "id": "dt_inflatable_flamingo",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.4825,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_inflatable_flamingo.png",
+        "winter": "rework/renders/winter/dt_inflatable_flamingo.png"
+      }
+    },
+    {
+      "id": "dt_inflatable_tube_guy",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.1482,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_inflatable_tube_guy.png",
+        "winter": "rework/renders/winter/dt_inflatable_tube_guy.png"
+      }
+    },
+    {
+      "id": "dt_keyboard",
+      "tier": 1,
+      "triangles": 188,
+      "tierBudget": 500,
+      "ceilingUse": 0.376,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_keyboard.png",
+        "winter": "rework/renders/winter/dt_keyboard.png"
+      }
+    },
+    {
+      "id": "dt_kiosk",
+      "tier": 4,
+      "triangles": 184,
+      "tierBudget": 3500,
+      "ceilingUse": 0.053,
+      "role": "building",
+      "need": 2100,
+      "mutedShare": 0.6484,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "184 triangles is 5% of the 3500 ceiling, under 60 % of the tier ceiling (2100); muted share 65% is under the 70 % building rule: rebuilt from a new kit_rework recipe",
+      "renders": {
+        "city": "rework/renders/city/dt_kiosk.png",
+        "winter": "rework/renders/winter/dt_kiosk.png"
+      }
+    },
+    {
+      "id": "dt_leaning_present_stack",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.2183,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_leaning_present_stack.png",
+        "winter": "rework/renders/winter/dt_leaning_present_stack.png"
+      }
+    },
+    {
+      "id": "dt_light_up_reindeer",
+      "tier": 3,
+      "triangles": 456,
+      "tierBudget": 1500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_light_up_reindeer.png",
+        "winter": "rework/renders/winter/dt_light_up_reindeer.png"
+      }
+    },
+    {
+      "id": "dt_lost_sneaker",
+      "tier": 1,
+      "triangles": 228,
+      "tierBudget": 500,
+      "ceilingUse": 0.456,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 0.4981,
+      "smoothShare": 0.5019,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_lost_sneaker.png",
+        "winter": "rework/renders/winter/dt_lost_sneaker.png"
+      }
+    },
+    {
+      "id": "dt_mailbox",
+      "tier": 3,
+      "triangles": 456,
+      "tierBudget": 1500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.1549,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_mailbox.png",
+        "winter": "rework/renders/winter/dt_mailbox.png"
+      }
+    },
+    {
+      "id": "dt_market_stall",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.5989,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_market_stall.png",
+        "winter": "rework/renders/winter/dt_market_stall.png"
+      }
+    },
+    {
+      "id": "dt_mega_tree",
+      "tier": 5,
+      "triangles": 1502,
+      "tierBudget": 5000,
+      "ceilingUse": 0.3,
+      "role": "hero",
+      "need": 3000,
+      "mutedShare": 0.7384,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1502 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_mega_tree.png",
+        "winter": "rework/renders/winter/dt_mega_tree.png"
+      }
+    },
+    {
+      "id": "dt_mini_gift",
+      "tier": 1,
+      "triangles": 152,
+      "tierBudget": 500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 0.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_mini_gift.png",
+        "winter": "rework/renders/winter/dt_mini_gift.png"
+      }
+    },
+    {
+      "id": "dt_monster_truck",
+      "tier": 4,
+      "triangles": 1064,
+      "tierBudget": 3500,
+      "ceilingUse": 0.304,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.5569,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1064 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_monster_truck.png",
+        "winter": "rework/renders/winter/dt_monster_truck.png"
+      }
+    },
+    {
+      "id": "dt_moped",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.4232,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_moped.png",
+        "winter": "rework/renders/winter/dt_moped.png"
+      }
+    },
+    {
+      "id": "dt_newspaper_box",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.4948,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_newspaper_box.png",
+        "winter": "rework/renders/winter/dt_newspaper_box.png"
+      }
+    },
+    {
+      "id": "dt_paddling_pool",
+      "tier": 3,
+      "triangles": 460,
+      "tierBudget": 1500,
+      "ceilingUse": 0.307,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.3273,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_paddling_pool.png",
+        "winter": "rework/renders/winter/dt_paddling_pool.png"
+      }
+    },
+    {
+      "id": "dt_pallet_stack",
+      "tier": 3,
+      "triangles": 456,
+      "tierBudget": 1500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_pallet_stack.png",
+        "winter": "rework/renders/winter/dt_pallet_stack.png"
+      }
+    },
+    {
+      "id": "dt_parking_meter",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_parking_meter.png",
+        "winter": "rework/renders/winter/dt_parking_meter.png"
+      }
+    },
+    {
+      "id": "dt_pickup_truck",
+      "tier": 4,
+      "triangles": 1060,
+      "tierBudget": 3500,
+      "ceilingUse": 0.303,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.3873,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1060 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_pickup_truck.png",
+        "winter": "rework/renders/winter/dt_pickup_truck.png"
+      }
+    },
+    {
+      "id": "dt_picnic_table",
+      "tier": 3,
+      "triangles": 456,
+      "tierBudget": 1500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.9641,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_picnic_table.png",
+        "winter": "rework/renders/winter/dt_picnic_table.png"
+      }
+    },
+    {
+      "id": "dt_pizza_box_tower",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.5298,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_pizza_box_tower.png",
+        "winter": "rework/renders/winter/dt_pizza_box_tower.png"
+      }
+    },
+    {
+      "id": "dt_pizza_slice",
+      "tier": 1,
+      "triangles": 164,
+      "tierBudget": 500,
+      "ceilingUse": 0.328,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 0.6474,
+      "smoothShare": 0.2583,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_pizza_slice.png",
+        "winter": "rework/renders/winter/dt_pizza_slice.png"
+      }
+    },
+    {
+      "id": "dt_poinsettia_pot",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.1789,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_poinsettia_pot.png",
+        "winter": "rework/renders/winter/dt_poinsettia_pot.png"
+      }
+    },
+    {
+      "id": "dt_potted_palm",
+      "tier": 2,
+      "triangles": 212,
+      "tierBudget": 700,
+      "ceilingUse": 0.303,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.5702,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_potted_palm.png",
+        "winter": "rework/renders/winter/dt_potted_palm.png"
+      }
+    },
+    {
+      "id": "dt_puzzle_cube",
+      "tier": 1,
+      "triangles": 44,
+      "tierBudget": 500,
+      "ceilingUse": 0.088,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 0.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_puzzle_cube.png",
+        "winter": "rework/renders/winter/dt_puzzle_cube.png"
+      }
+    },
+    {
+      "id": "dt_recycling_bank",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.3277,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_recycling_bank.png",
+        "winter": "rework/renders/winter/dt_recycling_bank.png"
+      }
+    },
+    {
+      "id": "dt_rocket_water_tower",
+      "tier": 5,
+      "triangles": 1506,
+      "tierBudget": 5000,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 3000,
+      "mutedShare": 0.6088,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1506 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_rocket_water_tower.png",
+        "winter": "rework/renders/winter/dt_rocket_water_tower.png"
+      }
+    },
+    {
+      "id": "dt_rubber_duck_sunglasses",
+      "tier": 1,
+      "triangles": 328,
+      "tierBudget": 500,
+      "ceilingUse": 0.656,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 0.0381,
+      "smoothShare": 0.9975,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_rubber_duck_sunglasses.png",
+        "winter": "rework/renders/winter/dt_rubber_duck_sunglasses.png"
+      }
+    },
+    {
+      "id": "dt_satellite_dish",
+      "tier": 3,
+      "triangles": 468,
+      "tierBudget": 1500,
+      "ceilingUse": 0.312,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_satellite_dish.png",
+        "winter": "rework/renders/winter/dt_satellite_dish.png"
+      }
+    },
+    {
+      "id": "dt_shipping_container",
+      "tier": 4,
+      "triangles": 1056,
+      "tierBudget": 3500,
+      "ceilingUse": 0.302,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.4072,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1056 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_shipping_container.png",
+        "winter": "rework/renders/winter/dt_shipping_container.png"
+      }
+    },
+    {
+      "id": "dt_shopping_cart",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.965,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_shopping_cart.png",
+        "winter": "rework/renders/winter/dt_shopping_cart.png"
+      }
+    },
+    {
+      "id": "dt_skateboard",
+      "tier": 2,
+      "triangles": 212,
+      "tierBudget": 700,
+      "ceilingUse": 0.303,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_skateboard.png",
+        "winter": "rework/renders/winter/dt_skateboard.png"
+      }
+    },
+    {
+      "id": "dt_sleigh",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.1876,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_sleigh.png",
+        "winter": "rework/renders/winter/dt_sleigh.png"
+      }
+    },
+    {
+      "id": "dt_smartphone",
+      "tier": 1,
+      "triangles": 40,
+      "tierBudget": 500,
+      "ceilingUse": 0.08,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 1.0,
+      "smoothShare": 0.6226,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_smartphone.png",
+        "winter": "rework/renders/winter/dt_smartphone.png"
+      }
+    },
+    {
+      "id": "dt_snow_pile",
+      "tier": 3,
+      "triangles": 120,
+      "tierBudget": 1500,
+      "ceilingUse": 0.08,
+      "role": "prop",
+      "need": 24,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_snow_pile.png",
+        "winter": "rework/renders/winter/dt_snow_pile.png"
+      }
+    },
+    {
+      "id": "dt_snowman",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.8945,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_snowman.png",
+        "winter": "rework/renders/winter/dt_snowman.png"
+      }
+    },
+    {
+      "id": "dt_snowplough",
+      "tier": 4,
+      "triangles": 1052,
+      "tierBudget": 3500,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.2299,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1052 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_snowplough.png",
+        "winter": "rework/renders/winter/dt_snowplough.png"
+      }
+    },
+    {
+      "id": "dt_soda_can",
+      "tier": 1,
+      "triangles": 84,
+      "tierBudget": 500,
+      "ceilingUse": 0.168,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 0.2473,
+      "smoothShare": 0.981,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_soda_can.png",
+        "winter": "rework/renders/winter/dt_soda_can.png"
+      }
+    },
+    {
+      "id": "dt_spinning_office_chair",
+      "tier": 2,
+      "triangles": 212,
+      "tierBudget": 700,
+      "ceilingUse": 0.303,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.2601,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_spinning_office_chair.png",
+        "winter": "rework/renders/winter/dt_spinning_office_chair.png"
+      }
+    },
+    {
+      "id": "dt_street_lamp",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.9815,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_street_lamp.png",
+        "winter": "rework/renders/winter/dt_street_lamp.png"
+      }
+    },
+    {
+      "id": "dt_street_tree",
+      "tier": 3,
+      "triangles": 456,
+      "tierBudget": 1500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_street_tree.png",
+        "winter": "rework/renders/winter/dt_street_tree.png"
+      }
+    },
+    {
+      "id": "dt_suitcase",
+      "tier": 2,
+      "triangles": 212,
+      "tierBudget": 700,
+      "ceilingUse": 0.303,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.0865,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_suitcase.png",
+        "winter": "rework/renders/winter/dt_suitcase.png"
+      }
+    },
+    {
+      "id": "dt_takeout_box",
+      "tier": 1,
+      "triangles": 152,
+      "tierBudget": 500,
+      "ceilingUse": 0.304,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 0.189,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_takeout_box.png",
+        "winter": "rework/renders/winter/dt_takeout_box.png"
+      }
+    },
+    {
+      "id": "dt_taxi",
+      "tier": 4,
+      "triangles": 1056,
+      "tierBudget": 3500,
+      "ceilingUse": 0.302,
+      "role": "hero",
+      "need": 2100,
+      "mutedShare": 0.2559,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1056 triangles is 30% of the 3500 ceiling, under 60 % of the tier ceiling (2100); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_taxi.png",
+        "winter": "rework/renders/winter/dt_taxi.png"
+      }
+    },
+    {
+      "id": "dt_tennis_ball",
+      "tier": 1,
+      "triangles": 64,
+      "tierBudget": 500,
+      "ceilingUse": 0.128,
+      "role": "prop",
+      "need": 40,
+      "mutedShare": 0.0,
+      "smoothShare": 1.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_tennis_ball.png",
+        "winter": "rework/renders/winter/dt_tennis_ball.png"
+      }
+    },
+    {
+      "id": "dt_tower_crane",
+      "tier": 5,
+      "triangles": 1504,
+      "tierBudget": 5000,
+      "ceilingUse": 0.301,
+      "role": "hero",
+      "need": 3000,
+      "mutedShare": 0.105,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1504 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000); round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_tower_crane.png",
+        "winter": "rework/renders/winter/dt_tower_crane.png"
+      }
+    },
+    {
+      "id": "dt_townhouse",
+      "tier": 5,
+      "triangles": 1504,
+      "tierBudget": 5000,
+      "ceilingUse": 0.301,
+      "role": "building",
+      "need": 3000,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "1504 triangles is 30% of the 5000 ceiling, under 60 % of the tier ceiling (3000): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_townhouse.png",
+        "winter": "rework/renders/winter/dt_townhouse.png"
+      }
+    },
+    {
+      "id": "dt_traffic_cone",
+      "tier": 2,
+      "triangles": 214,
+      "tierBudget": 700,
+      "ceilingUse": 0.306,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.6612,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_traffic_cone.png",
+        "winter": "rework/renders/winter/dt_traffic_cone.png"
+      }
+    },
+    {
+      "id": "dt_traffic_light",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.8466,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_traffic_light.png",
+        "winter": "rework/renders/winter/dt_traffic_light.png"
+      }
+    },
+    {
+      "id": "dt_vending_machine",
+      "tier": 3,
+      "triangles": 452,
+      "tierBudget": 1500,
+      "ceilingUse": 0.301,
+      "role": "prop",
+      "need": 450,
+      "mutedShare": 0.2057,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_vending_machine.png",
+        "winter": "rework/renders/winter/dt_vending_machine.png"
+      }
+    },
+    {
+      "id": "dt_water_bottle",
+      "tier": 1,
+      "triangles": 156,
+      "tierBudget": 500,
+      "ceilingUse": 0.312,
+      "role": "prop",
+      "need": 150,
+      "mutedShare": 0.6595,
+      "smoothShare": 1.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "meets every 2026-11-07 rule that applies",
+      "renders": {
+        "city": "rework/renders/city/dt_water_bottle.png",
+        "winter": "rework/renders/winter/dt_water_bottle.png"
+      }
+    },
+    {
+      "id": "dt_wheelie_bin",
+      "tier": 2,
+      "triangles": 212,
+      "tierBudget": 700,
+      "ceilingUse": 0.303,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 1.0,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_wheelie_bin.png",
+        "winter": "rework/renders/winter/dt_wheelie_bin.png"
+      }
+    },
+    {
+      "id": "dt_wooden_sled",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.9488,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_wooden_sled.png",
+        "winter": "rework/renders/winter/dt_wooden_sled.png"
+      }
+    },
+    {
+      "id": "dt_wreath",
+      "tier": 2,
+      "triangles": 216,
+      "tierBudget": 700,
+      "ceilingUse": 0.309,
+      "role": "prop",
+      "need": 210,
+      "mutedShare": 0.8873,
+      "smoothShare": 0.0,
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "round parts are flat-shaded (smooth share 0%): silhouette kept, rebuilt smooth and to the triangle target",
+      "renders": {
+        "city": "rework/renders/city/dt_wreath.png",
+        "winter": "rework/renders/winter/dt_wreath.png"
+      }
+    }
+  ]
+}

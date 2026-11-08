@@ -8,6 +8,10 @@
 # budget. tests/unit/ArtManifest.test.luau re-checks the manifest offline against the FBX files
 # (bytes, sha256, budgets, hard-coded id scan).
 # Run: blender --background --python art/scripts/export_all.py -- --out art/export
+# 013 options: --prefix ck_ exports only the collections whose id starts with the prefix and merges their rows into the
+# existing manifest (other rows and FBX files stay byte-identical); --partial lets ids of that prefix be missing (the
+# kit is exported in batches and the missing ids are printed). Through the Blender MCP, set
+# sys.argv = ["blender", "--", "--prefix", "ck_", "--partial"] and exec the file; without --partial every id must exist.
 
 import datetime
 import hashlib
@@ -79,6 +83,25 @@ def face_failures(obj, rects):
     return failures
 
 
+def fronts_rects(art):
+    """Cell and strip rects of the fronts and signs atlas (013), or None before it exists."""
+    path = os.path.join(art, "atlases", "fronts", "fronts.json")
+    if not os.path.isfile(path):
+        return None
+    data = load_json(path)
+    rects = {}
+    for group in ("signs", "billboards", "strips"):
+        for name, rect in data[group].items():
+            rects[name] = (rect["u0"], rect["v0"], rect["u1"], rect["v1"])
+    return rects
+
+
+# Objects drawn with the fronts atlas (ObjectDef.atlas = "fronts"): their UVs are checked against fronts.json.
+def is_fronts(object_id):
+    return (object_id.startswith("ck_shop_") or object_id.startswith("ck_billboard_")
+            or object_id == "ck_meme_buffering_billboard")
+
+
 def check_collection(coll, object_id, budgets, rects):
     """Validates one objectId collection against the modelling rules; returns its triangle count."""
     errors = []
@@ -145,6 +168,14 @@ def export_to_fbx(meshes, out_path) -> None:
     for obj in meshes:
         obj.select_set(True)
     exporter = fbx_op()
+    if not hasattr(bpy.context, "selected_objects"):
+        # Run through the Blender MCP the context has no selection; give the exporter one.
+        with bpy.context.temp_override(selected_objects=list(meshes), active_object=meshes[-1]):
+            return _export(exporter, meshes, out_path)
+    return _export(exporter, meshes, out_path)
+
+
+def _export(exporter, meshes, out_path) -> None:
     kwargs = {
         "filepath": out_path,
         "use_selection": True,
@@ -179,18 +210,25 @@ def run() -> None:
 
     budgets = load_json(os.path.join(art, "scripts", "budgets.json"))
     rects = rects_from_palette(load_json(os.path.join(art, "palette.json")))
+    front_rects = fronts_rects(art)
 
+    prefix = argv[argv.index("--prefix") + 1] if "--prefix" in argv else ""
+    partial = "--partial" in argv
     entries = []
     for name in sorted(os.listdir(source_dir)):
         if not name.endswith(".blend"):
             continue
         bpy.ops.wm.open_mainfile(filepath=os.path.join(source_dir, name))
-        collections = list(bpy.data.collections)
+        collections = [c for c in bpy.data.collections if c.name.startswith(prefix)]
         if not collections:
+            if prefix:
+                continue
             raise RuntimeError(f"{name}: no collections to export")
         for coll in sorted(collections, key=lambda c: c.name):
             object_id = coll.name
-            triangles = check_collection(coll, object_id, budgets, rects)
+            if is_fronts(object_id) and front_rects is None:
+                raise RuntimeError(f"{object_id}: art/atlases/fronts/fronts.json is missing (run fronts_atlas.py)")
+            triangles = check_collection(coll, object_id, budgets, front_rects if is_fronts(object_id) else rects)
             out_path = os.path.join(out_abs, f"{object_id}.fbx")
             export_to_fbx([o for o in coll.objects if o.type == "MESH"], out_path)
             data = open(out_path, "rb").read()
@@ -203,11 +241,19 @@ def run() -> None:
             })
             print(f"export: {object_id} ({triangles} tris, {len(data)} bytes)")
 
-    expected = set(budgets["tiers"])
+    expected = {k for k in budgets["tiers"] if k.startswith(prefix)}
     exported = {entry["id"] for entry in entries}
-    if expected != exported:
+    if partial:
+        if exported - expected:
+            raise RuntimeError(f"extra ids: {sorted(exported - expected)}")
+        print(f"export: partial, {len(expected - exported)} ids not built yet: {sorted(expected - exported)}")
+    elif expected != exported:
         raise RuntimeError(f"id mismatch: missing={sorted(expected - exported)} "
                            f"extra={sorted(exported - expected)}")
+    manifest_path = os.path.join(out_abs, "manifest.json")
+    if prefix and os.path.isfile(manifest_path):
+        kept = [row for row in load_json(manifest_path)["meshes"] if not row["id"].startswith(prefix)]
+        entries = kept + entries
 
     manifest = {
         "generated": datetime.date.today().isoformat(),
@@ -216,7 +262,6 @@ def run() -> None:
         "palette": "palette.png",
         "meshes": sorted(entries, key=lambda entry: entry["id"]),
     }
-    manifest_path = os.path.join(out_abs, "manifest.json")
     with open(manifest_path, "w", encoding="utf-8") as handle:
         json.dump(manifest, handle, indent=2)
         handle.write("\n")

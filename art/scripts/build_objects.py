@@ -924,6 +924,10 @@ def build_file(tier_file: str, object_ids: list, recipes: dict, sizes: dict,
         for part in recipes[object_id]:
             emit(builder, part)
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        if UPGRADE_FLOORS.get(object_id):
+            import dt_upgrade
+            tags = dt_upgrade.apply(bm, tags, UPGRADE_FLOORS[object_id],
+                                    int(0.6 * budgets["meshTriangles"][budgets["tiers"][object_id] - 1]))
 
         # Normalise: uniform scale so the longest bounding side equals the ObjectDef size, then origin at
         # the bottom centre of the footprint. The hub has no size rule and keeps its authored scale.
@@ -968,6 +972,19 @@ def downtown_recipes() -> dict:
     return downtown_recipes.all_recipes(sys.modules[__name__]), set(downtown_recipes.CORE_IDS)
 
 
+def rework_downtown() -> None:
+    """013 Phase 9: the dt_* meshes that art/scripts/kit_rework.py owns (the pilot hydrant, the Stage C pocket set) are
+    rebuilt over the plain recipes above, so a Downtown rebuild never reverts them."""
+    root = os.path.dirname(art_dir())
+    path = os.path.join(art_dir(), "scripts", "kit_rework.py")
+    ns = {"__name__": "kit_rework"}
+    exec(compile(open(path, encoding="utf-8").read(), path, "exec"), ns)
+    ns["ROOT"] = root
+    ns["load_stage_b"]()
+    ids = sorted(k for k in ns["RECIPES"] if k.startswith("dt_"))
+    ns["run"]({"root": root, "only": ids})
+
+
 def main() -> None:
     os.makedirs(source_dir(), exist_ok=True)
     world = world_from_argv()
@@ -989,6 +1006,9 @@ def main() -> None:
     core_ids = set()
     if world == "downtown":
         recipes, core_ids = downtown_recipes()
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import dt_upgrade
+        UPGRADE_FLOORS.update(dt_upgrade.load_floors(art_dir()))
         core_ids = {"dt_" + name for name in core_ids}
     else:
         recipes = all_recipes()
@@ -1003,6 +1023,7 @@ def main() -> None:
             build_file(tier_file, ids, recipes, budgets["sizes"], rects, budgets)
         theme_ids = sorted(k for k in budgets["sizes"] if k not in core_ids)
         build_file(DOWNTOWN_THEME_FILE, theme_ids, recipes, budgets["sizes"], rects, budgets)
+        rework_downtown()
         return
 
     grouped = {}
@@ -1015,5 +1036,8 @@ def main() -> None:
 
 
 UV_MARGIN = 0.05
+# 013 T025: dt_ id -> triangle floor for the meshes the audit upgrades or replaces (set by main in downtown mode).
+UPGRADE_FLOORS = {}
 
-main()
+if __name__ == "__main__":
+    main()

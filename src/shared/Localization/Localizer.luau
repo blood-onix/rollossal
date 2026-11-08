@@ -7,14 +7,22 @@ local LocalizationService = game:GetService("LocalizationService")
 local Config = require(script.Parent.Parent.Config)
 local BaseStrings = require(script.Parent.Strings)
 local ParkCityStrings = require(script.Parent.ParkCityStrings)
+local CityKitStrings = require(script.Parent.CityKitStrings)
 
 -- Strings.luau is loaded by Lune (no `script` there), so the generated Park City names are merged here.
 local Strings: { [string]: { en: string, es: string? } } = table.clone(BaseStrings)
-for key, texts in ParkCityStrings :: { [string]: { en: string, es: string? } } do
-	if Strings[key] ~= nil then
-		error(`Localizer: duplicate string key {key}`)
+for _, extra in
+	{
+		ParkCityStrings :: { [string]: { en: string, es: string? } },
+		CityKitStrings :: { [string]: { en: string, es: string? } },
+	}
+do
+	for key, texts in extra do
+		if Strings[key] ~= nil then
+			error(`Localizer: duplicate string key {key}`)
+		end
+		Strings[key] = texts
 	end
-	Strings[key] = texts
 end
 
 local SOURCE_LOCALE = "en-us"

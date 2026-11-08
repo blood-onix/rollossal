@@ -1,0 +1,130 @@
+[
+  {
+    "id": "ck_house_gable_fence",
+    "tier": 4,
+    "triangles": 3234,
+    "ceiling": 3500,
+    "pctCeiling": 92.4,
+    "mutedShare": 1.0,
+    "snowShare": 0.05,
+    "scale": 0.848,
+    "dims": [
+      19.6,
+      21.34,
+      24.5
+    ],
+    "file": "art/source/ck_buildings.blend"
+  },
+  {
+    "id": "ck_shop_row_three",
+    "tier": 5,
+    "triangles": 4638,
+    "ceiling": 5000,
+    "pctCeiling": 92.8,
+    "mutedShare": 0.989,
+    "snowShare": 0.035,
+    "scale": 0.973,
+    "dims": [
+      44.0,
+      24.69,
+      42.06
+    ],
+    "file": "art/source/ck_buildings.blend"
+  },
+  {
+    "id": "ck_tower_slab",
+    "tier": 5,
+    "triangles": 4564,
+    "ceiling": 5000,
+    "pctCeiling": 91.3,
+    "mutedShare": 0.995,
+    "snowShare": 0.031,
+    "scale": 0.871,
+    "dims": [
+      23.69,
+      18.99,
+      52.0
+    ],
+    "file": "art/source/ck_buildings.blend"
+  },
+  {
+    "id": "ck_street_lamp_double",
+    "tier": 3,
+    "triangles": 942,
+    "ceiling": 1500,
+    "pctCeiling": 62.8,
+    "mutedShare": 1.0,
+    "snowShare": 0.029,
+    "scale": 1.091,
+    "dims": [
+      5.09,
+      1.35,
+      9.6
+    ],
+    "file": "art/source/ck_props_t1_t3.blend"
+  },
+  {
+    "id": "ck_bin_street",
+    "tier": 2,
+    "triangles": 628,
+    "ceiling": 700,
+    "pctCeiling": 89.7,
+    "mutedShare": 1.0,
+    "snowShare": 0.058,
+    "scale": 1.066,
+    "dims": [
+      1.79,
+      1.79,
+      3.4
+    ],
+    "file": "art/source/ck_props_t1_t3.blend"
+  },
+  {
+    "id": "ck_car_sedan",
+    "tier": 4,
+    "triangles": 2568,
+    "ceiling": 3500,
+    "pctCeiling": 73.4,
+    "mutedShare": 0.569,
+    "snowShare": 0.037,
+    "scale": 0.971,
+    "dims": [
+      15.0,
+      6.46,
+      5.67
+    ],
+    "file": "art/source/ck_props_t4_t5.blend"
+  },
+  {
+    "id": "ck_tree_oak",
+    "tier": 4,
+    "triangles": 2552,
+    "ceiling": 3500,
+    "pctCeiling": 72.9,
+    "mutedShare": 1.0,
+    "snowShare": 0.0,
+    "scale": 1.034,
+    "dims": [
+      12.32,
+      11.19,
+      16.0
+    ],
+    "file": "art/source/ck_props_t4_t5.blend"
+  },
+  {
+    "id": "dt_fire_hydrant",
+    "tier": 2,
+    "triangles": 220,
+    "ceiling": 700,
+    "pctCeiling": 31.4,
+    "mutedShare": 0.105,
+    "snowShare": 0.0,
+    "scale": 1.132,
+    "dims": [
+      1.56,
+      1.43,
+      2.4
+    ],
+    "file": "art/source/dt_tier2.blend"
+  }
+]

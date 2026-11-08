@@ -1,0 +1,1194 @@
+{
+  "version": 1,
+  "blender": "5.2.3 LTS",
+  "meshes": {
+    "dt_aa_battery": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_aa_battery.png",
+        "winter": "renders/winter/dt_aa_battery.png"
+      },
+      "mutedShare": 0.3494,
+      "smoothShare": 0.0
+    },
+    "dt_acoustic_guitar": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_acoustic_guitar.png",
+        "winter": "renders/winter/dt_acoustic_guitar.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_apartment_block": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_apartment_block.png",
+        "winter": "renders/winter/dt_apartment_block.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_arcade_cabinet": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_arcade_cabinet.png",
+        "winter": "renders/winter/dt_arcade_cabinet.png"
+      },
+      "mutedShare": 0.1315,
+      "smoothShare": 0.0
+    },
+    "dt_basketball": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_basketball.png",
+        "winter": "renders/winter/dt_basketball.png"
+      },
+      "mutedShare": 0.1368,
+      "smoothShare": 1.0
+    },
+    "dt_bauble": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_bauble.png",
+        "winter": "renders/winter/dt_bauble.png"
+      },
+      "mutedShare": 0.0,
+      "smoothShare": 1.0
+    },
+    "dt_beach_ball": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_beach_ball.png",
+        "winter": "renders/winter/dt_beach_ball.png"
+      },
+      "mutedShare": 0.8139,
+      "smoothShare": 0.0
+    },
+    "dt_bench": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_bench.png",
+        "winter": "renders/winter/dt_bench.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_bicycle": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_bicycle.png",
+        "winter": "renders/winter/dt_bicycle.png"
+      },
+      "mutedShare": 0.5472,
+      "smoothShare": 0.0
+    },
+    "dt_big_street_tree": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_big_street_tree.png",
+        "winter": "renders/winter/dt_big_street_tree.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_billboard": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_billboard.png",
+        "winter": "renders/winter/dt_billboard.png"
+      },
+      "mutedShare": 0.6142,
+      "smoothShare": 0.0
+    },
+    "dt_boombox_speaker": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_boombox_speaker.png",
+        "winter": "renders/winter/dt_boombox_speaker.png"
+      },
+      "mutedShare": 0.1502,
+      "smoothShare": 0.0
+    },
+    "dt_bottle_cap": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_bottle_cap.png",
+        "winter": "renders/winter/dt_bottle_cap.png"
+      },
+      "mutedShare": 0.3591,
+      "smoothShare": 1.0
+    },
+    "dt_bus_shelter": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_bus_shelter.png",
+        "winter": "renders/winter/dt_bus_shelter.png"
+      },
+      "mutedShare": 0.9544,
+      "smoothShare": 0.0
+    },
+    "dt_cinema": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_cinema.png",
+        "winter": "renders/winter/dt_cinema.png"
+      },
+      "mutedShare": 0.7202,
+      "smoothShare": 0.0
+    },
+    "dt_city_bus": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_city_bus.png",
+        "winter": "renders/winter/dt_city_bus.png"
+      },
+      "mutedShare": 0.5549,
+      "smoothShare": 0.0
+    },
+    "dt_cocoa_cart": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_cocoa_cart.png",
+        "winter": "renders/winter/dt_cocoa_cart.png"
+      },
+      "mutedShare": 0.3739,
+      "smoothShare": 0.0
+    },
+    "dt_cocoa_truck": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_cocoa_truck.png",
+        "winter": "renders/winter/dt_cocoa_truck.png"
+      },
+      "mutedShare": 0.4646,
+      "smoothShare": 0.0
+    },
+    "dt_coffee_cup": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_coffee_cup.png",
+        "winter": "renders/winter/dt_coffee_cup.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 1.0
+    },
+    "dt_corner_bakery": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_corner_bakery.png",
+        "winter": "renders/winter/dt_corner_bakery.png"
+      },
+      "mutedShare": 0.9507,
+      "smoothShare": 0.0
+    },
+    "dt_corner_shop_row": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_corner_shop_row.png",
+        "winter": "renders/winter/dt_corner_shop_row.png"
+      },
+      "mutedShare": 0.9656,
+      "smoothShare": 0.0
+    },
+    "dt_delivery_van": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_delivery_van.png",
+        "winter": "renders/winter/dt_delivery_van.png"
+      },
+      "mutedShare": 0.9579,
+      "smoothShare": 0.0
+    },
+    "dt_donut": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_donut.png",
+        "winter": "renders/winter/dt_donut.png"
+      },
+      "mutedShare": 0.6098,
+      "smoothShare": 1.0
+    },
+    "dt_donut_food_truck": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_donut_food_truck.png",
+        "winter": "renders/winter/dt_donut_food_truck.png"
+      },
+      "mutedShare": 0.4401,
+      "smoothShare": 0.0
+    },
+    "dt_drum_kit": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_drum_kit.png",
+        "winter": "renders/winter/dt_drum_kit.png"
+      },
+      "mutedShare": 0.271,
+      "smoothShare": 0.0
+    },
+    "dt_e_scooter": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_e_scooter.png",
+        "winter": "renders/winter/dt_e_scooter.png"
+      },
+      "mutedShare": 0.7041,
+      "smoothShare": 0.0
+    },
+    "dt_earbud_case": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_earbud_case.png",
+        "winter": "renders/winter/dt_earbud_case.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.7231
+    },
+    "dt_ev_charging_station": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_ev_charging_station.png",
+        "winter": "renders/winter/dt_ev_charging_station.png"
+      },
+      "mutedShare": 0.9936,
+      "smoothShare": 0.0
+    },
+    "dt_fairy_light_bulb": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_fairy_light_bulb.png",
+        "winter": "renders/winter/dt_fairy_light_bulb.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 1.0
+    },
+    "dt_ferris_wheel": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_ferris_wheel.png",
+        "winter": "renders/winter/dt_ferris_wheel.png"
+      },
+      "mutedShare": 0.9832,
+      "smoothShare": 0.0
+    },
+    "dt_fire_engine": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_fire_engine.png",
+        "winter": "renders/winter/dt_fire_engine.png"
+      },
+      "mutedShare": 0.3512,
+      "smoothShare": 0.0
+    },
+    "dt_fire_hydrant": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_fire_hydrant.png",
+        "winter": "renders/winter/dt_fire_hydrant.png"
+      },
+      "mutedShare": 0.1045,
+      "smoothShare": 0.8955
+    },
+    "dt_fountain": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_fountain.png",
+        "winter": "renders/winter/dt_fountain.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_game_controller": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_game_controller.png",
+        "winter": "renders/winter/dt_game_controller.png"
+      },
+      "mutedShare": 0.0144,
+      "smoothShare": 0.9856
+    },
+    "dt_garbage_truck": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_garbage_truck.png",
+        "winter": "renders/winter/dt_garbage_truck.png"
+      },
+      "mutedShare": 0.4886,
+      "smoothShare": 0.0
+    },
+    "dt_giant_duck": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_giant_duck.png",
+        "winter": "renders/winter/dt_giant_duck.png"
+      },
+      "mutedShare": 0.0323,
+      "smoothShare": 0.0
+    },
+    "dt_gift_box": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_gift_box.png",
+        "winter": "renders/winter/dt_gift_box.png"
+      },
+      "mutedShare": 0.0,
+      "smoothShare": 0.0
+    },
+    "dt_gingerbread_cookie": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_gingerbread_cookie.png",
+        "winter": "renders/winter/dt_gingerbread_cookie.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.7547
+    },
+    "dt_glass_tower": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_glass_tower.png",
+        "winter": "renders/winter/dt_glass_tower.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_glass_tower_bow": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_glass_tower_bow.png",
+        "winter": "renders/winter/dt_glass_tower_bow.png"
+      },
+      "mutedShare": 0.7033,
+      "smoothShare": 0.0
+    },
+    "dt_hatchback": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_hatchback.png",
+        "winter": "renders/winter/dt_hatchback.png"
+      },
+      "mutedShare": 0.212,
+      "smoothShare": 0.0
+    },
+    "dt_headphones": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_headphones.png",
+        "winter": "renders/winter/dt_headphones.png"
+      },
+      "mutedShare": 0.6138,
+      "smoothShare": 0.9186
+    },
+    "dt_hot_dog_cart": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_hot_dog_cart.png",
+        "winter": "renders/winter/dt_hot_dog_cart.png"
+      },
+      "mutedShare": 0.3279,
+      "smoothShare": 0.0
+    },
+    "dt_ice_cream_truck": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_ice_cream_truck.png",
+        "winter": "renders/winter/dt_ice_cream_truck.png"
+      },
+      "mutedShare": 0.682,
+      "smoothShare": 0.0
+    },
+    "dt_ice_lolly": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_ice_lolly.png",
+        "winter": "renders/winter/dt_ice_lolly.png"
+      },
+      "mutedShare": 0.109,
+      "smoothShare": 0.891
+    },
+    "dt_ice_rink": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_ice_rink.png",
+        "winter": "renders/winter/dt_ice_rink.png"
+      },
+      "mutedShare": 0.9803,
+      "smoothShare": 0.0
+    },
+    "dt_inflatable_flamingo": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_inflatable_flamingo.png",
+        "winter": "renders/winter/dt_inflatable_flamingo.png"
+      },
+      "mutedShare": 0.4825,
+      "smoothShare": 0.0
+    },
+    "dt_inflatable_tube_guy": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_inflatable_tube_guy.png",
+        "winter": "renders/winter/dt_inflatable_tube_guy.png"
+      },
+      "mutedShare": 0.1482,
+      "smoothShare": 0.0
+    },
+    "dt_keyboard": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_keyboard.png",
+        "winter": "renders/winter/dt_keyboard.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_kiosk": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_kiosk.png",
+        "winter": "renders/winter/dt_kiosk.png"
+      },
+      "mutedShare": 0.6484,
+      "smoothShare": 0.0
+    },
+    "dt_leaning_present_stack": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_leaning_present_stack.png",
+        "winter": "renders/winter/dt_leaning_present_stack.png"
+      },
+      "mutedShare": 0.2183,
+      "smoothShare": 0.0
+    },
+    "dt_light_up_reindeer": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_light_up_reindeer.png",
+        "winter": "renders/winter/dt_light_up_reindeer.png"
+      },
+      "mutedShare": 0.0,
+      "smoothShare": 0.0
+    },
+    "dt_lost_sneaker": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_lost_sneaker.png",
+        "winter": "renders/winter/dt_lost_sneaker.png"
+      },
+      "mutedShare": 0.4981,
+      "smoothShare": 0.5019
+    },
+    "dt_mailbox": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_mailbox.png",
+        "winter": "renders/winter/dt_mailbox.png"
+      },
+      "mutedShare": 0.1549,
+      "smoothShare": 0.0
+    },
+    "dt_market_stall": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_market_stall.png",
+        "winter": "renders/winter/dt_market_stall.png"
+      },
+      "mutedShare": 0.5989,
+      "smoothShare": 0.0
+    },
+    "dt_mega_tree": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_mega_tree.png",
+        "winter": "renders/winter/dt_mega_tree.png"
+      },
+      "mutedShare": 0.7384,
+      "smoothShare": 0.0
+    },
+    "dt_mini_gift": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_mini_gift.png",
+        "winter": "renders/winter/dt_mini_gift.png"
+      },
+      "mutedShare": 0.0,
+      "smoothShare": 0.0
+    },
+    "dt_monster_truck": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_monster_truck.png",
+        "winter": "renders/winter/dt_monster_truck.png"
+      },
+      "mutedShare": 0.5569,
+      "smoothShare": 0.0
+    },
+    "dt_moped": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_moped.png",
+        "winter": "renders/winter/dt_moped.png"
+      },
+      "mutedShare": 0.4232,
+      "smoothShare": 0.0
+    },
+    "dt_newspaper_box": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_newspaper_box.png",
+        "winter": "renders/winter/dt_newspaper_box.png"
+      },
+      "mutedShare": 0.4948,
+      "smoothShare": 0.0
+    },
+    "dt_paddling_pool": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_paddling_pool.png",
+        "winter": "renders/winter/dt_paddling_pool.png"
+      },
+      "mutedShare": 0.3273,
+      "smoothShare": 0.0
+    },
+    "dt_pallet_stack": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_pallet_stack.png",
+        "winter": "renders/winter/dt_pallet_stack.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_parking_meter": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_parking_meter.png",
+        "winter": "renders/winter/dt_parking_meter.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_pickup_truck": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_pickup_truck.png",
+        "winter": "renders/winter/dt_pickup_truck.png"
+      },
+      "mutedShare": 0.3873,
+      "smoothShare": 0.0
+    },
+    "dt_picnic_table": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_picnic_table.png",
+        "winter": "renders/winter/dt_picnic_table.png"
+      },
+      "mutedShare": 0.9641,
+      "smoothShare": 0.0
+    },
+    "dt_pizza_box_tower": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_pizza_box_tower.png",
+        "winter": "renders/winter/dt_pizza_box_tower.png"
+      },
+      "mutedShare": 0.5298,
+      "smoothShare": 0.0
+    },
+    "dt_pizza_slice": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_pizza_slice.png",
+        "winter": "renders/winter/dt_pizza_slice.png"
+      },
+      "mutedShare": 0.6474,
+      "smoothShare": 0.2583
+    },
+    "dt_poinsettia_pot": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_poinsettia_pot.png",
+        "winter": "renders/winter/dt_poinsettia_pot.png"
+      },
+      "mutedShare": 0.1789,
+      "smoothShare": 0.0
+    },
+    "dt_potted_palm": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_potted_palm.png",
+        "winter": "renders/winter/dt_potted_palm.png"
+      },
+      "mutedShare": 0.5702,
+      "smoothShare": 0.0
+    },
+    "dt_puzzle_cube": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_puzzle_cube.png",
+        "winter": "renders/winter/dt_puzzle_cube.png"
+      },
+      "mutedShare": 0.0,
+      "smoothShare": 0.0
+    },
+    "dt_recycling_bank": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_recycling_bank.png",
+        "winter": "renders/winter/dt_recycling_bank.png"
+      },
+      "mutedShare": 0.3277,
+      "smoothShare": 0.0
+    },
+    "dt_rocket_water_tower": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_rocket_water_tower.png",
+        "winter": "renders/winter/dt_rocket_water_tower.png"
+      },
+      "mutedShare": 0.6088,
+      "smoothShare": 0.0
+    },
+    "dt_rubber_duck_sunglasses": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_rubber_duck_sunglasses.png",
+        "winter": "renders/winter/dt_rubber_duck_sunglasses.png"
+      },
+      "mutedShare": 0.0381,
+      "smoothShare": 0.9975
+    },
+    "dt_satellite_dish": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_satellite_dish.png",
+        "winter": "renders/winter/dt_satellite_dish.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_shipping_container": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_shipping_container.png",
+        "winter": "renders/winter/dt_shipping_container.png"
+      },
+      "mutedShare": 0.4072,
+      "smoothShare": 0.0
+    },
+    "dt_shopping_cart": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_shopping_cart.png",
+        "winter": "renders/winter/dt_shopping_cart.png"
+      },
+      "mutedShare": 0.965,
+      "smoothShare": 0.0
+    },
+    "dt_skateboard": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_skateboard.png",
+        "winter": "renders/winter/dt_skateboard.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_sleigh": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_sleigh.png",
+        "winter": "renders/winter/dt_sleigh.png"
+      },
+      "mutedShare": 0.1876,
+      "smoothShare": 0.0
+    },
+    "dt_smartphone": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_smartphone.png",
+        "winter": "renders/winter/dt_smartphone.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.6226
+    },
+    "dt_snow_pile": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_snow_pile.png",
+        "winter": "renders/winter/dt_snow_pile.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_snowman": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_snowman.png",
+        "winter": "renders/winter/dt_snowman.png"
+      },
+      "mutedShare": 0.8945,
+      "smoothShare": 0.0
+    },
+    "dt_snowplough": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_snowplough.png",
+        "winter": "renders/winter/dt_snowplough.png"
+      },
+      "mutedShare": 0.2299,
+      "smoothShare": 0.0
+    },
+    "dt_soda_can": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_soda_can.png",
+        "winter": "renders/winter/dt_soda_can.png"
+      },
+      "mutedShare": 0.2473,
+      "smoothShare": 0.981
+    },
+    "dt_spinning_office_chair": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_spinning_office_chair.png",
+        "winter": "renders/winter/dt_spinning_office_chair.png"
+      },
+      "mutedShare": 0.2601,
+      "smoothShare": 0.0
+    },
+    "dt_street_lamp": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_street_lamp.png",
+        "winter": "renders/winter/dt_street_lamp.png"
+      },
+      "mutedShare": 0.9815,
+      "smoothShare": 0.0
+    },
+    "dt_street_tree": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_street_tree.png",
+        "winter": "renders/winter/dt_street_tree.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_suitcase": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_suitcase.png",
+        "winter": "renders/winter/dt_suitcase.png"
+      },
+      "mutedShare": 0.0865,
+      "smoothShare": 0.0
+    },
+    "dt_takeout_box": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_takeout_box.png",
+        "winter": "renders/winter/dt_takeout_box.png"
+      },
+      "mutedShare": 0.189,
+      "smoothShare": 0.0
+    },
+    "dt_taxi": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_taxi.png",
+        "winter": "renders/winter/dt_taxi.png"
+      },
+      "mutedShare": 0.2559,
+      "smoothShare": 0.0
+    },
+    "dt_tennis_ball": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_tennis_ball.png",
+        "winter": "renders/winter/dt_tennis_ball.png"
+      },
+      "mutedShare": 0.0,
+      "smoothShare": 1.0
+    },
+    "dt_tower_crane": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_tower_crane.png",
+        "winter": "renders/winter/dt_tower_crane.png"
+      },
+      "mutedShare": 0.105,
+      "smoothShare": 0.0
+    },
+    "dt_townhouse": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_townhouse.png",
+        "winter": "renders/winter/dt_townhouse.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_traffic_cone": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_traffic_cone.png",
+        "winter": "renders/winter/dt_traffic_cone.png"
+      },
+      "mutedShare": 0.6612,
+      "smoothShare": 0.0
+    },
+    "dt_traffic_light": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_traffic_light.png",
+        "winter": "renders/winter/dt_traffic_light.png"
+      },
+      "mutedShare": 0.8466,
+      "smoothShare": 0.0
+    },
+    "dt_vending_machine": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_vending_machine.png",
+        "winter": "renders/winter/dt_vending_machine.png"
+      },
+      "mutedShare": 0.2057,
+      "smoothShare": 0.0
+    },
+    "dt_water_bottle": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_water_bottle.png",
+        "winter": "renders/winter/dt_water_bottle.png"
+      },
+      "mutedShare": 0.6595,
+      "smoothShare": 1.0
+    },
+    "dt_wheelie_bin": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_wheelie_bin.png",
+        "winter": "renders/winter/dt_wheelie_bin.png"
+      },
+      "mutedShare": 1.0,
+      "smoothShare": 0.0
+    },
+    "dt_wooden_sled": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_wooden_sled.png",
+        "winter": "renders/winter/dt_wooden_sled.png"
+      },
+      "mutedShare": 0.9488,
+      "smoothShare": 0.0
+    },
+    "dt_wreath": {
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "renders": {
+        "city": "renders/city/dt_wreath.png",
+        "winter": "renders/winter/dt_wreath.png"
+      },
+      "mutedShare": 0.8873,
+      "smoothShare": 0.0
+    }
+  }
+}

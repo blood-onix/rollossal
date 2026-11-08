@@ -41,6 +41,9 @@ python3 scripts/design-tokens.py --check
 step "Atlas determinism"
 python3 art/scripts/palette.py --check
 
+step "Fronts atlas determinism"
+python3 art/scripts/fronts_atlas.py --check
+
 step "Lune unit tests"
 lune run tests/unit/run
 

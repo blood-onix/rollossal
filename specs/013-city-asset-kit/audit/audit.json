@@ -1,0 +1,2095 @@
+{
+  "version": 1,
+  "blender": "5.2.3 LTS",
+  "headroom": {
+    "unculledCeiling": 550000,
+    "culledCeiling": 290000,
+    "unculled": 189802,
+    "culled": 54552,
+    "projectedUnculled": 785988,
+    "projectedCulled": 413164,
+    "atFloorUnculled": 574598,
+    "atFloorCulled": 301164
+  },
+  "meshes": [
+    {
+      "id": "dt_aa_battery",
+      "tier": 1,
+      "size": 0.4,
+      "triangles": 76,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 1.9,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "76 triangles meets the pocket floor 40 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_aa_battery.png",
+        "winter": "renders/winter/dt_aa_battery.png"
+      }
+    },
+    {
+      "id": "dt_acoustic_guitar",
+      "tier": 2,
+      "size": 3,
+      "triangles": 92,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.438,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "92 triangles is 0.44 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_acoustic_guitar.png",
+        "winter": "renders/winter/dt_acoustic_guitar.png"
+      }
+    },
+    {
+      "id": "dt_apartment_block",
+      "tier": 5,
+      "size": 40,
+      "triangles": 348,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.232,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "348 triangles is 0.23 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_apartment_block.png",
+        "winter": "renders/winter/dt_apartment_block.png"
+      }
+    },
+    {
+      "id": "dt_arcade_cabinet",
+      "tier": 3,
+      "size": 6.5,
+      "triangles": 100,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.222,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "100 triangles is 0.22 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_arcade_cabinet.png",
+        "winter": "renders/winter/dt_arcade_cabinet.png"
+      }
+    },
+    {
+      "id": "dt_basketball",
+      "tier": 1,
+      "size": 1,
+      "triangles": 116,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.773,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "116 triangles is 0.77 of the tier floor 150; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_basketball.png",
+        "winter": "renders/winter/dt_basketball.png"
+      }
+    },
+    {
+      "id": "dt_bauble",
+      "tier": 1,
+      "size": 0.6,
+      "triangles": 76,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 1.9,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "76 triangles meets the pocket floor 40 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_bauble.png",
+        "winter": "renders/winter/dt_bauble.png"
+      }
+    },
+    {
+      "id": "dt_beach_ball",
+      "tier": 2,
+      "size": 2,
+      "triangles": 220,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 1.048,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "220 triangles meets the tier floor 210 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_beach_ball.png",
+        "winter": "renders/winter/dt_beach_ball.png"
+      }
+    },
+    {
+      "id": "dt_bench",
+      "tier": 3,
+      "size": 7,
+      "triangles": 48,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.107,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "48 triangles is 0.11 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_bench.png",
+        "winter": "renders/winter/dt_bench.png"
+      }
+    },
+    {
+      "id": "dt_bicycle",
+      "tier": 3,
+      "size": 6.5,
+      "triangles": 180,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.4,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "180 triangles is 0.40 of the tier floor 450; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_bicycle.png",
+        "winter": "renders/winter/dt_bicycle.png"
+      }
+    },
+    {
+      "id": "dt_big_street_tree",
+      "tier": 4,
+      "size": 20,
+      "triangles": 172,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.164,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "172 triangles is 0.16 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_big_street_tree.png",
+        "winter": "renders/winter/dt_big_street_tree.png"
+      }
+    },
+    {
+      "id": "dt_billboard",
+      "tier": 4,
+      "size": 18,
+      "triangles": 84,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.08,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "84 triangles is 0.08 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_billboard.png",
+        "winter": "renders/winter/dt_billboard.png"
+      }
+    },
+    {
+      "id": "dt_boombox_speaker",
+      "tier": 2,
+      "size": 2,
+      "triangles": 108,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.514,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "108 triangles is 0.51 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_boombox_speaker.png",
+        "winter": "renders/winter/dt_boombox_speaker.png"
+      }
+    },
+    {
+      "id": "dt_bottle_cap",
+      "tier": 1,
+      "size": 0.3,
+      "triangles": 72,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 1.8,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "72 triangles meets the pocket floor 40 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_bottle_cap.png",
+        "winter": "renders/winter/dt_bottle_cap.png"
+      }
+    },
+    {
+      "id": "dt_bus_shelter",
+      "tier": 4,
+      "size": 10,
+      "triangles": 84,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.08,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "84 triangles is 0.08 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_bus_shelter.png",
+        "winter": "renders/winter/dt_bus_shelter.png"
+      }
+    },
+    {
+      "id": "dt_cinema",
+      "tier": 5,
+      "size": 36,
+      "triangles": 204,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.136,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "204 triangles is 0.14 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_cinema.png",
+        "winter": "renders/winter/dt_cinema.png"
+      }
+    },
+    {
+      "id": "dt_city_bus",
+      "tier": 4,
+      "size": 25,
+      "triangles": 260,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.248,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "260 triangles is 0.25 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_city_bus.png",
+        "winter": "renders/winter/dt_city_bus.png"
+      }
+    },
+    {
+      "id": "dt_cocoa_cart",
+      "tier": 3,
+      "size": 6.5,
+      "triangles": 220,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.489,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "220 triangles is 0.49 of the tier floor 450; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_cocoa_cart.png",
+        "winter": "renders/winter/dt_cocoa_cart.png"
+      }
+    },
+    {
+      "id": "dt_cocoa_truck",
+      "tier": 4,
+      "size": 18,
+      "triangles": 320,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.305,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "320 triangles is 0.30 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_cocoa_truck.png",
+        "winter": "renders/winter/dt_cocoa_truck.png"
+      }
+    },
+    {
+      "id": "dt_coffee_cup",
+      "tier": 1,
+      "size": 0.7,
+      "triangles": 108,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 2.7,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "108 triangles meets the pocket floor 40 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_coffee_cup.png",
+        "winter": "renders/winter/dt_coffee_cup.png"
+      }
+    },
+    {
+      "id": "dt_corner_bakery",
+      "tier": 4,
+      "size": 22,
+      "triangles": 200,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.19,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "200 triangles is 0.19 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_corner_bakery.png",
+        "winter": "renders/winter/dt_corner_bakery.png"
+      }
+    },
+    {
+      "id": "dt_corner_shop_row",
+      "tier": 5,
+      "size": 26,
+      "triangles": 432,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.288,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "432 triangles is 0.29 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_corner_shop_row.png",
+        "winter": "renders/winter/dt_corner_shop_row.png"
+      }
+    },
+    {
+      "id": "dt_delivery_van",
+      "tier": 4,
+      "size": 17,
+      "triangles": 204,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.194,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "204 triangles is 0.19 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_delivery_van.png",
+        "winter": "renders/winter/dt_delivery_van.png"
+      }
+    },
+    {
+      "id": "dt_donut",
+      "tier": 1,
+      "size": 0.8,
+      "triangles": 180,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 4.5,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "180 triangles meets the pocket floor 40 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_donut.png",
+        "winter": "renders/winter/dt_donut.png"
+      }
+    },
+    {
+      "id": "dt_donut_food_truck",
+      "tier": 4,
+      "size": 18,
+      "triangles": 416,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.396,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "416 triangles is 0.40 of the tier floor 1050; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_donut_food_truck.png",
+        "winter": "renders/winter/dt_donut_food_truck.png"
+      }
+    },
+    {
+      "id": "dt_drum_kit",
+      "tier": 3,
+      "size": 5,
+      "triangles": 300,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.667,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "300 triangles is 0.67 of the tier floor 450; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_drum_kit.png",
+        "winter": "renders/winter/dt_drum_kit.png"
+      }
+    },
+    {
+      "id": "dt_e_scooter",
+      "tier": 2,
+      "size": 3.8,
+      "triangles": 152,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.724,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "152 triangles is 0.72 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_e_scooter.png",
+        "winter": "renders/winter/dt_e_scooter.png"
+      }
+    },
+    {
+      "id": "dt_earbud_case",
+      "tier": 1,
+      "size": 0.5,
+      "triangles": 24,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 0.6,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "24 triangles is 0.60 of the pocket floor 40; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_earbud_case.png",
+        "winter": "renders/winter/dt_earbud_case.png"
+      }
+    },
+    {
+      "id": "dt_ev_charging_station",
+      "tier": 5,
+      "size": 32,
+      "triangles": 224,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.149,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "224 triangles is 0.15 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_ev_charging_station.png",
+        "winter": "renders/winter/dt_ev_charging_station.png"
+      }
+    },
+    {
+      "id": "dt_fairy_light_bulb",
+      "tier": 1,
+      "size": 0.5,
+      "triangles": 40,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 1.0,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "40 triangles meets the pocket floor 40 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_fairy_light_bulb.png",
+        "winter": "renders/winter/dt_fairy_light_bulb.png"
+      }
+    },
+    {
+      "id": "dt_ferris_wheel",
+      "tier": 5,
+      "size": 50,
+      "triangles": 460,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.307,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "460 triangles is 0.31 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_ferris_wheel.png",
+        "winter": "renders/winter/dt_ferris_wheel.png"
+      }
+    },
+    {
+      "id": "dt_fire_engine",
+      "tier": 4,
+      "size": 24,
+      "triangles": 300,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.286,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "300 triangles is 0.29 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_fire_engine.png",
+        "winter": "renders/winter/dt_fire_engine.png"
+      }
+    },
+    {
+      "id": "dt_fire_hydrant",
+      "tier": 2,
+      "size": 2.4,
+      "triangles": 176,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.838,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "176 triangles is 0.84 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_fire_hydrant.png",
+        "winter": "renders/winter/dt_fire_hydrant.png"
+      }
+    },
+    {
+      "id": "dt_fountain",
+      "tier": 4,
+      "size": 13,
+      "triangles": 324,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.309,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "324 triangles is 0.31 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_fountain.png",
+        "winter": "renders/winter/dt_fountain.png"
+      }
+    },
+    {
+      "id": "dt_game_controller",
+      "tier": 1,
+      "size": 0.9,
+      "triangles": 108,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.72,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "108 triangles is 0.72 of the tier floor 150; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_game_controller.png",
+        "winter": "renders/winter/dt_game_controller.png"
+      }
+    },
+    {
+      "id": "dt_garbage_truck",
+      "tier": 4,
+      "size": 20,
+      "triangles": 312,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.297,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "312 triangles is 0.30 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_garbage_truck.png",
+        "winter": "renders/winter/dt_garbage_truck.png"
+      }
+    },
+    {
+      "id": "dt_giant_duck",
+      "tier": 5,
+      "size": 35,
+      "triangles": 272,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.181,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "272 triangles is 0.18 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_giant_duck.png",
+        "winter": "renders/winter/dt_giant_duck.png"
+      }
+    },
+    {
+      "id": "dt_gift_box",
+      "tier": 2,
+      "size": 2,
+      "triangles": 56,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.267,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "56 triangles is 0.27 of the tier floor 210 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_gift_box.png",
+        "winter": "renders/winter/dt_gift_box.png"
+      }
+    },
+    {
+      "id": "dt_gingerbread_cookie",
+      "tier": 1,
+      "size": 1,
+      "triangles": 112,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.747,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "112 triangles is 0.75 of the tier floor 150; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_gingerbread_cookie.png",
+        "winter": "renders/winter/dt_gingerbread_cookie.png"
+      }
+    },
+    {
+      "id": "dt_glass_tower",
+      "tier": 5,
+      "size": 60,
+      "triangles": 224,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.149,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "224 triangles is 0.15 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_glass_tower.png",
+        "winter": "renders/winter/dt_glass_tower.png"
+      }
+    },
+    {
+      "id": "dt_glass_tower_bow",
+      "tier": 5,
+      "size": 60,
+      "triangles": 308,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.205,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "308 triangles is 0.20 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_glass_tower_bow.png",
+        "winter": "renders/winter/dt_glass_tower_bow.png"
+      }
+    },
+    {
+      "id": "dt_hatchback",
+      "tier": 4,
+      "size": 14,
+      "triangles": 216,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.206,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "216 triangles is 0.21 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_hatchback.png",
+        "winter": "renders/winter/dt_hatchback.png"
+      }
+    },
+    {
+      "id": "dt_headphones",
+      "tier": 1,
+      "size": 1,
+      "triangles": 136,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.907,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "136 triangles is 0.91 of the tier floor 150; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_headphones.png",
+        "winter": "renders/winter/dt_headphones.png"
+      }
+    },
+    {
+      "id": "dt_hot_dog_cart",
+      "tier": 3,
+      "size": 7.5,
+      "triangles": 152,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.338,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "152 triangles is 0.34 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_hot_dog_cart.png",
+        "winter": "renders/winter/dt_hot_dog_cart.png"
+      }
+    },
+    {
+      "id": "dt_ice_cream_truck",
+      "tier": 4,
+      "size": 15,
+      "triangles": 258,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.246,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "258 triangles is 0.25 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_ice_cream_truck.png",
+        "winter": "renders/winter/dt_ice_cream_truck.png"
+      }
+    },
+    {
+      "id": "dt_ice_lolly",
+      "tier": 1,
+      "size": 0.6,
+      "triangles": 44,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 1.1,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "44 triangles meets the pocket floor 40 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_ice_lolly.png",
+        "winter": "renders/winter/dt_ice_lolly.png"
+      }
+    },
+    {
+      "id": "dt_ice_rink",
+      "tier": 5,
+      "size": 40,
+      "triangles": 564,
+      "tierBudget": 5000,
+      "floorClass": "flat",
+      "floor": 24,
+      "fillRatio": 23.5,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "564 triangles meets the flat floor 24 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_ice_rink.png",
+        "winter": "renders/winter/dt_ice_rink.png"
+      }
+    },
+    {
+      "id": "dt_inflatable_flamingo",
+      "tier": 2,
+      "size": 3,
+      "triangles": 152,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.724,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "152 triangles is 0.72 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_inflatable_flamingo.png",
+        "winter": "renders/winter/dt_inflatable_flamingo.png"
+      }
+    },
+    {
+      "id": "dt_inflatable_tube_guy",
+      "tier": 3,
+      "size": 9,
+      "triangles": 276,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.613,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "276 triangles is 0.61 of the tier floor 450; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_inflatable_tube_guy.png",
+        "winter": "renders/winter/dt_inflatable_tube_guy.png"
+      }
+    },
+    {
+      "id": "dt_keyboard",
+      "tier": 1,
+      "size": 1.5,
+      "triangles": 132,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.88,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "132 triangles is 0.88 of the tier floor 150; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_keyboard.png",
+        "winter": "renders/winter/dt_keyboard.png"
+      }
+    },
+    {
+      "id": "dt_kiosk",
+      "tier": 4,
+      "size": 12,
+      "triangles": 96,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.091,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "96 triangles is 0.09 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_kiosk.png",
+        "winter": "renders/winter/dt_kiosk.png"
+      }
+    },
+    {
+      "id": "dt_leaning_present_stack",
+      "tier": 2,
+      "size": 3.6,
+      "triangles": 80,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.381,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "80 triangles is 0.38 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_leaning_present_stack.png",
+        "winter": "renders/winter/dt_leaning_present_stack.png"
+      }
+    },
+    {
+      "id": "dt_light_up_reindeer",
+      "tier": 3,
+      "size": 7,
+      "triangles": 160,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.356,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "160 triangles is 0.36 of the tier floor 450; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_light_up_reindeer.png",
+        "winter": "renders/winter/dt_light_up_reindeer.png"
+      }
+    },
+    {
+      "id": "dt_lost_sneaker",
+      "tier": 1,
+      "size": 1.3,
+      "triangles": 48,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.32,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "48 triangles is 0.32 of the tier floor 150 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_lost_sneaker.png",
+        "winter": "renders/winter/dt_lost_sneaker.png"
+      }
+    },
+    {
+      "id": "dt_mailbox",
+      "tier": 3,
+      "size": 4.5,
+      "triangles": 72,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.16,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "72 triangles is 0.16 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_mailbox.png",
+        "winter": "renders/winter/dt_mailbox.png"
+      }
+    },
+    {
+      "id": "dt_market_stall",
+      "tier": 4,
+      "size": 12,
+      "triangles": 164,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.156,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "164 triangles is 0.16 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_market_stall.png",
+        "winter": "renders/winter/dt_market_stall.png"
+      }
+    },
+    {
+      "id": "dt_mega_tree",
+      "tier": 5,
+      "size": 45,
+      "triangles": 418,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.279,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "418 triangles is 0.28 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_mega_tree.png",
+        "winter": "renders/winter/dt_mega_tree.png"
+      }
+    },
+    {
+      "id": "dt_mini_gift",
+      "tier": 1,
+      "size": 0.9,
+      "triangles": 56,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.373,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "56 triangles is 0.37 of the tier floor 150; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_mini_gift.png",
+        "winter": "renders/winter/dt_mini_gift.png"
+      }
+    },
+    {
+      "id": "dt_monster_truck",
+      "tier": 4,
+      "size": 18,
+      "triangles": 360,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.343,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "360 triangles is 0.34 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_monster_truck.png",
+        "winter": "renders/winter/dt_monster_truck.png"
+      }
+    },
+    {
+      "id": "dt_moped",
+      "tier": 3,
+      "size": 6,
+      "triangles": 140,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.311,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "140 triangles is 0.31 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_moped.png",
+        "winter": "renders/winter/dt_moped.png"
+      }
+    },
+    {
+      "id": "dt_newspaper_box",
+      "tier": 2,
+      "size": 3,
+      "triangles": 60,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.286,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "60 triangles is 0.29 of the tier floor 210 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_newspaper_box.png",
+        "winter": "renders/winter/dt_newspaper_box.png"
+      }
+    },
+    {
+      "id": "dt_paddling_pool",
+      "tier": 3,
+      "size": 8,
+      "triangles": 288,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.64,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "288 triangles is 0.64 of the tier floor 450; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_paddling_pool.png",
+        "winter": "renders/winter/dt_paddling_pool.png"
+      }
+    },
+    {
+      "id": "dt_pallet_stack",
+      "tier": 3,
+      "size": 5,
+      "triangles": 156,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.347,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "156 triangles is 0.35 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_pallet_stack.png",
+        "winter": "renders/winter/dt_pallet_stack.png"
+      }
+    },
+    {
+      "id": "dt_parking_meter",
+      "tier": 2,
+      "size": 3.8,
+      "triangles": 88,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.419,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "88 triangles is 0.42 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_parking_meter.png",
+        "winter": "renders/winter/dt_parking_meter.png"
+      }
+    },
+    {
+      "id": "dt_pickup_truck",
+      "tier": 4,
+      "size": 16,
+      "triangles": 228,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.217,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "228 triangles is 0.22 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_pickup_truck.png",
+        "winter": "renders/winter/dt_pickup_truck.png"
+      }
+    },
+    {
+      "id": "dt_picnic_table",
+      "tier": 3,
+      "size": 6,
+      "triangles": 72,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.16,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "72 triangles is 0.16 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_picnic_table.png",
+        "winter": "renders/winter/dt_picnic_table.png"
+      }
+    },
+    {
+      "id": "dt_pizza_box_tower",
+      "tier": 2,
+      "size": 3.9,
+      "triangles": 96,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.457,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "96 triangles is 0.46 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_pizza_box_tower.png",
+        "winter": "renders/winter/dt_pizza_box_tower.png"
+      }
+    },
+    {
+      "id": "dt_pizza_slice",
+      "tier": 1,
+      "size": 0.9,
+      "triangles": 68,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.453,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "68 triangles is 0.45 of the tier floor 150; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_pizza_slice.png",
+        "winter": "renders/winter/dt_pizza_slice.png"
+      }
+    },
+    {
+      "id": "dt_poinsettia_pot",
+      "tier": 2,
+      "size": 2.4,
+      "triangles": 156,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.743,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "156 triangles is 0.74 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_poinsettia_pot.png",
+        "winter": "renders/winter/dt_poinsettia_pot.png"
+      }
+    },
+    {
+      "id": "dt_potted_palm",
+      "tier": 2,
+      "size": 3.2,
+      "triangles": 124,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.59,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "124 triangles is 0.59 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_potted_palm.png",
+        "winter": "renders/winter/dt_potted_palm.png"
+      }
+    },
+    {
+      "id": "dt_puzzle_cube",
+      "tier": 1,
+      "size": 0.5,
+      "triangles": 36,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 0.9,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "36 triangles is 0.90 of the pocket floor 40; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_puzzle_cube.png",
+        "winter": "renders/winter/dt_puzzle_cube.png"
+      }
+    },
+    {
+      "id": "dt_recycling_bank",
+      "tier": 3,
+      "size": 6,
+      "triangles": 84,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.187,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "84 triangles is 0.19 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_recycling_bank.png",
+        "winter": "renders/winter/dt_recycling_bank.png"
+      }
+    },
+    {
+      "id": "dt_rocket_water_tower",
+      "tier": 5,
+      "size": 34,
+      "triangles": 262,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.175,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "262 triangles is 0.17 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_rocket_water_tower.png",
+        "winter": "renders/winter/dt_rocket_water_tower.png"
+      }
+    },
+    {
+      "id": "dt_rubber_duck_sunglasses",
+      "tier": 1,
+      "size": 1.2,
+      "triangles": 64,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.427,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "64 triangles is 0.43 of the tier floor 150; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_rubber_duck_sunglasses.png",
+        "winter": "renders/winter/dt_rubber_duck_sunglasses.png"
+      }
+    },
+    {
+      "id": "dt_satellite_dish",
+      "tier": 3,
+      "size": 5,
+      "triangles": 136,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.302,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "136 triangles is 0.30 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_satellite_dish.png",
+        "winter": "renders/winter/dt_satellite_dish.png"
+      }
+    },
+    {
+      "id": "dt_shipping_container",
+      "tier": 4,
+      "size": 20,
+      "triangles": 192,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.183,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "192 triangles is 0.18 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_shipping_container.png",
+        "winter": "renders/winter/dt_shipping_container.png"
+      }
+    },
+    {
+      "id": "dt_shopping_cart",
+      "tier": 2,
+      "size": 3.6,
+      "triangles": 132,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.629,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "132 triangles is 0.63 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_shopping_cart.png",
+        "winter": "renders/winter/dt_shopping_cart.png"
+      }
+    },
+    {
+      "id": "dt_skateboard",
+      "tier": 2,
+      "size": 2.2,
+      "triangles": 148,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.705,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "148 triangles is 0.70 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_skateboard.png",
+        "winter": "renders/winter/dt_skateboard.png"
+      }
+    },
+    {
+      "id": "dt_sleigh",
+      "tier": 4,
+      "size": 15,
+      "triangles": 108,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.103,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "108 triangles is 0.10 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_sleigh.png",
+        "winter": "renders/winter/dt_sleigh.png"
+      }
+    },
+    {
+      "id": "dt_smartphone",
+      "tier": 1,
+      "size": 0.8,
+      "triangles": 24,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 0.6,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "24 triangles is 0.60 of the pocket floor 40; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_smartphone.png",
+        "winter": "renders/winter/dt_smartphone.png"
+      }
+    },
+    {
+      "id": "dt_snow_pile",
+      "tier": 3,
+      "size": 6,
+      "triangles": 120,
+      "tierBudget": 1500,
+      "floorClass": "flat",
+      "floor": 24,
+      "fillRatio": 5.0,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "120 triangles meets the flat floor 24 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_snow_pile.png",
+        "winter": "renders/winter/dt_snow_pile.png"
+      }
+    },
+    {
+      "id": "dt_snowman",
+      "tier": 3,
+      "size": 8,
+      "triangles": 356,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.791,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "356 triangles is 0.79 of the tier floor 450; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_snowman.png",
+        "winter": "renders/winter/dt_snowman.png"
+      }
+    },
+    {
+      "id": "dt_snowplough",
+      "tier": 4,
+      "size": 22,
+      "triangles": 236,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.225,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "236 triangles is 0.23 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_snowplough.png",
+        "winter": "renders/winter/dt_snowplough.png"
+      }
+    },
+    {
+      "id": "dt_soda_can",
+      "tier": 1,
+      "size": 0.6,
+      "triangles": 84,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 2.1,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "84 triangles meets the pocket floor 40 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_soda_can.png",
+        "winter": "renders/winter/dt_soda_can.png"
+      }
+    },
+    {
+      "id": "dt_spinning_office_chair",
+      "tier": 2,
+      "size": 3.4,
+      "triangles": 124,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.59,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "124 triangles is 0.59 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_spinning_office_chair.png",
+        "winter": "renders/winter/dt_spinning_office_chair.png"
+      }
+    },
+    {
+      "id": "dt_street_lamp",
+      "tier": 3,
+      "size": 9.5,
+      "triangles": 80,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.178,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "80 triangles is 0.18 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_street_lamp.png",
+        "winter": "renders/winter/dt_street_lamp.png"
+      }
+    },
+    {
+      "id": "dt_street_tree",
+      "tier": 3,
+      "size": 9,
+      "triangles": 88,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.196,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "88 triangles is 0.20 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_street_tree.png",
+        "winter": "renders/winter/dt_street_tree.png"
+      }
+    },
+    {
+      "id": "dt_suitcase",
+      "tier": 2,
+      "size": 2.6,
+      "triangles": 76,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.362,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "76 triangles is 0.36 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_suitcase.png",
+        "winter": "renders/winter/dt_suitcase.png"
+      }
+    },
+    {
+      "id": "dt_takeout_box",
+      "tier": 1,
+      "size": 1.2,
+      "triangles": 40,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.267,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "40 triangles is 0.27 of the tier floor 150 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_takeout_box.png",
+        "winter": "renders/winter/dt_takeout_box.png"
+      }
+    },
+    {
+      "id": "dt_taxi",
+      "tier": 4,
+      "size": 14,
+      "triangles": 216,
+      "tierBudget": 3500,
+      "floorClass": "tier",
+      "floor": 1050,
+      "fillRatio": 0.206,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "216 triangles is 0.21 of the tier floor 1050 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_taxi.png",
+        "winter": "renders/winter/dt_taxi.png"
+      }
+    },
+    {
+      "id": "dt_tennis_ball",
+      "tier": 1,
+      "size": 0.6,
+      "triangles": 68,
+      "tierBudget": 500,
+      "floorClass": "pocket",
+      "floor": 40,
+      "fillRatio": 1.7,
+      "baselineVerdict": "keep",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "keep",
+      "reason": "68 triangles meets the pocket floor 40 and w-season stays under 15%.",
+      "renders": {
+        "city": "renders/city/dt_tennis_ball.png",
+        "winter": "renders/winter/dt_tennis_ball.png"
+      }
+    },
+    {
+      "id": "dt_tower_crane",
+      "tier": 5,
+      "size": 55,
+      "triangles": 192,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.128,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "192 triangles is 0.13 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_tower_crane.png",
+        "winter": "renders/winter/dt_tower_crane.png"
+      }
+    },
+    {
+      "id": "dt_townhouse",
+      "tier": 5,
+      "size": 30,
+      "triangles": 152,
+      "tierBudget": 5000,
+      "floorClass": "tier",
+      "floor": 1500,
+      "fillRatio": 0.101,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "152 triangles is 0.10 of the tier floor 1500 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_townhouse.png",
+        "winter": "renders/winter/dt_townhouse.png"
+      }
+    },
+    {
+      "id": "dt_traffic_cone",
+      "tier": 2,
+      "size": 2,
+      "triangles": 66,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.314,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "66 triangles is 0.31 of the tier floor 210 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_traffic_cone.png",
+        "winter": "renders/winter/dt_traffic_cone.png"
+      }
+    },
+    {
+      "id": "dt_traffic_light",
+      "tier": 3,
+      "size": 9.8,
+      "triangles": 116,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.258,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "116 triangles is 0.26 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_traffic_light.png",
+        "winter": "renders/winter/dt_traffic_light.png"
+      }
+    },
+    {
+      "id": "dt_vending_machine",
+      "tier": 3,
+      "size": 7,
+      "triangles": 60,
+      "tierBudget": 1500,
+      "floorClass": "tier",
+      "floor": 450,
+      "fillRatio": 0.133,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "60 triangles is 0.13 of the tier floor 450 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_vending_machine.png",
+        "winter": "renders/winter/dt_vending_machine.png"
+      }
+    },
+    {
+      "id": "dt_water_bottle",
+      "tier": 1,
+      "size": 0.9,
+      "triangles": 92,
+      "tierBudget": 500,
+      "floorClass": "tier",
+      "floor": 150,
+      "fillRatio": 0.613,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "92 triangles is 0.61 of the tier floor 150; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_water_bottle.png",
+        "winter": "renders/winter/dt_water_bottle.png"
+      }
+    },
+    {
+      "id": "dt_wheelie_bin",
+      "tier": 2,
+      "size": 3.5,
+      "triangles": 64,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.305,
+      "baselineVerdict": "replace",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "replace",
+      "reason": "64 triangles is 0.30 of the tier floor 210 (under 0.35), so the silhouette cannot meet the style bible and is rebuilt from a new recipe.",
+      "renders": {
+        "city": "renders/city/dt_wheelie_bin.png",
+        "winter": "renders/winter/dt_wheelie_bin.png"
+      }
+    },
+    {
+      "id": "dt_wooden_sled",
+      "tier": 2,
+      "size": 3.2,
+      "triangles": 100,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.476,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "100 triangles is 0.48 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_wooden_sled.png",
+        "winter": "renders/winter/dt_wooden_sled.png"
+      }
+    },
+    {
+      "id": "dt_wreath",
+      "tier": 2,
+      "size": 2.8,
+      "triangles": 200,
+      "tierBudget": 700,
+      "floorClass": "tier",
+      "floor": 210,
+      "fillRatio": 0.952,
+      "baselineVerdict": "upgrade",
+      "seasonShare": {
+        "city": 0.0,
+        "winter": 0.0
+      },
+      "verdict": "upgrade",
+      "reason": "200 triangles is 0.95 of the tier floor 210; the silhouette is kept and rebuilt with bevels and detail up to the floor-to-target band.",
+      "renders": {
+        "city": "renders/city/dt_wreath.png",
+        "winter": "renders/winter/dt_wreath.png"
+      }
+    }
+  ]
+}
