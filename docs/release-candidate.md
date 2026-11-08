@@ -189,6 +189,11 @@ ceiling, muted and smooth shares):
 - Street scenes at D1 and D5, city and winter: `scene-mainstreet-*.png`, `scene-suburb-*.png`.
 - Before / after: `before-after-<theme>-<houses-shops|downtown|street|park>.png`.
 
+**Upload done 2026-11-08:** all 121 `ck_*` and 99 `dt_*` ids and the city and winter theme and fronts atlases are in
+`src/shared/Assets.luau`. Owner played the rebuilt Downtown on 2026-11-08 through a temporary world switch ("it's ok"). Park City is the active
+world and Downtown is not coming back as one, so these meshes appear in the game only once a feature dresses Park City
+with them: its objects are plain parts today (only the hub is a mesh).
+
 Upload batch (one pass, replaces every earlier 013 batch above): the 121 `ck_*` FBX files in `art/export/` into
 `Assets.meshes.ck_<id>` (37 new keys from Stage B and C, all at `""`); all 99 `dt_*` FBX files (they keep their keys); the city and winter
 theme and fronts atlases. The `dt_*` FBX files exported before 2026-11-08 had a swatch bug (87 meshes drawn entirely in

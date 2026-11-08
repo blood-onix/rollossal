@@ -64,3 +64,28 @@ same code the game runs).
 - Not covered: the look of the new meshes in Studio. The 121-entry check is the kit's data table: no world places a
   `ck_*` object yet, and the rebuilt `dt_*` meshes are not uploaded (owner batch), so the world still shows the old
   `dt_*` meshes. The owner's play check stays in `docs/release-candidate.md`.
+
+## Mesh ids wired in (2026-11-08)
+
+- The owner bulk-imported the FBX files. The 220 `ck_*` and `dt_*` `MeshId` values were read from the imported parts in
+  Workspace and written to `src/shared/Assets.luau`; all 220 load through `CreateMeshPartAsync`, and the 220 imported
+  models were then removed from the place.
+- Studio's "Failed to grant Game permission" lines came with the import. The assets and the experience have the same
+  owner, and the meshes load. The ids in those lines are Model assets, not meshes, and must not go in `Assets.meshes`.
+- Playtest (Server): 195 keys (all 121 `ck_*`, 74 `dt_*`) built through `ObjectVisual.buildMesh` at their exact sizes with
+  the right ids. The other 25 `dt_*` keys were not in the tables this check walked; they passed the load test only.
+- Not covered: the look. Park City replaces Downtown as the active world (`src/shared/Worlds.luau`), so no `dt_*` or
+  `ck_*` mesh was placed in the running world.
+- Atlases: the four new city and winter theme and fronts ids are Image assets on the owner's account and load in Studio.
+  The 56 kept atlas cells did not move, so older meshes keep their UVs and only pick up the new colours.
+- Console: no errors from game scripts. Besides the usual Studio lines, `ContentId` failures for 5941783247, 911778514,
+  911769342 and 911771771, none of which are in the repo.
+
+## Downtown with the uploaded art (2026-11-08)
+
+- Run with a temporary, uncommitted change that stops Park City replacing Downtown. Winter theme (Downtown's active
+  theme): 1,475 placed objects, all `dt_*` meshes from the new ids (86 distinct keys), no stand-ins, all on the new winter
+  atlas, 60 fps in the opening seconds.
+- Console: only with this switch, `LightField:113` errors, because Park City's small-object data still loads and its ids are
+  not in Downtown's object table. Not a problem in the shipping setup, where Park City is active.
+- The owner's play check and gate 6 approval are still open.
