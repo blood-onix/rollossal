@@ -1,15 +1,10 @@
 {
-  "verdict": "incomplete",
+  "verdict": "complete",
   "remaining": [],
-  "human": [
-    {
-      "item": "Gate 6: owner approval of the 18 contact sheets and the look of the rebuilt dt_* meshes (SC-005, T057)",
-      "reason": "Needs the owner's taste review of the images; it holds the merge, not the agent's work."
-    },
-    {
-      "item": "Owner mesh upload batch: 84 ck_* FBX files, the 87 rebuilt dt_* FBX files and the fronts atlas PNGs (FR-011, T033, T045, T060)",
-      "reason": "Roblox asset upload needs the owner's account credentials; the empty-id stand-ins hold until then and the hand-off is recorded in docs/release-candidate.md."
-    }
-  ],
-  "summary": "The round-1 gaps (T061 to T064) are verified fixed: audit_report.py --check exits 0, scripts/check.sh passes, release-candidate notes match the 22 names and 87 rebuilt dt_* meshes, dt_kiosk is rebuilt to 184 triangles with the reason recorded, and the contact sheets are newer than every mesh and atlas, so only owner approval and uploads remain."
+  "summary": "Marked done manually",
+  "completion": {
+    "source": "manual",
+    "at": "2026-11-08T11:51:53.780Z",
+    "by": "Roman_Tikhonov <bloodonix@gmail.com>"
+  }
 }
