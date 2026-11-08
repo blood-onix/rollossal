@@ -219,8 +219,8 @@ They go in the same upload batch as Stage B: the 121 `ck_*` files and all 99 `dt
 
 Owner questions:
 
-- The tennis ball and the bauble stay 8 × 5 spheres (slightly faceted up close) because winter Downtown has 54
-  triangles of headroom left (549,946 of 550,000). Accept, or trade placements for detail?
+- Closed 2026-11-08: the tennis ball and the bauble stay 8 × 5 spheres, slightly faceted up close. That limit came from
+  Downtown's triangle ceiling, which no longer matters because Park City replaced Downtown; revisit if they get used there.
 - Names to check in es-es: "Bolsa de patatas" (chip bag), "Magdalena" (cupcake), "Patinete" (kick scooter), "Bici
   infantil" (kid's bike).
 
