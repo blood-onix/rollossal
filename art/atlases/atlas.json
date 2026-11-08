@@ -2,22 +2,22 @@
   "size": 1024,
   "themes": {
     "autumn": {
-      "pixelSha256": "95adf92d8cd6584ee84a4f621300ac4c146a9795b9d34d5025e96b4a0b87e2d1"
+      "pixelSha256": "9c3678f9ed54416fd6a91582e890e31b455dfa3975e9c71a2bf8789347f996f5"
     },
     "city": {
-      "pixelSha256": "1cff75948ebeaf7a41fd7ea083c98f75b3b2cdc3dd80dc1f747c90ae44b49865"
+      "pixelSha256": "767cc992fa74caa6244bec17bda627d07653669c83d24446e1d46d45302fe4f9"
     },
     "neon": {
-      "pixelSha256": "adf677bd22b53b7956427dda9f176c382a4df3a1fec132816e4ae2d5405a4e00"
+      "pixelSha256": "d2e04be2d44a5a6f31c3e38939096edc0ad7124fbc2f337cfb418de4293945db"
     },
     "spring": {
-      "pixelSha256": "85d970196d6968c78fecea7e010eddb682db7cb2b98a1e05381a6f8140a34f24"
+      "pixelSha256": "0d62981cd5096c9275d9d643b78ba9c7d7ab7b05991a1578cfb63948c184a934"
     },
     "toon": {
-      "pixelSha256": "ce7a19d72c9f20aa637ea4c3327c0f0334271be01e3e738b658f6e8f9995fd5e"
+      "pixelSha256": "7d188b3f3ef94e4ed1ddf7906312a61285c91330e37d3deafe9d6adbca9667db"
     },
     "winter": {
-      "pixelSha256": "4cc7cc6c03e651e9f7e81974c94889a75cb66576fe0afbbddaae4222ed190b27"
+      "pixelSha256": "31dde621a7f9c799a73ac9820aaadda7a973f29c184cd37bc08f0c5a20be4b17"
     }
   },
   "version": 2

@@ -74,7 +74,18 @@ for _, hero in tokens.color.hero do
 	if hero.ref ~= nil then
 		heroCells[hero.name] = table.clone(worldTokens[hero.ref :: string])
 	else
-		heroCells[hero.name] = { _default = hexToRgb(hero.value) }
+		local value = hero.value :: any
+		if type(value) == "table" then
+			-- per-theme wear cells (013 tween-appeal rework): first theme is the default
+			local perTheme: { [string]: { number } } = {}
+			for themeId, hex in value do
+				perTheme[themeId] = hexToRgb(hex)
+			end
+			perTheme._default = hexToRgb(value[firstTheme])
+			heroCells[hero.name] = perTheme
+		else
+			heroCells[hero.name] = { _default = hexToRgb(value) }
+		end
 	end
 end
 
@@ -139,10 +150,10 @@ for _, id in Themes.order do
 			expect.same(names, EXPECTED_CELLS[id])
 			for name in palette do
 				local want
-				if string.sub(name, 1, 2) == "w-" then
-					want = rgb(worldTokens[name], id)
-				elseif string.sub(name, 1, 6) == "light-" then
+				if string.sub(name, 1, 6) == "light-" then
 					want = rgb(lightCells[name], id)
+				elseif heroCells[name] == nil and string.sub(name, 1, 2) == "w-" then
+					want = rgb(worldTokens[name], id)
 				else
 					want = rgb(heroCells[name], id)
 				end
@@ -175,8 +186,37 @@ test("Themes: lighting derives from the light-* cells with sane scalars", functi
 		)
 	end
 	expect.equal(Themes.winter.lighting.clockTime, 16.5)
-	expect.equal(Themes.city.lighting.clockTime, 13)
+	expect.equal(Themes.city.lighting.clockTime, 16.8)
 end)
+
+test(
+	"Themes: city and winter carry the late-afternoon grade (owner decision 2026-11-07)",
+	function()
+		for _, id in { "city", "winter" } do
+			local light = (Themes :: any)[id].lighting
+			expect.truthy(
+				light.clockTime >= 15.5 and light.clockTime <= 18,
+				`{id}: late-afternoon clockTime`
+			)
+			expect.truthy(
+				light.shadowSoftness ~= nil and light.shadowSoftness <= 0.25,
+				`{id}: crisp shadows`
+			)
+			expect.truthy(light.geographicLatitude ~= nil, `{id}: latitude set`)
+			local grade = light.grading
+			expect.truthy(grade ~= nil, `{id}: grading`)
+			expect.truthy(grade.contrast > 0 and grade.contrast <= 0.25, `{id}: slight contrast`)
+			expect.truthy(math.abs(grade.saturation) <= 0.15, `{id}: slight saturation`)
+			expect.equal(#grade.tint, 3)
+			-- cooler, darker outdoor ambient than the sky top so shadows read blue-grey (style bible section 8)
+			local sky = light.outdoorAmbient
+			expect.truthy(sky[3] > sky[1], `{id}: outdoor ambient is cool`)
+		end
+		for _, id in { "spring", "autumn", "toon", "neon" } do
+			expect.equal((Themes :: any)[id].lighting.grading, nil)
+		end
+	end
+)
 
 local KINDS = { snow = true, petals = true, leaves = true, sparkle = true, none = true }
 

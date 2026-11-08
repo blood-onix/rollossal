@@ -37,9 +37,12 @@ end
 
 -- The mesh texture: the active theme's atlas when the meshes are atlas-era, else the legacy shared
 -- palette. Never both. "" means no TextureID at all (contracts/theme-content.md §6).
-local function textureId(): string
+local function textureId(atlas: string?): string
 	local theme = Worlds.activeTheme
-	if
+	if atlas == "fronts" then
+		-- The fronts and signs atlas (013). "" falls back to no TextureID, without a warning.
+		return if theme ~= nil then Assets.frontsAtlases[theme.paletteAssetKey] or "" else ""
+	elseif
 		Assets.renderingMode == "atlas"
 		and theme ~= nil
 		and Assets.palettes[theme.paletteAssetKey] ~= ""
@@ -91,7 +94,8 @@ function ObjectVisual.buildMesh(
 	assetKey: string?,
 	label: string,
 	longestSide: number,
-	tier: number?
+	tier: number?,
+	atlas: string?
 ): MeshPart?
 	local contentId = if assetKey then Assets.meshes[assetKey] else nil
 	if contentId == nil or contentId == "" then
@@ -115,7 +119,7 @@ function ObjectVisual.buildMesh(
 	if longest > 0 and math.abs(longest - longestSide) > longestSide * SIZE_TOLERANCE then
 		mesh.Size = mesh.Size * (longestSide / longest)
 	end
-	local id = textureId()
+	local id = textureId(atlas)
 	if id ~= "" then
 		mesh.TextureID = id
 	end
@@ -124,7 +128,8 @@ end
 
 -- A fresh, unparented template. May yield when a mesh id is set; callers cache the result per object id.
 function ObjectVisual.build(def: ObjectDef): BasePart
-	return ObjectVisual.buildMesh(def.assetKey, def.id, def.size, def.tier) or standIn(def)
+	return ObjectVisual.buildMesh(def.assetKey, def.id, def.size, def.tier, def.atlas)
+		or standIn(def)
 end
 
 return ObjectVisual

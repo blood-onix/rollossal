@@ -235,6 +235,8 @@ local Config = {
 		maxWeatherParticles = 40,
 		maxDressingSlotShare = 0.15,
 		defaultMaxPlacements = 1500,
+		-- Billboard designs packed in the fronts and signs atlas (constitution XI; 013 D1).
+		billboardTextures = 8,
 	},
 	-- Weather emitter geometry (studs: the emission box above and around the camera; researcher R-08).
 	weatherEmitterHeight = 30,

@@ -1,23 +1,10 @@
 {
-  "verdict": "incomplete",
+  "verdict": "complete",
   "remaining": [],
-  "human": [
-    {
-      "item": "T048 driving a real D 3 ball up the Giant Oak ramp and over the Roof Run and cottage lanes",
-      "reason": "The oak deck now sits at the ramp end and a D 3 sphere walks it; a driven ball trips the anti-teleport check, so the owner's play is the check."
-    },
-    {
-      "item": "T016 / T047 thud sound and camera nudge by ear and eye, by-eye feel of the bob and wobble cues",
-      "reason": "Needs eyes and ears on a live ball. The cues were measured numerically in T047 and the rest is listed in docs/release-candidate.md as an owner check."
-    },
-    {
-      "item": "T045 Gate 6: owner approval of the shots and of the played build",
-      "reason": "Needs the owner's judgement and recorded approval in playtest.md; the agent cannot give it."
-    },
-    {
-      "item": "T035 second-client check that a taken light object disappears for another player",
-      "reason": "Needs two connected Studio clients; only one is available here. The outbox spec covers the server side."
-    }
-  ],
-  "summary": "scripts/check.sh passes. The Giant Oak deck is fixed in round 5 and no agent-doable work remains; what is left (driven-ball route checks, by-ear and by-eye cue checks, two-client check, gate 6) needs the owner."
+  "summary": "Marked done manually",
+  "completion": {
+    "source": "manual",
+    "at": "2026-11-07T15:06:22.439Z",
+    "by": "Roman_Tikhonov <bloodonix@gmail.com>"
+  }
 }

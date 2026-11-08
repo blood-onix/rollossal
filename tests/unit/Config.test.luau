@@ -90,6 +90,12 @@ test("Config: the run loop flag is a boolean", function()
 	expect.equal(type(Config.Flags.RunLoop), "boolean")
 end)
 
+test("Config: billboard designs are capped at 8", function()
+	local cap = Config.Budgets.billboardTextures
+	expect.equal(cap, 8)
+	expect.truthy(cap > 0 and cap == math.floor(cap))
+end)
+
 test("Config: mesh triangle budgets per tier are 500, 700, 1500, 3500, 5000", function()
 	local expected = { 500, 700, 1500, 3500, 5000 }
 	local actual = Config.Budgets.meshTriangles

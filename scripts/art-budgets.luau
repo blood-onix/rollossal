@@ -5,10 +5,12 @@
 -- specs/004-snow-village/contracts/art-pipeline.md "Budget source", generalised to both worlds by
 -- specs/007-downtown-holiday-city/contracts/rules-and-code.md §7: the union of the Snow Village objects (keyed
 -- by id) and the Downtown objects (keyed dt_<id>, theme-only objects and hero variants included), plus the hub.
+-- 013 adds the city asset kit (keyed ck_<id>, world "city_kit").
 
 local Config = require("../src/shared/Config")
 local SnowVillage = require("../src/shared/Content/Worlds/SnowVillage")
 local Downtown = require("../src/shared/Content/Worlds/Downtown")
+local CityKit = require("../src/shared/Content/CityKit")
 
 export type Budgets = {
 	meshTriangles: { number },
@@ -58,6 +60,15 @@ function ArtBudgets.meshes(): { MeshEntry }
 				size = variant.size or base.size,
 			})
 		end
+	end
+	-- The city asset kit (013): ck_* keys, a third key set disjoint from the other two.
+	for _, object in CityKit.objects do
+		table.insert(entries, {
+			key = object.assetKey :: string,
+			tier = object.tier,
+			size = object.size,
+			world = "city_kit",
+		})
 	end
 	return entries
 end

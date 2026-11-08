@@ -78,7 +78,7 @@ def cell_rgb(name, theme):
         if hero["name"] == name:
             if "ref" in hero:
                 return parse_hex(colour(worldByName[hero["ref"]], theme))
-            return parse_hex(hero["value"])
+            return parse_hex(colour(hero, theme))  # a plain hex, or per theme (wear cells, 013 rework)
     if name in lightByName:
         return parse_hex(colour(lightByName[name], theme))
     fail(f"unknown palette cell {name!r}")

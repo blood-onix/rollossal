@@ -79,13 +79,18 @@ export type Resolved = {
 
 local ThemeResolve = {}
 
--- slot.small=1 … slot.landmark=5 (data-model.md §3.1).
+-- slot.small=1 … slot.landmark=5 (data-model.md §3.1). slot.meme.t2 … t5 (013) is one slot per tier, because
+-- the meme originals span four sizes and resolve maps exactly one tier to a slot.
 local SLOT_TIERS: { [string]: number } = {
 	["slot.small"] = 1,
 	["slot.medium"] = 2,
 	["slot.yard"] = 3,
 	["slot.street"] = 4,
 	["slot.landmark"] = 5,
+	["slot.meme.t2"] = 2,
+	["slot.meme.t3"] = 3,
+	["slot.meme.t4"] = 4,
+	["slot.meme.t5"] = 5,
 }
 ThemeResolve.SLOT_TIERS = SLOT_TIERS
 
