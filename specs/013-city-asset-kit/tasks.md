@@ -297,3 +297,39 @@ Task: "T051 [P] [US4] Register English and Spanish localisation names in src/sha
 - [X] T062 Correct `docs/release-candidate.md` "013 City asset kit: mesh upload batch 1 and fronts atlas": it still says "8 clear so far, 10 dropped, at least 20 needed" and "upgraded `dt_*` meshes are not part of this batch yet", but `docs/design/shop-names.json` now has 22 `clear` names with cells `sign_00` to `sign_21`, the atlas PNGs were regenerated with them, and the 86 rebuilt `dt_*` FBX files are listed in the next section; state the final counts and fold the rebuilt `dt_*` re-upload into the batch instructions per T045, T060, FR-011 (partial)
 - [X] T063 Rebuild `dt_kiosk` (audit verdict `replace`, 96 triangles, floor 1050) to the highest triangle count that keeps the winter city Downtown N10 sum within 550,000 unculled and 290,000 culled (bevel and reveals as the other rebuilt meshes), re-export it, update its `art/export/manifest.json` row and `Assets.luau` stays unchanged, remove the `dt_kiosk` exception from `tests/unit/CityKit.test.luau` only if the new count reaches its floor, otherwise record the reached count and the reason in `docs/release-candidate.md` per FR-002, FR-003 downtown "kiosks", T025, T031 (partial)
 - [X] T064 Re-render the Gate 6 contact sheets after the final meshes and atlas: `building`, `street`, `park`, `suburbs`, `mainstreet`, `downtown` (rendered 20:30 to 20:33, before the `dt_*` rebuild at 20:39) and `signage`, `meme` (rendered before the 22-name atlas regenerated at 20:35), in `city` and `winter` via `art/scripts/contact_sheet.py`, into `specs/013-city-asset-kit/contact-sheets/<theme>/`, so the owner reviews the shipped geometry and sign names per FR-013, SC-005, T032, T044, T053 (partial)
+
+---
+
+## Phase 9: Tween-appeal rework (owner decision 2026-11-07)
+
+**Purpose**: The owner rejected the first sheets as too childish. Rework the kit to "stylised real with punch" (spec
+"Owner decision 2026-11-07", plan R1 to R6, research R-18, style bible sections 2, 3, 7, 8, 9). Constitution XI is
+unchanged. Owner checks go to `docs/release-candidate.md`.
+
+### Stage A: pilot (stops for the owner's go)
+
+- [X] T065 Record the decision in `spec.md`, `plan.md`, `research.md` (R-18 real dimensions) and `docs/design/08-style-bible.md` sections 2, 3, 7, 8, 9
+- [X] T066 Render the "before" tiles of the 8 pilot assets (current meshes, atlas and lighting) in `city` and `winter` with `art/scripts/street_shots.py`
+- [X] T067 Muted urban palette and wear cells: `docs/design/tokens.json` (`city`, `winter` world tokens; 8 reserved hero cells become `w-glass-lit`, `w-pavement-stained`, `w-paint-worn`, `w-road-slush`, `w-concrete`, `w-graffiti`, `w-snowcap`, `w-icicle`), per-theme hero values and patterns in `art/scripts/palette.py`, `scripts/design-tokens.py` and `tests/unit/Themes.test.luau`; regenerate with `python3 scripts/design-tokens.py` and `python3 art/scripts/palette.py`
+- [X] T068 Late-afternoon lighting as data: `Themes.city` / `Themes.winter` values, optional `shadowSoftness`, `geographicLatitude`, `grading` in `LightingDef` (`Themes.luau`, `GreyBoxRoom.luau`), applied in `src/server/WorldBuilder.luau`, tested in `tests/unit/Themes.test.luau`
+- [X] T069 Rework builder and pilot recipes in `art/scripts/kit_rework.py` (bevelled boxes, smooth round parts, limbs, snow caps, icicles) for `ck_house_gable_fence`, `ck_shop_row_three`, `ck_tower_slab`, `ck_bin_street`, `dt_fire_hydrant`, `ck_street_lamp_double`, `ck_tree_oak`, `ck_car_sedan`; buildings at least 60 % of their tier ceiling and at least 70 % muted by area
+- [X] T070 Pilot sizes from research R-18 in `src/shared/Content/CityKit.luau` (house 24.5, shop row 44, bin 3.4), `lune run scripts/art-sync` for `art/scripts/budgets.json`
+- [X] T071 Build the 8 pilot meshes through the Blender MCP, export them with `art/scripts/export_all.py --prefix <id> --partial`, update `art/export/manifest.json`
+- [X] T072 QA images in `specs/013-city-asset-kit/contact-sheets/pilot/`: street-level and top tile sheets in `city` and `winter`, one main-street and one suburb-corner scene per theme at D1 and D5, the before/after sheet
+- [X] T073 Per-asset report (triangles, % of tier ceiling, muted share) in `specs/013-city-asset-kit/contact-sheets/pilot/README.md`
+- [X] T074 Gate 2 smoke test for the lighting change: Studio playtest, console read, `Lighting` and `ColorCorrectionEffect` values, recorded in `specs/013-city-asset-kit/playtest.md` 🔒
+- [X] T075 `scripts/check.sh` exits 0; list the pilot images and the re-upload batch (2 theme atlases, 8 meshes) on `docs/release-candidate.md`; stop for the owner's go
+
+### Stage B: rollout (after the owner's go on Stage A)
+
+- [X] T076 Apply the approved direction to every asset in the finalised zone list through `art/scripts/kit_rework.py`, with research R-18 sizes and the owner's answers on towers and tier moves
+- [X] T077 Content mix: trim the playground to swing set and slide in default placements; add the urban props (traffic lights, parking meter, e-scooter dock, food truck, phone-repair kiosk, neon-edged shop sign, scaffolding, crane or skip, rooftop water tank, sports car, taxi, motorbike) inside existing tiers, with `CityKit.luau` entries, en-us and es-es names, `Assets.luau` keys as `""`
+- [X] T078 Re-run the 99-mesh audit (`audit_render.py`, `audit_report.py`) with the new rules (muted share, smooth round parts, 60 % of ceiling for tier 3 to 5) and give keep / upgrade / replace verdicts
+- [X] T079 Re-render all contact sheets (street-level and top) and street scenes in `city` and `winter`; Gate 6 package on `docs/release-candidate.md`; one batched mesh upload hand-off
+
+### Stage C: the small end (owner request 2026-11-08, "we're missing small objects")
+
+- [X] T080 Rebuild the Downtown pocket set (the 19 tier 1 `dt_*` meshes the new-rule audit marks upgrade) in the kit style through `art/scripts/kit_stage_c.py`, keeping keys, sizes and the winter Downtown N10 placement-weighted triangle sum under its ceiling; `build_objects.py --world downtown` re-applies them
+- [X] T081 Add small kit objects: 13 tier 1 and 12 tier 2 objects up to 3 studs across street, park, suburbs and main street, with `CityKit.luau` entries, en-us and es-es names, `Assets.luau` keys as `""`, and a test that the small end stays stocked
+- [X] T082 Re-run the rework audit; small-object and pocket contact sheets in `city` and `winter`; D1 and D5 street scenes with small objects at ball height
+- [X] T083 `scripts/check.sh` exits 0; Gate 2 smoke test 🔒; Stage C on the Gate 6 package and the upload batch in `docs/release-candidate.md`

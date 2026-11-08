@@ -25,7 +25,8 @@ vetting task, see `shop-names-and-memes.md`). Text uses a built-in 5 x 7 bitmap 
 
 | Region | Cells | Cell size | Y range |
 | --- | --- | --- | --- |
-| Sign cells `sign_00` to `sign_23` | 4 across, 6 down | 256 x 64 | 0 to 383 |
+| Sign cells `sign_00` to `sign_21` | 4 across, 6 down | 256 x 64 | 0 to 383 |
+| Wear cells `fx_snowcap`, `fx_glasslit` (013 rework, plan R2; listed under `strips`) | the last 2 slots of the sign grid | 256 x 64 | 320 to 383 |
 | Billboard cells `bb_*` | 4 across, 2 down | 256 x 128 | 384 to 639 |
 | Facade strips `fx_brick`, `fx_render`, `fx_glass`, `fx_shutter`, `fx_shopglaze`, `fx_cornice` | 6 stacked | 1,024 x 64 | 640 to 1,023 |
 

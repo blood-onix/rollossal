@@ -972,6 +972,19 @@ def downtown_recipes() -> dict:
     return downtown_recipes.all_recipes(sys.modules[__name__]), set(downtown_recipes.CORE_IDS)
 
 
+def rework_downtown() -> None:
+    """013 Phase 9: the dt_* meshes that art/scripts/kit_rework.py owns (the pilot hydrant, the Stage C pocket set) are
+    rebuilt over the plain recipes above, so a Downtown rebuild never reverts them."""
+    root = os.path.dirname(art_dir())
+    path = os.path.join(art_dir(), "scripts", "kit_rework.py")
+    ns = {"__name__": "kit_rework"}
+    exec(compile(open(path, encoding="utf-8").read(), path, "exec"), ns)
+    ns["ROOT"] = root
+    ns["load_stage_b"]()
+    ids = sorted(k for k in ns["RECIPES"] if k.startswith("dt_"))
+    ns["run"]({"root": root, "only": ids})
+
+
 def main() -> None:
     os.makedirs(source_dir(), exist_ok=True)
     world = world_from_argv()
@@ -1010,6 +1023,7 @@ def main() -> None:
             build_file(tier_file, ids, recipes, budgets["sizes"], rects, budgets)
         theme_ids = sorted(k for k in budgets["sizes"] if k not in core_ids)
         build_file(DOWNTOWN_THEME_FILE, theme_ids, recipes, budgets["sizes"], rects, budgets)
+        rework_downtown()
         return
 
     grouped = {}

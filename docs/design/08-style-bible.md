@@ -34,9 +34,34 @@ Quietest to loudest, in the order the eye should read a street:
 Rules: use token names only, never raw colours; a road is never lighter than its sidewalk; the largest area of any
 frame is ground or wall, not accent; `w-glow` is Neon on tier 4 to 5 hero props only.
 
+**Owner decision 2026-11-07: tween-appeal rework.** The target is "stylised real with punch": a real city a giant ball
+is eating, never a toy town.
+
+- **Muted urban base.** Ground, walls, roofs and every large surface use desaturated real-material colours: concrete,
+  brick, render, stone, asphalt, slate, weathered paint (`w-wall-*`, `w-roof-*`, `w-concrete`, `w-asphalt`,
+  `w-sidewalk`, `w-kerb`). Saturated colour is for accents only: shop signs, awnings, cars, hero props, meme originals.
+- **70 % rule.** Every building is at least 70 % muted roles by visible area. The muted roles are the ground, wall, roof,
+  concrete, glass, trim, door, metal, wood and wear cells; the accent roles are `w-accent-*`, `w-glow`, `w-graffiti` and
+  the fronts atlas sign cells. The share is reported per asset.
+- **Wear through the atlas.** Walls and roofs use the `grime` gradient (darker towards the base); `w-pavement-stained`,
+  `w-road-slush`, `w-paint-worn` (chipped street-furniture paint), `w-glass-lit` (lit windows for dusk) and
+  `w-graffiti` (abstract shapes, never words or letters) are atlas cells, so wear costs nothing at runtime.
+
 ## 3. Proportions and edge treatment
 
-- Real-world proportions. Only the one hero feature of a prop may be exaggerated, by at most 10 %.
+- Real-world proportions at 1 m = 3.2 studs (the sedan anchor; `specs/013-city-asset-kit/research.md` R-18). Bins,
+  bollards, hydrants, post boxes, lamps, signs and parking meters are tall and slim, never squat. Where a tier band caps
+  the real size, keep the real aspect ratio. Buildings use real storey heights (3 m housing, 4 to 4.5 m shop ground
+  floor) and a 2.1 m door, so a car never dwarfs a front door. Only the one hero feature of a prop may be exaggerated, by
+  at most 10 %.
+- **Smooth round forms** (owner decision 2026-11-07). No gem-faceted fruit, flowers, baubles, balls or foliage. Round
+  parts get enough segments to read round at D5 (at least 12 around for a part wider than 1 stud, 8 for a thin post) and
+  are smooth-shaded; hard edges stay sharp. Trees are clustered smooth canopies with a visible trunk and a branch
+  break-up.
+- **Budget where it is seen.** Tier 3 to 5 buildings and hero props reach at least 60 % of their tier ceiling, spent on
+  recessed window frames, roof overhangs and eaves, doors with steps, cornices, shopfront glazing and mullions,
+  balconies, AC units, rooftop water tanks, vents, drainpipes and fire escapes. Every building variant has one
+  distinctive silhouette feature so no two neighbours read the same. Tier 1 litter stays cheap.
 - Chunky, readable silhouettes at phone size: a feature smaller than 3 % of the object's longest side is dropped or
   merged. At D5 on a phone a hydrant must read as a hydrant from its outline alone.
 - One bevel segment on silhouette edges (Constitution XI), width about 1.5 % of the longest side (a 14-stud car: 0.2
@@ -97,20 +122,45 @@ Scene totals are a separate limit, measured by the heavy-scene benchmark (`docs/
   path, bins and hydrants face the road, shop fronts face the street. Random yaw is only for clutter that has no front
   (scattered pickups, debris). Placement yaw as data is tracked by features 004i/004j, not 009.
 - Props sit on the ground plane with their base flush; nothing floats or sinks.
+- **Content mix** (owner decision 2026-11-07). The city is urban and teen-coded, not a playground. The playground is one
+  compact kit (swing set and slide); the seesaw, sandpit and climbing frame are not in default placements. Urban props
+  fill the tiers instead: traffic lights, parking meter, e-scooter dock, food truck, phone-repair kiosk, neon-edged shop
+  sign (`w-glow` on tier 4 to 5 heroes only, section 2), scaffolding, construction crane or skip, rooftop water tank,
+  sports car, taxi and motorbike. The meme originals stay: humour works for this age.
 
 ## 8. Lighting
 
-Warm sun from `Themes.city`: `brightness 3`, `clockTime 13`, `fogStart 200`, `fogEnd 1000`, `atmosphere 0.25`,
-`light-sky` (143, 208, 255), `light-ambient` (154, 166, 184). Shadows read as soft blue-grey, not black. Fog only
-softens the far skyline; it never hides the street. Every capture is judged in this lighting.
+**Owner decision 2026-11-07.** Late-afternoon sun with strong directional contrast, data in `Themes.city` and
+`Themes.winter` (`src/shared/Content/Themes.luau`):
+
+| | `city` | `winter` |
+| --- | --- | --- |
+| `clockTime` | 16.8 | 16.5 |
+| `brightness` | 2.6 | 2.2 |
+| `geographicLatitude` | 41 | 52 |
+| `shadowSoftness` | 0.12 | 0.18 |
+| `fogStart` / `fogEnd` | 250 / 1100 | 180 / 900 |
+| `atmosphereDensity` | 0.3 | 0.34 |
+| grading `contrast` / `saturation` | 0.12 / 0.06 | 0.10 / -0.04 |
+| grading `tint` | warm (255, 246, 236) | cool (240, 246, 255) |
+| `light-sky` / `light-ambient` | cool blue-grey, darker than before | cool blue-grey |
+
+The sun is low and warm, so walls facing it glow and the other side falls into cool blue-grey shadow (the outdoor
+ambient is the `light-sky` cell). Shadows are crisp and read blue-grey, never black. Atmosphere adds a slight haze to
+the far skyline; fog never hides the street. Every capture is judged in this lighting; the Blender QA renders use the
+same values (`art/scripts/street_shots.py`).
 
 ## 9. Themes
 
 - **`city` first.** The look is established in the `city` theme and the five shots are taken in it. A theme swaps the
   atlas and never the meshes, so a prop that reads in `city` reads in every season.
-- **`winter` is dressing.** `w-season` is an accent trim: snow on the roof ridge and the top of the awning, a cap on
-  the hedge, a line on the car roof. Never a blanket over every top face; the wall, road and sidewalk colours must
-  still show. In the capture the seasonal colour is under 15 % of the visible area.
+- **`winter` is real weather, not a recolour** (owner decision 2026-11-07). Snow is geometry: thin caps on ledges,
+  sills, the roof ridge and eaves, car roofs and fence rails, coloured by `w-snowcap`; icicle accents under gutters and
+  awnings use `w-icicle`; road cells darken to slush (`w-road-slush`). Because a theme never swaps meshes, the same caps
+  exist in every theme, where `w-snowcap` is stone coping or flashing grey and `w-icicle` is dark gutter metal. Roofs keep
+  their slate or tile colour in winter; no roof is blanket white. `w-season` stays an accent trim: never a blanket over
+  every top face; the wall, road and sidewalk colours must still show, and the seasonal colour stays under 15 % of the
+  visible area.
 
 ## 10. The ball
 

@@ -140,7 +140,7 @@ test("Art: Downtown asks for 99 meshes, all keyed dt_ and disjoint from Snow Vil
 end)
 
 test(
-	"Art: the city kit asks for 84 meshes, all keyed ck_ and disjoint from Snow Village and Downtown",
+	"Art: the city kit asks for 121 meshes, all keyed ck_ and disjoint from Snow Village and Downtown",
 	function()
 		local count = 0
 		for key in kitKeys do
@@ -149,8 +149,8 @@ test(
 			expect.falsy(snowKeys[key], key)
 			expect.falsy(downtownKeys[key], key)
 		end
-		expect.equal(count, 84)
-		expect.equal(#CityKit.objects, 84)
+		expect.equal(count, 121)
+		expect.equal(#CityKit.objects, 121)
 		for _, object in CityKit.objects do
 			expect.truthy(Assets.meshes[object.assetKey :: string] ~= nil, object.id)
 		end
@@ -201,7 +201,7 @@ test(
 		expect.equal(#manifest.meshes, #SnowVillage.objects + 1 + downtownBuilt + kitBuilt)
 		if requireIds then
 			expect.equal(downtownBuilt, 99)
-			expect.equal(kitBuilt, 84)
+			expect.equal(kitBuilt, 121)
 		end
 	end
 )

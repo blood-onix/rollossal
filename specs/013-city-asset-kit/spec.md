@@ -172,3 +172,48 @@ Players encounter 5 to 8 deadpan, internet-humour sight gags in the world—buil
 - **In-House Blender Sourcing Default**: Per the owner's 2026-11-02 decision in `009-style-bible-bakeoff` (`docs/design/08-style-bible.md` section 11), all new and upgraded world meshes are built in Blender using the in-house pipeline to the style bible's detail bands unless the owner explicitly reopens CC0 pack imports (in which case CC0 licences are recorded per pack).
 - **Billboard Texture Cap**: Constitution Principle XI requires the small cap on billboard textures to live in `src/shared/Config.luau` and be stated by the feature that adds them; a default cap of `8` billboard textures (sufficient for deadpan meme billboards and city placeholder ads) will be defined in `Config.Budgets` unless adjusted in `plan.md`.
 - **Stand-In Fallback Behaviour**: Newly created meshes that have not yet been uploaded by the owner are registered in `src/shared/Assets.luau` with `""` so the existing spawner automatically uses their dimensional stand-in parts until the batched owner upload hand-off is completed.
+
+## Owner decision 2026-11-07: tween-appeal rework
+
+The owner reviewed the `city` and `winter` contact sheets and rejected the look as too childish for the 10 to 12
+audience: toy proportions, a candy palette, gem-faceted round shapes, too much playground content, no wear and flat
+lighting. The target is **"stylised real with punch"**: the clean real-life look of the big city roleplay and heist games
+on the platform, with high-contrast lighting. It must read as a real city that a giant ball is eating, never a toy town.
+Constitution XI is unchanged: one shared gradient atlas, one bevel segment, no SurfaceAppearance or PBR, no transparency,
+no per-prop lights, one MeshPart per absorbable, tier budgets in `Config.Budgets.meshTriangles`.
+
+Requirements added by the decision (FR-R1 to FR-R8; the full rule text is in `docs/design/08-style-bible.md`):
+
+- **FR-R1 Real proportions.** Street props use real dimensions at the game's stud scale (research R-18). Bins, bollards,
+  hydrants, post boxes, lamps, signs and parking meters are tall and slim. Hero exaggeration stays at most 10 %, one
+  feature. Buildings use real storey and door heights, so a car never dwarfs a front door.
+- **FR-R2 Muted urban base.** Walls, roofs, ground and large surfaces use desaturated real-material colours; saturated
+  colour only on accents (signs, awnings, cars, hero props, meme originals). Every building is at least 70 % muted roles
+  by visible area, reported per asset.
+- **FR-R3 Smooth round forms.** No gem-faceted fruit, flowers, baubles, balls or foliage. Round parts have enough
+  segments to read round at D5 and are smooth-shaded; hard edges stay sharp. Trees are clustered smooth canopies with a
+  visible trunk and branch break-up.
+- **FR-R4 Budget where it is seen.** Tier 3 to 5 buildings and hero props reach at least 60 % of their tier ceiling, spent
+  on recessed windows, eaves, steps, cornices, glazing and mullions, balconies, AC units, water tanks, vents, drainpipes
+  and fire escapes. Every building variant has one distinctive silhouette feature. Tier 1 litter stays cheap.
+- **FR-R5 Wear through the atlas.** Grime gradient on walls, stained pavement, lit windows, worn street-furniture paint
+  and abstract graffiti (no words or letters, Constitution IV), at no runtime cost.
+- **FR-R6 Content mix.** Playground cut to one compact kit (swing set and slide); seesaw, sandpit and climbing frame drop
+  out of default placements. Urban teen-coded props are added inside the existing tiers (traffic lights, parking meter,
+  e-scooter dock, food truck, phone-repair kiosk, neon-edged shop sign, scaffolding, crane or skip, rooftop water tank,
+  sports car, taxi, motorbike). The meme originals stay.
+- **FR-R7 Real winter.** Geometry snow caps on ledges, sills, car roofs and fences, icicle accents, slush-darkened road
+  cells; `w-season` stays an accent trim and no roof is blanket white.
+- **FR-R8 Lighting.** `Themes.city` and `Themes.winter` move to a late-afternoon sun with stronger directional contrast,
+  cooler blue-grey shadows, slight atmosphere and colour grading. Every capture is judged in it.
+
+**Staging (Constitution I).** Stage A is a pilot: one house, one shop row, one tower, a bin, a hydrant, a street lamp, a
+tree and a car, the palette and lighting change, and the QA images (contact sheets in both themes at a three-quarter
+street-level camera and the top view, one street scene per theme at D1 and D5, a before/after sheet). Stage A stops for
+the owner's go. Stage B applies the approved direction to the whole finalised zone list and re-runs the 99-mesh audit with
+the new rules. Gate 6 holds this feature on the owner's approval of the Stage B images.
+
+- **SC-R1**: The 8 pilot assets meet FR-R1 to FR-R5 and FR-R7, with triangle use reported as a % of the tier ceiling and
+  the muted share reported per building; the pilot images are listed on `docs/release-candidate.md`.
+- **SC-R2**: After Stage B, every asset in the finalised zone list meets FR-R1 to FR-R7 and the 99-mesh audit is re-run with
+  the new rules.

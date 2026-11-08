@@ -52,12 +52,15 @@ def _longest(bm) -> float:
 
 def apply(bm, tags, floor: int, cap: int):
     """Returns the new (face, swatch) list. `cap` is the triangle ceiling (60 % of the budget)."""
+    # Adding a layer invalidates every BMFace reference held outside the bmesh (Blender 4.x+), so the tags are carried
+    # over by face index. Before 2026-11-07 they were read through the stale references, every one was skipped as
+    # removed, and all faces fell back to w-metal (found by the Phase 9 audit, T078).
+    bm.faces.index_update()
+    by_index = [(face.index, swatch) for face, swatch in tags if face.is_valid]
     layer = bm.faces.layers.string.get("swatch") or bm.faces.layers.string.new("swatch")
-    for face, swatch in tags:
-        if not face.is_valid:
-            continue
-        face[layer] = swatch.encode()
     bm.faces.ensure_lookup_table()
+    for index, swatch in by_index:
+        bm.faces[index][layer] = swatch.encode()
     longest = _longest(bm)
 
     # 1. silhouette bevel on the longest hard edges that fit under the floor (a trial copy sizes the edge count)

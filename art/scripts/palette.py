@@ -85,7 +85,7 @@ def theme_cells(theme):
         out[hero["name"]] = (
             parse_hex(colour(world[[t["name"] for t in world].index(hero["ref"])], theme))
             if "ref" in hero
-            else parse_hex(hero["value"])
+            else parse_hex(colour(hero, theme))
         )
     return out
 
@@ -180,19 +180,82 @@ def atlas_pixels(theme):
         offset = (y * B.SIZE + x) * 3
         buffer[offset:offset + 3] = bytes(rgb)
 
+    styles = cell_styles()
     for index in range(64):
         name = atlas_cell_names()[index]
         col, row = index % B.CELLS_ACROSS, index // B.CELLS_ACROSS
         x0, y0 = col * B.CELL_W, row * B.CELL_H
         rgb = theme_rgb[name]
+        gradient, pattern = styles.get(name, (None, None))
+        grad = grime_factor if gradient == "grime" or pattern == "grime" else factor
         for y_in_cell in range(B.CELL_H):
-            row_rgb = bytes(shade(rgb, factor(y_in_cell)))
+            row_rgb = shade(rgb, grad(y_in_cell))
+            row_bytes = bytes(row_rgb)
             for x in range(B.CELL_W):
                 offset = ((y0 + y_in_cell) * B.SIZE + x0 + x) * 3
-                buffer[offset:offset + 3] = row_rgb
+                if pattern in ("stain", "chips", "graffiti"):
+                    buffer[offset:offset + 3] = bytes(wear_pixel(pattern, row_rgb, x, y_in_cell, theme_rgb))
+                else:
+                    buffer[offset:offset + 3] = row_bytes
 
     paint_strips(put, theme_rgb)
     return buffer
+
+
+def cell_styles():
+    """Cell name -> (gradient, pattern) for the cells that carry them (013 tween-appeal rework, FR-R5):
+    a w-* token may set "gradient": "grime"; a hero cell may set "pattern" (grime, stain, chips, graffiti)."""
+    world, heroes, _ = cell_names()
+    out = {}
+    for token in world:
+        if token.get("gradient"):
+            out[token["name"]] = (token["gradient"], None)
+    for hero in heroes:
+        if hero.get("pattern"):
+            out[hero["name"]] = (None, hero["pattern"])
+    return out
+
+
+def grime_factor(row_in_cell):
+    """Wall grime: the plain gradient over the top 70 % of a face, then darker towards the base (rain splash, dirt)."""
+    t = row_in_cell / (B.CELL_H - 1)
+    if t <= 0.7:
+        return 1.06 - 0.12 * t / 0.7
+    return 0.94 - 0.22 * (t - 0.7) / 0.3
+
+
+def cell_hash(x, y, salt):
+    """Deterministic integer hash in [0, 1) (no random module: the atlas is pinned by its pixel hash)."""
+    h = (x * 374761393 + y * 668265263 + salt * 2147483647) & 0xFFFFFFFF
+    h = ((h ^ (h >> 13)) * 1274126177) & 0xFFFFFFFF
+    return ((h ^ (h >> 16)) & 0xFFFF) / 65536.0
+
+
+def wear_pixel(pattern, rgb, x, y, theme_rgb):
+    """Stains (darker blotches), chips (lighter flecks of worn paint) and graffiti (abstract colour shapes, no letters)."""
+    if pattern == "stain":
+        # blotches on an 8 px lattice: a cell is stained when its hash is low; soft 1 px fringe
+        cx, cy = x // 8, y // 8
+        if cell_hash(cx, cy, 3) < 0.18:
+            return shade(rgb, 0.8)
+        if cell_hash(x, y, 5) < 0.02:
+            return shade(rgb, 0.7)
+        return rgb
+    if pattern == "chips":  # sparse 4 px chips of bare metal and a few rust flecks, dense near the base (kicks)
+        near_base = y > 48
+        if cell_hash(x // 4, y // 4, 7) < (0.07 if near_base else 0.025):
+            return shade(theme_rgb["w-metal"], 0.85)
+        if cell_hash(x // 6, y // 6, 11) < 0.012:
+            return shade(theme_rgb["w-wood"], 0.75)
+        return rgb
+    # graffiti: three overlapping abstract shapes (two discs and a slanted band) in accent colours
+    shapes = (("w-accent-pink", (34, 30, 20)), ("w-accent-teal", (78, 24, 17)), ("w-accent-yellow", (100, 44, 12)))
+    for role, (cx, cy, r) in shapes:
+        if (x - cx) ** 2 + ((y - cy) * 1.4) ** 2 <= r * r:
+            return shade(theme_rgb[role], 0.92)
+    if abs((x - 2 * y) - 4) < 7 and 10 < x < 118:
+        return shade(theme_rgb["w-accent-orange"], 0.9)
+    return rgb
 
 
 def atlas_cell_names():

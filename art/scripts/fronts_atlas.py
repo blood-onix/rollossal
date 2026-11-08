@@ -4,7 +4,9 @@
 # names, each with its `cell`). Text is a built-in 5 x 7 bitmap font scaled up; no font file, no network.
 #
 # Layout, identical on every theme (px, row 0 at the top; 2 px inset on every side of a cell or strip):
-#   sign_00 .. sign_23   24 cells, 4 across x 6 down, 256 x 64,  y 0..383     one shop name each, two lines at most
+#   sign_00 .. sign_21   22 cells, 4 across x 6 down, 256 x 64,  y 0..383     one shop name each, two lines at most
+#   fx_snowcap, fx_glasslit  the last two 256 x 64 cells of that grid (013 rework, plan R2): snow caps (stone coping
+#                        outside winter) and lit windows; listed under "strips" because they are facade surfaces
 #   bb_*                  8 cells, 4 across x 2 down, 256 x 128, y 384..639    the billboard designs (the cap)
 #   fx_*                  6 strips, stacked, 1,024 x 64,          y 640..1023  facade strips
 # Writes art/atlases/fronts/<themeId>.png and art/atlases/fronts/fronts.json (layout, names, pixel SHA-256 per theme).
@@ -23,7 +25,8 @@ import palette as P
 
 SIZE = 1024
 INSET = 2
-SIGN_W, SIGN_H, SIGN_COLS, SIGN_COUNT = 256, 64, 4, 24
+SIGN_W, SIGN_H, SIGN_COLS, SIGN_COUNT = 256, 64, 4, 22
+WEAR_NAMES = ["fx_snowcap", "fx_glasslit"]  # in sign grid slots 22 and 23
 BB_W, BB_H, BB_COLS, BB_TOP = 256, 128, 4, 384
 BB_NAMES = ["bb_404", "bb_chart", "bb_loading", "bb_empty", "bb_arrow", "bb_testcard", "bb_nested", "bb_buffering"]
 FX_NAMES = ["fx_brick", "fx_render", "fx_glass", "fx_shutter", "fx_shopglaze", "fx_cornice"]
@@ -257,17 +260,21 @@ def paint_strip(c, rgbs, index, theme):
     x0, y0, w, h = fx_rect(index)
     name = FX_NAMES[index]
     trim, glass, door = rgbs["w-trim"], rgbs["w-glass"], rgbs["w-door"]
+    grime = [P.grime_factor(round(y * (P.B.CELL_H - 1) / (h - 1))) for y in range(h)]  # darker towards the base
     if name == "fx_brick":
         base = rgbs["w-wall-b"]
+        mortar_rgb = P.shade(rgbs["w-kerb"], 1.15)
         for y in range(h):
             for x in range(w):
                 mortar = (y % 8) < 2 or ((x + (y // 8 % 2) * 8) % 16) < 2
-                c.put(x0 + x, y0 + y, trim if mortar else base)
+                tone = 0.92 + 0.08 * P.cell_hash((x + (y // 8 % 2) * 8) // 16, y // 8, 13)  # brick-to-brick variation
+                c.put(x0 + x, y0 + y, P.shade(mortar_rgb if mortar else base, grime[y] * (1.0 if mortar else tone)))
     elif name == "fx_render":
         base = rgbs["w-wall-a"]
-        c.rect(x0, y0, w, h, base)
-        for k in range(0, w, 48):
-            c.rect(x0 + k, y0 + (k * 7) % h, 24, 1, rgbs["w-wall-c"])
+        for y in range(h):
+            for x in range(w):
+                streak = (x % 97) < 3 and y > h * 0.3  # rain streaks below the sills
+                c.put(x0 + x, y0 + y, P.shade(base, grime[y] * (0.9 if streak else 1.0)))
     elif name == "fx_glass":
         c.rect(x0, y0, w, h, glass)
         for k in range(0, w, 64):
@@ -296,6 +303,17 @@ def paint_strip(c, rgbs, index, theme):
             c.rect(x0, y0, w, 4, rgbs["w-season"])  # thin season trim, under 15 % of the strip
 
 
+def paint_wear(c, rgbs, index):
+    x0, y0, w, h = sign_rect(SIGN_COUNT + index)
+    if WEAR_NAMES[index] == "fx_snowcap":
+        for y in range(h):
+            c.rect(x0, y0 + y, w, 1, P.shade(rgbs["w-snowcap"], 1.04 - 0.12 * y / (h - 1)))
+    else:  # fx_glasslit: warm lit pane with a dark frame and a cross mullion
+        c.rect(x0, y0, w, h, rgbs["w-metal-dark"])
+        c.rect(x0 + 6, y0 + 6, w - 12, h - 12, rgbs["w-glass-lit"])
+        c.rect(x0 + w // 2 - 2, y0, 4, h, rgbs["w-metal-dark"])
+
+
 def atlas_pixels(theme, shops):
     rgbs = P.theme_cells(theme)
     c = Canvas()
@@ -305,6 +323,8 @@ def atlas_pixels(theme, shops):
         paint_billboard(c, rgbs, index)
     for index in range(len(FX_NAMES)):
         paint_strip(c, rgbs, index, theme)
+    for index in range(len(WEAR_NAMES)):
+        paint_wear(c, rgbs, index)
     return c.buf
 
 
@@ -327,7 +347,8 @@ def layout(shops):
         "version": 1, "size": SIZE, "inset": INSET,
         "signs": signs,
         "billboards": {name: inner(*bb_rect(i)) for i, name in enumerate(BB_NAMES)},
-        "strips": {name: inner(*fx_rect(i)) for i, name in enumerate(FX_NAMES)},
+        "strips": {**{name: inner(*fx_rect(i)) for i, name in enumerate(FX_NAMES)},
+                   **{name: inner(*sign_rect(SIGN_COUNT + i)) for i, name in enumerate(WEAR_NAMES)}},
     }
 
 

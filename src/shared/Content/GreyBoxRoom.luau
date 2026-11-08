@@ -122,6 +122,14 @@ export type EnvironmentDef = {
 	blocks: { BlockDef },
 	markers: { MarkerDef },
 }
+-- Colour grading (one ColorCorrectionEffect in Lighting). tint is RGB 0..255.
+export type GradingDef = {
+	brightness: number,
+	contrast: number,
+	saturation: number,
+	tint: { number },
+}
+
 export type LightingDef = {
 	ambient: { number },
 	outdoorAmbient: { number },
@@ -133,6 +141,10 @@ export type LightingDef = {
 	atmosphereDensity: number,
 	atmosphereColor: { number },
 	atmosphereDecay: { number },
+	-- Optional (013 tween-appeal rework, style bible section 8): applied by WorldBuilder.applyLighting when set.
+	shadowSoftness: number?,
+	geographicLatitude: number?,
+	grading: GradingDef?,
 }
 
 -- Theme additions (005, specs/005-theme-art-pipeline/data-model.md §3).

@@ -33,6 +33,7 @@ local FALLBACK_GREY = Color3.fromRGB(150, 150, 150)
 local HUB_FLOOR_THICKNESS = 1
 local PAD_THICKNESS = 0.2
 local ATMOSPHERE_NAME = "WorldAtmosphere"
+local GRADING_NAME = "ThemeGrading"
 local DEFAULT_HUB_FLOOR = { 110, 110, 110 }
 local DEFAULT_HUB_PAD = { 150, 150, 150 }
 -- Authored footprint of art/export/hub.fbx in studs (the hub has no ObjectDef size rule).
@@ -521,6 +522,29 @@ function WorldBuilder.applyLighting(lighting: LightingDef)
 	settings.Density = lighting.atmosphereDensity
 	settings.Color = colour(lighting.atmosphereColor)
 	settings.Decay = colour(lighting.atmosphereDecay)
+
+	-- Optional (013 tween-appeal rework). A world without them keeps the place's own values.
+	if lighting.shadowSoftness ~= nil then
+		Lighting.ShadowSoftness = lighting.shadowSoftness
+	end
+	if lighting.geographicLatitude ~= nil then
+		Lighting.GeographicLatitude = lighting.geographicLatitude
+	end
+	local grade = Lighting:FindFirstChild(GRADING_NAME)
+	if lighting.grading ~= nil then
+		if grade == nil then
+			grade = Instance.new("ColorCorrectionEffect")
+			grade.Name = GRADING_NAME
+			grade.Parent = Lighting
+		end
+		local effect = grade :: ColorCorrectionEffect
+		effect.Brightness = lighting.grading.brightness
+		effect.Contrast = lighting.grading.contrast
+		effect.Saturation = lighting.grading.saturation
+		effect.TintColor = colour(lighting.grading.tint)
+	elseif grade ~= nil then
+		grade:Destroy()
+	end
 end
 
 -- One template per object type, built on first use (a mesh template yields while the asset loads).

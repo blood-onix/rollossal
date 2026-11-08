@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-07",
+  "generated": "2026-11-08",
   "blender": "5.2.3 LTS",
   "atlas": "art/atlases",
   "palette": "palette.png",
@@ -112,590 +112,849 @@
     {
       "id": "ck_barbecue",
       "tier": 2,
-      "triangles": 280,
-      "bytes": 23900,
-      "sha256": "0b15077c6e42bd9e254d7091a62e25385708794eb6b14c7525e68e1a67b2ad4e"
+      "triangles": 648,
+      "bytes": 31772,
+      "sha256": "3d4119fa11d759aa1364518c4850184e25bb5f19e6fbff0c4bc9320c630e008b"
     },
     {
       "id": "ck_bike_rack",
       "tier": 2,
-      "triangles": 376,
-      "bytes": 24604,
-      "sha256": "408efcc023235d0411579a7cd542bb925087290ddda1fefacf2627c25260eb08"
+      "triangles": 696,
+      "bytes": 33996,
+      "sha256": "ea17dd3303522646eef1cb37bcf3072a4fc5db1b57c1ca5c9831af018fb239f3"
     },
     {
       "id": "ck_billboard_404",
       "tier": 4,
-      "triangles": 504,
-      "bytes": 24540,
-      "sha256": "360d5fcccd8b83bdccb8f77f2dc2a3818e8a511be5b83afc4121734619866c7e"
+      "triangles": 2316,
+      "bytes": 56636,
+      "sha256": "b21c57660f09a2fc2ded362c71df9b46260ff914e49ae966e82e3b13a0969749"
     },
     {
       "id": "ck_billboard_arrow",
       "tier": 4,
-      "triangles": 504,
-      "bytes": 24556,
-      "sha256": "565723a36671e198b9cb3f513676ae242543d76fadcc1d54e5b6eff7f7c60e90"
+      "triangles": 2316,
+      "bytes": 56588,
+      "sha256": "1f19fb1b302fbc5303f0f5213142119ae3ff285541ef6e0740524a4c8d0862b8"
     },
     {
       "id": "ck_billboard_chart",
       "tier": 4,
-      "triangles": 504,
-      "bytes": 24556,
-      "sha256": "3a227c7b1ded1890a1b72d61119920beed8aa8ff5dbb49052f821a0b2e24df85"
+      "triangles": 2316,
+      "bytes": 56620,
+      "sha256": "a8eabe3bcba55d4201069f5546c3a8c3fd401aa431171aee911aedf8a6c706bc"
     },
     {
       "id": "ck_billboard_empty",
       "tier": 4,
-      "triangles": 504,
-      "bytes": 24540,
-      "sha256": "feec7bc0e27cb2c55dcd579d3865ccee939b8944800fb73f2a884e3ceccbd17c"
+      "triangles": 2316,
+      "bytes": 56540,
+      "sha256": "ae6b50eaa7b406db3a5d9123251b034e0157c0d3a7e8fdf1cc7d749a4c3d7cb8"
     },
     {
       "id": "ck_billboard_loading",
       "tier": 4,
-      "triangles": 504,
-      "bytes": 24540,
-      "sha256": "11d1e47724c501717f7fbc4a9e54b3431aa0545fc32fe3daf2e007a83cfc461d"
+      "triangles": 2316,
+      "bytes": 56652,
+      "sha256": "d3bf51e51bbf8ed6507bfdfba90d7b4c44cd7276e5577746de5b4efdd7439fb4"
     },
     {
       "id": "ck_billboard_nested",
       "tier": 5,
-      "triangles": 504,
-      "bytes": 24604,
-      "sha256": "90711e0aa65e64a0477563142111e2097c791772206fe961974c870f428b4ed8"
+      "triangles": 3760,
+      "bytes": 78828,
+      "sha256": "bde7a075df6ebb6a7346e7434059a3f6f5290977792e324124cf18420e32f567"
     },
     {
       "id": "ck_billboard_testcard",
       "tier": 5,
-      "triangles": 504,
-      "bytes": 24604,
-      "sha256": "b08bfca048809a5139254a68633cbb5a0a3559d3acfdade15b21acb5f79600f7"
+      "triangles": 3760,
+      "bytes": 78908,
+      "sha256": "41d6ef0a34cb4a34ea312e3ca8b3a926fc678e0e7498f9a4916ab821e59c61da"
     },
     {
       "id": "ck_bin_street",
       "tier": 2,
-      "triangles": 280,
-      "bytes": 22812,
-      "sha256": "2756761a3ca7ecd4f77f5be7b44743dcb13380251b80d4b7e950a2049007b664"
+      "triangles": 628,
+      "bytes": 30092,
+      "sha256": "1d404d5958f29f6534dc245f53f33aa866e469bc40aa382d65b1cdfa00c588a1"
+    },
+    {
+      "id": "ck_bird_bath",
+      "tier": 2,
+      "triangles": 400,
+      "bytes": 26236,
+      "sha256": "7aebe549e68df406e889cb567476106219ebdd821281400942179b1e1bcfe476"
+    },
+    {
+      "id": "ck_bistro_chair",
+      "tier": 2,
+      "triangles": 384,
+      "bytes": 26124,
+      "sha256": "b3e5aae396a954f5677392fa9d942eb73fdf26f25c721bc637f172369f890f86"
     },
     {
       "id": "ck_bollard",
       "tier": 1,
-      "triangles": 164,
-      "bytes": 21612,
-      "sha256": "6c90cf8ea48bd36082837368636481db24c756f3b19336109725317f57bde495"
+      "triangles": 236,
+      "bytes": 22924,
+      "sha256": "21868b894207a5c35ed9e39f1f30f19f23e294868f6774c1b95b41937e7265a4"
     },
     {
       "id": "ck_bus_stop_pole",
       "tier": 2,
-      "triangles": 228,
-      "bytes": 21964,
-      "sha256": "bc03021ae1caa36d41da593507b16c692cc540cc2659dd3d91c253dc7354a190"
+      "triangles": 464,
+      "bytes": 26780,
+      "sha256": "c11be258995d0f7d9134cc5ef2234e245a0551eefa0c6c47f0a04ea9d12e2ab1"
     },
     {
       "id": "ck_bush",
       "tier": 2,
-      "triangles": 360,
-      "bytes": 29884,
-      "sha256": "96a1c157d096c89d2e3ad3655c4bac37ba5630f822eebb338f5f42de2b6fc76f"
+      "triangles": 608,
+      "bytes": 31724,
+      "sha256": "582d349373a446e3617b9888482d9ae3602f7dfa68394e19d65be561a0d80c7d"
     },
     {
       "id": "ck_cafe_table_parasol",
       "tier": 3,
-      "triangles": 456,
-      "bytes": 26060,
-      "sha256": "fb885c5481e040afabf7528801b73bab0577318427c2bf79e8967c24c193f383"
+      "triangles": 1288,
+      "bytes": 42716,
+      "sha256": "59de819311303abcd83cc0caddcf08f5cd63b3ce8fac74bd24df0b9f97a1d99e"
     },
     {
       "id": "ck_car_estate",
       "tier": 4,
-      "triangles": 1068,
-      "bytes": 31644,
-      "sha256": "b5d792551e2be6e8ff3e8dc4edc1596c36a4aeb92e72b85bb0f2e835bfc521ae"
+      "triangles": 2584,
+      "bytes": 60876,
+      "sha256": "64dd0b707d95a1602598b2c9a47ffe5f0037d31be1ac36a9544c47c56f2a2564"
     },
     {
       "id": "ck_car_sedan",
       "tier": 4,
-      "triangles": 1056,
-      "bytes": 31644,
-      "sha256": "05759b1328d3dc409bfd28f87105ad0bdcc546da6f6bd6d6a4308d78e3fefd80"
+      "triangles": 2568,
+      "bytes": 60268,
+      "sha256": "7b15ca86147f624f60d28b40b6c3c3ab55bbf75cfa580103c0b86f73969d462f"
+    },
+    {
+      "id": "ck_car_sports",
+      "tier": 4,
+      "triangles": 2780,
+      "bytes": 61644,
+      "sha256": "c9a639dda38e54f39ca256381f2ec03d3416b71482522e490df0ca852d61b74d"
+    },
+    {
+      "id": "ck_cardboard_boxes",
+      "tier": 2,
+      "triangles": 180,
+      "bytes": 22492,
+      "sha256": "fede8a81959ea3b24036dce04a3532ca3f93d1824c3f81961f60142d1043bcab"
+    },
+    {
+      "id": "ck_chip_bag",
+      "tier": 1,
+      "triangles": 264,
+      "bytes": 24396,
+      "sha256": "21304e45359ef4601b8a8b818bf22b58226b95ff98448e2ceb03387b4d4cc049"
     },
     {
       "id": "ck_climbing_frame",
       "tier": 3,
       "triangles": 808,
       "bytes": 28044,
-      "sha256": "059cb6636f2ee6c82a81a729f18196dbbda8bba97a0e311733b0b0cf954c20dd"
+      "sha256": "e4201647785ad8f051b9110e657dc56eddae890438b5d3ed511023085299b16a"
+    },
+    {
+      "id": "ck_cooler",
+      "tier": 2,
+      "triangles": 200,
+      "bytes": 22172,
+      "sha256": "787b64e84dbff575bfe747a915232be7debf54890b93eecdd7b46c08bfb46944"
     },
     {
       "id": "ck_crossing_zebra",
       "tier": 3,
-      "triangles": 84,
-      "bytes": 19644,
-      "sha256": "c4b153adbc8fdaea9efb64275c0ac6b0d50385e66085a0129ee535d17a18abe1"
+      "triangles": 644,
+      "bytes": 28700,
+      "sha256": "e5c3f4a25ce62c856a84410c4fe39bed20a52a0b4cd6cc81d764c8edb05fc088"
+    },
+    {
+      "id": "ck_cupcake",
+      "tier": 1,
+      "triangles": 264,
+      "bytes": 24188,
+      "sha256": "6230fa228018552fb4ab26451199c142408186ec279d454c456fc59eefb98332"
     },
     {
       "id": "ck_flower_bed",
       "tier": 2,
+      "triangles": 588,
+      "bytes": 30124,
+      "sha256": "c33899b4f07241151755dba2c3b534dfa518a6073d74578e91872960ad4852e2"
+    },
+    {
+      "id": "ck_flower_buckets",
+      "tier": 2,
+      "triangles": 512,
+      "bytes": 28252,
+      "sha256": "6ebc0dd44305e783461fbe1215a5a9f7ad31f229ed0df945bb598c31173f4446"
+    },
+    {
+      "id": "ck_flower_pot",
+      "tier": 1,
       "triangles": 336,
-      "bytes": 25340,
-      "sha256": "d3680189657376bbce1e0ee9ea6b58ce3e4957f4a4384405b8af6f92bdcd94cf"
+      "bytes": 26076,
+      "sha256": "bee9dbb5a584e2cc661de04cbb91106f1e5f73d00249682f20a08d51192eb49e"
+    },
+    {
+      "id": "ck_flying_disc",
+      "tier": 1,
+      "triangles": 232,
+      "bytes": 22780,
+      "sha256": "94e613640c38a39e459d7b2ee34ad616d1cc054d36a73ca322849b68f78758ae"
+    },
+    {
+      "id": "ck_food_truck",
+      "tier": 4,
+      "triangles": 2684,
+      "bytes": 63212,
+      "sha256": "60e839f990669d92e8449aa912644ec43d85b541967d84b265d51a3c53ce54a6"
     },
     {
       "id": "ck_fruit_crates",
       "tier": 2,
-      "triangles": 320,
-      "bytes": 25804,
-      "sha256": "2f8de88389a2dfd4b5a5972583e4de49a5d45cede52997f5ebac0a725c287587"
+      "triangles": 572,
+      "bytes": 28940,
+      "sha256": "c1a0d50532804dbfee0df6cfc35b1dc53d895b86b7c509b6e5096228c603a97a"
     },
     {
       "id": "ck_garden_fence",
       "tier": 3,
-      "triangles": 596,
-      "bytes": 29564,
-      "sha256": "d09744d6882000efc3b84aaeed9e249957fc6eb34add8c3f64db059c845b954d"
+      "triangles": 1100,
+      "bytes": 37420,
+      "sha256": "23bfdb87991e89302544d875c007ed37b9891c4a223aed6195aa0ebfc9eaf7b8"
+    },
+    {
+      "id": "ck_garden_gnome",
+      "tier": 1,
+      "triangles": 372,
+      "bytes": 26204,
+      "sha256": "b893df59a922645d8a1f99dd071015a76ca4acd60ed2ee6a6cf9175d64033ae1"
     },
     {
       "id": "ck_garden_shed",
       "tier": 3,
-      "triangles": 632,
-      "bytes": 26060,
-      "sha256": "94982c5c9fc191cb9ecbe4afdf6ef1c167c551f222a1b61a44f39d14e6ac1d03"
+      "triangles": 860,
+      "bytes": 30620,
+      "sha256": "fb27c4679f11238212198d2df5b6c44b191bf819bc9a18168b0af3320fc77f85"
+    },
+    {
+      "id": "ck_grocery_bag",
+      "tier": 1,
+      "triangles": 256,
+      "bytes": 24444,
+      "sha256": "42906c7453e04436af48ade423f6a2c6c6ff290fba85b42a70d8701960c16778"
     },
     {
       "id": "ck_hedge_row",
       "tier": 3,
-      "triangles": 700,
-      "bytes": 36316,
-      "sha256": "873560fa0d63807fcf5601b6bf216e12c4afe8564fca49a0f3d19ee553621ac0"
+      "triangles": 1380,
+      "bytes": 44220,
+      "sha256": "301b4caeb942db55bb964b9d31dbcad3e25bf4ce8c4e67040f862f2b9dbf2c86"
     },
     {
       "id": "ck_house_bungalow",
       "tier": 4,
-      "triangles": 1108,
-      "bytes": 37004,
-      "sha256": "8c8a076c9ac06a581fc9b3cbf4706d67ec6fb0a2507d1405d3b7946ddc2b49ce"
+      "triangles": 2670,
+      "bytes": 58812,
+      "sha256": "ec8bee18fb32121aaa1ceb8667c2acd63cd16755763d55bca04d83704ccb63f3"
     },
     {
       "id": "ck_house_corner_bay",
       "tier": 4,
-      "triangles": 1372,
-      "bytes": 40060,
-      "sha256": "c3429305e931f25a9ff8a56e94bf2655c41da508d5626c05d03df1612ecbad79"
+      "triangles": 3172,
+      "bytes": 66988,
+      "sha256": "1f2ca8f84871b7be31240d455c244db914919e830ac9cd7b319e714676648543"
     },
     {
       "id": "ck_house_gable_fence",
       "tier": 4,
-      "triangles": 1424,
-      "bytes": 40476,
-      "sha256": "aafd8c438892610ca8d974b233df836e7695fb618d44319b77f068d366b5cbf7"
+      "triangles": 3234,
+      "bytes": 68012,
+      "sha256": "d17effae208180ee992baa1564333e30b51918057435a6840c98487132ad5844"
     },
     {
       "id": "ck_house_semi_garage",
       "tier": 4,
-      "triangles": 1412,
-      "bytes": 40204,
-      "sha256": "676dae9fe03c268b61a9d319173314a306f63e8474a907ac8716eb5cdaad53a9"
+      "triangles": 2314,
+      "bytes": 55084,
+      "sha256": "379af66af7608594dd4965a901337c5965869eb5e9cafa321cd80aaa38358c3b"
     },
     {
       "id": "ck_house_split_level",
       "tier": 4,
-      "triangles": 1252,
-      "bytes": 38844,
-      "sha256": "ab88ce8b39097e43361e8cd5c7f615dfbca280d83ab6a9661440b78532b4ed08"
+      "triangles": 2104,
+      "bytes": 49532,
+      "sha256": "58d614ab0245282b82f7f627950b904d6ddaafa67a158ff73bd6217cfed8b670"
     },
     {
       "id": "ck_house_terrace_pair",
       "tier": 4,
-      "triangles": 1160,
-      "bytes": 37788,
-      "sha256": "4e6dab3b41268bc2016470731214ba4d1085f4d1f837ca177280f6750a90e7ef"
+      "triangles": 2922,
+      "bytes": 62524,
+      "sha256": "7d38be12e0298741cbbd226ebd923b86e7af8c4a63bdd3dd61706571f32f2ba9"
     },
     {
       "id": "ck_kerb_corner",
       "tier": 3,
-      "triangles": 112,
-      "bytes": 20428,
-      "sha256": "4245ed303713bf47c6fbc27438d5adb4a7b233dbca82c6963b389210e46e6e5b"
+      "triangles": 1144,
+      "bytes": 38012,
+      "sha256": "4575eb3af1d176282dc3020f1524d2496feb8a1bff1405b3f4a0a1f3b8e56f10"
+    },
+    {
+      "id": "ck_kick_scooter",
+      "tier": 2,
+      "triangles": 388,
+      "bytes": 25948,
+      "sha256": "dd2525d7a25f1fbeb58b078694af9fd64d281a47e31ba770501c95e06d1c94b7"
+    },
+    {
+      "id": "ck_kids_bike",
+      "tier": 2,
+      "triangles": 556,
+      "bytes": 31388,
+      "sha256": "1b735cfbb0d825943018d1c073b646f2a2ba3bc44459584202c7818fe0eb6418"
     },
     {
       "id": "ck_landmark_arch",
       "tier": 5,
-      "triangles": 1916,
-      "bytes": 39612,
-      "sha256": "60bff2adb9e4478efe8b417ffb029d5992c2075dc92a3a3434228d226f9878ae"
+      "triangles": 4700,
+      "bytes": 92812,
+      "sha256": "96da5e748fcf303a0cdf62c4f7eceae04079398fad7b0278bb0f24aad01587a3"
     },
     {
       "id": "ck_landmark_clock_tower",
       "tier": 5,
-      "triangles": 1520,
-      "bytes": 37484,
-      "sha256": "d462382e2628b869f924b18ba0c0d0dc44b5bde6f148d00f04e92beaa34f5c63"
+      "triangles": 4864,
+      "bytes": 89772,
+      "sha256": "ae9c50bf1162012cca2dbcdee284350893b74474642fc31a7e9e6d3645a8a010"
     },
     {
       "id": "ck_landmark_obelisk",
       "tier": 5,
-      "triangles": 1550,
-      "bytes": 45212,
-      "sha256": "9df64513317d74ce12f36a8a8d948b65f9bad67f0f8c287f8a1463d4b578145c"
+      "triangles": 3826,
+      "bytes": 89532,
+      "sha256": "b6a3f5aca6fcb8325509c3f19a04696c32b28a8fa21ff3e5b769810dc409cdff"
     },
     {
       "id": "ck_lawn_mower",
       "tier": 2,
-      "triangles": 344,
-      "bytes": 23404,
-      "sha256": "218ceb1998bfc7183cddccee77ebfe98417a5204ddd433410dfff1adb2ca47a1"
+      "triangles": 656,
+      "bytes": 30092,
+      "sha256": "296f84a9e5e5445a141a09292a6e9322d8a0de9d52c41f3f973c57a3ea7cde33"
+    },
+    {
+      "id": "ck_leaf_pile",
+      "tier": 2,
+      "triangles": 380,
+      "bytes": 27100,
+      "sha256": "90f327661216fb3c7714923b8cf6ce3bd58ac49e12b5029676e4e801a0cab917"
     },
     {
       "id": "ck_limousine",
       "tier": 4,
-      "triangles": 1344,
-      "bytes": 35244,
-      "sha256": "e650d291e64c16494c506d9c6aa43844f36bef23404f96040bf032f566352316"
+      "triangles": 2596,
+      "bytes": 60268,
+      "sha256": "10a44f5d054dc659991a44110bebfbede76b0b96d9d0f30fdba83c65491545df"
     },
     {
       "id": "ck_meme_banana_scale",
       "tier": 5,
-      "triangles": 1574,
-      "bytes": 61884,
-      "sha256": "164b54701d23f5a7e2c645a2b27ad20f4afbe4fe6cec3ece9a25ae0c308fb4d8"
+      "triangles": 4000,
+      "bytes": 96076,
+      "sha256": "b908745d016996cea3e9e219fc83444734666135c6327af2627f506bc4631d8b"
     },
     {
       "id": "ck_meme_buffering_billboard",
       "tier": 4,
-      "triangles": 504,
-      "bytes": 24572,
-      "sha256": "92de975b9a8a6aa789b9a93f0d25778feb3055b3ac4b0cb32a1d9db3ac395e52"
+      "triangles": 2316,
+      "bytes": 56556,
+      "sha256": "b8942f8201262c866a68df6bfac5f7738ba655d1b2652d9f9e70f32c948e3d48"
     },
     {
       "id": "ck_meme_cone_statue",
       "tier": 4,
-      "triangles": 1082,
-      "bytes": 39452,
-      "sha256": "9fbbd3459a3bc461092bbfc3b6c42ed5f94c64555ebde417cc7efebe31cb5d7a"
+      "triangles": 2588,
+      "bytes": 74012,
+      "sha256": "47e9ba12f5bdbdd766031f645558cb4202858f4004eb932f5bab1da27401eb55"
     },
     {
       "id": "ck_meme_phone_1pc",
       "tier": 4,
-      "triangles": 1068,
-      "bytes": 30844,
-      "sha256": "fdde6e9106a336e08f90cb937ccec2f1c42b22d2fbf5693bac33451f4eaac3b2"
+      "triangles": 2160,
+      "bytes": 62332,
+      "sha256": "fae4ea2bd08bd788bb3682cfedf612d68b78758bfbe97ac6e61fecf1e8238626"
     },
     {
       "id": "ck_meme_pond_cart",
       "tier": 3,
-      "triangles": 508,
-      "bytes": 26892,
-      "sha256": "7a9a859b0f64a07692e8357b57e408dfa705c26f0cc9b041e27b8510a9db6baa"
+      "triangles": 1152,
+      "bytes": 41996,
+      "sha256": "50fd821d8ab61509fa99d9fa66c4597dce7bf2caabaf933da17be948f9c7589c"
     },
     {
       "id": "ck_meme_vacant_lot",
       "tier": 5,
-      "triangles": 448,
-      "bytes": 24108,
-      "sha256": "b4f95d07fb643a3ca7f8fd4b5ba58edd2268d7b408b19a773a8f361893960a69"
+      "triangles": 4444,
+      "bytes": 101516,
+      "sha256": "1fe97f4336c8ed213efcdb1ff98fcf1c9358f02af029ca8cdcb34450089b65f0"
     },
     {
       "id": "ck_meme_wet_floor_sign",
       "tier": 2,
-      "triangles": 236,
-      "bytes": 22412,
-      "sha256": "bc63ed127afd7cdcf02e0a12f98b01dc27150832b80cd576cdbc31457de01ba1"
+      "triangles": 416,
+      "bytes": 26876,
+      "sha256": "a81278ccbc8ff153500e32d37a0898c16e357ca777a13cc64e906cafa5a48e23"
     },
     {
       "id": "ck_midrise_brick_8",
       "tier": 5,
-      "triangles": 2184,
-      "bytes": 41468,
-      "sha256": "5bd58432e5063a1c75391ea281804d97e59452e3fcb572e884fed46e96092100"
+      "triangles": 4944,
+      "bytes": 76188,
+      "sha256": "53b2883a2924a1efd6a1e4f0baca833eccfb5b496465fd71a20364b16b01191a"
     },
     {
       "id": "ck_midrise_corner_clock",
       "tier": 5,
-      "triangles": 2752,
-      "bytes": 48156,
-      "sha256": "36b6115a6bb1e46428fd60299b0b981ff505318638feeb1cede14ee295684555"
+      "triangles": 4848,
+      "bytes": 82428,
+      "sha256": "286c894cd8c487a8ea13fe642ae621e01d067999868fd9380c323bda76d1e68f"
     },
     {
       "id": "ck_midrise_courtyard",
       "tier": 5,
-      "triangles": 2700,
-      "bytes": 46908,
-      "sha256": "85f49e8ca5518605a86959058970050a6a6c03ac428f1fd620494c9dd00a0c3d"
+      "triangles": 4888,
+      "bytes": 84076,
+      "sha256": "60f832038fed3f83baedba7ca9a79c5ada3178f8741311d410871e568b902edc"
     },
     {
       "id": "ck_midrise_mixed",
       "tier": 5,
-      "triangles": 2160,
-      "bytes": 41052,
-      "sha256": "e8c216929169852a6576de913257ab292af1989324f1e4ffbd2778dc86e59964"
+      "triangles": 4424,
+      "bytes": 71708,
+      "sha256": "dda0d4114a3968531fd1e0297b68c747eaabf1c2d89de296568ad51af0c1c0be"
     },
     {
       "id": "ck_midrise_render_10",
       "tier": 5,
-      "triangles": 2340,
-      "bytes": 42956,
-      "sha256": "b8fb67f2c710ee994cec5b920538de7260ff23bf5f52d943632902c8dfb8687a"
+      "triangles": 4808,
+      "bytes": 79196,
+      "sha256": "afbea43d71d978d343828920451676d389e2696f7ff195898e2e55bc7d5f86a1"
     },
     {
       "id": "ck_midrise_setback",
       "tier": 5,
-      "triangles": 2784,
-      "bytes": 48188,
-      "sha256": "3f0bd92bdcee0e3d246e5ba53935cd038cfdb8e2fa0c562b1cd300d3ac9c1e76"
+      "triangles": 4944,
+      "bytes": 81724,
+      "sha256": "66fd9455eeda289fd8844072517de785c9a81c820f09dfaa3fa5189d84e979d1"
+    },
+    {
+      "id": "ck_motorbike",
+      "tier": 3,
+      "triangles": 1448,
+      "bytes": 49580,
+      "sha256": "2cf0554696888887314b62d50dde63f284ed11ee36db29cc8154305d3e81983d"
+    },
+    {
+      "id": "ck_neon_sign",
+      "tier": 4,
+      "triangles": 2660,
+      "bytes": 71964,
+      "sha256": "8e1805708c3e543577edc2c626a46a14949b35e9b78d32b9f872810d4f961725"
+    },
+    {
+      "id": "ck_newspaper_bundle",
+      "tier": 1,
+      "triangles": 124,
+      "bytes": 21036,
+      "sha256": "77baa19af3468c8c6de4b08c37a7fcd816e169c6ca0d2dc3bbfec90a21ff9117"
+    },
+    {
+      "id": "ck_padlock",
+      "tier": 1,
+      "triangles": 176,
+      "bytes": 22252,
+      "sha256": "6f588bab90b7a27a123c9b4da2ecb9b5eb30ce3601ebf82313b8a92a93c259b6"
+    },
+    {
+      "id": "ck_parking_meter",
+      "tier": 3,
+      "triangles": 1256,
+      "bytes": 42252,
+      "sha256": "bd1aa66e54c8756eed40be8d10210266b18a6b6c88eff6c9186bc92758738b74"
     },
     {
       "id": "ck_path_curve",
       "tier": 3,
-      "triangles": 96,
-      "bytes": 20508,
-      "sha256": "78937efc0cd7f5810776f3dd37ddf531aede7b4cbb157e755f1c44f7ce1e7373"
+      "triangles": 584,
+      "bytes": 31036,
+      "sha256": "0da5af3be6123d77e6eee7b4df8672e4a1e5b064284d3c74cea7a2fbd9ac422b"
     },
     {
       "id": "ck_path_straight",
       "tier": 3,
-      "triangles": 72,
-      "bytes": 19516,
-      "sha256": "aa72c65ff8ca869267138ae36aa303b566c2702a2eb4c8e4e5975c3fac6774f2"
+      "triangles": 760,
+      "bytes": 29916,
+      "sha256": "583bce180ccf3b4275b297ed12e9c1a5c8b76c0e8ab27aac35685b780cc86df0"
+    },
+    {
+      "id": "ck_phone_repair_kiosk",
+      "tier": 3,
+      "triangles": 944,
+      "bytes": 33500,
+      "sha256": "4e4e1407fe8a2db7ec244f04d24d1583b2629a866a59cfa0202739a13d5495b0"
     },
     {
       "id": "ck_picnic_basket",
       "tier": 1,
-      "triangles": 178,
-      "bytes": 22156,
-      "sha256": "2079350b5146df2a9203d08b5c9e551c68624b169d49a5140193cc2b099a09c8"
+      "triangles": 388,
+      "bytes": 26300,
+      "sha256": "32ad52e919ea497de54cb5e39c204b2bfd89f046549083d9bd0c06f29a892ba7"
     },
     {
       "id": "ck_picnic_blanket",
       "tier": 2,
-      "triangles": 72,
-      "bytes": 19516,
-      "sha256": "af4fd93be441795a703cd4c935374007ea0a1ad21e1460c70e6e76f0697b00d9"
+      "triangles": 144,
+      "bytes": 20812,
+      "sha256": "03bdbfed4e86fe494e264b40528aca3f9d8b09d9cc1ea616172d5e4d427dcd4f"
     },
     {
       "id": "ck_planter_box",
       "tier": 2,
-      "triangles": 324,
-      "bytes": 26860,
-      "sha256": "98f3e970d10ae97911b331c1d7956f9a99a634b74ce2ef47b737aee730e85731"
+      "triangles": 640,
+      "bytes": 30460,
+      "sha256": "4d0dcf0bfcf5fda6368c6ebbe567c0cd39d02065683d03942b8d5fc331f2181d"
     },
     {
       "id": "ck_pond_edge",
       "tier": 3,
-      "triangles": 388,
-      "bytes": 27948,
-      "sha256": "ab655e930c9212d32a411c5cbcd1c875dfe89d031986a9702a3d738f593c1130"
+      "triangles": 1292,
+      "bytes": 44716,
+      "sha256": "ebab071d3250aaf35bb248aae1c95780a176fd9914f4a6f45f3a7e64bd241f13"
     },
     {
       "id": "ck_post_box",
       "tier": 2,
-      "triangles": 240,
-      "bytes": 22556,
-      "sha256": "6ec6ab5e146f2d3ea4312c8d1eb2373627f384f8ab57488bba49f876410939c6"
+      "triangles": 500,
+      "bytes": 27516,
+      "sha256": "b28100ce8aac8cacb859217081ac3c7d0d359af53e47ae749c16753328ea507d"
+    },
+    {
+      "id": "ck_potted_shrub",
+      "tier": 2,
+      "triangles": 404,
+      "bytes": 27116,
+      "sha256": "2dd1b83a7a6608e1d80a4522d8815b7f31d428174cdef38f143c99d5733577ef"
     },
     {
       "id": "ck_railing_section",
       "tier": 3,
-      "triangles": 492,
-      "bytes": 24396,
-      "sha256": "a12a194fc4a06be6a2407dec0ea6b1aadbc0ea233aebb0e587d400c09b1da0fe"
+      "triangles": 584,
+      "bytes": 28604,
+      "sha256": "0abe56f599b1953ac56773b220685058a7944f730314382ef5c99275195bd83a"
+    },
+    {
+      "id": "ck_rain_barrel",
+      "tier": 2,
+      "triangles": 436,
+      "bytes": 25436,
+      "sha256": "e144e6043ca82e99baa68bcc1820d5af9672d6e03162ac5959ef803f24fd2e9f"
+    },
+    {
+      "id": "ck_recycling_box",
+      "tier": 1,
+      "triangles": 208,
+      "bytes": 22380,
+      "sha256": "d75641693152808075cae40a21ee6312bbf07c27ba671960fe2392596fc648bb"
     },
     {
       "id": "ck_road_marking_arrow",
       "tier": 2,
-      "triangles": 32,
-      "bytes": 19196,
-      "sha256": "cc3cac5c308591e7a10a502c3c13c970593300c99baa500ae0c392899294c84a"
+      "triangles": 116,
+      "bytes": 20652,
+      "sha256": "496ccb0c728f10f3e901ebf408cd3b6c077d922f8503271076283f4e3349168b"
     },
     {
       "id": "ck_road_marking_dash",
       "tier": 2,
-      "triangles": 72,
-      "bytes": 19500,
-      "sha256": "f04619d4641dbb9adf4ee8f6c4589a0b0d732366c5dba0e003031eb27a1940d0"
+      "triangles": 264,
+      "bytes": 23036,
+      "sha256": "2015db05ce1c5aaa3d93fa3806d503b3605460fdd5f9ac236272e4475052f591"
+    },
+    {
+      "id": "ck_sand_pail",
+      "tier": 1,
+      "triangles": 308,
+      "bytes": 24812,
+      "sha256": "a75b176da6b83f48deeaf85746ba4ca6ce289e2f483795c11aa596a8f7a38080"
     },
     {
       "id": "ck_sandpit",
       "tier": 3,
       "triangles": 92,
       "bytes": 20300,
-      "sha256": "7e37ee77c9c5591312ad73b08059d1f4802c483ea4b76e78f602936676e678fd"
+      "sha256": "8f0f77b3cf5ca782676dfb8d3573c3db9b95313d9dbda24d3f53ed5045efd95c"
     },
     {
       "id": "ck_sandwich_board",
       "tier": 2,
-      "triangles": 284,
-      "bytes": 22732,
-      "sha256": "1cadf202d246f76058bc33bcd2438e7278c5edae41ea76b62455c62c071dd99e"
+      "triangles": 304,
+      "bytes": 23180,
+      "sha256": "ff180c8ef0e6228331b5ffaece72586b7689eb5b11bc3a7a57a00189fa38fd28"
+    },
+    {
+      "id": "ck_scaffolding",
+      "tier": 4,
+      "triangles": 2212,
+      "bytes": 50700,
+      "sha256": "d055cf7754eadb9b557585eb1d55a895d3a601c2d1b2d92fa77957e2631b03d0"
+    },
+    {
+      "id": "ck_scooter_dock",
+      "tier": 3,
+      "triangles": 1424,
+      "bytes": 44924,
+      "sha256": "a0e47d5d2c9e6f1799c20277931fe0409af0f66d1a7ba188523b5e3e24283001"
     },
     {
       "id": "ck_seesaw",
       "tier": 2,
       "triangles": 276,
       "bytes": 22364,
-      "sha256": "bc4321f7ea2850387b8f7b2b4eea66790d512550e7429a56c3ee222c262ff72b"
+      "sha256": "158f7b3ca4ce074deb50eba9127ba97e0f28b14027ca0332cff0c6eb7b6a858f"
     },
     {
       "id": "ck_shop_bakery",
       "tier": 4,
-      "triangles": 1128,
-      "bytes": 31436,
-      "sha256": "15c3e168703554147b76a1a64c7276a8f06d26637528c8fcd1fcde5dc5661a3b"
+      "triangles": 2164,
+      "bytes": 52172,
+      "sha256": "ddbb09f11c4d648a7015f52514a8a3aac74d2dc293d67d62b02bf0a2506a8797"
     },
     {
       "id": "ck_shop_bookshop",
       "tier": 4,
-      "triangles": 1236,
-      "bytes": 32732,
-      "sha256": "36ec9125afcb0d1f1355a3bc386af76f5e721e136abf6d8983a8e617d64d57f9"
+      "triangles": 2598,
+      "bytes": 59596,
+      "sha256": "d68bcf61f44db28a2feadc09fbcd081273b0f23ec7c30642faa3221885f05492"
     },
     {
       "id": "ck_shop_cafe",
       "tier": 4,
-      "triangles": 1056,
-      "bytes": 30652,
-      "sha256": "ccdd85c4949711d8f76252985febef6adba18e784ce13713e82fb424d578052b"
+      "triangles": 2264,
+      "bytes": 53308,
+      "sha256": "66c3a503cc574d13126c89b4fa030ca342826a71ea24812d732d9d4e0f4314aa"
     },
     {
       "id": "ck_shop_grocer",
       "tier": 4,
-      "triangles": 1176,
-      "bytes": 32316,
-      "sha256": "9820410b026c753f585264ae556b3a6b3cbc819dabf825ed9eeb38b1ffdac4d6"
+      "triangles": 2442,
+      "bytes": 53068,
+      "sha256": "74f011d279dfbda2a0e08c39abce168e356fcce1c79266629bdfe7163e1bcb7e"
     },
     {
       "id": "ck_shop_pharmacy_cross",
       "tier": 4,
-      "triangles": 1164,
-      "bytes": 32348,
-      "sha256": "820d4e21ffe76d088c80155b15c398548f778aa6fc0e8ca4ade586bf99741aba"
+      "triangles": 2452,
+      "bytes": 56956,
+      "sha256": "1d6ea7f05534fd4c6f90a742e8bb892408ec20fbc87b2f0cb41c7aa414af8b3d"
     },
     {
       "id": "ck_shop_pizzeria",
       "tier": 4,
-      "triangles": 1128,
-      "bytes": 31516,
-      "sha256": "3e25229c4caf785b6d652d730450681854247594a26210f3a85d9175aa66fab0"
+      "triangles": 2756,
+      "bytes": 59052,
+      "sha256": "1bd73b6eb41538fdd3b0aebd7c9edebb2c2ee76f0188bb186ef8dd30d25130bc"
     },
     {
       "id": "ck_shop_row_arcade",
       "tier": 5,
-      "triangles": 2940,
-      "bytes": 51084,
-      "sha256": "fd21f7a0d96d3a639ff719fddc69e619ee4aa899b1c9291e70c9d51feb697d29"
+      "triangles": 4920,
+      "bytes": 80204,
+      "sha256": "8b459a105b4f325b9ee4acf69b60922aa52ef3c4d9f657ecbf798fd3bfd66dc0"
     },
     {
       "id": "ck_shop_row_corner",
       "tier": 5,
-      "triangles": 2952,
-      "bytes": 51516,
-      "sha256": "1c2ce40a7883849ea45c0fa00803d4a8d61d4303ec10c5455856f8dc5a0652a0"
+      "triangles": 4856,
+      "bytes": 83804,
+      "sha256": "5889851ad6695fc53568d3ab3b2d3f5065a395809fa440cc97648672b601505a"
     },
     {
       "id": "ck_shop_row_three",
       "tier": 5,
-      "triangles": 2460,
-      "bytes": 45596,
-      "sha256": "fbee7a3d3d5ed9ea7884e564e490f95a951172342d694a04f46c4f47cb5a82cc"
+      "triangles": 4638,
+      "bytes": 77068,
+      "sha256": "093fcd68c3e4f5061659b7a7af7afba4a9bdc1086bccb646f5924b9d115a6455"
+    },
+    {
+      "id": "ck_skip",
+      "tier": 3,
+      "triangles": 1008,
+      "bytes": 37852,
+      "sha256": "50d592c3a86c5b7bb9e06f88d81970f33b58889ccaa4dc4f9ac6e6b1ea16680c"
     },
     {
       "id": "ck_slide",
       "tier": 3,
-      "triangles": 480,
-      "bytes": 24316,
-      "sha256": "8cf8ff26a2e4443c65323a71bd2a4707c7867c4682d8ee2880b0a3abcecf514f"
+      "triangles": 1063,
+      "bytes": 39100,
+      "sha256": "17a03a225fa9be99d77245545ff8531b7c38b285e9a58caf07aedb4f683289fc"
+    },
+    {
+      "id": "ck_soccer_ball",
+      "tier": 1,
+      "triangles": 224,
+      "bytes": 23020,
+      "sha256": "a125aa173522d18083de4b5c3a5e38485563c7ce8288f9295a638f24ae9772a0"
     },
     {
       "id": "ck_street_lamp_double",
       "tier": 3,
-      "triangles": 624,
-      "bytes": 27180,
-      "sha256": "e315670c056879620d816cab83e2af2f07aabd6443e458d6802c5f54cee55f36"
+      "triangles": 942,
+      "bytes": 35260,
+      "sha256": "5a7564cc90c9395095c76ebd5f5894698bd3794c0c1ac54c3d441470f3d87639"
     },
     {
       "id": "ck_street_sign",
       "tier": 2,
-      "triangles": 268,
-      "bytes": 22828,
-      "sha256": "060fa56d1a2c0468d7a4e27a3d9520e7c4ec7abda0d2e3432593ee73d39a83e1"
+      "triangles": 608,
+      "bytes": 29052,
+      "sha256": "3cf934fd6c474f1806d2ba16478a6c0e8291e2da728464e7f416a9d83d750c28"
     },
     {
       "id": "ck_subway_entrance",
       "tier": 4,
-      "triangles": 1332,
-      "bytes": 33980,
-      "sha256": "f0283926d2437e05e93e0482db46b298749c969d71b6667dd150dd8953edef81"
+      "triangles": 2344,
+      "bytes": 55164,
+      "sha256": "d3a9f38d727c6384d7ea06ba1f22e0dcb68c4b80001311e4bbc4afc5d17fa65c"
+    },
+    {
+      "id": "ck_sunglasses",
+      "tier": 1,
+      "triangles": 272,
+      "bytes": 23900,
+      "sha256": "daad32c82ead5d74516c357705728fdd967644ed411df1a33b8ec6b3c6a3491b"
     },
     {
       "id": "ck_swing_set",
       "tier": 3,
-      "triangles": 516,
-      "bytes": 25132,
-      "sha256": "59cb48238f329966bd5861aa315cb600d0a66afb940bf97cae55086525d1697d"
+      "triangles": 932,
+      "bytes": 35356,
+      "sha256": "4c24fa3e21664af41379b2c5de18e98a2b5a07af872d642c496a801596cf0d7e"
+    },
+    {
+      "id": "ck_taxi",
+      "tier": 4,
+      "triangles": 2836,
+      "bytes": 62076,
+      "sha256": "f35856a7e3c7fce9f872a668e4e8eb84bd2f780d4405cfd851f070cdc044518e"
+    },
+    {
+      "id": "ck_toolbox",
+      "tier": 2,
+      "triangles": 152,
+      "bytes": 21468,
+      "sha256": "f89b03778f50ceb6aa0df5c81855963fb0048e90580c519d68193b1d3163c2b1"
     },
     {
       "id": "ck_tower_crown",
       "tier": 5,
-      "triangles": 2904,
-      "bytes": 48972,
-      "sha256": "1016d2d4ac0e74d465f2df9e8c3e9836184627a10a0c663173e7f430f9e2c13a"
+      "triangles": 3326,
+      "bytes": 64876,
+      "sha256": "48f01ad0a540c7a40e3b2c7f3562d221ce52d94fe073e8dccd72061e8f9bd162"
     },
     {
       "id": "ck_tower_slab",
       "tier": 5,
-      "triangles": 2676,
-      "bytes": 47708,
-      "sha256": "42b7fe5089f7cc324bff0030d81788ff5a0c969f0fc32bad218a6956be6e8f26"
+      "triangles": 4564,
+      "bytes": 77244,
+      "sha256": "253dc25b72aebf2e75301ca147667a7eea36a128aa1f212f6d05a0a69fe24796"
     },
     {
       "id": "ck_tower_stepped",
       "tier": 5,
-      "triangles": 2724,
-      "bytes": 47708,
-      "sha256": "a089d6fde213aea1caaf59f6b1d4f237a1a68c395a2fac7bce14a7363be80a30"
+      "triangles": 3268,
+      "bytes": 62588,
+      "sha256": "50d735445e40d388a8c906fe7feb02ac886916ddce4f5a489a7ceecdebdc027d"
     },
     {
       "id": "ck_tower_twin",
       "tier": 5,
-      "triangles": 2736,
-      "bytes": 47100,
-      "sha256": "953c3a03ce65eca2b60c2000491d63cb11625b333c15c14a000b0f828a868271"
+      "triangles": 3660,
+      "bytes": 68812,
+      "sha256": "365b9731fcb457ec2245399cb918ee48da927c1747d15097ede16d8b7dcf8eee"
+    },
+    {
+      "id": "ck_traffic_cone",
+      "tier": 2,
+      "triangles": 232,
+      "bytes": 23100,
+      "sha256": "459b9bd7d5dc0f554e3d0226443a858b1d6df55ef4cac4e9caa3743ae4de9d99"
+    },
+    {
+      "id": "ck_traffic_lights",
+      "tier": 4,
+      "triangles": 3200,
+      "bytes": 73180,
+      "sha256": "104f54fee9183ba078b29054f5ab8892055f86338fde12a25437cdc03ab62939"
     },
     {
       "id": "ck_tram",
       "tier": 4,
-      "triangles": 1448,
-      "bytes": 35708,
-      "sha256": "3cbc12fd092613469ed842a4753c482596f8203fec4d95380aef0a7ac6a47317"
+      "triangles": 3068,
+      "bytes": 61772,
+      "sha256": "7d067eebb071ad9e1ac30eecd1fef9fa339763ab8889450615bc4b2de7081e6a"
     },
     {
       "id": "ck_trampoline",
       "tier": 3,
-      "triangles": 568,
-      "bytes": 26748,
-      "sha256": "7a6fde27bfe36fe17447a1d5b141c64087ab554ad88c45b059557d253f719a15"
+      "triangles": 1400,
+      "bytes": 46876,
+      "sha256": "f7b167ad8fb7b31cd5f8d25fb8918e8f25cd09c99cc444188588d61f9b233ad2"
     },
     {
       "id": "ck_tree_birch",
       "tier": 3,
-      "triangles": 532,
-      "bytes": 32460,
-      "sha256": "c00a2b472757d98d42099d1e2b0f38108a79643010123c6ab9718bbb5e9e8899"
+      "triangles": 1420,
+      "bytes": 47612,
+      "sha256": "ec9aab5891fd3a1501ce2ed1e6af4f024f7dd06e872ade5d0faa36b914801a1f"
     },
     {
       "id": "ck_tree_oak",
       "tier": 4,
-      "triangles": 1224,
-      "bytes": 54380,
-      "sha256": "4f9e24577b487f0194a9a56f3145d9c07f16afdaa03b10be6d702ea5a7534e0f"
+      "triangles": 2552,
+      "bytes": 72348,
+      "sha256": "37c0c2c7718775a8f065984d5f5ed800b88765802c9639a2af33818fe84cd820"
     },
     {
       "id": "ck_tree_pine",
       "tier": 4,
-      "triangles": 1074,
-      "bytes": 35180,
-      "sha256": "f648b5096ca187c2ac215c936e0eab25b5f5dd91e92f5ce7c671846751ac0e3c"
+      "triangles": 2204,
+      "bytes": 61452,
+      "sha256": "fd8d5c0b0002043cde352a31f1959edca02a1e054e9267381bf2ec58e33b30ef"
+    },
+    {
+      "id": "ck_water_tank",
+      "tier": 4,
+      "triangles": 2924,
+      "bytes": 68636,
+      "sha256": "5b9f717de2ce4ed6e811d354f95b8abb0c512164655f1102c071d8d9d782b050"
+    },
+    {
+      "id": "ck_watering_can",
+      "tier": 1,
+      "triangles": 216,
+      "bytes": 23260,
+      "sha256": "cbee6fbe632e6bbe169d05eadf36d52627ead11bb24e4a396816da876e586bbd"
     },
     {
       "id": "clock_tower",
@@ -744,693 +1003,693 @@
       "tier": 1,
       "triangles": 76,
       "bytes": 19916,
-      "sha256": "4e06a94868bda174a5384be725d377a2cd51e96bf5d230fc277b996aee22cdb5"
+      "sha256": "e35cbaa99975fe52945cd8d7574b34cc8a11f2aad87dea8d686850bcfc829153"
     },
     {
       "id": "dt_acoustic_guitar",
       "tier": 2,
       "triangles": 216,
       "bytes": 24460,
-      "sha256": "a3fa8f3c9fc66bae5138005f6424460bc012a5696ba70aae01110db0126f46d4"
+      "sha256": "6c8a14959f91adb1419a18b634f11818ca09683969c06aaac53de180300dcc77"
     },
     {
       "id": "dt_apartment_block",
       "tier": 5,
       "triangles": 1500,
-      "bytes": 42620,
-      "sha256": "6940327bf97e9bc851cab73d491fc1c160e32ce02951bd25b5f3555b326fd747"
+      "bytes": 42652,
+      "sha256": "f9b27c83f54fb963f3eae2f37bbefdc5b1ccbce986b5133b84b39bdfb0a81e10"
     },
     {
       "id": "dt_arcade_cabinet",
       "tier": 3,
       "triangles": 452,
-      "bytes": 28044,
-      "sha256": "827d56378a81bfaa8f6087987ce30186c8ee81d2ea122230d8d816c3093ec085"
+      "bytes": 28092,
+      "sha256": "63b897e129ba8f5dd7047ad5e828d75c0555b706ae53225b45254d2a834cb4c3"
     },
     {
       "id": "dt_basketball",
       "tier": 1,
-      "triangles": 156,
-      "bytes": 21916,
-      "sha256": "4126adbf01dbad64bbb7f84c82171723606183472278d4cbd8b69d8d0184d58c"
+      "triangles": 154,
+      "bytes": 22316,
+      "sha256": "0e01876b49d7759cb0f289d0dc7bb1635856145e64ba187bd78f5849614d64bd"
     },
     {
       "id": "dt_bauble",
       "tier": 1,
       "triangles": 76,
-      "bytes": 20412,
-      "sha256": "c0c94072c535bddd38d812fdcaaa32d0b27af5cc4d2dc01ab621503ae296042d"
+      "bytes": 20108,
+      "sha256": "cdc4816f539818980d1b4e74e2040ad46e42b2692ada7db196e735339cc81570"
     },
     {
       "id": "dt_beach_ball",
       "tier": 2,
       "triangles": 220,
       "bytes": 23996,
-      "sha256": "86ccc3b176939a13d2f4e6d1599f695177b26404f2d72107aaeb14254b3ab72d"
+      "sha256": "5956e83fbc583533cc139de4b8ad7f7057f87af24e360306ce361983533ff993"
     },
     {
       "id": "dt_bench",
       "tier": 3,
       "triangles": 456,
-      "bytes": 28172,
-      "sha256": "02337d3f8d0cab20bc41e219daf703ee4a1cab2e9e893aaa5b59e5d31c468752"
+      "bytes": 28076,
+      "sha256": "5ad53f60cb5083497b870b20a9ef6b6ffeeb76e19105b5851ed5f0e333d61c98"
     },
     {
       "id": "dt_bicycle",
       "tier": 3,
       "triangles": 452,
-      "bytes": 28044,
-      "sha256": "72cf00139fb9d3100a309784ab0fffc29cb8dd6eb47d613045a81bbd79742e50"
+      "bytes": 27916,
+      "sha256": "f075b6f7224e016e3882605dc0ceae05904eb7c619b4dc6584bc04747c152fb5"
     },
     {
       "id": "dt_big_street_tree",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 48124,
-      "sha256": "99daececa11ecd23bf806fff9358d2a348742bb79c2c38f4067fa79e17d23225"
+      "bytes": 47980,
+      "sha256": "df9dc04f975611083e1248419a24e7a404787cd492fd7ec2386c24c174f5c68d"
     },
     {
       "id": "dt_billboard",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 40732,
-      "sha256": "8ad8bc62ec9899b32b9a6a42c7e592f4c27a2eaf20eae2a4fc2fba716d5a278c"
+      "bytes": 40716,
+      "sha256": "28f4d56e35d35278d1543552582472dcd59c31a8d7e7fd943a6427c2b0d8ee3e"
     },
     {
       "id": "dt_boombox_speaker",
       "tier": 2,
       "triangles": 212,
-      "bytes": 22236,
-      "sha256": "930c5f1b54dab62489298cec375f9da307a789a004e073a83f78d452c90b41fc"
+      "bytes": 22284,
+      "sha256": "b2b9625d8c3b2ca448e95083a515ca02bead883779e2bb731cc3568c64e2af6d"
     },
     {
       "id": "dt_bottle_cap",
       "tier": 1,
       "triangles": 72,
-      "bytes": 19788,
-      "sha256": "2a8701d578eed00543476965c5af03b9335a491d282663b05ad995feb00cff09"
+      "bytes": 19932,
+      "sha256": "1d4a8c4587ad6aeebbf2c51962b2a06b7d01f933df84e952507250be8d136419"
     },
     {
       "id": "dt_bus_shelter",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 40252,
-      "sha256": "0e276fde7629d29cdafdae549747824a13afc81fe8bd2ab0291c8b74dfb90e3b"
+      "bytes": 39884,
+      "sha256": "cfd30c98215dd057c920a4514688ce0043463f7d529169962d619b371577c1ee"
     },
     {
       "id": "dt_cinema",
       "tier": 5,
       "triangles": 1500,
-      "bytes": 48076,
-      "sha256": "a42392757351c4113bb5e38905cd63306441acc99e8f765b2e07a798613e8f30"
+      "bytes": 47804,
+      "sha256": "b2021937acef15feb3c026328c9c3df7ea2e6dad13b7f2caa5e6b09c1c0cde10"
     },
     {
       "id": "dt_city_bus",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 38332,
-      "sha256": "1c34010e0038acd30afcb7e483a83c5e38d76ccf8c6396bf8b778b40a2a60c96"
+      "bytes": 38044,
+      "sha256": "5d5d0eb4add12e5c30ce84eacdf02cb9007f822f02e98664cbda7631b26eb2c9"
     },
     {
       "id": "dt_cocoa_cart",
       "tier": 3,
       "triangles": 452,
-      "bytes": 26124,
-      "sha256": "15b5223e807dec88ddcf890db91a44b69dcea448e15edc1538c378c4957941cb"
+      "bytes": 26172,
+      "sha256": "5cd2a6b1b5ece6182913f9c3085db7f8cf1b2b29a89aff5d88676a4fd8037ade"
     },
     {
       "id": "dt_cocoa_truck",
       "tier": 4,
       "triangles": 1056,
-      "bytes": 39484,
-      "sha256": "6ec7a9952c6794a6d7799c3a6708077d3591114ed43a8a4549fa0ea16898c485"
+      "bytes": 39372,
+      "sha256": "dc1dac036b47a1fe9b17a7db0950f93749429bd5e559b0389d075a86be39ddb4"
     },
     {
       "id": "dt_coffee_cup",
       "tier": 1,
       "triangles": 108,
-      "bytes": 20572,
-      "sha256": "245cea6b573a3cc36679acd29d39b7191a4032cd0e19c3cb612aa651f65efb96"
+      "bytes": 20716,
+      "sha256": "ff4a96ff08d8031eea7778e43c9dc03b589712f443717eea8f6601a6d3079b2a"
     },
     {
       "id": "dt_corner_bakery",
       "tier": 4,
       "triangles": 1056,
-      "bytes": 39052,
-      "sha256": "5fb3efc4841e2f5f2505bd04dc4b76f41ddafafe621447c934af0c58daffe6a3"
+      "bytes": 38956,
+      "sha256": "3679ae83013e4885f09bd4a77348ee0ad0ac63680638c7036a8406d828e1eba3"
     },
     {
       "id": "dt_corner_shop_row",
       "tier": 5,
       "triangles": 1504,
-      "bytes": 41692,
-      "sha256": "a7b0bbed6e4e70aed41c405d3d730d5745ff385c8af3dd8cb92771ba5ced8258"
+      "bytes": 41772,
+      "sha256": "d7a2a8a37d3054ce91d8ec693ae868d031fdc09a7dba057378ff3e4a546b75d9"
     },
     {
       "id": "dt_delivery_van",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 39628,
-      "sha256": "aecc6acc8ed1a782806397582b79311d7dcbad93a7eaf1dde71240beb68a96a2"
+      "bytes": 39324,
+      "sha256": "8c354f4132490644f34d709d7cbe047c8a34886ac050d1f1245fe255df416117"
     },
     {
       "id": "dt_donut",
       "tier": 1,
       "triangles": 180,
-      "bytes": 22012,
-      "sha256": "6129178483d53720d08806c15ee4757f687ff70f4086223b9e4135fb4566d4c3"
+      "bytes": 21948,
+      "sha256": "1cab429441da7a4205cc24d0175be0fdfbca9d9023e554315ba70f94de8abdf1"
     },
     {
       "id": "dt_donut_food_truck",
       "tier": 4,
       "triangles": 1056,
-      "bytes": 40876,
-      "sha256": "3626ce3030af6dd3926cfd4d0e2fea5bc18d1af572b22f426411d9c2fdad1dfc"
+      "bytes": 40524,
+      "sha256": "d7cd13018552301ef5f7578fc5e49ad31ef433e47154aeb8354f7915beb74d50"
     },
     {
       "id": "dt_drum_kit",
       "tier": 3,
       "triangles": 460,
       "bytes": 25804,
-      "sha256": "a57f51cc1c420d63b9ef2a07d5ead99f77521d4672f989e4aab5e21ec1951933"
+      "sha256": "09a9fb557098a91d8b3d8b3fd3bd4d1017a3b8be4b8ea2b627bd1bc37634c65d"
     },
     {
       "id": "dt_e_scooter",
       "tier": 2,
       "triangles": 216,
-      "bytes": 22284,
-      "sha256": "3bcd1510c231639471f7b0315b912ff0e2100cf2f4e6a1a8067c4642f3cb2d94"
+      "bytes": 22316,
+      "sha256": "14ba796cf7b0595843b38afba34c78ff03c8268eb0b3012de452accd0bf88ccc"
     },
     {
       "id": "dt_earbud_case",
       "tier": 1,
       "triangles": 40,
-      "bytes": 19260,
-      "sha256": "a2c437a497f2f827b0daf75454c3d61146be84d697a80a8536db4449d56b30c8"
+      "bytes": 19324,
+      "sha256": "18e6ab8230aafec636463717e748ccd8b333e9cb939aa9233a0897de6ff69259"
     },
     {
       "id": "dt_ev_charging_station",
       "tier": 5,
       "triangles": 1504,
-      "bytes": 48876,
-      "sha256": "5a98dfddfeb0d915a368eecf6ff67c4fd14cbd9aedc48fdaeaa22c818ecff6d4"
+      "bytes": 48396,
+      "sha256": "0004eb7f3fedffe6163090bc58813d2d50b5604bae10f6c05d0ae92a18628569"
     },
     {
       "id": "dt_fairy_light_bulb",
       "tier": 1,
-      "triangles": 40,
-      "bytes": 19788,
-      "sha256": "9a29643a1e70ff80c9a71aa7fb35404a02c0a00e70149562244e22af199f970d"
+      "triangles": 180,
+      "bytes": 22236,
+      "sha256": "6d9ccf82b7bde859499607827c72503e18631d55882e5f4a13b1b0fc8a457b32"
     },
     {
       "id": "dt_ferris_wheel",
       "tier": 5,
       "triangles": 1504,
-      "bytes": 49132,
-      "sha256": "3ea987dc0460d8eaf9d68def576e7c2947448ed18d2d07abef6616ec26f153df"
+      "bytes": 49228,
+      "sha256": "8e5cb30fb988a8171b0cf7c6d155fac03cfd8a53ecd29561e65695959b452639"
     },
     {
       "id": "dt_fire_engine",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 37868,
-      "sha256": "763a0360989b84616ceb89d518257a91c57e8e8719d6dc7332919d5931b5474d"
+      "bytes": 37580,
+      "sha256": "d62c0ad2f48f4c2b2f3c74b8a615c2175a693e072a3d886556fc73b2597fc713"
     },
     {
       "id": "dt_fire_hydrant",
       "tier": 2,
-      "triangles": 216,
-      "bytes": 22636,
-      "sha256": "6b903371e6ab65af3867c9cb56604eabccff4f65bff50d454612ca6d4db057b0"
+      "triangles": 220,
+      "bytes": 23052,
+      "sha256": "0fe3ad20a0e07a0204f2dd839433a8d5ebb3e8275edfdecb0687d06343310b3b"
     },
     {
       "id": "dt_fountain",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 39500,
-      "sha256": "df89567b104ec5adb4d2bd058f3acf92b9632857210430c5f637fe8522404ec3"
+      "bytes": 39308,
+      "sha256": "da2cba3766292454b5f8a168e13b628c938d4c7880492b80a60ec8dc4fbff093"
     },
     {
       "id": "dt_game_controller",
       "tier": 1,
-      "triangles": 156,
-      "bytes": 21260,
-      "sha256": "5a723054013d2accea9dce22c25d29c613f85a8d0ca5a62b18981a7e600f95ef"
+      "triangles": 152,
+      "bytes": 21740,
+      "sha256": "f99549ff247c7d74a485f08b2ce6d85710d0d245f959654a38168ffbb837dcf8"
     },
     {
       "id": "dt_garbage_truck",
       "tier": 4,
       "triangles": 1056,
-      "bytes": 38940,
-      "sha256": "a4a285ecf665414e8fc097307977bb184dbe408fc271e0b7f885c53ec47f505f"
+      "bytes": 38700,
+      "sha256": "38186b2625fc4cb7a54229a044cb413fb7a55d99364769d83b9ee8d7ff351855"
     },
     {
       "id": "dt_giant_duck",
       "tier": 5,
       "triangles": 1504,
-      "bytes": 58860,
-      "sha256": "5aeac5b063b88276c6a06dddc798329c4fefc05b847e29d43cd0fbd43e5adc6e"
+      "bytes": 58556,
+      "sha256": "7fcab8a71b8d28790deea1092e31f8829ae0e7b840e661d51f5f9065ecc52d29"
     },
     {
       "id": "dt_gift_box",
       "tier": 2,
       "triangles": 212,
       "bytes": 23660,
-      "sha256": "b5b266414103d5bed7ace7ca2c265f6ba344b7559729c568e28894b559030541"
+      "sha256": "b6bc0e76fe28efedca1dc67c045462c4dd3efe21d457b953aee19c9b02ff22b2"
     },
     {
       "id": "dt_gingerbread_cookie",
       "tier": 1,
-      "triangles": 152,
-      "bytes": 21740,
-      "sha256": "511db33d9125ee6e3278ed30bc5cdf8a0d964e231b1696d1e9670dd3eba7de33"
+      "triangles": 300,
+      "bytes": 24028,
+      "sha256": "b45a808339640d9a241d852723d7bdc54f716d74d0fd3588c4ca8a9205691319"
     },
     {
       "id": "dt_glass_tower",
       "tier": 5,
       "triangles": 1504,
-      "bytes": 46124,
-      "sha256": "9e977ca90e5f00a6bbbd53b82ed29d759ee291c6a53a652fd4c6890050727879"
+      "bytes": 45772,
+      "sha256": "00a6a7d4193f31e8e36391015b77acea70e9685409ffce9421ef3a28d9125b74"
     },
     {
       "id": "dt_glass_tower_bow",
       "tier": 5,
       "triangles": 1500,
-      "bytes": 48588,
-      "sha256": "8c8eb3becb17a4d32fbc6b3a89c3020b5676f6ad68dc34fa8a895a5cb0dc1cce"
+      "bytes": 48476,
+      "sha256": "2ce65f7b406f14fc52b03240ebb287006bb470eebcb03d011ea26ea5a598c057"
     },
     {
       "id": "dt_hatchback",
       "tier": 4,
       "triangles": 1056,
-      "bytes": 38124,
-      "sha256": "5874c04599ad3fbb7e8039e916da108c120e6ff78a026538bc2ef13d6ee1af59"
+      "bytes": 37820,
+      "sha256": "4f1776e82a5b1b9fa13dd9416ca1c327d72dc4eaa3f636723f88a60d1235557b"
     },
     {
       "id": "dt_headphones",
       "tier": 1,
       "triangles": 152,
-      "bytes": 21644,
-      "sha256": "65885c9c1459f5e060579200bc411d26d9840f3763f7aa3dd1070c30625f78b5"
+      "bytes": 21660,
+      "sha256": "a26be40387d4bb913b877dcc2e0c2875b0a383316bbb9e4e72250e514c893129"
     },
     {
       "id": "dt_hot_dog_cart",
       "tier": 3,
       "triangles": 456,
-      "bytes": 27388,
-      "sha256": "d24d1d38a90d54816ca8af46b76ce929c69bcef71b0ab77dc26d7ea9ae0c5370"
+      "bytes": 27404,
+      "sha256": "a7c03fa63765bd253e3f962a66bfa94601952442db9b488f4c0b839bf20f4966"
     },
     {
       "id": "dt_ice_cream_truck",
       "tier": 4,
       "triangles": 1056,
-      "bytes": 40556,
-      "sha256": "e41b772678023644cbfb4527071247640047ccf46d5fbe69073b9dd3816665c3"
+      "bytes": 40316,
+      "sha256": "23349b98da5312107a5573fcaa7ef2ba008cfba08c64c30b01ce0d0d4bd8700b"
     },
     {
       "id": "dt_ice_lolly",
       "tier": 1,
-      "triangles": 44,
-      "bytes": 19788,
-      "sha256": "cc5bf400d3fd9a9474f26835359923da34b3b15a5dc2cf253c8f5cc8a914a1cf"
+      "triangles": 108,
+      "bytes": 20940,
+      "sha256": "c35708c334e8bc1110204e34217d0b87db8b0e116ec1777c421b5eda5708c04a"
     },
     {
       "id": "dt_ice_rink",
       "tier": 5,
       "triangles": 564,
       "bytes": 28732,
-      "sha256": "6f1227e68289748ca6c0e9ff538a8d5c7baf2774966a7c6139324df9b12aa9bc"
+      "sha256": "57268529eccaf7f092b520c0366831e70d879cf57e0d35c22cfab05725798845"
     },
     {
       "id": "dt_inflatable_flamingo",
       "tier": 2,
       "triangles": 216,
-      "bytes": 23724,
-      "sha256": "c7418be5850041272174572a0b3df50e700de47a33a7c8759032bf0357592ef6"
+      "bytes": 23660,
+      "sha256": "adf37d24070bdd154205ceea284ab171e035832f0d4cd740d778b91f8e737e71"
     },
     {
       "id": "dt_inflatable_tube_guy",
       "tier": 3,
       "triangles": 452,
-      "bytes": 26908,
-      "sha256": "8a002b3dc03aac59bac14c4f9acb43c66163381ceb2d582905def3ea159a1285"
+      "bytes": 27052,
+      "sha256": "72fb6530a3bbe5abfd2de878302ff392fcd06531c8c8f765e6f7d1f75bb99559"
     },
     {
       "id": "dt_keyboard",
       "tier": 1,
-      "triangles": 156,
-      "bytes": 20812,
-      "sha256": "b3dfc4dcca446b0f4ef7671f1664d97280096c2cf28251e57460bf3c38110736"
+      "triangles": 188,
+      "bytes": 21116,
+      "sha256": "827526c4938449eb1c4a7fd933be16047913df92e39db6886e413498b3fb1e28"
     },
     {
       "id": "dt_kiosk",
       "tier": 4,
       "triangles": 184,
-      "bytes": 21804,
-      "sha256": "d30f248787c3cb12185188e97fe860d5bdd21d28e9bae99a51130186d5d6ca77"
+      "bytes": 21900,
+      "sha256": "a7a474eaefe57148358e4f0029924ca6e7c34764f5a5fbb6780f5e90ff8b1ec2"
     },
     {
       "id": "dt_leaning_present_stack",
       "tier": 2,
       "triangles": 216,
-      "bytes": 23884,
-      "sha256": "a65d7eef03741d49f2944d16893dbc7a65a34662b986fd9b25c360af82c2f62b"
+      "bytes": 23868,
+      "sha256": "b8f6a9c780da09a4caba289a5b9376f5ae0074b8b8e970825e6b4a823972d907"
     },
     {
       "id": "dt_light_up_reindeer",
       "tier": 3,
       "triangles": 456,
-      "bytes": 27500,
-      "sha256": "c29e056f09aaf6d2585a6b4eadc197377d3472d45b0e9740124e3c2788c5f5d1"
+      "bytes": 27468,
+      "sha256": "cb5a39fc4eb12269dec681cfa2b73f12fa623169ad1fad3c03242adda3165547"
     },
     {
       "id": "dt_lost_sneaker",
       "tier": 1,
-      "triangles": 152,
-      "bytes": 21388,
-      "sha256": "e14208462dc79b6d2c829d9da465747c5f78678cfefee6968daaf31b2ad76873"
+      "triangles": 228,
+      "bytes": 23548,
+      "sha256": "d7ddfd4c7c60a0ba9eb8c6869a1755862a6c8b484e816c209575f59adb9d67ee"
     },
     {
       "id": "dt_mailbox",
       "tier": 3,
       "triangles": 456,
-      "bytes": 27932,
-      "sha256": "ab2e4a32102fb508b23c054f6058fbbaa7cb95345071a6db5dd0615586f3fed3"
+      "bytes": 27740,
+      "sha256": "849963f20691d0a801813fc6d4e0b60d23b2758ff12e9168c382bfc342d5b0ae"
     },
     {
       "id": "dt_market_stall",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 38812,
-      "sha256": "eb36c5f7b94cc0bbde58fae91f2c03623501cc733c9a9b82bc93b9d501a54d56"
+      "bytes": 38572,
+      "sha256": "9758bb5525fa5c11ea82eaed451a49c0cbd690ed5d489ff5cc619a2bb77fa79e"
     },
     {
       "id": "dt_mega_tree",
       "tier": 5,
       "triangles": 1502,
-      "bytes": 55372,
-      "sha256": "97900a0af5c3d7a97849eea045ffaaa323a60141508026760774fe2820dfaa53"
+      "bytes": 56140,
+      "sha256": "48215e289333b46d913ef4b830e2f0aa8f95c6ae867783bb8f3c087f002bb0f3"
     },
     {
       "id": "dt_mini_gift",
       "tier": 1,
       "triangles": 152,
       "bytes": 21772,
-      "sha256": "154a2a1a9007b1c9c5db55c02269b0a01a01640b4eeb2ad966f852890ff3ac71"
+      "sha256": "1181412a176009e16cb1bef481b17a7078dfe513f77ba1382fc2363fed70ed98"
     },
     {
       "id": "dt_monster_truck",
       "tier": 4,
       "triangles": 1064,
-      "bytes": 36604,
-      "sha256": "83cb46e920a0785fdaec1edae1abec2384ade21d161d791f2d15c01082a61d93"
+      "bytes": 36460,
+      "sha256": "7d5f2db01634cd230d15bfde8868909bf06e6b3e1dfe31d79414e977be0fc046"
     },
     {
       "id": "dt_moped",
       "tier": 3,
       "triangles": 452,
-      "bytes": 27308,
-      "sha256": "484fadc607e7cde22421225f3f7f4b5d2302f06b36df948fe90ff0429ec4b993"
+      "bytes": 27244,
+      "sha256": "325de8d6a7f69a712d4d1f14a718917b553fbe5d1fbb55091910f8e74a36b832"
     },
     {
       "id": "dt_newspaper_box",
       "tier": 2,
       "triangles": 216,
-      "bytes": 22396,
-      "sha256": "95d9ac6f3bd6630ca6b8ee6be989f3bf8167a49fd852583c2e76ae03ecc1540d"
+      "bytes": 22460,
+      "sha256": "de1932df3cee91c19e9caf0206635cfb5a66021cf981234dc3044c9180d3952a"
     },
     {
       "id": "dt_paddling_pool",
       "tier": 3,
       "triangles": 460,
-      "bytes": 28300,
-      "sha256": "2296ed6a7d45e8e7f59e5d5d6101369632075f717c5fe269a66d08734350e0b7"
+      "bytes": 28220,
+      "sha256": "65f51fa472e519359922b45d0d6578e47e5b804efefe46dd5fb2f105e6a04566"
     },
     {
       "id": "dt_pallet_stack",
       "tier": 3,
       "triangles": 456,
-      "bytes": 25564,
-      "sha256": "4506573c50753e772c62c2981b2da52334111ab3be26444373812fbf02c4450e"
+      "bytes": 25532,
+      "sha256": "3ce43ba08161d3b09bee6fee77e9447598a1ec783993820a30ca891e507a40a7"
     },
     {
       "id": "dt_parking_meter",
       "tier": 2,
       "triangles": 216,
-      "bytes": 22764,
-      "sha256": "df2892f19d65c2ccccdec50c013b527254377c14d4ea4147782f8e800c3e2064"
+      "bytes": 22828,
+      "sha256": "7b2e38879bf027af2596321a8f26a15972f9545d1ff573157adf13a4a577b5e2"
     },
     {
       "id": "dt_pickup_truck",
       "tier": 4,
       "triangles": 1060,
-      "bytes": 38732,
-      "sha256": "9eac29a437e5e6e1dbb15ed788398bede53f219a29f48a06673b1e088832ae25"
+      "bytes": 38380,
+      "sha256": "bf6248945c8feb82b3dab75fca6d3629f7a64633fd5837afea8d5b488ba65e40"
     },
     {
       "id": "dt_picnic_table",
       "tier": 3,
       "triangles": 456,
-      "bytes": 26620,
-      "sha256": "56da37eb1ace26b8cc4af45cb7744ee97e88825975ad72b2b65fae902e8d871e"
+      "bytes": 26604,
+      "sha256": "bde3486548a565a5a61cfc3115981c8a6a305af5597a67e030ff78b7c78fdd37"
     },
     {
       "id": "dt_pizza_box_tower",
       "tier": 2,
       "triangles": 216,
-      "bytes": 23420,
-      "sha256": "92994384eaa00b6be66e574169df3bbd811c7605f5dd33f8bc0a7eedacd54c1f"
+      "bytes": 23388,
+      "sha256": "fe13af582a6fc0b9ceb16c5344aea41eb7f86f99ce7f28446d5da4cc8d979b69"
     },
     {
       "id": "dt_pizza_slice",
       "tier": 1,
-      "triangles": 156,
-      "bytes": 23196,
-      "sha256": "88788c51687f5979d1344169896d569d8eedff3456ab6ee96251c0364c1f717d"
+      "triangles": 164,
+      "bytes": 21820,
+      "sha256": "1c37fb86aac36afb4d55192b73f8d906bde8e8c07229b9f7f8dd9bba0c2abb0e"
     },
     {
       "id": "dt_poinsettia_pot",
       "tier": 2,
       "triangles": 216,
-      "bytes": 23020,
-      "sha256": "4ba2fa90bd535bbf5c3dec3e932268a529b2696e7ffa718d4214b6672f911afb"
+      "bytes": 23148,
+      "sha256": "b28ed6f1ef2c1658be192fc65d212f82352721c47fc9b90daaa4666fd111454b"
     },
     {
       "id": "dt_potted_palm",
       "tier": 2,
       "triangles": 212,
       "bytes": 22956,
-      "sha256": "a99cd1ed6d5dbb018a5d0878f6f03f0b2830752423881cd75601b6ced1f9ce68"
+      "sha256": "2809c0871755ab6d1975b6fd0ec6cc87168f82a3bfcb1d3725104d9215040251"
     },
     {
       "id": "dt_puzzle_cube",
       "tier": 1,
       "triangles": 44,
-      "bytes": 19356,
-      "sha256": "4fbc9b93ab2888fbd1b135f21f5611bef4d1e9856b18da34c5b5237363bfaff8"
+      "bytes": 19404,
+      "sha256": "b2f8c285e86876ad2eb31929fa56b8d5ad15f5f8dd29266ad94d09bd9c373d38"
     },
     {
       "id": "dt_recycling_bank",
       "tier": 3,
       "triangles": 452,
-      "bytes": 28748,
-      "sha256": "21f8565b10cf1fd3b8c2d7113882d834a72b848017a8e6c92264b5e420cc702a"
+      "bytes": 28508,
+      "sha256": "b2afa70cbcb144041904ea16acf843eafbb6de721a356a88e5237b088317cfba"
     },
     {
       "id": "dt_rocket_water_tower",
       "tier": 5,
       "triangles": 1506,
-      "bytes": 49964,
-      "sha256": "940528ff3fb889c46ff80e46bc1d41012c0b282dae0939190ef6c6e35375ec12"
+      "bytes": 49820,
+      "sha256": "54917830fa22ce364dc363a88a19d42dff49866256496639e009b5a5874b0bba"
     },
     {
       "id": "dt_rubber_duck_sunglasses",
       "tier": 1,
-      "triangles": 152,
-      "bytes": 23004,
-      "sha256": "d39147c2c14b342c3c74b10cfcd68e1ccf3d87b615fb701e98e5d8f66afbbb10"
+      "triangles": 328,
+      "bytes": 25916,
+      "sha256": "5048741fc9efe6d1104f8986fa92ea7384b972fde39e26218413bb536579f286"
     },
     {
       "id": "dt_satellite_dish",
       "tier": 3,
       "triangles": 468,
       "bytes": 29932,
-      "sha256": "4d9f16a8510f0b3d6b4b026ca924d52bfe397a77b01e0ec9a96e9506808e1440"
+      "sha256": "a8699c4d0e4aba875c2e24b5ce9ba97209b90a55161721311d74acaeaa2b7cec"
     },
     {
       "id": "dt_shipping_container",
       "tier": 4,
       "triangles": 1056,
-      "bytes": 37804,
-      "sha256": "cc55a1fe5ff875011d8a95a58062707cbef3a10c50cdcf6b71967f47700c8666"
+      "bytes": 37500,
+      "sha256": "c6fe7a25e5a28d55b5da9159f3fd9c871990ce2f4e8b020318fea280b42d535d"
     },
     {
       "id": "dt_shopping_cart",
       "tier": 2,
       "triangles": 216,
-      "bytes": 22204,
-      "sha256": "b2e50cc0670170541d4db8bf341f927d2dc04cc21eceafbd66513e01fc3c20be"
+      "bytes": 22284,
+      "sha256": "38ff77a6e06023996e7f10363d75fec6175f57030428131f97757b16cdb17f34"
     },
     {
       "id": "dt_skateboard",
       "tier": 2,
       "triangles": 212,
-      "bytes": 22028,
-      "sha256": "71205851d75451eec99b6dcb941f0f5ac410f67041c207fc96601b2b590266e7"
+      "bytes": 22012,
+      "sha256": "790539468d43dd02414d366bfc391971bae1f955a116f05de865e189823f5ab4"
     },
     {
       "id": "dt_sleigh",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 40076,
-      "sha256": "396cf4e47751204a9383f27b59b28bd52321f30b583d2015bc790b6b2632357c"
+      "bytes": 39996,
+      "sha256": "86327a8cbb6f11dfc0a6b178f1e285e047e022b9064b56167952b0a03c22a756"
     },
     {
       "id": "dt_smartphone",
       "tier": 1,
       "triangles": 40,
-      "bytes": 19260,
-      "sha256": "eacd33be924a6f1657cda0296f06efcf9aa479230760c6a1082afcac53eceac4"
+      "bytes": 19276,
+      "sha256": "e3e0683acb27d7d686c6b4231fcb8249e5216020513f8ba42d0618d8a8226286"
     },
     {
       "id": "dt_snow_pile",
       "tier": 3,
       "triangles": 120,
       "bytes": 22684,
-      "sha256": "2ecff8e3372c9d6789b781375e7910c440a12690e735ac452ce053c8f56cdb52"
+      "sha256": "79adedbebda508bd496fe7710c435065bb4c8260ff89ea98ba39587b2546c73e"
     },
     {
       "id": "dt_snowman",
       "tier": 3,
       "triangles": 452,
-      "bytes": 31164,
-      "sha256": "62aa3d35fe3b198d9564f80c587e4cd1db1e2e04961a9765d24e4f225d378287"
+      "bytes": 31116,
+      "sha256": "6774e9a9928d5d19948608f3f0ed9bbb57133b2f2dfc94ec2fb299955aa030f6"
     },
     {
       "id": "dt_snowplough",
       "tier": 4,
       "triangles": 1052,
-      "bytes": 39484,
-      "sha256": "81cb2bfcc54183318cb1b9728f3ad90406dd44b16eaecf895616d54ecc29ac8c"
+      "bytes": 39196,
+      "sha256": "ff71bf56159872e5435b7db154771e95f80574ab60b0ae4caa589a7b3381322e"
     },
     {
       "id": "dt_soda_can",
       "tier": 1,
       "triangles": 84,
-      "bytes": 20060,
-      "sha256": "164f5a44d454e236c463a401e045857c0ff04cc8556ad0625584ec7c28d5af62"
+      "bytes": 20220,
+      "sha256": "cc2245d1baffe51c338f87c29bba2e7ae0036b7a1c8042c6b3de7aca11c80f27"
     },
     {
       "id": "dt_spinning_office_chair",
       "tier": 2,
       "triangles": 212,
-      "bytes": 22620,
-      "sha256": "1855780fadb1be05565f91c92193de2bbb7748d63b57566190f862c6da1df2b1"
+      "bytes": 22636,
+      "sha256": "08b0202fc705e3e84376891e2685c03050f9f066cbb88819f01fc8e4fdcb762b"
     },
     {
       "id": "dt_street_lamp",
       "tier": 3,
       "triangles": 452,
-      "bytes": 29596,
-      "sha256": "bb854a7a406e4c1b6c97f853de64d05f3756fa158203a3bbb6b671ec9d0dbc4e"
+      "bytes": 29420,
+      "sha256": "36e1b3d27eb9f3f86fb114a9cfb6377f39159d1c6852b8a0f72dd40303bb873b"
     },
     {
       "id": "dt_street_tree",
       "tier": 3,
       "triangles": 456,
-      "bytes": 30492,
-      "sha256": "81411b38ac099cc6bd4ea12215914be2b8dea0541af3ba52850341de752455c0"
+      "bytes": 30524,
+      "sha256": "0f72e1a87614dd47207ca5adb21fc586becdf4e6bd334f90826afb10819fe93f"
     },
     {
       "id": "dt_suitcase",
       "tier": 2,
       "triangles": 212,
-      "bytes": 23004,
-      "sha256": "57f3f159a6d21954e8f0839de05c692b159bace985de54468412f9f148976563"
+      "bytes": 23052,
+      "sha256": "1820ef0949736743cc4a027fd9a5568f21b175f68774df7b9ac64b09f85d4cfe"
     },
     {
       "id": "dt_takeout_box",
       "tier": 1,
       "triangles": 152,
-      "bytes": 22060,
-      "sha256": "9129d39047e6b346f3c98f43ad8ebd526cafb290ef2f52788d43cf74fdba97f9"
+      "bytes": 22092,
+      "sha256": "46456c0f12350fcc6314f7ad829e021f0bcf6e61f910519f65c36d05f03392e6"
     },
     {
       "id": "dt_taxi",
       "tier": 4,
       "triangles": 1056,
-      "bytes": 38108,
-      "sha256": "2a3119fe49878ecadbba917d6f063ba6f00e69fb9be29d86de2e0ad2241a6092"
+      "bytes": 37852,
+      "sha256": "ed962b1d4cc792feec85a9eb50f9f08fb95f951a703fb12d71f406b3cc8dc092"
     },
     {
       "id": "dt_tennis_ball",
       "tier": 1,
-      "triangles": 68,
-      "bytes": 20316,
-      "sha256": "bb07d40aa69db0f1cafa74fdbd3a1af4dc1c5fd7a56b4a30f542d9aeb886a88b"
+      "triangles": 64,
+      "bytes": 19772,
+      "sha256": "f921afc2667c0fb4c0a901c08166fa1a8c3d265358ff4302a0f4a750fb0c6e2f"
     },
     {
       "id": "dt_tower_crane",
       "tier": 5,
       "triangles": 1504,
-      "bytes": 51452,
-      "sha256": "7ebb56156c111c8f44798deeee3bb3c8b62ad9b450d2ef7d7ac69d3ea2c53f8b"
+      "bytes": 50940,
+      "sha256": "d9a60090dbc48d96c12c41bdb583bf1231ddc199467509be59576527eb98f4a1"
     },
     {
       "id": "dt_townhouse",
       "tier": 5,
       "triangles": 1504,
-      "bytes": 49500,
-      "sha256": "18423c4113c6f774807e64573f5ba5e24a587fc29b95a12ab735e91a916b8058"
+      "bytes": 49484,
+      "sha256": "57024783df619296d6e96191ec164b3efe4a947ea38112341477af8025877445"
     },
     {
       "id": "dt_traffic_cone",
       "tier": 2,
       "triangles": 214,
-      "bytes": 23260,
-      "sha256": "1fe6357443a736032a23069edd6474e5f8f18516fccd81d5a3dd1dc2cd6202bd"
+      "bytes": 23292,
+      "sha256": "e092689d6c859b55b07f7f4d5eb296944eef10ed37bfd6b201104acffc1745c6"
     },
     {
       "id": "dt_traffic_light",
       "tier": 3,
       "triangles": 452,
-      "bytes": 29196,
-      "sha256": "ad6501cd79b89843091c92db5d7368f57b2536caed1f79d772151b97140a5400"
+      "bytes": 29500,
+      "sha256": "57a91a6e42a675b5d088b4bf2be233ac73ba8f0c7fad275cace0990ac278ae8a"
     },
     {
       "id": "dt_vending_machine",
       "tier": 3,
       "triangles": 452,
-      "bytes": 27308,
-      "sha256": "71f2d364f5e08edc4e67a2aa95cf4d8fe791130444c4c7b1bf675ed7524a548c"
+      "bytes": 27244,
+      "sha256": "241b400d08d12f4582bd33a70efa60e11de39e7394dec7380a484d29ab33b930"
     },
     {
       "id": "dt_water_bottle",
       "tier": 1,
       "triangles": 156,
-      "bytes": 21084,
-      "sha256": "817670b321c3edcef6ce3c67c6190bbfbeebbab9f69382ded6ec0a4ec15e33a0"
+      "bytes": 21180,
+      "sha256": "d730242e9f843d680cae10e257f9fe61c1e460b273a70d6f7c7abc18a0da8d64"
     },
     {
       "id": "dt_wheelie_bin",
       "tier": 2,
       "triangles": 212,
-      "bytes": 22892,
-      "sha256": "1bb3b0a1ceef1cc4ee85dbde61951d1c0876c3ff4ca5729c72565fbba2cd3dbe"
+      "bytes": 22924,
+      "sha256": "2c6a931b116003322967108fa967756e137fa6b23ff49b4159eeef5e5c7c9584"
     },
     {
       "id": "dt_wooden_sled",
       "tier": 2,
       "triangles": 216,
-      "bytes": 22076,
-      "sha256": "ee693558fcfd717627595d998080f8cbfdf830b67267808e2ae6a1cca102cd73"
+      "bytes": 22124,
+      "sha256": "7b6b2dc8a67e9be7742e466e04dd5a97a2d200df0d1ea65ff11378c2df164f34"
     },
     {
       "id": "dt_wreath",
       "tier": 2,
       "triangles": 216,
-      "bytes": 24044,
-      "sha256": "dfc41fae3ac5e357035c99aa321a39892a2fad73ed3780acbe09be102a6de4e3"
+      "bytes": 23996,
+      "sha256": "ce23763225410f0e5c6acf6d5840c73ba0bf158320c7d859964553d9a2d998f8"
     },
     {
       "id": "fence_section",

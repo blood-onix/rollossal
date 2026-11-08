@@ -6,6 +6,8 @@ audit_render.py through Blender) and the winter-city triangle totals from `lune 
 
   python3 art/scripts/audit_report.py                 write audit.json and audit.md from the inputs
   python3 art/scripts/audit_report.py --check FILE    validate FILE (audit.json); exit 1 on any failure
+  python3 art/scripts/audit_report.py --rework        Phase 9 (T078): audit-rework.json and audit-rework.md from
+                                                      <audit>/rework/render-data.json with the 2026-11-07 rules
 
 Verdict rule (research R-02), triangles only: replace under 0.35 of the floor, upgrade from 0.35 to under 1.0, keep at
 1.0 or more with w-season under 15 % in both themes. A keep with a heavy w-season share moves one step to upgrade.
@@ -32,6 +34,9 @@ BASELINE = {"keep": 12, "upgrade": 36, "replace": 51}
 
 # rebuilt below the audit floor because the N10 ceilings run out (art/scripts/dt_upgrade.py CAPPED); needs only > baseline
 CAPPED = ("dt_kiosk",)
+# baseline "keep" meshes rebuilt on purpose by the Phase 9 rework (art/scripts/kit_stage_c.py, the pocket set): they no
+# longer match the baseline count and only have to stay at or above their floor
+REWORKED = ("dt_fairy_light_bulb", "dt_ice_lolly", "dt_tennis_ball")
 
 
 def load(path):
@@ -186,7 +191,10 @@ def check(path):
         # audit.json is the pre-rebuild baseline: keep meshes still match the manifest exactly, a rebuilt mesh must
         # have grown to at least its floor (a capped one only has to have grown)
         now = manifest[i]["triangles"]
-        if m["verdict"] == "keep":
+        if m["verdict"] == "keep" and i in REWORKED:
+            if now < m["floor"]:
+                errors.append(f"{i}: reworked mesh under the floor {m['floor']}")
+        elif m["verdict"] == "keep":
             if m["triangles"] != now:
                 errors.append(f"{i}: triangles differ from the manifest")
         elif i in CAPPED:
@@ -236,7 +244,122 @@ def check(path):
     return 0
 
 
+# Phase 9 (T078): the tween-appeal rules of the style bible, sections 2 and 3 (owner decision 2026-11-07).
+BUILDINGS = {"dt_apartment_block", "dt_cinema", "dt_corner_bakery", "dt_corner_shop_row", "dt_glass_tower",
+             "dt_glass_tower_bow", "dt_townhouse", "dt_kiosk"}
+# Props built from boxes and panels on purpose: no round part, so smooth shading is not asked of them.
+BOXY = {"dt_shipping_container", "dt_pallet_stack", "dt_vending_machine", "dt_recycling_bank", "dt_newspaper_box",
+        "dt_billboard", "dt_arcade_cabinet", "dt_puzzle_cube", "dt_gift_box", "dt_mini_gift", "dt_suitcase",
+        "dt_takeout_box", "dt_pizza_box_tower", "dt_leaning_present_stack", "dt_market_stall", "dt_bus_shelter",
+        "dt_ice_rink", "dt_ev_charging_station", "dt_snow_pile", "dt_aa_battery", "dt_keyboard"}
+MUTED_MIN = 0.70
+SMOOTH_MIN = 0.15
+CEILING_SHARE = 0.60
+
+
+def rework_build():
+    manifest = {m["id"]: m for m in load(os.path.join(ROOT, "art", "export", "manifest.json"))["meshes"]}
+    budgets = load(os.path.join(ROOT, "art", "scripts", "budgets.json"))
+    render = load(os.path.join(AUDIT_DIR, "rework", "render-data.json"))
+    meshes = []
+    for mesh_id in sorted(k for k in manifest if k.startswith("dt_")):
+        tier = budgets["tiers"][mesh_id]
+        ceiling = budgets["meshTriangles"][tier - 1]
+        tris = manifest[mesh_id]["triangles"]
+        data = render["meshes"][mesh_id]
+        building = mesh_id in BUILDINGS
+        hero = not building and tier >= 4 and mesh_id not in FLAT_IDS
+        cls, floor = floor_class(mesh_id, tier, budgets["sizes"][mesh_id])
+        need = max(floor, int(ceiling * CEILING_SHARE)) if (building and tier >= 3) or hero else floor
+        fails = []
+        if tris < need:
+            what = "60 % of the tier ceiling" if need > floor else f"the {cls} floor"
+            fails.append(f"{tris} triangles is {tris / ceiling:.0%} of the {ceiling} ceiling, under {what} ({need})")
+        if building and data["mutedShare"] < MUTED_MIN:
+            fails.append(f"muted share {data['mutedShare']:.0%} is under the 70 % building rule")
+        if mesh_id not in BOXY and not building and data["smoothShare"] < SMOOTH_MIN:
+            fails.append(f"round parts are flat-shaded (smooth share {data['smoothShare']:.0%})")
+        season = max(data["seasonShare"].values())
+        if season >= SEASON_LIMIT:
+            fails.append(f"w-season covers {season:.0%}, over 15 %")
+        if tris < need * 0.35:
+            verdict = "replace"
+        elif fails:
+            verdict = "upgrade"
+        else:
+            verdict = "keep"
+        if verdict == "keep":
+            reason = "meets every 2026-11-07 rule that applies"
+        else:
+            reason = "; ".join(fails) + (": rebuilt from a new kit_rework recipe" if verdict == "replace"
+                                         else ": silhouette kept, rebuilt smooth and to the triangle target")
+        meshes.append({
+            "id": mesh_id, "tier": tier, "triangles": tris, "tierBudget": ceiling, "ceilingUse": round(tris / ceiling, 3),
+            "role": "building" if building else ("hero" if hero else "prop"), "need": need,
+            "mutedShare": data["mutedShare"], "smoothShare": data["smoothShare"], "seasonShare": data["seasonShare"],
+            "verdict": verdict, "reason": reason, "renders": {t: "rework/" + data["renders"][t] for t in THEMES},
+        })
+    totals = headroom()
+    by_id = {m["id"]: m for m in meshes}
+    unculled, culled = totals["unculled"], totals["culled"]
+    for key, count in totals["placements"].items():
+        m = by_id.get(key)
+        if m and m["triangles"] < m["need"]:
+            extra = (m["need"] - m["triangles"]) * count
+            unculled += extra
+            if m["tier"] >= 4:
+                culled += extra
+    return {
+        "version": 1, "rules": "style bible sections 2 and 3, owner decision 2026-11-07", "blender": render["blender"],
+        "headroom": {"unculledCeiling": UNCULLED_CEILING, "culledCeiling": CULLED_CEILING,
+                     "unculled": totals["unculled"], "culled": totals["culled"],
+                     "atNeedUnculled": unculled, "atNeedCulled": culled},
+        "meshes": meshes,
+    }
+
+
+def rework_md(audit, path):
+    h = audit["headroom"]
+    c = counts(audit["meshes"])
+    over = h["atNeedUnculled"] > h["unculledCeiling"] or h["atNeedCulled"] > h["culledCeiling"]
+    lines = [
+        "# Rework audit of the 99 dt_* meshes (013 Phase 9, T078)", "",
+        f"Rules: {audit['rules']}. Buildings need a 70 % muted share; tier 3 to 5 buildings and tier 4 to 5 hero props "
+        "need 60 % of the tier ceiling; props with round parts must be smooth-shaded (boxy props are exempt); w-season "
+        "stays under 15 %. Replace when the mesh is under 0.35 of what it needs.", "",
+        f"Verdicts: **{c['keep']} keep, {c['upgrade']} upgrade, {c['replace']} replace**.", "",
+        "## Headroom (winter city, Downtown N10 sum)", "",
+        "| | Now | Every placed mesh at what it needs | Ceiling |", "| --- | --- | --- | --- |",
+        f"| Unculled | {h['unculled']:,} | {h['atNeedUnculled']:,} | {h['unculledCeiling']:,} |",
+        f"| Culled (tier 4 and 5) | {h['culled']:,} | {h['atNeedCulled']:,} | {h['culledCeiling']:,} |", "",
+        ("Reading: raising every placed mesh to what the new rules ask exceeds a Downtown N10 ceiling, so the rebuilds "
+         "go in batches, highest-visibility first, and stop where the headroom runs out (research R-03); the ceilings "
+         "are not raised." if over else
+         "Reading: every placed mesh fits under the Downtown N10 ceilings at what the new rules ask."), "",
+        "## Meshes", "",
+        "| Id | Tier | Role | Tris | % of ceiling | Needs | Muted | Smooth | Verdict | Reason |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for m in audit["meshes"]:
+        lines.append(f"| `{m['id']}` | {m['tier']} | {m['role']} | {m['triangles']} | {m['ceilingUse']:.0%} | "
+                     f"{m['need']} | {m['mutedShare']:.0%} | {m['smoothShare']:.0%} | {m['verdict']} | {m['reason']} |")
+    with open(path, "w", encoding="utf-8") as handle:
+        handle.write("\n".join(lines) + "\n")
+
+
+def rework_main():
+    audit = rework_build()
+    with open(os.path.join(AUDIT_DIR, "audit-rework.json"), "w", encoding="utf-8") as handle:
+        json.dump(audit, handle, indent=2)
+        handle.write("\n")
+    rework_md(audit, os.path.join(AUDIT_DIR, "audit-rework.md"))
+    print(f"audit: wrote audit-rework.json and audit-rework.md: {counts(audit['meshes'])}, headroom {audit['headroom']}")
+    return 0
+
+
 def main():
+    if "--rework" in sys.argv:
+        return rework_main()
     if "--check" in sys.argv:
         return check(sys.argv[sys.argv.index("--check") + 1])
     audit = build()

@@ -204,18 +204,6 @@
       "u1": 0.498047,
       "v0": 0.626953,
       "v1": 0.685547
-    },
-    "sign_22": {
-      "u0": 0.501953,
-      "u1": 0.748047,
-      "v0": 0.626953,
-      "v1": 0.685547
-    },
-    "sign_23": {
-      "u0": 0.751953,
-      "u1": 0.998047,
-      "v0": 0.626953,
-      "v1": 0.685547
     }
   },
   "size": 1024,
@@ -238,6 +226,12 @@
       "v0": 0.189453,
       "v1": 0.248047
     },
+    "fx_glasslit": {
+      "u0": 0.751953,
+      "u1": 0.998047,
+      "v0": 0.626953,
+      "v1": 0.685547
+    },
     "fx_render": {
       "u0": 0.001953,
       "u1": 0.998047,
@@ -255,26 +249,32 @@
       "u1": 0.998047,
       "v0": 0.126953,
       "v1": 0.185547
+    },
+    "fx_snowcap": {
+      "u0": 0.501953,
+      "u1": 0.748047,
+      "v0": 0.626953,
+      "v1": 0.685547
     }
   },
   "themes": {
     "autumn": {
-      "pixelSha256": "7274fb1960e795e1d20e9adc5d086bf5426b698d9a3b31d2fac48cf9b61cb835"
+      "pixelSha256": "1d4f4a71a39d2828b42adaecab1d46d82c909258ba3a793f8ab05a8b2f846750"
     },
     "city": {
-      "pixelSha256": "43f683339cc3473a32fe8cded86daf226b3373c3abf6171d63bc06f6d1216df0"
+      "pixelSha256": "232ad660c37eda45651ab3a27533ee204655d2bbb01a2561669150feee9b260d"
     },
     "neon": {
-      "pixelSha256": "47d18f72445577ea19b61b4dc86f262c7b2dd80e852ef51761b8d5fe39688dd2"
+      "pixelSha256": "a7ef6deb4e4b103af4cc7176ea12c93f7528b39773fa9692c223c179d2b8dd09"
     },
     "spring": {
-      "pixelSha256": "0f1e592a355718b0c619e8bdc866b2e5c99383deeafbf987f7fbcf050760fed8"
+      "pixelSha256": "f8ffdb58d64d36b23a21a8d41d1a4ea3a3b2cee9a871ee1cbb7bf238b84cad3d"
     },
     "toon": {
-      "pixelSha256": "e9dcd20160be0c100d10e6a11b8aa8061097138643ca71df2de90c861e8a1153"
+      "pixelSha256": "5d326058cee1ce754b8768f16c44b78d3c3bbf45a1ed1a7ff2ea6fb2cd3bd3a2"
     },
     "winter": {
-      "pixelSha256": "4e67cee3d72e98b9978906958107df73e1be0ad04f7714d6bb77f3dc4bd80d1b"
+      "pixelSha256": "a81f7aa3474942f3bf6632d5735bf08f62547b00134aeb703a9ae3be600b8216"
     }
   },
   "version": 1

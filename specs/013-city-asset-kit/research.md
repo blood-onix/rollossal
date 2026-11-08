@@ -243,3 +243,45 @@ count, the manifest commit, the `Assets.luau` keys to fill. Until the ids arrive
 `ObjectVisual` draws the stand-in (it warns once, which is the existing behaviour and is not changed).
 
 **Rationale**: Constitution X and spec FR-011, FR-012.
+
+## R-18: Real proportions at the game's stud scale (owner decision 2026-11-07)
+
+**Scale.** The kit is anchored on the car: `ck_car_sedan` is 15 studs long and a mid-size sedan is about 4.7 m, so
+**1 m = 3.2 studs**. The default R15 avatar (about 5.2 studs) at a 1.65 to 1.75 m person gives 3.0 to 3.2, so the anchor
+agrees with how players read the world.
+
+**Reference dimensions** (typical ranges from municipal street-furniture catalogues, manufacturer data sheets and
+building-code minimums; the value used is the middle of the range unless a tier band forces it):
+
+| Object | Real size | Studs at 3.2 / m | Used | Note |
+| --- | --- | --- | --- | --- |
+| Mid-size sedan | 4.7 × 1.8 × 1.45 m | 15 × 5.8 × 4.6 | 15 | the anchor |
+| Litter bin | 1.0 to 1.1 m tall, 0.45 to 0.6 m wide | 3.4 × 1.6 | **3.4** (was 2.2) | tall and slim, tier 2 band 1.6 to 3.9 |
+| Fire hydrant | 0.75 to 0.9 m tall above grade | 2.4 to 2.9 | 2.4 (kept) | `dt_` key keeps its size |
+| Bollard | 0.9 to 1.0 m tall, 0.15 to 0.2 m wide | 3.0 × 0.6 | Stage B (now 1.3) | tier 1 band ends at 1.5; Stage B asks for tier 2 |
+| Post box (pillar) | 1.6 m tall, 0.6 m wide | 5.1 × 1.9 | Stage B (now 3.0) | tier 2 band ends at 3.9 |
+| Parking meter | 1.5 m tall | 4.8 | Stage B (now 3.8) | tier 2 band ends at 3.9 |
+| Pedestrian street lamp | 3 to 4.5 m | 9.6 to 14 | 9.6 (kept) | a heritage lamp; a 6 to 8 m road lamp (19 to 26 studs) needs tier 4 |
+| Young street tree | 5 to 6 m | 16 to 19 | 16 (kept) | |
+| Storey (floor to floor) | 3.0 m housing, 4 to 4.5 m shop ground floor | 9.6, 13 to 14 | used | |
+| Front door | 2.1 m tall, 0.9 m wide | 6.7 × 2.9 | used | |
+| Two-storey house | 7 to 8 m tall to the ridge, 7 to 10 m wide | 22 to 32 | **24.5** (was 16) | top of tier 4 (10 to 25) |
+| Three-shop row, three storeys | 13 to 14 m wide, 10 to 11 m tall | 42 to 45 × 32 to 35 | **44** (was 28) | tier 5 |
+| Tower slab | | | 52 (kept) | real storeys give 5 floors plus plant; see below |
+
+**Decision.** Street props take the real size where the tier band allows it (the bin moves from 2.2 to 3.4 studs) and
+keep real aspect ratios where the band caps them (the lamp is a 3 m heritage lamp, not a shrunken road lamp). Buildings
+use real storey and door heights inside their tier band, so a sedan is about a third of the house's height, as on a real
+street; the pilot house goes from 16 to 24.5 studs and the shop row from 28 to 44. Sizes are `CityKit.luau` data inside
+the existing tier bands, so no band and no gameplay rule changes.
+
+**Open for the owner (Stage B):**
+
+1. Towers. At real storey height the 60-stud tier 5 cap allows about six floors, so `ck_tower_slab` reads as a block of
+   flats, not a skyscraper. The alternative is a deliberate exception for towers only: more floors at a compressed
+   storey (about 6 studs), which keeps "tower" but breaks the door-to-car ratio up high where the player rarely compares.
+2. Tier moves for street props whose real height is above their band (bollard, post box, parking meter, road lamp).
+   They change gameplay data (which ball size eats them), so they are the owner's call.
+
+**Alternatives rejected**: scaling the whole kit up to real building heights (a 15-storey tower would be 144 studs, far
+above the tier 5 cap and the growth curve); keeping toy proportions (the owner's rejection).

@@ -442,7 +442,7 @@ test("Strings: no Downtown text names a person, an animal to absorb, a brand or 
 end)
 
 -- 013: every city kit nameKey has en and es, and the two differ unless the word is the same in both.
-local SAME_IN_BOTH = { Bungalow = true }
+local SAME_IN_BOTH = { Bungalow = true, Taxi = true }
 
 test(
 	"Strings: every CityKit name has both languages and no key clashes with Strings.luau",

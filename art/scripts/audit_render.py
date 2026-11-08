@@ -8,6 +8,9 @@
 #   PARAMS = {"root": "<repo root>", "out": "<repo root>/specs/013-city-asset-kit/audit", "only": ["dt_bench"]}
 #   exec(open(PARAMS["root"] + "/art/scripts/audit_render.py").read()); run(PARAMS)
 # `only` is optional (omit it for all 99). The run replaces the open file in the claimed Blender.
+# Phase 9 (T078, tween-appeal rework): PARAMS "rework": True writes to <out>/rework/ instead and also measures, per mesh,
+# the muted share (area whose UVs sit in a non-accent cell; accents are w-accent-*, w-glow, w-graffiti and hero-*) and
+# the smooth share (area of smooth-shaded faces). audit_report.py --rework turns that into audit-rework.json/.md.
 
 import json
 import math
@@ -38,6 +41,29 @@ def season_share(obj, cell) -> float:
                for i in polygon.loop_indices):
             inside += polygon.area
     return inside / total if total > 0 else 0.0
+
+
+ACCENT = ("w-accent-", "w-glow", "w-graffiti", "hero-")
+
+
+def shares(obj, cells):
+    """(muted share, smooth share) by face area; a face belongs to the cell that holds its UV centroid."""
+    layer = obj.data.uv_layers.active
+    total = muted = smooth = 0.0
+    for polygon in obj.data.polygons:
+        area = polygon.area
+        total += area
+        if polygon.use_smooth:
+            smooth += area
+        uvs = [layer.data[i].uv for i in polygon.loop_indices]
+        u = sum(uv.x for uv in uvs) / len(uvs)
+        v = sum(uv.y for uv in uvs) / len(uvs)
+        name = next((n for n, (u0, v0, u1, v1) in cells.items() if u0 <= u <= u1 and v0 <= v <= v1), "")
+        if not name.startswith(ACCENT):
+            muted += area
+    if total <= 0:
+        return 1.0, 0.0
+    return muted / total, smooth / total
 
 
 def setup_scene(scene):
@@ -78,11 +104,13 @@ def frame(cam, obj):
     cam.rotation_euler = (-direction).to_track_quat("-Z", "Y").to_euler()
 
 
-def main(out, only):
+def main(out, only, rework=False):
     art = art_dir()
     with open(os.path.join(art, "palette.json"), encoding="utf-8") as handle:
-        rect = json.load(handle)["cells"][SEASON_CELL]
+        all_cells = json.load(handle)["cells"]
+    rect = all_cells[SEASON_CELL]
     cell = (rect["u0"], rect["v0"], rect["u1"], rect["v1"])
+    cells = {n: (c["u0"], c["v0"], c["u1"], c["v1"]) for n, c in all_cells.items()}
     data = {}
     for name in SOURCES:
         bpy.ops.wm.open_mainfile(filepath=os.path.join(art, "source", name + ".blend"))
@@ -110,6 +138,9 @@ def main(out, only):
                 bpy.ops.render.render(write_still=True)
                 renders[theme] = rel
             data[object_id] = {"seasonShare": {theme: round(share, 4) for theme in THEMES}, "renders": renders}
+            if rework:
+                muted, smooth = shares(obj, cells)
+                data[object_id].update({"mutedShare": round(muted, 4), "smoothShare": round(smooth, 4)})
     path = os.path.join(out, "render-data.json")
     merged = {}
     if only and os.path.isfile(path):
@@ -127,5 +158,7 @@ def main(out, only):
 def run(params):
     global ROOT
     ROOT = params["root"]
-    main(os.path.abspath(params["out"]), set(params.get("only", [])))
+    out = os.path.abspath(params["out"])
+    rework = bool(params.get("rework"))
+    main(os.path.join(out, "rework") if rework else out, set(params.get("only", [])), rework)
     print("audit_render: OK")

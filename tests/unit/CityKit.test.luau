@@ -14,11 +14,11 @@ local test, expect = harness.test, harness.expect
 
 local ZONE_COUNTS: { [string]: number } = {
 	building = 25,
-	street = 11,
-	park = 16,
-	suburbs = 7,
-	mainstreet = 5,
-	downtown = 6,
+	street = 21,
+	park = 22,
+	suburbs = 15,
+	mainstreet = 13,
+	downtown = 11,
 	signage = 7,
 	meme = 7,
 }
@@ -30,8 +30,8 @@ local FLOORS: { [string]: number } = { pocket = 40, flat = 24, panel = 150 }
 local TIER_FLOORS = { 150, 210, 450, 1050, 1500 }
 
 local objects = CityKit.objects
-test("CityKit: 84 objects, unique ids, keyed ck_ and named object.citykit.<id>", function()
-	expect.equal(#objects, 84)
+test("CityKit: 121 objects, unique ids, keyed ck_ and named object.citykit.<id>", function()
+	expect.equal(#objects, 121)
 	local seen: { [string]: boolean } = {}
 	for _, object in objects do
 		expect.falsy(seen[object.id], object.id)
@@ -55,8 +55,8 @@ test("CityKit: zone counts match the asset list", function()
 	end
 end)
 
-test("CityKit: new meshes by tier are T1 2, T2 17, T3 18, T4 27, T5 20", function()
-	local expected = { 2, 17, 18, 27, 20 }
+test("CityKit: new meshes by tier are T1 15, T2 29, T3 23, T4 34, T5 20", function()
+	local expected = { 15, 29, 23, 34, 20 }
 	local counts = { 0, 0, 0, 0, 0 }
 	for _, object in objects do
 		counts[object.tier] += 1
@@ -92,6 +92,49 @@ test("CityKit: the class floor sits under 60 % of the tier budget for every obje
 			floor <= Config.Budgets.meshTriangles[object.tier] * TARGET_SHARE,
 			`{object.id} floor {floor}`
 		)
+	end
+end)
+
+test(
+	"CityKit: the playground in default placements is the swing set and the slide (style bible section 7)",
+	function()
+		local ids: { [string]: boolean } = {}
+		for _, object in objects do
+			ids[object.id] = true
+		end
+		for id in CityKit.notDefault do
+			expect.truthy(ids[id], id)
+		end
+		for _, id in { "seesaw", "climbing_frame", "sandpit" } do
+			expect.truthy(CityKit.notDefault[id], id)
+		end
+		expect.falsy(CityKit.notDefault.swing_set)
+		expect.falsy(CityKit.notDefault.slide)
+	end
+)
+
+test("CityKit: the twelve urban props of the content mix are in the catalogue", function()
+	local ids: { [string]: boolean } = {}
+	for _, object in objects do
+		ids[object.id] = true
+	end
+	for _, id in
+		{
+			"traffic_lights",
+			"parking_meter",
+			"scooter_dock",
+			"food_truck",
+			"phone_repair_kiosk",
+			"neon_sign",
+			"scaffolding",
+			"skip",
+			"water_tank",
+			"car_sports",
+			"taxi",
+			"motorbike",
+		}
+	do
+		expect.truthy(ids[id], id)
 	end
 end)
 
@@ -132,7 +175,7 @@ test("CityKit: every name has English and Spanish text and no stray strings exis
 		keys += 1
 		expect.truthy(string.sub(key, 1, 15) == "object.citykit.", key)
 	end
-	expect.equal(keys, 84)
+	expect.equal(keys, 121)
 	for _, object in objects do
 		local texts = (CityKitStrings :: any)[object.nameKey]
 		expect.truthy(texts ~= nil, object.nameKey)
@@ -212,6 +255,7 @@ end)
 -- ---------------------------------------------------------------- the audit (FR-001, SC-001)
 
 local AUDIT = "specs/013-city-asset-kit/audit/audit.json"
+local REWORKED = { dt_fairy_light_bulb = true, dt_ice_lolly = true, dt_tennis_ball = true }
 
 test(
 	"Audit: 99 dt_ entries with valid verdicts, reasons and headroom under the ceilings",
@@ -231,7 +275,9 @@ test(
 			expect.falsy(seen[mesh.id], mesh.id)
 			seen[mesh.id] = true
 			-- audit.json is the baseline before the rebuild: kept meshes still match the manifest, rebuilt ones grew (the kiosk only past its baseline, its floor does not fit the N10 ceilings)
-			if mesh.verdict == "keep" then
+			-- three baseline keeps were rebuilt on purpose by the Phase 9 pocket rework (art/scripts/kit_stage_c.py); they
+			-- only have to stay at or above their floor (audit_report.py REWORKED)
+			if mesh.verdict == "keep" and not REWORKED[mesh.id] then
 				expect.equal(mesh.triangles, triangles[mesh.id], mesh.id)
 			elseif mesh.id == "dt_kiosk" then
 				expect.truthy(triangles[mesh.id] > mesh.triangles, mesh.id)
@@ -379,6 +425,26 @@ test("Signage: every fronts object has its cells in fronts.json", function()
 				object.id
 			)
 		end
+	end
+end)
+
+test("CityKit: the small end is stocked (Stage C, owner request 2026-11-08)", function()
+	-- at least 15 tier 1 objects, at least 10 tier 2 objects in the low half of the band (up to 3 studs), and tier 1
+	-- in every everyday zone, so a D1 ball has something to eat wherever the kit is placed
+	local tier1, lowTier2 = 0, 0
+	local zones: { [string]: boolean } = {}
+	for _, object in objects do
+		if object.tier == 1 then
+			tier1 += 1
+			zones[object.zone :: string] = true
+		elseif object.tier == 2 and object.size <= 3 then
+			lowTier2 += 1
+		end
+	end
+	expect.truthy(tier1 >= 15, `tier 1: {tier1}`)
+	expect.truthy(lowTier2 >= 10, `tier 2 up to 3 studs: {lowTier2}`)
+	for _, zone in { "street", "park", "suburbs", "mainstreet" } do
+		expect.truthy(zones[zone], zone)
 	end
 end)
 

@@ -339,4 +339,152 @@ return {
 		en = "Vacant lot",
 		es = "Solar vacío",
 	},
+	["object.citykit.traffic_lights"] = {
+		en = "Traffic lights",
+		es = "Semáforo",
+	},
+	["object.citykit.parking_meter"] = {
+		en = "Parking meter",
+		es = "Parquímetro",
+	},
+	["object.citykit.scooter_dock"] = {
+		en = "E-scooter dock",
+		es = "Estación de patinetes",
+	},
+	["object.citykit.motorbike"] = {
+		en = "Motorbike",
+		es = "Moto",
+	},
+	["object.citykit.food_truck"] = {
+		en = "Food truck",
+		es = "Camión de comida",
+	},
+	["object.citykit.phone_repair_kiosk"] = {
+		en = "Phone repair kiosk",
+		es = "Quiosco de reparación de móviles",
+	},
+	["object.citykit.skip"] = {
+		en = "Builder's skip",
+		es = "Contenedor de escombros",
+	},
+	["object.citykit.neon_sign"] = {
+		en = "Neon rooftop sign",
+		es = "Letrero de neón",
+	},
+	["object.citykit.scaffolding"] = {
+		en = "Scaffolding",
+		es = "Andamio",
+	},
+	["object.citykit.water_tank"] = {
+		en = "Rooftop water tank",
+		es = "Depósito de agua",
+	},
+	["object.citykit.car_sports"] = {
+		en = "Sports car",
+		es = "Deportivo",
+	},
+	["object.citykit.taxi"] = {
+		en = "Taxi",
+		es = "Taxi",
+	},
+	["object.citykit.chip_bag"] = {
+		en = "Chip bag",
+		es = "Bolsa de patatas",
+	},
+	["object.citykit.padlock"] = {
+		en = "Padlock",
+		es = "Candado",
+	},
+	["object.citykit.newspaper_bundle"] = {
+		en = "Newspaper bundle",
+		es = "Fajo de periódicos",
+	},
+	["object.citykit.soccer_ball"] = {
+		en = "Soccer ball",
+		es = "Balón de fútbol",
+	},
+	["object.citykit.flying_disc"] = {
+		en = "Flying disc",
+		es = "Disco volador",
+	},
+	["object.citykit.sand_pail"] = {
+		en = "Sand pail and shovel",
+		es = "Cubo y pala",
+	},
+	["object.citykit.garden_gnome"] = {
+		en = "Garden gnome",
+		es = "Gnomo de jardín",
+	},
+	["object.citykit.watering_can"] = {
+		en = "Watering can",
+		es = "Regadera",
+	},
+	["object.citykit.flower_pot"] = {
+		en = "Flower pot",
+		es = "Maceta con flores",
+	},
+	["object.citykit.recycling_box"] = {
+		en = "Recycling box",
+		es = "Caja de reciclaje",
+	},
+	["object.citykit.grocery_bag"] = {
+		en = "Grocery bag",
+		es = "Bolsa de la compra",
+	},
+	["object.citykit.cupcake"] = {
+		en = "Cupcake",
+		es = "Magdalena",
+	},
+	["object.citykit.sunglasses"] = {
+		en = "Sunglasses",
+		es = "Gafas de sol",
+	},
+	["object.citykit.traffic_cone"] = {
+		en = "Traffic cone",
+		es = "Cono de tráfico",
+	},
+	["object.citykit.kick_scooter"] = {
+		en = "Kick scooter",
+		es = "Patinete",
+	},
+	["object.citykit.cardboard_boxes"] = {
+		en = "Cardboard boxes",
+		es = "Cajas de cartón",
+	},
+	["object.citykit.bistro_chair"] = {
+		en = "Bistro chair",
+		es = "Silla de terraza",
+	},
+	["object.citykit.flower_buckets"] = {
+		en = "Flower buckets",
+		es = "Cubos de flores",
+	},
+	["object.citykit.potted_shrub"] = {
+		en = "Potted shrub",
+		es = "Arbusto en maceta",
+	},
+	["object.citykit.leaf_pile"] = {
+		en = "Leaf pile",
+		es = "Montón de hojas",
+	},
+	["object.citykit.bird_bath"] = {
+		en = "Bird bath",
+		es = "Bebedero para pájaros",
+	},
+	["object.citykit.cooler"] = {
+		en = "Cooler",
+		es = "Nevera portátil",
+	},
+	["object.citykit.kids_bike"] = {
+		en = "Kid's bike",
+		es = "Bici infantil",
+	},
+	["object.citykit.toolbox"] = {
+		en = "Toolbox",
+		es = "Caja de herramientas",
+	},
+	["object.citykit.rain_barrel"] = {
+		en = "Rain barrel",
+		es = "Barril de lluvia",
+	},
 }
