@@ -1,0 +1,23 @@
+{
+  "verdict": "incomplete",
+  "remaining": [
+    "T041 Copy the 24 captured Studio shots into specs/014-park-city-art/shots/ (re-capture if the copy is refused)",
+    "T042 Capture the missing ground-level `edge` and whole-map overview shots in winter and city, and update the shot list in playtest.md",
+    "T043 Rerun quickstart scenarios 3 and 6 in Studio and update the T040 validation table in playtest.md (T040 stays open until then)"
+  ],
+  "human": [
+    {
+      "item": "T032 Set Budgets.parkCityTrianglesUnculled/Culled",
+      "reason": "Owner decision. R-07's rule (0.8 x the highest step held at 30 fps) gives 700,000, below the 876,493 scene that held 60 fps. The owner must pick between pinning the measured scene, accepting 700,000 and cutting meshes, or funding a stress scene (docs/release-candidate.md)."
+    },
+    {
+      "item": "T037 Record owner review and Gate 6 approval in playtest.md",
+      "reason": "Needs the owner to look at the shots, play the build in winter and city, and approve the map-edge, spawn-prune and meme-spot layout changes in the SVGs."
+    },
+    {
+      "item": "T040 quickstart scenarios 5 (map edge) and 8 (gates)",
+      "reason": "These rows depend on the owner's SVG approval, Gate 6 approval and the pull request, which cannot be done here."
+    }
+  ],
+  "summary": "Code, generators, Lune tests and scripts/check.sh all pass; what is left is getting the Gate 6 shots into the repo (24 captured, 2 views missing), a quickstart rerun, and owner decisions on the triangle ceilings and the Gate 6 approval."
+}
