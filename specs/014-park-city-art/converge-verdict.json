@@ -4,24 +4,24 @@
   "human": [
     {
       "item": "T041 Copy the captured Studio shots into specs/014-park-city-art/shots/ (T034 closes with it)",
-      "reason": "The JPGs still exist in ~/.claude/projects/.../tool-results, but this session's permission policy denies any cp or read outside the repo (external_directory deny), and screen_capture has no output path. The owner must run the two cp loops in playtest.md from the repo root. A grey-box Blender render is ruled out by R-12."
+      "reason": "The JPGs exist in ~/.claude/projects/.../tool-results, but external directory access restrictions prevent copying files from outside the workspace repository; the owner must run the copy command from repo root."
     },
     {
       "item": "T042 Ground-level edge and whole-map overview shots in winter and city",
-      "reason": "Already captured (edge_ground, overview, overview_high in both themes) and listed in playtest.md. They are missing from shots/ only because of the same copy block as T041, so the owner's copy command finishes this task."
+      "reason": "Views were captured in Studio and recorded in playtest.md, but the files reside in the external tool-results directory and cannot be copied into shots/ by the agent due to external path restrictions."
     },
     {
       "item": "T032 Set Budgets.parkCityTrianglesUnculled/Culled",
-      "reason": "Owner decision. R-07's rule (0.8 x the highest step held at 30 fps) gives 700,000, below the 876,493 scene that held 60 fps. The owner must pick between pinning the measured scene, accepting 700,000 and cutting meshes, or funding a stress scene (docs/release-candidate.md)."
+      "reason": "Requires owner decision on whether to pin the benchmarked scene triangles (876,493) or apply the formula ceiling (700,000) and trim meshes, as documented in docs/release-candidate.md."
     },
     {
       "item": "T037 Record owner review and Gate 6 approval in playtest.md",
-      "reason": "Needs the owner to look at the shots, play the build in winter and city, and approve the map-edge, spawn-prune and meme-spot layout changes in the SVGs."
+      "reason": "Requires human owner review of visual shots and manual gameplay verification in winter and city themes for Gate 6 sign-off."
     },
     {
-      "item": "T040 quickstart scenarios 5 (map edge), 7 (budgets) and 8 (gates)",
-      "reason": "These rows depend on the owner's SVG approval, the T032 ceiling decision, Gate 6 approval and the pull request, none of which can be done here."
+      "item": "T040 quickstart scenarios 5 (map edge), 7 (budgets), and 8 (gates)",
+      "reason": "The remaining quickstart validation rows depend on the owner's layout approval, budget decision, Gate 6 review, and PR creation."
     }
   ],
-  "summary": "No new buildable work found (scripts/check.sh passes with 593 tests, T043 is done); what is left is the owner's copy of the captured shots into shots/, the T032 ceiling decision, Gate 6 approval and the pull request."
+  "summary": "All automated implementation and verification tasks are complete with 607 passing tests; remaining open items require owner decisions (triangle budget ceiling), external tool-result file copies, and Gate 6 visual/playtest approval."
 }
