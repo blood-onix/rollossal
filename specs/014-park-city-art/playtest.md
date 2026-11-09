@@ -138,6 +138,13 @@ draws grey boxes only, which R-12 says these shots must not be, and R-12's condi
 met, since the captures work. No grey-box render was saved under the shot names. The two commands above, run by the
 owner from the repo root, are what is left.
 
+Fifth pass, 2026-11-09 (T034, T041, T042 still open). The owner copied 19 JPGs into `shots/`, but they are not the Gate 6
+set: their blob ids (`1794145…` to `1794148…`) match none of the 30 in the two commands above. All 19 were opened: 15 are
+gameplay frames with the HUD on (one is the Results screen), 4 are unnamed views without a HUD, and all are `winter`, so
+none can take a `<theme>-<view>.jpg` name. They were left in place, unrenamed. The two copy commands were submitted once
+as T041 asks and the session's Bash policy refused them again (`not-on-allowlist`), so nothing was copied. The two
+commands above, run by the owner from the repo root, are still what is left.
+
 What the shots show, for the owner's review:
 
 - Plaza landmark: `mega_tree` in `winter`, `giant_duck` in `city`. Fronts mid-rises, the Glass Tower, memes and street
@@ -185,6 +192,10 @@ Run 2026-11-08 after the second shot pass, `winter` restored (the five generated
 | 8 Gates | Gate 2 passes. **Open (owner)**: shots not in `shots/` (the copy above), no pull request, no owner approval |
 
 The T032 ladder could not run this pass: 10 of 10 seconds sampled in Play were throttled (14.7 to 15.8 fps).
+
+Rerun 2026-11-09: `scripts/check.sh` exit 0. T032 again: 10 of 10 seconds in Play had `RenderStepped` at 15 to 16 with
+Heartbeat at 60 to 61 (viewport 1008 × 812), so no unthrottled seconds and no ladder. Sync probe clean on the 27 scripts
+this branch changes (a shortened list, not the full probe). Scenarios 5, 7 and 8 stay open as in the table.
 
 Rerun of scenarios 3 and 6 (T043), 2026-11-08, `winter`, sync probe clean, `DebugSize` on for scenario 6 only and back
 off afterwards.

@@ -2,15 +2,15 @@
  "stage": 3,
  "theme": "winter",
  "totals": {
-  "kinds": 219,
-  "exact": 68,
+  "kinds": 231,
+  "exact": 80,
   "substitute": 37,
   "standin": 114
  },
  "placementsByStatus": {
-  "exact": 1660,
-  "substitute": 411,
-  "standin": 2542
+  "exact": 3187,
+  "substitute": 505,
+  "standin": 2400
  },
  "byTier": {
   "1": {
@@ -24,17 +24,17 @@
    "standin": 30
   },
   "3": {
-   "exact": 17,
+   "exact": 18,
    "substitute": 6,
    "standin": 20
   },
   "4": {
-   "exact": 10,
+   "exact": 17,
    "substitute": 9,
    "standin": 9
   },
   "5": {
-   "exact": 6,
+   "exact": 10,
    "substitute": 3,
    "standin": 9
   },
@@ -60,7 +60,7 @@
   {
    "id": "acorn",
    "tier": 1,
-   "placements": 58,
+   "placements": 166,
    "status": "exact",
    "assetKey": "acorn",
    "scale": null,
@@ -96,7 +96,7 @@
   {
    "id": "arcade_cabinet",
    "tier": 3,
-   "placements": 0,
+   "placements": 16,
    "status": "exact",
    "assetKey": "dt_arcade_cabinet",
    "scale": 1.0,
@@ -156,7 +156,7 @@
   {
    "id": "bench",
    "tier": 3,
-   "placements": 252,
+   "placements": 267,
    "status": "exact",
    "assetKey": "dt_bench",
    "scale": 1.0,
@@ -180,7 +180,7 @@
   {
    "id": "bicycle",
    "tier": 2,
-   "placements": 68,
+   "placements": 108,
    "status": "exact",
    "assetKey": "dt_bicycle",
    "scale": 0.92,
@@ -204,12 +204,12 @@
   {
    "id": "bike_bottle",
    "tier": 1,
-   "placements": 7,
+   "placements": 31,
    "status": "substitute",
    "assetKey": "dt_water_bottle",
    "scale": 1.56,
    "fitChecked": true,
-   "stage": 2,
+   "stage": 1,
    "role": "w-accent-blue",
    "note": "water bottle for a bike bottle"
   },
@@ -228,7 +228,7 @@
   {
    "id": "bird_bath",
    "tier": 2,
-   "placements": 2,
+   "placements": 1,
    "status": "exact",
    "assetKey": "ck_bird_bath",
    "scale": 1.0,
@@ -348,7 +348,7 @@
   {
    "id": "boules_set",
    "tier": 1,
-   "placements": 18,
+   "placements": 20,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -408,7 +408,7 @@
   {
    "id": "bush",
    "tier": 3,
-   "placements": 217,
+   "placements": 201,
    "status": "exact",
    "assetKey": "ck_bush",
    "scale": 1.54,
@@ -444,19 +444,19 @@
   {
    "id": "cafe_table_set",
    "tier": 3,
-   "placements": 25,
+   "placements": 57,
    "status": "exact",
    "assetKey": "ck_cafe_table_parasol",
    "scale": 0.55,
    "fitChecked": true,
-   "stage": 2,
+   "stage": 1,
    "role": "w-accent-yellow",
    "note": "scale 0.55 is outside 0.6 to 1.6: a stand-in candidate"
   },
   {
    "id": "camper_van",
    "tier": 4,
-   "placements": 1,
+   "placements": 9,
    "status": "substitute",
    "assetKey": "dt_delivery_van",
    "scale": 0.94,
@@ -516,12 +516,12 @@
   {
    "id": "cardboard_boxes",
    "tier": 3,
-   "placements": 3,
+   "placements": 19,
    "status": "exact",
    "assetKey": "ck_cardboard_boxes",
    "scale": 1.67,
    "fitChecked": true,
-   "stage": 2,
+   "stage": 1,
    "role": "w-wood",
    "note": "scale 1.67 is outside 0.6 to 1.6: a stand-in candidate"
   },
@@ -588,19 +588,19 @@
   {
    "id": "city_bus",
    "tier": 4,
-   "placements": 0,
+   "placements": 12,
    "status": "exact",
    "assetKey": "dt_city_bus",
    "scale": 1.0,
    "fitChecked": true,
-   "stage": 1,
+   "stage": 2,
    "role": "w-accent-red",
    "note": ""
   },
   {
    "id": "coffee_cup",
    "tier": 1,
-   "placements": 15,
+   "placements": 27,
    "status": "exact",
    "assetKey": "dt_coffee_cup",
    "scale": 1.71,
@@ -620,6 +620,54 @@
    "stage": 1,
    "role": "w-accent-yellow",
    "note": "coin"
+  },
+  {
+   "id": "colossal_cupcake",
+   "tier": 5,
+   "placements": 1,
+   "status": "exact",
+   "assetKey": "ck_cupcake",
+   "scale": 146.67,
+   "fitChecked": true,
+   "stage": 1,
+   "role": "w-accent-pink",
+   "note": "colossal cupcake; scale 146.67 is outside 0.6 to 1.6: a stand-in candidate"
+  },
+  {
+   "id": "colossal_duck",
+   "tier": 5,
+   "placements": 1,
+   "status": "exact",
+   "assetKey": "rubber_duck",
+   "scale": null,
+   "fitChecked": false,
+   "stage": 1,
+   "role": "w-accent-yellow",
+   "note": "colossal rubber duck on the pond; fit unchecked (no native size in a catalogue)"
+  },
+  {
+   "id": "colossal_gnome",
+   "tier": 5,
+   "placements": 1,
+   "status": "exact",
+   "assetKey": "ck_garden_gnome",
+   "scale": 38.33,
+   "fitChecked": true,
+   "stage": 1,
+   "role": "w-accent-blue",
+   "note": "colossal gnome; scale 38.33 is outside 0.6 to 1.6: a stand-in candidate"
+  },
+  {
+   "id": "colossal_present",
+   "tier": 5,
+   "placements": 1,
+   "status": "exact",
+   "assetKey": "dt_gift_box",
+   "scale": 20.0,
+   "fitChecked": true,
+   "stage": 1,
+   "role": "w-accent-red",
+   "note": "colossal present; scale 20.0 is outside 0.6 to 1.6: a stand-in candidate"
   },
   {
    "id": "cone_dropped",
@@ -672,7 +720,7 @@
   {
    "id": "cool_box",
    "tier": 2,
-   "placements": 38,
+   "placements": 82,
    "status": "exact",
    "assetKey": "ck_cooler",
    "scale": 1.3,
@@ -732,7 +780,7 @@
   {
    "id": "cup_small",
    "tier": 1,
-   "placements": 17,
+   "placements": 59,
    "status": "substitute",
    "assetKey": "dt_coffee_cup",
    "scale": 1.14,
@@ -744,7 +792,7 @@
   {
    "id": "cupcake",
    "tier": 1,
-   "placements": 38,
+   "placements": 50,
    "status": "exact",
    "assetKey": "ck_cupcake",
    "scale": 4.0,
@@ -768,7 +816,7 @@
   {
    "id": "daisy",
    "tier": 1,
-   "placements": 69,
+   "placements": 64,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -780,7 +828,7 @@
   {
    "id": "deckchair",
    "tier": 2,
-   "placements": 186,
+   "placements": 168,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -792,7 +840,7 @@
   {
    "id": "delivery_truck",
    "tier": 4,
-   "placements": 4,
+   "placements": 12,
    "status": "substitute",
    "assetKey": "dt_delivery_van",
    "scale": 1.0,
@@ -816,12 +864,12 @@
   {
    "id": "donut_truck",
    "tier": 4,
-   "placements": 1,
+   "placements": 5,
    "status": "exact",
    "assetKey": "dt_donut_food_truck",
    "scale": 1.0,
    "fitChecked": true,
-   "stage": 3,
+   "stage": 2,
    "role": "w-accent-pink",
    "note": ""
   },
@@ -888,7 +936,7 @@
   {
    "id": "flower_planter",
    "tier": 2,
-   "placements": 101,
+   "placements": 89,
    "status": "substitute",
    "assetKey": "ck_planter_box",
    "scale": 1.54,
@@ -900,7 +948,7 @@
   {
    "id": "football",
    "tier": 2,
-   "placements": 29,
+   "placements": 74,
    "status": "exact",
    "assetKey": "ck_soccer_ball",
    "scale": 2.86,
@@ -936,7 +984,7 @@
   {
    "id": "frisbee",
    "tier": 1,
-   "placements": 14,
+   "placements": 39,
    "status": "exact",
    "assetKey": "ck_flying_disc",
    "scale": 2.22,
@@ -948,7 +996,7 @@
   {
    "id": "fruit_crate",
    "tier": 2,
-   "placements": 24,
+   "placements": 52,
    "status": "exact",
    "assetKey": "ck_fruit_crates",
    "scale": 0.56,
@@ -972,7 +1020,7 @@
   {
    "id": "garden_gnome",
    "tier": 2,
-   "placements": 39,
+   "placements": 271,
    "status": "exact",
    "assetKey": "ck_garden_gnome",
    "scale": 1.83,
@@ -996,7 +1044,7 @@
   {
    "id": "giant_chess_piece",
    "tier": 2,
-   "placements": 54,
+   "placements": 60,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -1128,7 +1176,7 @@
   {
    "id": "hatchback",
    "tier": 3,
-   "placements": 55,
+   "placements": 63,
    "status": "exact",
    "assetKey": "dt_hatchback",
    "scale": 1.0,
@@ -1164,7 +1212,7 @@
   {
    "id": "hoarding",
    "tier": 4,
-   "placements": 128,
+   "placements": 28,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -1176,7 +1224,7 @@
   {
    "id": "hot_dog_trolley",
    "tier": 3,
-   "placements": 4,
+   "placements": 16,
    "status": "exact",
    "assetKey": "dt_hot_dog_cart",
    "scale": 1.0,
@@ -1236,7 +1284,7 @@
   {
    "id": "inflatable_flamingo",
    "tier": 2,
-   "placements": 1,
+   "placements": 13,
    "status": "exact",
    "assetKey": "dt_inflatable_flamingo",
    "scale": 1.0,
@@ -1260,7 +1308,7 @@
   {
    "id": "kick_scooter",
    "tier": 2,
-   "placements": 12,
+   "placements": 80,
    "status": "exact",
    "assetKey": "ck_kick_scooter",
    "scale": 1.2,
@@ -1284,7 +1332,7 @@
   {
    "id": "ladybird",
    "tier": 1,
-   "placements": 44,
+   "placements": 43,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -1296,7 +1344,7 @@
   {
    "id": "lantern",
    "tier": 2,
-   "placements": 3,
+   "placements": 15,
    "status": "exact",
    "assetKey": "lantern",
    "scale": null,
@@ -1308,7 +1356,7 @@
   {
    "id": "lawnmower",
    "tier": 3,
-   "placements": 0,
+   "placements": 16,
    "status": "exact",
    "assetKey": "ck_lawn_mower",
    "scale": 1.03,
@@ -1404,7 +1452,7 @@
   {
    "id": "lunchbox",
    "tier": 1,
-   "placements": 21,
+   "placements": 33,
    "status": "substitute",
    "assetKey": "dt_takeout_box",
    "scale": 1.0,
@@ -1416,7 +1464,7 @@
   {
    "id": "mailbox",
    "tier": 2,
-   "placements": 24,
+   "placements": 68,
    "status": "exact",
    "assetKey": "dt_mailbox",
    "scale": 1.0,
@@ -1462,9 +1510,105 @@
    "note": ""
   },
   {
+   "id": "mega_cone",
+   "tier": 4,
+   "placements": 1,
+   "status": "exact",
+   "assetKey": "ck_traffic_cone",
+   "scale": 11.3,
+   "fitChecked": true,
+   "stage": 2,
+   "role": "w-accent-orange",
+   "note": "giant traffic cone; scale 11.3 is outside 0.6 to 1.6: a stand-in candidate"
+  },
+  {
+   "id": "mega_cupcake",
+   "tier": 3,
+   "placements": 3,
+   "status": "exact",
+   "assetKey": "ck_cupcake",
+   "scale": 25.0,
+   "fitChecked": true,
+   "stage": 1,
+   "role": "w-accent-pink",
+   "note": "giant cupcake; scale 25.0 is outside 0.6 to 1.6: a stand-in candidate"
+  },
+  {
+   "id": "mega_duck",
+   "tier": 4,
+   "placements": 3,
+   "status": "exact",
+   "assetKey": "rubber_duck",
+   "scale": null,
+   "fitChecked": false,
+   "stage": 1,
+   "role": "w-accent-yellow",
+   "note": "giant rubber duck; fit unchecked (no native size in a catalogue)"
+  },
+  {
+   "id": "mega_flamingo",
+   "tier": 4,
+   "placements": 1,
+   "status": "exact",
+   "assetKey": "dt_inflatable_flamingo",
+   "scale": 6.67,
+   "fitChecked": true,
+   "stage": 2,
+   "role": "w-accent-pink",
+   "note": "giant inflatable flamingo; scale 6.67 is outside 0.6 to 1.6: a stand-in candidate"
+  },
+  {
+   "id": "mega_football",
+   "tier": 4,
+   "placements": 1,
+   "status": "exact",
+   "assetKey": "ck_soccer_ball",
+   "scale": 18.57,
+   "fitChecked": true,
+   "stage": 2,
+   "role": "w-white",
+   "note": "giant football; scale 18.57 is outside 0.6 to 1.6: a stand-in candidate"
+  },
+  {
+   "id": "mega_gnome",
+   "tier": 4,
+   "placements": 3,
+   "status": "exact",
+   "assetKey": "ck_garden_gnome",
+   "scale": 11.67,
+   "fitChecked": true,
+   "stage": 1,
+   "role": "w-accent-blue",
+   "note": "giant gnome; scale 11.67 is outside 0.6 to 1.6: a stand-in candidate"
+  },
+  {
+   "id": "mega_present",
+   "tier": 4,
+   "placements": 3,
+   "status": "exact",
+   "assetKey": "dt_gift_box",
+   "scale": 4.5,
+   "fitChecked": true,
+   "stage": 1,
+   "role": "w-accent-red",
+   "note": "giant present; scale 4.5 is outside 0.6 to 1.6: a stand-in candidate"
+  },
+  {
+   "id": "mega_trainer",
+   "tier": 4,
+   "placements": 1,
+   "status": "exact",
+   "assetKey": "dt_lost_sneaker",
+   "scale": 20.0,
+   "fitChecked": true,
+   "stage": 2,
+   "role": "w-accent-red",
+   "note": "giant lost sneaker; scale 20.0 is outside 0.6 to 1.6: a stand-in candidate"
+  },
+  {
    "id": "minibus",
    "tier": 4,
-   "placements": 2,
+   "placements": 6,
    "status": "substitute",
    "assetKey": "dt_delivery_van",
    "scale": 0.94,
@@ -1512,7 +1656,7 @@
   {
    "id": "napkin",
    "tier": 1,
-   "placements": 142,
+   "placements": 124,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -1560,7 +1704,7 @@
   {
    "id": "office_chair",
    "tier": 2,
-   "placements": 0,
+   "placements": 16,
    "status": "exact",
    "assetKey": "dt_spinning_office_chair",
    "scale": 1.0,
@@ -1584,12 +1728,12 @@
   {
    "id": "paddling_pool",
    "tier": 2,
-   "placements": 12,
+   "placements": 44,
    "status": "exact",
    "assetKey": "dt_paddling_pool",
    "scale": 0.57,
    "fitChecked": true,
-   "stage": 2,
+   "stage": 1,
    "role": "w-water",
    "note": "scale 0.57 is outside 0.6 to 1.6: a stand-in candidate"
   },
@@ -1716,7 +1860,7 @@
   {
    "id": "picnic_basket",
    "tier": 2,
-   "placements": 32,
+   "placements": 68,
    "status": "exact",
    "assetKey": "ck_picnic_basket",
    "scale": 1.47,
@@ -1728,7 +1872,7 @@
   {
    "id": "picnic_table",
    "tier": 3,
-   "placements": 33,
+   "placements": 31,
    "status": "exact",
    "assetKey": "dt_picnic_table",
    "scale": 1.0,
@@ -1764,7 +1908,7 @@
   {
    "id": "pine_cone",
    "tier": 1,
-   "placements": 37,
+   "placements": 191,
    "status": "exact",
    "assetKey": "pine_cone",
    "scale": null,
@@ -1812,7 +1956,7 @@
   {
    "id": "present",
    "tier": 2,
-   "placements": 6,
+   "placements": 54,
    "status": "exact",
    "assetKey": "dt_gift_box",
    "scale": 0.8,
@@ -1860,7 +2004,7 @@
   {
    "id": "removal_van",
    "tier": 4,
-   "placements": 1,
+   "placements": 9,
    "status": "substitute",
    "assetKey": "dt_delivery_van",
    "scale": 1.18,
@@ -1992,7 +2136,7 @@
   {
    "id": "rose",
    "tier": 1,
-   "placements": 56,
+   "placements": 53,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -2028,7 +2172,7 @@
   {
    "id": "rubber_duck",
    "tier": 1,
-   "placements": 36,
+   "placements": 138,
    "status": "exact",
    "assetKey": "rubber_duck",
    "scale": null,
@@ -2280,7 +2424,7 @@
   {
    "id": "suitcase",
    "tier": 2,
-   "placements": 17,
+   "placements": 41,
    "status": "exact",
    "assetKey": "dt_suitcase",
    "scale": 0.92,
@@ -2340,7 +2484,7 @@
   {
    "id": "taxi",
    "tier": 3,
-   "placements": 16,
+   "placements": 24,
    "status": "exact",
    "assetKey": "ck_taxi",
    "scale": 0.91,
@@ -2352,7 +2496,7 @@
   {
    "id": "tennis_ball",
    "tier": 1,
-   "placements": 88,
+   "placements": 233,
    "status": "exact",
    "assetKey": "dt_tennis_ball",
    "scale": 0.8,
@@ -2472,7 +2616,7 @@
   {
    "id": "traffic_cone",
    "tier": 2,
-   "placements": 12,
+   "placements": 24,
    "status": "exact",
    "assetKey": "ck_traffic_cone",
    "scale": 0.87,
@@ -2496,7 +2640,7 @@
   {
    "id": "trainer",
    "tier": 1,
-   "placements": 13,
+   "placements": 37,
    "status": "exact",
    "assetKey": "dt_lost_sneaker",
    "scale": 1.38,
@@ -2508,7 +2652,7 @@
   {
    "id": "trampoline",
    "tier": 3,
-   "placements": 15,
+   "placements": 31,
    "status": "exact",
    "assetKey": "ck_trampoline",
    "scale": 0.45,
@@ -2520,7 +2664,7 @@
   {
    "id": "tulip",
    "tier": 1,
-   "placements": 102,
+   "placements": 97,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -2544,7 +2688,7 @@
   {
    "id": "van",
    "tier": 4,
-   "placements": 19,
+   "placements": 23,
    "status": "exact",
    "assetKey": "dt_delivery_van",
    "scale": 1.0,
@@ -2556,12 +2700,12 @@
   {
    "id": "vending_machine",
    "tier": 3,
-   "placements": 4,
+   "placements": 64,
    "status": "exact",
    "assetKey": "dt_vending_machine",
    "scale": 1.0,
    "fitChecked": true,
-   "stage": 2,
+   "stage": 1,
    "role": "w-accent-red",
    "note": ""
   },
@@ -2652,7 +2796,7 @@
   {
    "id": "wheelie_bin",
    "tier": 2,
-   "placements": 54,
+   "placements": 86,
    "status": "exact",
    "assetKey": "dt_wheelie_bin",
    "scale": 1.0,
@@ -2683,7 +2827,6 @@
   "breadcrumb",
   "strawberry",
   "daisy",
-  "hoarding",
   "pea",
   "rose",
   "giant_chess_piece",
@@ -2707,10 +2850,10 @@
   "ice_cream_cone",
   "snail_shell",
   "pebble",
+  "boules_set",
   "pumpkin",
   "bird_seed_bag",
   "birds_nest",
-  "boules_set",
   "sweet",
   "vent",
   "gnome_hat",
@@ -2718,6 +2861,7 @@
   "grape_bunch",
   "cheese_wheel",
   "croissant",
+  "hoarding",
   "watermelon",
   "wheelbarrow",
   "coin",
