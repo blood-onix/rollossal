@@ -37,9 +37,24 @@ local function ballRadius(session: Session): number
 	return session.physicalDiameter / 2
 end
 
+-- How far past contact this ball may claim: further while a tier jump's vacuum runs (ToyService).
+local function reachTolerance(session: Session): number
+	if os.clock() < session.vacuumUntil then
+		return Config.absorbDistanceTolerance
+			+ math.min(
+				Config.vacuumRadiusCeiling,
+				math.max(
+					Config.vacuumRadiusFloor,
+					Config.vacuumRadiusFactor * session.authoritativeDiameter
+				)
+			)
+	end
+	return Config.absorbDistanceTolerance
+end
+
 local function inRange(session: Session, pooled: WorldSpawner.PooledWorldObject): boolean
 	local distance = (session.part.Position - pooled.part.Position).Magnitude
-	return distance <= ballRadius(session) + pooled.size / 2 + Config.absorbDistanceTolerance
+	return distance <= ballRadius(session) + pooled.size / 2 + reachTolerance(session)
 end
 
 -- True when the ball is within `Config.bumpContactTolerance` studs of the part's own box. `inRange` is a loose centre
@@ -83,7 +98,7 @@ local function lightVerdict(session: Session, info: WorldSpawner.LightInfo): str
 		distance = offset.Magnitude,
 		ballRadius = ballRadius(session),
 		size = info.size,
-		tolerance = Config.absorbDistanceTolerance,
+		tolerance = reachTolerance(session),
 		edible = Absorb.canEat(
 			Worlds.rules.absorb,
 			session.authoritativeDiameter,
@@ -307,7 +322,7 @@ end
 
 -- The Studio-only size tool (012 T025): sets the ball to one of the tour sizes through the normal size path. It does
 -- nothing at all unless Flags.DebugSize is on, and never outside Studio.
-local DEBUG_SIZES = { 1, 3, 6, 15, 35, 80 }
+local DEBUG_SIZES = { 1, 3, 6, 15, 35, 60, 80, 100 }
 
 function AbsorbService.trySetSize(session: Session, requested: unknown): string
 	if not Config.Flags.DebugSize or not RunService:IsStudio() then

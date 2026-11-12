@@ -162,14 +162,74 @@ local function buildGeometry(world: WorldDef, parent: Folder, themeId: string): 
 			wedge.BottomSurface = Enum.SurfaceType.Smooth
 			part = wedge
 		else
-			local block3d = staticPart(block.id, size, cframe, colour(swatch))
+			local block3d: Part
 			if block.kind == "Cylinder" then
+				-- An upright column: a cylinder's axis is its X, so it is stood on end.
+				block3d = staticPart(
+					block.id,
+					Vector3.new(size.Y, size.X, size.Z),
+					cframe * CFrame.Angles(0, 0, math.rad(90)),
+					colour(swatch)
+				)
 				block3d.Shape = Enum.PartType.Cylinder
+			else
+				block3d = staticPart(block.id, size, cframe, colour(swatch))
 			end
 			part = block3d
 		end
 		part.Parent = parent
 		count += 1
+	end
+	return count
+end
+
+-- Map-edge scenery (014 R-10): a mesh (one load per asset key, then clones) or a role-coloured block. Anchored and
+-- inert: no collision, no queries, no touch, no tag, no attributes; it is never an object. Yields while a mesh loads.
+local function buildScenery(world: WorldDef, parent: Folder): number
+	local palette = world.environment.palette
+	local meshes: { [string]: BasePart? } = {}
+	local failed: { [string]: boolean } = {}
+	local count = 0
+	local rows: { Worlds.SceneryDef } = world.environment.scenery or {}
+	for _, row in rows do
+		local at = row.cframe
+		local size = Vector3.new(row.size.x, row.size.y, row.size.z)
+		local yaw = CFrame.Angles(0, math.rad(at.yaw), 0)
+		local key = row.assetKey
+		if key ~= nil and meshes[key] == nil and not failed[key] then
+			local ok, built =
+				pcall(ObjectVisual.buildMesh, key, row.id, math.max(size.X, size.Y, size.Z))
+			if ok and built ~= nil then
+				meshes[key] = built
+			else
+				failed[key] = true
+			end
+		end
+		local template = if key ~= nil then meshes[key] else nil
+		local part: BasePart
+		if template ~= nil then
+			part = template:Clone()
+			part.Anchored = true
+			-- Standing on the row's base: the mesh's own height, not the row's box.
+			part.CFrame = CFrame.new(at.x, at.y - size.Y / 2 + part.Size.Y / 2, at.z) * yaw
+		else
+			local rgb = palette[row.role]
+			part = staticPart(
+				row.id,
+				size,
+				CFrame.new(at.x, at.y, at.z) * yaw,
+				if rgb then colour(rgb) else FALLBACK_GREY
+			)
+		end
+		part.Name = row.id
+		part.CanCollide = false
+		part.CanQuery = false
+		part.CanTouch = false
+		part.Parent = parent
+		count += 1
+	end
+	for _, template in meshes do
+		(template :: BasePart):Destroy()
 	end
 	return count
 end
@@ -339,9 +399,8 @@ local function buildHub(world: WorldDef, parent: Folder)
 	pad.Parent = parent
 end
 
--- Inert grey-box stand-ins for the mechanics a later feature makes real (012 research R5): rails, drain pipes, pads,
--- catapults and water. No scripts, no touch handlers, no attributes the game reads. Each Part is named with its
--- placeholder id and tagged "Placeholder" so the later feature can find it.
+-- The drawn bodies of rails, drain pipes, pads, catapults and water. ToyService makes the pads, catapults, rails and
+-- pipes work from the same world data, so these Parts need no scripts or touch handlers of their own.
 local PLACEHOLDER_TAG = "Placeholder"
 local PAD_COLOURS: { [string]: Color3 } = {
 	boost = Color3.fromRGB(255, 160, 40),
@@ -352,7 +411,9 @@ local PAD_COLOURS: { [string]: Color3 } = {
 }
 local RAIL_COLOUR = Color3.fromRGB(255, 120, 200)
 local PIPE_COLOUR = Color3.fromRGB(90, 120, 150)
-local CATAPULT_COLOUR = Color3.fromRGB(140, 100, 60)
+local CATAPULT_COLOUR = Color3.fromRGB(255, 190, 40)
+local CATAPULT_WOOD = Color3.fromRGB(150, 105, 60)
+local CATAPULT_DARK = Color3.fromRGB(95, 65, 40)
 local WATER_COLOUR = Color3.fromRGB(70, 140, 200)
 local SLICK_COLOUR = Color3.fromRGB(150, 200, 230)
 
@@ -373,12 +434,42 @@ local function placeholderPart(
 	return part
 end
 
+-- Three white chevrons on a boost pad, pointing the way it throws the ball (yaw as in the layout: 0 = north, 90 = east).
+local function addChevrons(item: any, parent: Folder): number
+	local yaw = math.rad(item.yaw)
+	local forward = Vector3.new(math.sin(yaw), 0, -math.cos(yaw))
+	local across = Vector3.new(-forward.Z, 0, forward.X)
+	local width: number, depth: number = item.size[1], item.size[2]
+	local back, side = depth * 0.16, width * 0.32
+	local count = 0
+	for step = -1, 1 do
+		local tip = Vector3.new(item.x, item.y + 0.06, item.z)
+			+ forward * (step * depth * 0.28 + back / 2)
+		for _, sign in { -1, 1 } do
+			local tail = tip - forward * back + across * (sign * side)
+			placeholderPart(
+				`{item.id}_chevron{count + 1}`,
+				Vector3.new(math.max(width * 0.07, 0.6), 0.1, (tip - tail).Magnitude),
+				CFrame.lookAt((tip + tail) / 2, tip),
+				Color3.new(1, 1, 1),
+				false,
+				parent
+			).Material =
+				Enum.Material.Neon
+			count += 1
+		end
+	end
+	return count
+end
+
 local function buildPlaceholders(world: WorldDef, parent: Folder): number
 	local count = 0
 	for _, item in (world.placeholders or {}) :: { any } do
 		local id: string = item.id
 		local kind: string = item.kind
-		if kind == "rail" or kind == "pipe" then
+		if kind == "rail" and not Config.toyRails then
+			continue
+		elseif kind == "rail" or kind == "pipe" then
 			local points: { { number } } = item.points
 			local tint = if kind == "rail" then RAIL_COLOUR else PIPE_COLOUR
 			local thickness = if kind == "rail" then 0.4 else 1
@@ -446,30 +537,56 @@ local function buildPlaceholders(world: WorldDef, parent: Folder): number
 				kind == "platform",
 				parent
 			)
-			if kind ~= "platform" then
-				part.Shape = Enum.PartType.Block
+			if kind == "boost" or kind == "bounce" or kind == "spring" then
+				part.Material = Enum.Material.Neon
+			end
+			if kind == "boost" then
+				count += addChevrons(item, parent)
 			end
 			count += 1
 		elseif kind == "catapult" or kind == "big_slingshot" then
+			-- A wooden siege catapult: two skids, two posts with a crossbar, the throwing arm and its bucket.
 			local scale = if kind == "big_slingshot" then 2 else 1
-			local yaw = CFrame.Angles(0, math.rad(item.restYaw), 0)
-			placeholderPart(
-				`{id}_base`,
-				Vector3.new(4, 1.5, 4) * scale,
-				CFrame.new(item.x, 0.75 * scale, item.z),
-				CATAPULT_COLOUR,
-				true,
-				parent
-			)
-			placeholderPart(
-				`{id}_arm`,
-				Vector3.new(1, 0.8, 8) * scale,
-				CFrame.new(item.x, 2 * scale, item.z) * yaw * CFrame.new(0, 0, -3 * scale),
-				CATAPULT_COLOUR,
-				false,
-				parent
-			)
-			count += 2
+			-- Local -Z is the way it throws (layout yaw: 0 = north, 90 = east); the bucket is at the back.
+			local frame = CFrame.new(item.x, 0, item.z)
+				* CFrame.Angles(0, -math.rad(item.restYaw), 0)
+			local bucketAt = Config.toyCatapultBucket
+			local pieces: { { any } } = {
+				{ "skidL", Vector3.new(1, 1, 7), CFrame.new(-1.8, 0.5, 0), CATAPULT_WOOD },
+				{ "skidR", Vector3.new(1, 1, 7), CFrame.new(1.8, 0.5, 0), CATAPULT_WOOD },
+				{ "postL", Vector3.new(0.8, 3, 0.8), CFrame.new(-1.8, 2.5, -1), CATAPULT_WOOD },
+				{ "postR", Vector3.new(0.8, 3, 0.8), CFrame.new(1.8, 2.5, -1), CATAPULT_WOOD },
+				{ "bar", Vector3.new(4.4, 0.8, 0.8), CFrame.new(0, 3.6, -1), CATAPULT_DARK },
+				{
+					"arm",
+					Vector3.new(0.7, 0.7, 8),
+					CFrame.new(0, 3, 1) * CFrame.Angles(math.rad(-22), 0, 0),
+					CATAPULT_WOOD,
+				},
+				{
+					"bucket",
+					Vector3.new(2.4, 0.9, 2.4),
+					CFrame.new(0, 1.9, bucketAt),
+					CATAPULT_COLOUR,
+				},
+				-- The glowing pad under the bucket: roll onto this to be thrown.
+				{ "spot", Vector3.new(6, 0.2, 6), CFrame.new(0, 0.15, bucketAt), CATAPULT_COLOUR },
+			}
+			for _, piece in pieces do
+				local offset: CFrame = piece[3]
+				local made = placeholderPart(
+					`{id}_{piece[1]}`,
+					piece[2] * scale,
+					frame * (offset.Rotation + offset.Position * scale),
+					piece[4],
+					false,
+					parent
+				)
+				if piece[1] == "spot" then
+					made.Material = Enum.Material.Neon
+				end
+			end
+			count += #pieces
 		elseif kind == "wading" or kind == "slick" or kind == "deep_until" then
 			local tint = if kind == "slick" then SLICK_COLOUR else WATER_COLOUR
 			local slab: Part
@@ -594,6 +711,7 @@ function WorldBuilder.start(
 
 	local buildThemeId = themeId or world.activeThemeId or "winter"
 	local geometryCount = buildGeometry(world, geometry, buildThemeId)
+		+ buildScenery(world, folder("Scenery", root))
 	buildHub(world, hub)
 	local markerCount = buildMarkers(world, markers, buildThemeId)
 	local placeholderCount = buildPlaceholders(world, placeholders)

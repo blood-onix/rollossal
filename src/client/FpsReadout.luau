@@ -24,7 +24,7 @@ local READOUT_FORMAT = "%d | avg %d | min %d | size %.1f"
 local FpsReadout = {}
 
 -- Park City tour sizes (012 T025): Studio only, behind Flags.DebugSize. Asks the server to set the ball's diameter.
-local TOUR_SIZES = { 1, 3, 6, 15, 35, 80 }
+local TOUR_SIZES = { 1, 3, 6, 15, 35, 60, 80, 100 }
 
 local function startSizeTool()
 	if not Config.Flags.DebugSize or not RunService:IsStudio() then
@@ -37,7 +37,8 @@ local function startSizeTool()
 		local button = Instance.new("TextButton")
 		button.Name = `Size{size}`
 		button.AnchorPoint = Vector2.new(0.5, 1)
-		button.Position = UDim2.new(0.5, (index - 3.5) * 52, 1, -(BOTTOM_MARGIN + HEIGHT + 4))
+		button.Position =
+			UDim2.new(0.5, (index - (#TOUR_SIZES + 1) / 2) * 52, 1, -(BOTTOM_MARGIN + HEIGHT + 4))
 		button.Size = UDim2.fromOffset(48, HEIGHT)
 		button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 		button.BackgroundTransparency = 0.3

@@ -27,6 +27,7 @@ local ParkCity = if Config.Flags.ParkCity then require(Content.Worlds.ParkCity) 
 export type WorldDef = GreyBoxRoom.WorldDef
 export type ObjectDef = GreyBoxRoom.ObjectDef
 export type BlockDef = GreyBoxRoom.BlockDef
+export type SceneryDef = GreyBoxRoom.SceneryDef
 export type SizeTierDef = GreyBoxRoom.SizeTierDef
 export type LightingDef = GreyBoxRoom.LightingDef
 export type ThemeBookPage = GreyBoxRoom.ThemeBookPage
@@ -40,10 +41,62 @@ local active: WorldDef = if Config.Flags.Downtown
 	elseif Config.Flags.SnowVillage then SnowVillage :: any
 	else GreyBoxRoom
 
--- Park City (012) replaces whichever world the chain above picked.
+-- Park City (012) replaces whichever world the chain above picked. 014: the rows named in slotRows (the Plaza
+-- landmark) become theme slots and slotPlacements (the memes) are added, so the theme resolve below maps them.
 if ParkCity ~= nil then
-	local park = table.clone(ParkCity)
-	park.fixedPlacements = require(Content.Worlds.ParkCityParts) :: any
+	local park = table.clone(ParkCity) :: any
+	local slotRows: { [string]: string } = park.slotRows or {}
+	local fixed: { any } = {}
+	for _, row in require(Content.Worlds.ParkCityParts) :: { any } do
+		local slot = slotRows[row.id]
+		if slot ~= nil then
+			row = table.clone(row)
+			row.objectId = slot
+		end
+		table.insert(fixed, row)
+	end
+	local slotPlacements: { any } = park.slotPlacements or {}
+	for _, row in slotPlacements do
+		table.insert(fixed, row)
+	end
+	-- Fun slice: small food for the food flow to place (Config.Flow.stock), parked out of sight until it is used.
+	if Config.Slice.enabled and Config.Flow.enabled then
+		local flow = Config.Flow
+		local index = 0
+		for _, entry in flow.stock do
+			for _ = 1, entry.count do
+				table.insert(fixed, {
+					id = `flow-{index + 1}`,
+					objectId = entry.kind,
+					x = flow.stockOrigin.x + (index % flow.stockPerRow) * flow.stockSpacing,
+					y = flow.stockOrigin.y,
+					z = flow.stockOrigin.z + (index // flow.stockPerRow) * flow.stockSpacing,
+					yaw = 0,
+				})
+				index += 1
+			end
+		end
+	end
+	park.fixedPlacements = fixed :: any
+	-- Fun slice: the generated map has no booster spots yet, so the section gets a few here (Config.Slice.boosters).
+	if Config.Slice.enabled then
+		local environment = table.clone(park.environment)
+		local markers = table.clone(environment.markers or {})
+		for index, spot in Config.Slice.boosters do
+			table.insert(markers, {
+				id = `slice-booster-{index}`,
+				kind = "BoosterSpot",
+				subKind = spot.kind,
+				x = spot.x,
+				y = 0,
+				z = spot.z,
+				yaw = spot.yaw or 0,
+				waypoints = nil,
+			})
+		end
+		environment.markers = markers
+		park.environment = environment
+	end
 	active = park :: any
 end
 

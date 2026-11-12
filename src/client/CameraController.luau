@@ -13,6 +13,8 @@ local Movement = require(Shared.Rules.Movement)
 local CameraLook = require(Shared.Rules.CameraLook)
 local Worlds = require(Shared.Worlds)
 
+local SPAWN_VIEW_SECONDS = 2
+
 local CameraController = {}
 
 local SHAKE_BIND = "RollossalCameraShake"
@@ -96,24 +98,39 @@ function CameraController.start()
 	-- Park City (012): a new ball starts at one of the 12 spawns, looking towards the city. `yaw` is a compass
 	-- bearing (north 0, east 90; north is -Z), the spawn's facing in the layout.
 	if Worlds.rules.absorb.mode == "bulk" then
-		local nearest: { x: number, z: number, yaw: number }? = nil
-		local best = math.huge
-		for _, point in Worlds.active.spawnPoints do
-			local distance = (Vector3.new(point.x, 0, point.z) - Vector3.new(
-				ball.Position.X,
-				0,
-				ball.Position.Z
-			)).Magnitude
-			if distance < best then
-				best, nearest = distance, point
+		-- The default camera script settles on its own heading in its first frames, so the view is held until it has.
+		local held = 0
+		RunService:BindToRenderStep(
+			"SpawnView",
+			Enum.RenderPriority.Camera.Value + 2,
+			function(dt: number)
+				if held > SPAWN_VIEW_SECONDS then
+					RunService:UnbindFromRenderStep("SpawnView")
+					return
+				end
+				local nearest: { x: number, z: number, yaw: number }? = nil
+				local best = math.huge
+				for _, point in Worlds.active.spawnPoints do
+					local distance = (Vector3.new(point.x, 0, point.z) - Vector3.new(
+						ball.Position.X,
+						0,
+						ball.Position.Z
+					)).Magnitude
+					if distance < best then
+						best, nearest = distance, point
+					end
+				end
+				if nearest ~= nil and best < 60 then
+					held += dt
+					local bearing = math.rad(nearest.yaw)
+					local heading = Vector3.new(math.sin(bearing), 0, -math.cos(bearing))
+					camera.CFrame = CFrame.lookAt(
+						ball.Position - heading * 8 + Vector3.new(0, 4, 0),
+						ball.Position
+					)
+				end
 			end
-		end
-		if nearest ~= nil and best < 60 then
-			local bearing = math.rad(nearest.yaw)
-			local heading = Vector3.new(math.sin(bearing), 0, -math.cos(bearing))
-			camera.CFrame =
-				CFrame.lookAt(ball.Position - heading * 8 + Vector3.new(0, 4, 0), ball.Position)
-		end
+		)
 	end
 	bindLook()
 

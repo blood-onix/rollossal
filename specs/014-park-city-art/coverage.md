@@ -8,56 +8,56 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 
 | Status | Kinds | Placements |
 | --- | --- | --- |
-| exact | 80 | 3187 |
-| substitute | 37 | 505 |
-| standin | 114 | 2400 |
-| **all** | **231** | **6092** |
+| exact | 81 | 3146 |
+| substitute | 52 | 952 |
+| standin | 98 | 1924 |
+| **all** | **231** | **6022** |
 
 | Tier | Exact | Substitute | Stand-in |
 | --- | --- | --- | --- |
-| 1 | 12 | 10 | 44 |
-| 2 | 22 | 7 | 30 |
-| 3 | 18 | 6 | 20 |
-| 4 | 17 | 9 | 9 |
-| 5 | 10 | 3 | 9 |
-| 6 | 1 | 2 | 2 |
+| 1 | 12 | 15 | 39 |
+| 2 | 22 | 12 | 25 |
+| 3 | 18 | 9 | 17 |
+| 4 | 17 | 11 | 7 |
+| 5 | 10 | 3 | 8 |
+| 6 | 2 | 2 | 2 |
 
 ## Every kind
 
 | Kind | Tier | Placed | Stage | Status | Mesh | Scale | Role | Planned | Note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| acorn | 1 | 166 | 1 | exact | `acorn` |  | w-bark |  | fit unchecked (no native size in a catalogue) |
-| apple | 1 | 37 | 1 | standin |  |  | w-accent-red |  | apple |
+| acorn | 1 | 163 | 1 | exact | `acorn` |  | w-bark |  | fit unchecked (no native size in a catalogue) |
+| apple | 1 | 30 | 1 | standin |  |  | w-accent-red |  | apple |
 | bell | 1 | 0 | 1 | substitute | `jingle_bell` |  | w-accent-yellow |  | Snow Village jingle bell for a bell; fit unchecked (no native size in a catalogue) |
-| berry | 1 | 26 | 1 | standin |  |  | w-accent-red |  | berry |
+| berry | 1 | 22 | 1 | standin |  |  | w-accent-red |  | berry |
 | bike_bottle | 1 | 31 | 1 | substitute | `dt_water_bottle` | 1.56 | w-accent-blue |  | water bottle for a bike bottle |
 | bird_seed_bag | 1 | 18 | 1 | standin |  |  | w-sand |  | bird seed bag (ck_grocery_bag is twice the size) |
-| birds_nest | 1 | 18 | 1 | standin |  |  | w-bark |  | bird's nest |
+| birds_nest | 1 | 17 | 1 | standin |  |  | w-bark |  | bird's nest |
 | biscuit | 1 | 0 | 1 | substitute | `cookie` |  | w-wood |  | Snow Village cookie for a biscuit; fit unchecked (no native size in a catalogue) |
 | bolt | 1 | 0 | 1 | standin |  |  | w-metal |  | bolt |
 | book_stack | 1 | 0 | 1 | standin |  |  | w-accent-blue |  | stack of books |
-| bottle_cap | 1 | 18 | 1 | exact | `dt_bottle_cap` | 1 | w-accent-red |  |  |
-| boules_set | 1 | 20 | 1 | standin |  |  | w-metal |  | boules set |
-| breadcrumb | 1 | 75 | 1 | standin |  |  | w-sand |  | breadcrumb |
+| bottle_cap | 1 | 16 | 1 | exact | `dt_bottle_cap` | 1 | w-accent-red |  |  |
+| boules_set | 1 | 18 | 1 | standin |  |  | w-metal |  | boules set |
+| breadcrumb | 1 | 70 | 1 | standin |  |  | w-sand |  | breadcrumb |
 | button | 1 | 12 | 1 | exact | `button` |  | w-accent-red |  | fit unchecked (no native size in a catalogue) |
 | coffee_cup | 1 | 27 | 1 | exact | `dt_coffee_cup` | 1.71 | w-white |  | scale 1.71 is outside 0.6 to 1.6: a stand-in candidate |
 | coin | 1 | 8 | 1 | standin |  |  | w-accent-yellow |  | coin |
 | cone_dropped | 1 | 24 | 1 | substitute | `pine_cone` |  | w-bark |  | pine cone for a dropped cone; fit unchecked (no native size in a catalogue) |
 | confetti | 1 | 16 | 1 | standin |  |  | w-accent-pink |  | confetti |
 | conker | 1 | 35 | 1 | standin |  |  | w-bark |  | conker |
-| croissant | 1 | 14 | 1 | standin |  |  | w-sand |  | croissant |
+| croissant | 1 | 14 | 1 | substitute | `dt_donut` | 1.5 | w-sand |  | donut for a croissant |
 | cup_small | 1 | 59 | 1 | substitute | `dt_coffee_cup` | 1.14 | w-white |  | coffee cup for a small cup |
-| cupcake | 1 | 50 | 1 | exact | `ck_cupcake` | 4 | w-accent-pink |  | scale 4.0 is outside 0.6 to 1.6: a stand-in candidate |
+| cupcake | 1 | 48 | 1 | exact | `ck_cupcake` | 4 | w-accent-pink |  | scale 4.0 is outside 0.6 to 1.6: a stand-in candidate |
 | cushion | 1 | 0 | 1 | standin |  |  | w-accent-red |  | cushion |
-| daisy | 1 | 64 | 1 | standin |  |  | w-white |  | daisy |
+| daisy | 1 | 74 | 1 | standin |  |  | w-white |  | daisy |
 | feather | 1 | 25 | 1 | standin |  |  | w-white |  | feather |
-| frisbee | 1 | 39 | 1 | exact | `ck_flying_disc` | 2.22 | w-accent-teal |  | scale 2.22 is outside 0.6 to 1.6: a stand-in candidate |
+| frisbee | 1 | 37 | 1 | exact | `ck_flying_disc` | 2.22 | w-accent-teal |  | scale 2.22 is outside 0.6 to 1.6: a stand-in candidate |
 | gnome_hat | 1 | 17 | 1 | standin |  |  | w-accent-red |  | gnome hat |
 | golden_acorn | 1 | 5 | 1 | standin |  |  | w-glow |  | golden acorn (kept gold: the acorn mesh would read as a plain acorn) |
 | grape_bunch | 1 | 16 | 1 | standin |  |  | w-accent-pink |  | bunch of grapes |
 | ice_cream_cone | 1 | 23 | 1 | standin |  |  | w-accent-pink |  | ice cream cone |
-| ladybird | 1 | 43 | 1 | standin |  |  | w-accent-red |  | ladybird |
-| leaf | 1 | 33 | 1 | standin |  |  | w-leaf |  | leaf |
+| ladybird | 1 | 45 | 1 | standin |  |  | w-accent-red |  | ladybird |
+| leaf | 1 | 29 | 1 | standin |  |  | w-leaf |  | leaf |
 | lunchbox | 1 | 33 | 1 | substitute | `dt_takeout_box` | 1 | w-accent-red |  | takeout box for a lunchbox |
 | marble | 1 | 42 | 1 | standin |  |  | w-accent-teal |  | marble |
 | mug | 1 | 15 | 1 | substitute | `cocoa_mug` |  | w-white |  | Snow Village cocoa mug for a mug; fit unchecked (no native size in a catalogue) |
@@ -68,34 +68,34 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | pebble | 1 | 22 | 1 | standin |  |  | w-concrete |  | pebble |
 | petal | 1 | 88 | 1 | standin |  |  | w-accent-pink |  | petal |
 | pigeon_spot | 1 | 0 | 1 | standin |  |  | w-concrete |  | pigeon spot |
-| pine_cone | 1 | 191 | 1 | exact | `pine_cone` |  | w-bark |  | fit unchecked (no native size in a catalogue) |
+| pine_cone | 1 | 189 | 1 | exact | `pine_cone` |  | w-bark |  | fit unchecked (no native size in a catalogue) |
 | racket | 1 | 3 | 1 | standin |  |  | w-accent-red |  | racket |
 | record_box | 1 | 0 | 1 | standin |  |  | w-wood |  | record box |
-| rose | 1 | 53 | 1 | standin |  |  | w-accent-red |  | rose |
+| rose | 1 | 59 | 1 | substitute | `ck_flower_pot` | 1.5 | w-accent-red |  | flower pot for a rose |
 | rubber_duck | 1 | 138 | 1 | exact | `rubber_duck` |  | w-accent-yellow |  | fit unchecked (no native size in a catalogue) |
-| sandwich | 1 | 27 | 1 | standin |  |  | w-sand |  | sandwich |
+| sandwich | 1 | 25 | 1 | substitute | `dt_takeout_box` | 1.17 | w-sand |  | takeout box for a sandwich |
 | scales | 1 | 0 | 1 | standin |  |  | w-metal |  | kitchen scales |
 | seed_packet | 1 | 37 | 1 | standin |  |  | w-accent-yellow |  | seed packet |
 | skateboard | 1 | 11 | 1 | exact | `dt_skateboard` | 1.18 | w-wood |  |  |
 | small_mushroom | 1 | 42 | 1 | standin |  |  | w-accent-red |  | small mushroom |
 | snail_shell | 1 | 23 | 1 | standin |  |  | w-sand |  | snail shell |
 | spoon | 1 | 0 | 1 | standin |  |  | w-metal |  | spoon |
-| strawberry | 1 | 72 | 1 | standin |  |  | w-accent-red |  | strawberry |
+| strawberry | 1 | 66 | 1 | standin |  |  | w-accent-red |  | strawberry |
 | sugar_cube | 1 | 0 | 1 | standin |  |  | w-white |  | sugar cube |
 | sweet | 1 | 18 | 1 | standin |  |  | w-accent-pink |  | sweet |
-| tennis_ball | 1 | 233 | 1 | exact | `dt_tennis_ball` | 0.8 | w-accent-yellow |  |  |
+| tennis_ball | 1 | 231 | 1 | exact | `dt_tennis_ball` | 0.8 | w-accent-yellow |  |  |
 | ticket | 1 | 0 | 1 | standin |  |  | w-accent-yellow |  | ticket |
-| toy_brick | 1 | 28 | 1 | standin |  |  | w-accent-red |  | toy brick |
+| toy_brick | 1 | 28 | 1 | substitute | `dt_puzzle_cube` | 1 | w-accent-red |  | puzzle cube for a toy brick |
 | toy_bucket | 1 | 9 | 1 | substitute | `ck_sand_pail` | 1.2 | w-accent-blue |  | sand pail for a toy bucket |
 | toy_car | 1 | 21 | 1 | substitute | `matchbox_car` |  | w-accent-red |  | Snow Village matchbox car for a toy car; fit unchecked (no native size in a catalogue) |
 | trainer | 1 | 37 | 1 | exact | `dt_lost_sneaker` | 1.38 | w-accent-red |  | the lost sneaker is a trainer |
-| tulip | 1 | 97 | 1 | standin |  |  | w-accent-red |  | tulip |
+| tulip | 1 | 107 | 1 | substitute | `ck_flower_pot` | 1.33 | w-accent-red |  | flower pot for a tulip |
 | violin | 1 | 0 | 1 | substitute | `dt_acoustic_guitar` | 1 | w-wood |  | acoustic guitar for a violin |
-| water_bottle | 1 | 89 | 1 | exact | `dt_water_bottle` | 2 | w-accent-blue |  | scale 2.0 is outside 0.6 to 1.6: a stand-in candidate |
-| armchair | 2 | 2 | 2 | standin |  |  | w-accent-red |  | armchair |
+| water_bottle | 1 | 87 | 1 | exact | `dt_water_bottle` | 2 | w-accent-blue |  | scale 2.0 is outside 0.6 to 1.6: a stand-in candidate |
+| armchair | 2 | 2 | 2 | substitute | `dt_spinning_office_chair` | 0.88 | w-accent-red |  | office chair for an armchair |
 | barbecue_small | 2 | 7 | 1 | exact | `ck_barbecue` | 0.71 | w-metal-dark |  |  |
 | bicycle | 2 | 108 | 1 | exact | `dt_bicycle` | 0.92 | w-accent-red |  |  |
-| bird_bath | 2 | 1 | 1 | exact | `ck_bird_bath` | 1 | w-concrete |  |  |
+| bird_bath | 2 | 3 | 1 | exact | `ck_bird_bath` | 1 | w-concrete |  |  |
 | birthday_cake | 2 | 2 | 1 | standin |  |  | w-accent-pink |  | birthday cake |
 | bmx | 2 | 2 | 1 | substitute | `dt_bicycle` | 0.77 | w-accent-red |  | bicycle for a BMX |
 | brick_pile | 2 | 6 | 2 | standin |  |  | w-wall-b |  | pile of bricks |
@@ -103,16 +103,16 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | camping_chair | 2 | 3 | 1 | substitute | `ck_bistro_chair` | 1.11 | w-accent-teal |  | bistro chair for a camping chair |
 | canoe | 2 | 3 | 1 | standin |  |  | w-accent-orange |  | canoe |
 | cheese_wheel | 2 | 17 | 1 | standin |  |  | w-accent-yellow |  | cheese wheel |
-| cool_box | 2 | 82 | 1 | exact | `ck_cooler` | 1.3 | w-white |  |  |
-| deckchair | 2 | 168 | 1 | standin |  |  | w-accent-teal |  | deckchair (no kit mesh; a chair would read wrong) |
+| cool_box | 2 | 81 | 1 | exact | `ck_cooler` | 1.3 | w-white |  |  |
+| deckchair | 2 | 170 | 1 | substitute | `ck_bistro_chair` | 0.96 | w-accent-teal |  | bistro chair for a deckchair |
 | e_scooter | 2 | 26 | 1 | exact | `dt_e_scooter` | 1.05 | w-accent-blue |  |  |
 | fence_panel | 2 | 0 | 1 | substitute | `fence_section` |  | w-wood |  | Snow Village fence section for a fence panel; fit unchecked (no native size in a catalogue) |
 | fire_ring | 2 | 1 | 1 | standin |  |  | w-concrete |  | fire ring |
 | flower_planter | 2 | 89 | 1 | substitute | `ck_planter_box` | 1.54 | w-leaf |  | planter box for a flower planter |
-| football | 2 | 74 | 1 | exact | `ck_soccer_ball` | 2.86 | w-white |  | scale 2.86 is outside 0.6 to 1.6: a stand-in candidate |
+| football | 2 | 72 | 1 | exact | `ck_soccer_ball` | 2.86 | w-white |  | scale 2.86 is outside 0.6 to 1.6: a stand-in candidate |
 | fruit_crate | 2 | 52 | 1 | exact | `ck_fruit_crates` | 0.56 | w-wood |  | scale 0.56 is outside 0.6 to 1.6: a stand-in candidate |
 | garden_gnome | 2 | 271 | 1 | exact | `ck_garden_gnome` | 1.83 | w-accent-blue |  | scale 1.83 is outside 0.6 to 1.6: a stand-in candidate |
-| giant_chess_piece | 2 | 60 | 1 | standin |  |  | w-white |  | giant chess piece |
+| giant_chess_piece | 2 | 54 | 1 | standin |  |  | w-white |  | giant chess piece |
 | gnome_king | 2 | 0 | 1 | standin |  |  | w-accent-blue |  | gnome king (the gnome mesh is a third of the size) |
 | hedge_piece | 2 | 480 | 1 | standin |  |  | w-leaf-dark |  | hedge cube of the maze walls (ck_hedge_row is a long row, not a cube) |
 | helmet | 2 | 39 | 1 | standin |  |  | w-accent-red |  | helmet |
@@ -126,13 +126,13 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | log | 2 | 42 | 1 | standin |  |  | w-bark |  | log |
 | mailbox | 2 | 68 | 1 | exact | `dt_mailbox` | 1 | w-accent-blue |  |  |
 | mushroom_bouncecap | 2 | 0 | 1 | standin |  |  | w-accent-red |  | bounce-cap mushroom |
-| mushroom_cluster | 2 | 29 | 1 | standin |  |  | w-accent-red |  | mushroom cluster |
+| mushroom_cluster | 2 | 27 | 1 | standin |  |  | w-accent-red |  | mushroom cluster |
 | net_post | 2 | 2 | 1 | standin |  |  | w-metal |  | net post |
 | newspaper_box | 2 | 22 | 1 | exact | `dt_newspaper_box` | 1.33 | w-accent-blue |  |  |
 | office_chair | 2 | 16 | 1 | exact | `dt_spinning_office_chair` | 1 | w-accent-teal |  |  |
 | paddling_pool | 2 | 44 | 1 | exact | `dt_paddling_pool` | 0.57 | w-water |  | scale 0.57 is outside 0.6 to 1.6: a stand-in candidate |
-| pedal_car | 2 | 1 | 1 | standin |  |  | w-accent-red |  | pedal car |
-| picnic_basket | 2 | 68 | 1 | exact | `ck_picnic_basket` | 1.47 | w-wood |  |  |
+| pedal_car | 2 | 1 | 1 | substitute | `ck_kids_bike` | 1.1 | w-accent-red |  | kids bike for a pedal car |
+| picnic_basket | 2 | 66 | 1 | exact | `ck_picnic_basket` | 1.47 | w-wood |  |  |
 | potted_plant | 2 | 37 | 1 | substitute | `ck_potted_shrub` | 0.79 | w-leaf |  | potted shrub for a potted plant |
 | present | 2 | 54 | 1 | exact | `dt_gift_box` | 0.8 | w-accent-red |  | the gift box is a present |
 | pumpkin | 2 | 24 | 1 | standin |  |  | w-accent-orange |  | pumpkin |
@@ -144,41 +144,41 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | table_lamp | 2 | 4 | 2 | standin |  |  | w-accent-yellow |  | table lamp |
 | ticket_machine | 2 | 4 | 2 | substitute | `ck_parking_meter` | 1.18 | w-paint-worn |  | parking meter for a ticket machine |
 | toadstool | 2 | 32 | 1 | standin |  |  | w-accent-red |  | toadstool |
-| tomato_plant | 2 | 32 | 1 | standin |  |  | w-leaf |  | tomato plant |
-| traffic_cone | 2 | 24 | 1 | exact | `ck_traffic_cone` | 0.87 | w-accent-orange |  |  |
+| tomato_plant | 2 | 32 | 1 | substitute | `ck_potted_shrub` | 0.86 | w-leaf |  | potted shrub for a tomato plant |
+| traffic_cone | 2 | 18 | 1 | exact | `ck_traffic_cone` | 0.87 | w-accent-orange |  |  |
 | vent | 2 | 21 | 2 | standin |  |  | w-metal |  | roof vent |
 | watering_can | 2 | 10 | 1 | exact | `ck_watering_can` | 1.54 | w-accent-teal |  |  |
 | watermelon | 2 | 16 | 1 | standin |  |  | w-leaf |  | watermelon |
-| wheelbarrow | 2 | 16 | 1 | standin |  |  | w-accent-red |  | wheelbarrow |
+| wheelbarrow | 2 | 15 | 1 | substitute | `dt_shopping_cart` | 1.11 | w-accent-red |  | shopping cart for a wheelbarrow |
 | wheelie_bin | 2 | 86 | 1 | exact | `dt_wheelie_bin` | 1 | w-metal-dark |  |  |
 | ac_unit | 3 | 3 | 2 | standin |  |  | w-metal |  | air-conditioning unit |
 | arcade_cabinet | 3 | 16 | 1 | exact | `dt_arcade_cabinet` | 1 | w-accent-teal |  |  |
-| bench | 3 | 267 | 1 | exact | `dt_bench` | 1 | w-wood |  |  |
+| bench | 3 | 265 | 1 | exact | `dt_bench` | 1 | w-wood |  |  |
 | bin_large | 3 | 41 | 1 | substitute | `ck_bin_street` | 1.18 | w-accent-teal |  | street bin for a large bin |
 | bus_shelter | 3 | 9 | 1 | exact | `dt_bus_shelter` | 1.2 | w-glass |  |  |
-| bush | 3 | 201 | 1 | exact | `ck_bush` | 1.54 | w-leaf |  |  |
+| bush | 3 | 200 | 1 | exact | `ck_bush` | 1.54 | w-leaf |  |  |
 | cafe_table_set | 3 | 57 | 1 | exact | `ck_cafe_table_parasol` | 0.55 | w-accent-yellow |  | scale 0.55 is outside 0.6 to 1.6: a stand-in candidate |
 | camping_tent | 3 | 3 | 1 | standin |  |  | w-accent-orange |  | camping tent |
 | cardboard_boxes | 3 | 19 | 1 | exact | `ck_cardboard_boxes` | 1.67 | w-wood |  | scale 1.67 is outside 0.6 to 1.6: a stand-in candidate |
 | catapult | 3 | 0 | 1 | standin |  |  | w-wood |  | catapult |
 | cement_mixer | 3 | 3 | 2 | standin |  |  | w-accent-orange |  | cement mixer |
 | chimney_stack | 3 | 2 | 2 | standin |  |  | w-wall-b |  | chimney stack |
-| fridge | 3 | 1 | 2 | standin |  |  | w-white |  | fridge |
-| goal | 3 | 2 | 1 | standin |  |  | w-white |  | football goal |
+| fridge | 3 | 1 | 2 | substitute | `dt_vending_machine` | 0.86 | w-white |  | vending machine for a fridge |
+| goal | 3 | 0 | 1 | standin |  |  | w-white |  | football goal |
 | hammock | 3 | 12 | 1 | standin |  |  | w-accent-teal |  | hammock |
-| hatchback | 3 | 63 | 2 | exact | `dt_hatchback` | 1 | w-accent-blue |  |  |
+| hatchback | 3 | 53 | 2 | exact | `dt_hatchback` | 1 | w-accent-blue |  |  |
 | hot_dog_trolley | 3 | 16 | 1 | exact | `dt_hot_dog_cart` | 1 | w-accent-yellow |  | the hot dog cart is the trolley |
 | ice_cream_cart | 3 | 8 | 1 | substitute | `dt_cocoa_cart` | 0.92 | w-white |  | cocoa cart for an ice cream cart |
 | ice_polisher | 3 | 0 | 1 | standin |  |  | w-accent-teal |  | ice polisher |
 | lawnmower | 3 | 16 | 1 | exact | `ck_lawn_mower` | 1.03 | w-accent-red |  |  |
-| luggage_trolley | 3 | 6 | 2 | standin |  |  | w-metal |  | luggage trolley (the shopping cart is too small) |
-| market_crate_stack | 3 | 5 | 2 | substitute | `ck_fruit_crates` | 1.03 | w-wood |  | fruit crates for a market crate stack |
+| luggage_trolley | 3 | 6 | 2 | standin |  |  | w-metal |  | luggage trolley |
+| market_crate_stack | 3 | 2 | 2 | substitute | `ck_fruit_crates` | 1.03 | w-wood |  | fruit crates for a market crate stack |
 | mega_cupcake | 3 | 3 | 1 | exact | `ck_cupcake` | 25 | w-accent-pink |  | giant cupcake; scale 25.0 is outside 0.6 to 1.6: a stand-in candidate |
 | pallet_bricks | 3 | 6 | 2 | substitute | `dt_pallet_stack` | 0.8 | w-wood |  | pallet stack for a pallet of bricks |
 | parasol | 3 | 14 | 2 | substitute | `ck_cafe_table_parasol` | 0.66 | w-accent-yellow |  | café table and parasol for a parasol |
 | pedalo | 3 | 3 | 1 | standin |  |  | w-accent-teal |  | pedalo |
-| phone_booth | 3 | 4 | 1 | standin |  |  | w-accent-red |  | phone booth |
-| picnic_table | 3 | 31 | 1 | exact | `dt_picnic_table` | 1 | w-wood |  |  |
+| phone_booth | 3 | 4 | 1 | substitute | `ck_phone_repair_kiosk` | 0.82 | w-accent-red |  | repair kiosk for a phone booth |
+| picnic_table | 3 | 28 | 1 | exact | `dt_picnic_table` | 1 | w-wood |  |  |
 | pigeon_coop | 3 | 1 | 2 | standin |  |  | w-wood |  | pigeon coop |
 | pipe_bundle | 3 | 3 | 2 | standin |  |  | w-metal |  | bundle of pipes |
 | rooftop_hot_tub | 3 | 0 | 1 | standin |  |  | w-water |  | rooftop hot tub |
@@ -187,7 +187,7 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | satellite_dish | 3 | 3 | 2 | exact | `dt_satellite_dish` | 0.8 | w-white |  |  |
 | shelter_bench | 3 | 9 | 1 | substitute | `dt_bench` | 0.86 | w-wood |  | bench for a shelter bench |
 | skip | 3 | 2 | 2 | exact | `ck_skip` | 1.02 | w-accent-yellow |  |  |
-| sofa | 3 | 1 | 2 | standin |  |  | w-accent-teal |  | sofa |
+| sofa | 3 | 1 | 2 | substitute | `dt_bench` | 1 | w-accent-teal |  | bench for a sofa |
 | solar_panel | 3 | 4 | 2 | standin |  |  | w-glass |  | solar panel |
 | swing_set | 3 | 1 | 1 | exact | `ck_swing_set` | 1.02 | w-metal |  |  |
 | taxi | 3 | 24 | 2 | exact | `ck_taxi` | 0.91 | w-accent-yellow |  |  |
@@ -196,7 +196,7 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | vending_machine | 3 | 64 | 1 | exact | `dt_vending_machine` | 1 | w-accent-red |  |  |
 | water_tank | 3 | 2 | 2 | exact | `ck_water_tank` | 0.34 | w-wood |  | scale 0.34 is outside 0.6 to 1.6: a stand-in candidate |
 | bandstand | 4 | 1 | 3 | exact | `bandstand` |  | w-white |  | fit unchecked (no native size in a catalogue) |
-| big_tree | 4 | 12 | 1 | substitute | `ck_tree_oak` | 1.25 | w-leaf |  | kit oak for a big tree |
+| big_tree | 4 | 9 | 1 | substitute | `ck_tree_oak` | 1.25 | w-leaf |  | kit oak for a big tree |
 | boathouse | 4 | 1 | 1 | standin |  |  | w-wood |  | boathouse |
 | bouncy_castle | 4 | 2 | 1 | standin |  |  | w-accent-pink |  | bouncy castle |
 | camper_van | 4 | 9 | 1 | substitute | `dt_delivery_van` | 0.94 | w-white |  | delivery van for a camper van |
@@ -204,10 +204,10 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | container | 4 | 3 | 2 | exact | `dt_shipping_container` | 1 | w-accent-red |  |  |
 | crane_mast | 4 | 1 | 2 | substitute | `dt_tower_crane` | 1.27 | w-accent-yellow |  | tower crane for a crane mast |
 | delivery_truck | 4 | 12 | 2 | substitute | `dt_delivery_van` | 1 | w-white |  | delivery van for a delivery truck |
-| digger | 4 | 2 | 2 | standin |  |  | w-accent-yellow |  | digger |
+| digger | 4 | 2 | 2 | substitute | `dt_snowplough` | 0.73 | w-accent-yellow |  | snowplough for a digger |
 | donut_truck | 4 | 5 | 2 | exact | `dt_donut_food_truck` | 1 | w-accent-pink |  |  |
 | fountain | 4 | 1 | 3 | exact | `dt_fountain` | 1.23 | w-kerb |  |  |
-| fruit_tree | 4 | 20 | 1 | substitute | `ck_tree_oak` | 0.69 | w-leaf |  | kit oak for a fruit tree |
+| fruit_tree | 4 | 10 | 1 | substitute | `ck_tree_oak` | 0.69 | w-leaf |  | kit oak for a fruit tree |
 | garden_shed | 4 | 20 | 1 | exact | `ck_garden_shed` | 0.92 | w-wood |  |  |
 | greenhouse | 4 | 0 | 1 | standin |  |  | w-glass |  | greenhouse |
 | hoarding | 4 | 28 | 2 | standin |  |  | w-paint-worn |  | construction hoarding panel (solid, eaten from D 17) |
@@ -222,12 +222,12 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | mega_trainer | 4 | 1 | 2 | exact | `dt_lost_sneaker` | 20 | w-accent-red |  | giant lost sneaker; scale 20.0 is outside 0.6 to 1.6: a stand-in candidate |
 | minibus | 4 | 6 | 1 | substitute | `dt_delivery_van` | 0.94 | w-white |  | delivery van for a minibus |
 | parade_float | 4 | 0 | 1 | standin |  |  | w-accent-pink |  | parade float |
-| portable_cabin | 4 | 2 | 2 | standin |  |  | w-wall-c |  | portable site cabin |
+| portable_cabin | 4 | 2 | 2 | substitute | `dt_shipping_container` | 0.7 | w-wall-c |  | shipping container for a site cabin |
 | removal_van | 4 | 9 | 2 | substitute | `dt_delivery_van` | 1.18 | w-white |  | delivery van for a removal van |
 | roof_building_1 | 4 | 1 | 2 | standin |  |  | w-wall-b |  | Roof Run building; a shop mesh is taller than the roof and would poke through |
 | skate_shelter | 4 | 0 | 1 | standin |  |  | w-concrete |  | skate park shelter |
 | slide_tower | 4 | 1 | 1 | substitute | `ck_slide` | 1.43 | w-accent-yellow |  | kit slide for a slide tower |
-| street_tree | 4 | 72 | 2 | exact | `dt_street_tree` | 1.56 | w-leaf |  |  |
+| street_tree | 4 | 70 | 2 | exact | `dt_street_tree` | 1.56 | w-leaf |  |  |
 | train_carriage | 4 | 4 | 2 | substitute | `ck_tram` | 1 | w-accent-yellow |  | tram for a train carriage |
 | van | 4 | 23 | 2 | exact | `dt_delivery_van` | 1 | w-white |  |  |
 | apartment_block | 5 | 7 | 2 | exact | `dt_apartment_block` | 1 | w-wall-a |  |  |
@@ -240,7 +240,6 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | cottage | 5 | 9 | 2 | substitute | `ck_house_bungalow` | 0.88 | w-wall-b |  | kit bungalow for a cottage |
 | ferris_wheel | 5 | 1 | 1 | exact | `dt_ferris_wheel` | 1 | w-metal |  |  |
 | giant_duck | 5 | 2 | 1 | exact | `dt_giant_duck` | 0.86 | w-accent-yellow |  |  |
-| giant_oak | 5 | 1 | 1 | standin |  |  | w-leaf |  | Giant Oak crown (kit oaks are less than half its size) |
 | hotel | 5 | 2 | 2 | substitute | `ck_midrise_render_10` | 0.67 | w-wall-a |  | rendered mid-rise for a hotel |
 | library | 5 | 2 | 2 | substitute | `ck_midrise_courtyard` | 0.73 | w-wall-b |  | courtyard mid-rise for a library |
 | roof_building_2 | 5 | 1 | 2 | standin |  |  | w-wall-a |  | Roof Run building; a shop mesh is taller than the roof |
@@ -253,6 +252,7 @@ Build stage **3** (Downtown core and Plaza), active theme **winter**. A kind who
 | terrace_house | 5 | 4 | 2 | exact | `ck_house_terrace_pair` | 1.2 | w-wall-b |  |  |
 | windmill | 5 | 1 | 1 | standin |  |  | w-white |  | windmill |
 | car_park | 6 | 1 | 2 | standin |  |  | w-concrete |  | multi-storey car park (its decks are blocks) |
+| giant_oak | 6 | 1 | 1 | exact | `ck_tree_oak` | 4 | w-leaf |  | the kit oak at giant size; scale 4.0 is outside 0.6 to 1.6: a stand-in candidate |
 | glass_tower | 6 | 1 | 3 | exact | `dt_glass_tower` | 1.5 | w-glass |  |  |
 | office_tower | 6 | 4 | 3 | substitute | `ck_tower_slab` | 1.35 | w-glass |  | kit slab tower for an office tower |
 | station_hall | 6 | 1 | 2 | standin |  |  | w-wall-b |  | station hall (also a building block) |
@@ -265,104 +265,87 @@ Stand-ins with no mesh yet, placed kinds only, ordered by placements × (7 − t
 | # | Kind | Tier | Placed | Value | Role |
 | --- | --- | --- | --- | --- | --- |
 | 1 | hedge_piece | 2 | 480 | 2400 | w-leaf-dark |
-| 2 | deckchair | 2 | 168 | 840 | w-accent-teal |
-| 3 | napkin | 1 | 124 | 744 | w-white |
-| 4 | tulip | 1 | 97 | 582 | w-accent-red |
-| 5 | petal | 1 | 88 | 528 | w-accent-pink |
-| 6 | breadcrumb | 1 | 75 | 450 | w-sand |
-| 7 | strawberry | 1 | 72 | 432 | w-accent-red |
-| 8 | daisy | 1 | 64 | 384 | w-white |
-| 9 | pea | 1 | 64 | 384 | w-leaf |
-| 10 | rose | 1 | 53 | 318 | w-accent-red |
-| 11 | giant_chess_piece | 2 | 60 | 300 | w-white |
-| 12 | ladybird | 1 | 43 | 258 | w-accent-red |
-| 13 | marble | 1 | 42 | 252 | w-accent-teal |
-| 14 | small_mushroom | 1 | 42 | 252 | w-accent-red |
-| 15 | cabbage | 2 | 48 | 240 | w-leaf |
-| 16 | apple | 1 | 37 | 222 | w-accent-red |
-| 17 | seed_packet | 1 | 37 | 222 | w-accent-yellow |
-| 18 | conker | 1 | 35 | 210 | w-bark |
-| 19 | log | 2 | 42 | 210 | w-bark |
-| 20 | leaf | 1 | 33 | 198 | w-leaf |
-| 21 | helmet | 2 | 39 | 195 | w-accent-red |
-| 22 | toy_brick | 1 | 28 | 168 | w-accent-red |
-| 23 | sandwich | 1 | 27 | 162 | w-sand |
-| 24 | toadstool | 2 | 32 | 160 | w-accent-red |
-| 25 | tomato_plant | 2 | 32 | 160 | w-leaf |
-| 26 | berry | 1 | 26 | 156 | w-accent-red |
-| 27 | feather | 1 | 25 | 150 | w-white |
-| 28 | mushroom_cluster | 2 | 29 | 145 | w-accent-red |
-| 29 | ice_cream_cone | 1 | 23 | 138 | w-accent-pink |
-| 30 | snail_shell | 1 | 23 | 138 | w-sand |
-| 31 | pebble | 1 | 22 | 132 | w-concrete |
-| 32 | boules_set | 1 | 20 | 120 | w-metal |
-| 33 | pumpkin | 2 | 24 | 120 | w-accent-orange |
-| 34 | bird_seed_bag | 1 | 18 | 108 | w-sand |
-| 35 | birds_nest | 1 | 18 | 108 | w-bark |
-| 36 | sweet | 1 | 18 | 108 | w-accent-pink |
-| 37 | vent | 2 | 21 | 105 | w-metal |
-| 38 | gnome_hat | 1 | 17 | 102 | w-accent-red |
-| 39 | confetti | 1 | 16 | 96 | w-accent-pink |
-| 40 | grape_bunch | 1 | 16 | 96 | w-accent-pink |
-| 41 | cheese_wheel | 2 | 17 | 85 | w-accent-yellow |
-| 42 | croissant | 1 | 14 | 84 | w-sand |
-| 43 | hoarding | 4 | 28 | 84 | w-paint-worn |
-| 44 | watermelon | 2 | 16 | 80 | w-leaf |
-| 45 | wheelbarrow | 2 | 16 | 80 | w-accent-red |
-| 46 | coin | 1 | 8 | 48 | w-accent-yellow |
-| 47 | hammock | 3 | 12 | 48 | w-accent-teal |
-| 48 | party_hat | 1 | 8 | 48 | w-accent-pink |
-| 49 | scarecrow | 2 | 8 | 40 | w-wood |
-| 50 | brick_pile | 2 | 6 | 30 | w-wall-b |
-| 51 | golden_acorn | 1 | 5 | 30 | w-glow |
-| 52 | luggage_trolley | 3 | 6 | 24 | w-metal |
-| 53 | oar | 1 | 4 | 24 | w-wood |
-| 54 | table_lamp | 2 | 4 | 20 | w-accent-yellow |
-| 55 | racket | 1 | 3 | 18 | w-accent-red |
-| 56 | phone_booth | 3 | 4 | 16 | w-accent-red |
-| 57 | solar_panel | 3 | 4 | 16 | w-glass |
-| 58 | canoe | 2 | 3 | 15 | w-accent-orange |
-| 59 | lifebuoy | 2 | 3 | 15 | w-accent-red |
-| 60 | ac_unit | 3 | 3 | 12 | w-metal |
-| 61 | camping_tent | 3 | 3 | 12 | w-accent-orange |
-| 62 | cement_mixer | 3 | 3 | 12 | w-accent-orange |
-| 63 | pedalo | 3 | 3 | 12 | w-accent-teal |
-| 64 | pipe_bundle | 3 | 3 | 12 | w-metal |
-| 65 | armchair | 2 | 2 | 10 | w-accent-red |
-| 66 | birthday_cake | 2 | 2 | 10 | w-accent-pink |
-| 67 | net_post | 2 | 2 | 10 | w-metal |
-| 68 | chimney_stack | 3 | 2 | 8 | w-wall-b |
-| 69 | goal | 3 | 2 | 8 | w-white |
-| 70 | rowing_boat | 3 | 2 | 8 | w-wood |
-| 71 | bouncy_castle | 4 | 2 | 6 | w-accent-pink |
-| 72 | digger | 4 | 2 | 6 | w-accent-yellow |
-| 73 | portable_cabin | 4 | 2 | 6 | w-wall-c |
-| 74 | fire_ring | 2 | 1 | 5 | w-concrete |
-| 75 | pedal_car | 2 | 1 | 5 | w-accent-red |
-| 76 | fridge | 3 | 1 | 4 | w-white |
-| 77 | pigeon_coop | 3 | 1 | 4 | w-wood |
-| 78 | roundabout | 3 | 1 | 4 | w-accent-red |
-| 79 | sofa | 3 | 1 | 4 | w-accent-teal |
-| 80 | umpire_chair | 3 | 1 | 4 | w-white |
-| 81 | boathouse | 4 | 1 | 3 | w-wood |
-| 82 | roof_building_1 | 4 | 1 | 3 | w-wall-b |
-| 83 | giant_oak | 5 | 1 | 2 | w-leaf |
-| 84 | roof_building_2 | 5 | 1 | 2 | w-wall-a |
-| 85 | roof_building_3 | 5 | 1 | 2 | w-wall-c |
-| 86 | roof_building_4 | 5 | 1 | 2 | w-wall-b |
-| 87 | roof_building_5 | 5 | 1 | 2 | w-wall-a |
-| 88 | roof_building_6 | 5 | 1 | 2 | w-wall-c |
-| 89 | roof_building_7 | 5 | 1 | 2 | w-wall-b |
-| 90 | roof_building_8 | 5 | 1 | 2 | w-wall-a |
-| 91 | windmill | 5 | 1 | 2 | w-white |
-| 92 | car_park | 6 | 1 | 1 | w-concrete |
-| 93 | station_hall | 6 | 1 | 1 | w-wall-b |
+| 2 | napkin | 1 | 124 | 744 | w-white |
+| 3 | petal | 1 | 88 | 528 | w-accent-pink |
+| 4 | daisy | 1 | 74 | 444 | w-white |
+| 5 | breadcrumb | 1 | 70 | 420 | w-sand |
+| 6 | strawberry | 1 | 66 | 396 | w-accent-red |
+| 7 | pea | 1 | 64 | 384 | w-leaf |
+| 8 | giant_chess_piece | 2 | 54 | 270 | w-white |
+| 9 | ladybird | 1 | 45 | 270 | w-accent-red |
+| 10 | marble | 1 | 42 | 252 | w-accent-teal |
+| 11 | small_mushroom | 1 | 42 | 252 | w-accent-red |
+| 12 | cabbage | 2 | 48 | 240 | w-leaf |
+| 13 | seed_packet | 1 | 37 | 222 | w-accent-yellow |
+| 14 | conker | 1 | 35 | 210 | w-bark |
+| 15 | log | 2 | 42 | 210 | w-bark |
+| 16 | helmet | 2 | 39 | 195 | w-accent-red |
+| 17 | apple | 1 | 30 | 180 | w-accent-red |
+| 18 | leaf | 1 | 29 | 174 | w-leaf |
+| 19 | toadstool | 2 | 32 | 160 | w-accent-red |
+| 20 | feather | 1 | 25 | 150 | w-white |
+| 21 | ice_cream_cone | 1 | 23 | 138 | w-accent-pink |
+| 22 | snail_shell | 1 | 23 | 138 | w-sand |
+| 23 | mushroom_cluster | 2 | 27 | 135 | w-accent-red |
+| 24 | berry | 1 | 22 | 132 | w-accent-red |
+| 25 | pebble | 1 | 22 | 132 | w-concrete |
+| 26 | pumpkin | 2 | 24 | 120 | w-accent-orange |
+| 27 | bird_seed_bag | 1 | 18 | 108 | w-sand |
+| 28 | boules_set | 1 | 18 | 108 | w-metal |
+| 29 | sweet | 1 | 18 | 108 | w-accent-pink |
+| 30 | vent | 2 | 21 | 105 | w-metal |
+| 31 | birds_nest | 1 | 17 | 102 | w-bark |
+| 32 | gnome_hat | 1 | 17 | 102 | w-accent-red |
+| 33 | confetti | 1 | 16 | 96 | w-accent-pink |
+| 34 | grape_bunch | 1 | 16 | 96 | w-accent-pink |
+| 35 | cheese_wheel | 2 | 17 | 85 | w-accent-yellow |
+| 36 | hoarding | 4 | 28 | 84 | w-paint-worn |
+| 37 | watermelon | 2 | 16 | 80 | w-leaf |
+| 38 | coin | 1 | 8 | 48 | w-accent-yellow |
+| 39 | hammock | 3 | 12 | 48 | w-accent-teal |
+| 40 | party_hat | 1 | 8 | 48 | w-accent-pink |
+| 41 | scarecrow | 2 | 8 | 40 | w-wood |
+| 42 | brick_pile | 2 | 6 | 30 | w-wall-b |
+| 43 | golden_acorn | 1 | 5 | 30 | w-glow |
+| 44 | luggage_trolley | 3 | 6 | 24 | w-metal |
+| 45 | oar | 1 | 4 | 24 | w-wood |
+| 46 | table_lamp | 2 | 4 | 20 | w-accent-yellow |
+| 47 | racket | 1 | 3 | 18 | w-accent-red |
+| 48 | solar_panel | 3 | 4 | 16 | w-glass |
+| 49 | canoe | 2 | 3 | 15 | w-accent-orange |
+| 50 | lifebuoy | 2 | 3 | 15 | w-accent-red |
+| 51 | ac_unit | 3 | 3 | 12 | w-metal |
+| 52 | camping_tent | 3 | 3 | 12 | w-accent-orange |
+| 53 | cement_mixer | 3 | 3 | 12 | w-accent-orange |
+| 54 | pedalo | 3 | 3 | 12 | w-accent-teal |
+| 55 | pipe_bundle | 3 | 3 | 12 | w-metal |
+| 56 | birthday_cake | 2 | 2 | 10 | w-accent-pink |
+| 57 | net_post | 2 | 2 | 10 | w-metal |
+| 58 | chimney_stack | 3 | 2 | 8 | w-wall-b |
+| 59 | rowing_boat | 3 | 2 | 8 | w-wood |
+| 60 | bouncy_castle | 4 | 2 | 6 | w-accent-pink |
+| 61 | fire_ring | 2 | 1 | 5 | w-concrete |
+| 62 | pigeon_coop | 3 | 1 | 4 | w-wood |
+| 63 | roundabout | 3 | 1 | 4 | w-accent-red |
+| 64 | umpire_chair | 3 | 1 | 4 | w-white |
+| 65 | boathouse | 4 | 1 | 3 | w-wood |
+| 66 | roof_building_1 | 4 | 1 | 3 | w-wall-b |
+| 67 | roof_building_2 | 5 | 1 | 2 | w-wall-a |
+| 68 | roof_building_3 | 5 | 1 | 2 | w-wall-c |
+| 69 | roof_building_4 | 5 | 1 | 2 | w-wall-b |
+| 70 | roof_building_5 | 5 | 1 | 2 | w-wall-a |
+| 71 | roof_building_6 | 5 | 1 | 2 | w-wall-c |
+| 72 | roof_building_7 | 5 | 1 | 2 | w-wall-b |
+| 73 | roof_building_8 | 5 | 1 | 2 | w-wall-a |
+| 74 | windmill | 5 | 1 | 2 | w-white |
+| 75 | car_park | 6 | 1 | 1 | w-concrete |
+| 76 | station_hall | 6 | 1 | 1 | w-wall-b |
 
 ## Kit meshes Park City does not use
 
-131 uploaded `ck_*` and `dt_*` meshes are not mapped to a kind (catalogue entries the layout has no object for):
+124 uploaded `ck_*` and `dt_*` meshes are not mapped to a kind (catalogue entries the layout has no object for):
 
-`ck_bike_rack`, `ck_billboard_404`, `ck_billboard_arrow`, `ck_billboard_chart`, `ck_billboard_empty`, `ck_billboard_loading`, `ck_billboard_nested`, `ck_billboard_testcard`, `ck_bollard`, `ck_bus_stop_pole`, `ck_car_estate`, `ck_car_sedan`, `ck_car_sports`, `ck_chip_bag`, `ck_climbing_frame`, `ck_crossing_zebra`, `ck_flower_bed`, `ck_flower_buckets`, `ck_flower_pot`, `ck_food_truck`, `ck_garden_fence`, `ck_grocery_bag`, `ck_hedge_row`, `ck_house_corner_bay`, `ck_house_gable_fence`, `ck_house_semi_garage`, `ck_house_split_level`, `ck_kerb_corner`, `ck_kids_bike`, `ck_landmark_arch`, `ck_landmark_obelisk`, `ck_leaf_pile`, `ck_limousine`, `ck_meme_wet_floor_sign`, `ck_midrise_brick_8`, `ck_midrise_corner_clock`, `ck_midrise_mixed`, `ck_midrise_setback`, `ck_motorbike`, `ck_neon_sign`, `ck_newspaper_bundle`, `ck_padlock`, `ck_path_curve`, `ck_path_straight`, `ck_phone_repair_kiosk`, `ck_picnic_blanket`, `ck_pond_edge`, `ck_post_box`, `ck_rain_barrel`, `ck_recycling_box`, `ck_road_marking_arrow`, `ck_road_marking_dash`, `ck_sandpit`, `ck_sandwich_board`, `ck_scaffolding`, `ck_scooter_dock`, `ck_shop_bakery`, `ck_shop_bookshop`, `ck_shop_cafe`, `ck_shop_pharmacy_cross`, `ck_shop_pizzeria`, `ck_shop_row_arcade`, `ck_shop_row_corner`, `ck_shop_row_three`, `ck_street_lamp_double`, `ck_street_sign`, `ck_subway_entrance`, `ck_sunglasses`, `ck_toolbox`, `ck_tower_crown`, `ck_tower_stepped`, `ck_tower_twin`, `ck_traffic_lights`, `ck_tree_birch`, `ck_tree_pine`, `dt_aa_battery`, `dt_basketball`, `dt_bauble`, `dt_beach_ball`, `dt_big_street_tree`, `dt_billboard`, `dt_boombox_speaker`, `dt_cocoa_truck`, `dt_corner_bakery`, `dt_corner_shop_row`, `dt_donut`, `dt_drum_kit`, `dt_earbud_case`, `dt_ev_charging_station`, `dt_fairy_light_bulb`, `dt_fire_engine`, `dt_fire_hydrant`, `dt_game_controller`, `dt_garbage_truck`, `dt_gingerbread_cookie`, `dt_glass_tower_bow`, `dt_headphones`, `dt_ice_cream_truck`, `dt_ice_lolly`, `dt_ice_rink`, `dt_inflatable_tube_guy`, `dt_keyboard`, `dt_leaning_present_stack`, `dt_light_up_reindeer`, `dt_mini_gift`, `dt_monster_truck`, `dt_moped`, `dt_parking_meter`, `dt_pickup_truck`, `dt_pizza_box_tower`, `dt_pizza_slice`, `dt_poinsettia_pot`, `dt_potted_palm`, `dt_puzzle_cube`, `dt_recycling_bank`, `dt_rocket_water_tower`, `dt_rubber_duck_sunglasses`, `dt_shopping_cart`, `dt_sleigh`, `dt_smartphone`, `dt_snow_pile`, `dt_snowman`, `dt_snowplough`, `dt_soda_can`, `dt_street_lamp`, `dt_taxi`, `dt_townhouse`, `dt_traffic_cone`, `dt_traffic_light`, `dt_wooden_sled`, `dt_wreath`
+`ck_bike_rack`, `ck_billboard_404`, `ck_billboard_arrow`, `ck_billboard_chart`, `ck_billboard_empty`, `ck_billboard_loading`, `ck_billboard_nested`, `ck_billboard_testcard`, `ck_bollard`, `ck_bus_stop_pole`, `ck_car_estate`, `ck_car_sedan`, `ck_car_sports`, `ck_chip_bag`, `ck_climbing_frame`, `ck_crossing_zebra`, `ck_flower_bed`, `ck_flower_buckets`, `ck_food_truck`, `ck_garden_fence`, `ck_grocery_bag`, `ck_hedge_row`, `ck_house_corner_bay`, `ck_house_gable_fence`, `ck_house_semi_garage`, `ck_house_split_level`, `ck_kerb_corner`, `ck_landmark_arch`, `ck_landmark_obelisk`, `ck_leaf_pile`, `ck_limousine`, `ck_meme_wet_floor_sign`, `ck_midrise_brick_8`, `ck_midrise_corner_clock`, `ck_midrise_mixed`, `ck_midrise_setback`, `ck_motorbike`, `ck_neon_sign`, `ck_newspaper_bundle`, `ck_padlock`, `ck_path_curve`, `ck_path_straight`, `ck_picnic_blanket`, `ck_pond_edge`, `ck_post_box`, `ck_rain_barrel`, `ck_recycling_box`, `ck_road_marking_arrow`, `ck_road_marking_dash`, `ck_sandpit`, `ck_sandwich_board`, `ck_scaffolding`, `ck_scooter_dock`, `ck_shop_bakery`, `ck_shop_bookshop`, `ck_shop_cafe`, `ck_shop_pharmacy_cross`, `ck_shop_pizzeria`, `ck_shop_row_arcade`, `ck_shop_row_corner`, `ck_shop_row_three`, `ck_street_lamp_double`, `ck_street_sign`, `ck_subway_entrance`, `ck_sunglasses`, `ck_toolbox`, `ck_tower_crown`, `ck_tower_stepped`, `ck_tower_twin`, `ck_traffic_lights`, `ck_tree_birch`, `ck_tree_pine`, `dt_aa_battery`, `dt_basketball`, `dt_bauble`, `dt_beach_ball`, `dt_big_street_tree`, `dt_billboard`, `dt_boombox_speaker`, `dt_cocoa_truck`, `dt_corner_bakery`, `dt_corner_shop_row`, `dt_drum_kit`, `dt_earbud_case`, `dt_ev_charging_station`, `dt_fairy_light_bulb`, `dt_fire_engine`, `dt_fire_hydrant`, `dt_game_controller`, `dt_garbage_truck`, `dt_gingerbread_cookie`, `dt_glass_tower_bow`, `dt_headphones`, `dt_ice_cream_truck`, `dt_ice_lolly`, `dt_ice_rink`, `dt_inflatable_tube_guy`, `dt_keyboard`, `dt_leaning_present_stack`, `dt_light_up_reindeer`, `dt_mini_gift`, `dt_monster_truck`, `dt_moped`, `dt_parking_meter`, `dt_pickup_truck`, `dt_pizza_box_tower`, `dt_pizza_slice`, `dt_poinsettia_pot`, `dt_potted_palm`, `dt_recycling_bank`, `dt_rocket_water_tower`, `dt_rubber_duck_sunglasses`, `dt_sleigh`, `dt_smartphone`, `dt_snow_pile`, `dt_snowman`, `dt_soda_can`, `dt_street_lamp`, `dt_taxi`, `dt_townhouse`, `dt_traffic_cone`, `dt_traffic_light`, `dt_wooden_sled`, `dt_wreath`
 
 ## Map edge
 

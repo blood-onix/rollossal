@@ -244,6 +244,22 @@ return {
 		en = "Coin",
 		es = "Moneda",
 	},
+	["object.park.colossal_cupcake"] = {
+		en = "Colossal cupcake",
+		es = "Magdalena colosal",
+	},
+	["object.park.colossal_duck"] = {
+		en = "Colossal duck",
+		es = "Pato colosal",
+	},
+	["object.park.colossal_gnome"] = {
+		en = "Colossal gnome",
+		es = "Gnomo colosal",
+	},
+	["object.park.colossal_present"] = {
+		en = "Colossal present",
+		es = "Regalo colosal",
+	},
 	["object.park.cone_dropped"] = {
 		en = "Cone dropped",
 		es = "Piña caída",
@@ -523,6 +539,38 @@ return {
 	["object.park.market_stall"] = {
 		en = "Market stall",
 		es = "Puesto de mercado",
+	},
+	["object.park.mega_cone"] = {
+		en = "Mega cone",
+		es = "Cono gigante",
+	},
+	["object.park.mega_cupcake"] = {
+		en = "Mega cupcake",
+		es = "Magdalena gigante",
+	},
+	["object.park.mega_duck"] = {
+		en = "Mega duck",
+		es = "Pato gigante",
+	},
+	["object.park.mega_flamingo"] = {
+		en = "Mega flamingo",
+		es = "Flamenco gigante",
+	},
+	["object.park.mega_football"] = {
+		en = "Mega football",
+		es = "Balón gigante",
+	},
+	["object.park.mega_gnome"] = {
+		en = "Mega gnome",
+		es = "Gnomo gigante",
+	},
+	["object.park.mega_present"] = {
+		en = "Mega present",
+		es = "Regalo gigante",
+	},
+	["object.park.mega_trainer"] = {
+		en = "Mega trainer",
+		es = "Zapatilla gigante",
 	},
 	["object.park.minibus"] = {
 		en = "Minibus",
@@ -927,5 +975,9 @@ return {
 	["object.park.windmill"] = {
 		en = "Windmill",
 		es = "Molino",
+	},
+	["object.park.mega_tree"] = {
+		en = "Mega tree",
+		es = "Árbol gigante",
 	},
 }

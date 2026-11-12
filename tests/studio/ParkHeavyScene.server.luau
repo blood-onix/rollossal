@@ -1,10 +1,10 @@
 --!strict
--- 012 G6: Park City with twelve balls. Eleven playerless bots join the Studio player and eat across the real map for
+-- 012 G6, reused by 014 US4 (the dressed city's triangle ceiling): Park City with twelve balls. Eleven playerless bots join the Studio player and eat across the real map for
 -- SECONDS seconds, so the server carries 12 balls, their stuck visuals replicate, and every client draws its light
 -- field. Pair it with ParkHeavySampler.client (one fps value per second). Run inside Play, with Flags.ParkCity on:
 --   local copy = game.ServerStorage.Tests.ParkHeavyScene:Clone(); copy.Parent = game.ServerScriptService
--- (a Script in ServerStorage never runs). It writes the part count and bot sizes as JSON in the
--- `ParkHeavyReport` attribute of Workspace when the time is up. It starts only once.
+-- (a Script in ServerStorage never runs). It writes the part count (once a second and at the end) and bot sizes as JSON
+-- in the `ParkHeavyReport` attribute of Workspace when the time is up. It starts only once.
 
 local CollectionService = game:GetService("CollectionService")
 local HttpService = game:GetService("HttpService")
@@ -46,6 +46,18 @@ local grid = Light.buildGrid(light.data, light.stride, light.count, Config.light
 type Bot = { session: BallService.Session, target: number?, retargetAt: number, wander: Vector3 }
 local bots: { Bot } = {}
 local startedAt = os.clock()
+local partSamples: { number } = {}
+local nextSampleAt = startedAt + 1
+
+local function countParts(): number
+	local parts = 0
+	for _, descendant in Workspace:GetDescendants() do
+		if descendant:IsA("BasePart") then
+			parts += 1
+		end
+	end
+	return parts
+end
 
 pcall(PhysicsService.RegisterCollisionGroup, PhysicsService, BOT_GROUP)
 pcall(PhysicsService.RegisterCollisionGroup, PhysicsService, OBJECT_GROUP)
@@ -131,14 +143,13 @@ connection = RunService.Heartbeat:Connect(function()
 		part.AssemblyLinearVelocity =
 			Vector3.new(direction.X * speed, velocity.Y, direction.Z * speed)
 	end
+	if now >= nextSampleAt then
+		table.insert(partSamples, countParts())
+		nextSampleAt += 1
+	end
 	if now - startedAt >= SECONDS then
 		(connection :: RBXScriptConnection):Disconnect()
-		local parts = 0
-		for _, descendant in Workspace:GetDescendants() do
-			if descendant:IsA("BasePart") then
-				parts += 1
-			end
-		end
+		local parts = countParts()
 		local sizes = {}
 		for _, bot in bots do
 			table.insert(sizes, math.floor(bot.session.authoritativeDiameter * 100) / 100)
@@ -148,6 +159,7 @@ connection = RunService.Heartbeat:Connect(function()
 			HttpService:JSONEncode({
 				seconds = SECONDS,
 				serverParts = parts,
+				serverPartsPerSecond = partSamples,
 				balls = BOT_COUNT + 1,
 				botSizes = sizes,
 			})

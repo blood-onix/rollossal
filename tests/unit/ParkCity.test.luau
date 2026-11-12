@@ -117,7 +117,7 @@ test(
 )
 
 test("ParkCity: blocks, spawns and placeholders match the layout in count and id", function()
-	expect.equal(#ParkCity.environment.blocks, 93)
+	expect.equal(#ParkCity.environment.blocks, 90)
 	expect.equal(#ParkCity.environment.blocks, #layout.blocks)
 	local blockIds: { [string]: boolean } = {}
 	for _, block in ParkCity.environment.blocks do
@@ -133,7 +133,7 @@ test("ParkCity: blocks, spawns and placeholders match the layout in count and id
 		expect.equal(point.x, spawn.x)
 		expect.equal(point.z, spawn.z)
 	end
-	expect.equal(#ParkCity.golden, 8)
+	expect.equal(#ParkCity.golden, 7)
 
 	local rails, pipes, pads, catapults, water = 0, 0, 0, 0, 0
 	local ids: { [string]: boolean } = {}
@@ -161,10 +161,10 @@ test("ParkCity: blocks, spawns and placeholders match the layout in count and id
 		water += 1
 		expect.truthy(ids[area.id], `water {area.id}`)
 	end
-	expect.equal(rails, 14)
+	expect.equal(rails, 13)
 	expect.equal(pipes, 4)
-	expect.equal(pads, 40)
-	expect.equal(catapults, 6)
+	expect.equal(pads, 80)
+	expect.equal(catapults, 18)
 	expect.equal(water, 3)
 	expect.equal(#ParkCity.placeholders, rails + pipes + pads + catapults + water)
 end)
@@ -192,7 +192,7 @@ test(
 			expect.near(object.bulk, bulk, 0.01)
 		end
 		expect.equal(count, #ParkCity.objects)
-		expect.equal(count, 219)
+		expect.equal(count, 231)
 	end
 )
 
@@ -271,7 +271,7 @@ test("ParkCity: hedge and hoarding pieces are solid, and only they", function()
 			expect.equal(row.objectId, "hoarding")
 		end
 	end
-	expect.equal(solid, 128)
+	expect.equal(solid, 28)
 	expect.equal(objectById.hedge_piece.solid, true)
 	expect.equal(objectById.hoarding.solid, true)
 	local hedges = 0
@@ -302,6 +302,171 @@ test("ParkCity: every kind and tier has an English and Spanish name", function()
 	end
 end)
 
+-- 014: the theme fields, resolved as Worlds.luau does it (slotRows turned into slot ids, slotPlacements added).
+local Config = require("../../src/shared/Config")
+local Layout = require("../../src/shared/Rules/Layout")
+local ThemeResolve = require("../../src/shared/Rules/ThemeResolve")
+local Themes = require("../../src/shared/Content/Themes")
+
+local function baseWorld(): any
+	local world = table.clone(ParkCity) :: any
+	local fixed = {}
+	for _, row in Parts do
+		local slot = ParkCity.slotRows[row.id]
+		if slot ~= nil then
+			row = table.clone(row)
+			row.objectId = slot
+		end
+		table.insert(fixed, row)
+	end
+	for _, row in ParkCity.slotPlacements do
+		table.insert(fixed, row)
+	end
+	world.fixedPlacements = fixed
+	return world
+end
+
+test("ParkCity: theme fields name a supported theme and bind winter and city", function()
+	-- winter is the default; city is the one-line switch in scripts/park_city_dress.py (FR-006).
+	expect.truthy(ParkCity.activeThemeId == "winter" or ParkCity.activeThemeId == "city")
+	expect.same(ParkCity.supportedThemes, { "winter", "city" })
+	expect.truthy(ParkCity.themeBindings.winter and ParkCity.themeBindings.city)
+	-- The Plaza landmark is the one slot row, and it is the layout's theme_landmark (a giant duck at the Plaza).
+	local count = 0
+	for id, slot in ParkCity.slotRows do
+		count += 1
+		expect.equal(slot, "slot.landmark")
+		local row: any = nil
+		for _, part in Parts do
+			if part.id == id then
+				row = part
+			end
+		end
+		expect.equal(row.objectId, "giant_duck")
+		expect.equal(row.x, 0)
+		expect.equal(row.z, 36)
+	end
+	expect.equal(count, 1)
+end)
+
+test(
+	"ParkCity: the Plaza landmark resolves to a mega tree in winter and a giant duck in city",
+	function()
+		local world = baseWorld()
+		local plazaId = next(ParkCity.slotRows)
+		local expected = { winter = "mega_tree", city = "giant_duck" }
+		for themeId, objectId in expected do
+			local result = ThemeResolve.resolve(
+				world,
+				(Themes :: any)[themeId],
+				Layout.expand,
+				Config.Budgets.defaultMaxPlacements
+			)
+			local found = false
+			for _, placement in result.fixedPlacements do
+				expect.falsy(ThemeResolve.isSlot(placement.objectId), placement.id)
+				if placement.id == plazaId then
+					found = true
+					expect.equal(placement.objectId, objectId)
+				end
+				-- ThemeResolve drops a placement's `solid`; collision comes from the object def (D4).
+				expect.equal((placement :: any).solid, nil)
+			end
+			expect.truthy(found, themeId)
+			expect.truthy(result.slotPlacementIds[plazaId], themeId)
+			-- The swap never changes the rules: the theme's landmark has the duck's dims, bulk and tier.
+			local byId: { [string]: any } = {}
+			for _, object in result.objects do
+				byId[object.id] = object
+			end
+			local landmark, duck = byId[objectId], objectById.giant_duck
+			expect.equal(landmark.tier, duck.tier)
+			expect.equal(landmark.bulk, duck.bulk)
+			expect.same(landmark.dims, duck.dims)
+		end
+	end
+)
+
+test(
+	"ParkCity: nothing taller than 1 stud stands within 15 studs of a spawn, and spawns stay apart (FR-008)",
+	function()
+		for _, spawn in ParkCity.spawnPoints do
+			local function near(x: number, z: number, halfX: number, halfZ: number): boolean
+				local dx = math.max(math.abs(x - spawn.x) - halfX, 0)
+				local dz = math.max(math.abs(z - spawn.z) - halfZ, 0)
+				return math.sqrt(dx * dx + dz * dz) <= 15
+			end
+			for _, block in ParkCity.environment.blocks do
+				if
+					block.kind ~= "Boundary"
+					and near(block.cframe.x, block.cframe.z, block.size.x / 2, block.size.z / 2)
+				then
+					local top = block.cframe.y + block.size.y / 2
+					expect.truthy(top <= 1, `spawn {spawn.slot}: block {block.id} top {top}`)
+				end
+			end
+			for _, row in generated do
+				local object = objectById[row.kind]
+				local tall = object.dims[3] > 1 and (not row.light or object.solid == true)
+				if tall and near(row.x, row.z, 0, 0) then
+					error(`spawn {spawn.slot}: {row.kind} at {row.x}, {row.z} is an obstacle`)
+				end
+			end
+		end
+		for i, a in ParkCity.spawnPoints do
+			for j, b in ParkCity.spawnPoints do
+				if i < j then
+					local gap = math.sqrt((a.x - b.x) ^ 2 + (a.z - b.z) ^ 2)
+					expect.truthy(gap >= 270, `spawns {i} and {j} are {gap} apart`)
+				end
+			end
+		end
+	end
+)
+
+test(
+	"ParkCity: the map edge is scenery in the 500-620 band, within its Part budget, and never an object",
+	function()
+		local scenery = ParkCity.environment.scenery
+		expect.equal(#scenery, #layout.edge.rows)
+		expect.truthy(#scenery > 0 and #scenery <= layout.edge.limits.parts)
+		local placementIds: { [string]: boolean } = {}
+		for _, row in Parts do
+			placementIds[row.id] = true
+		end
+		for _, row in scenery do
+			local at = row.cframe
+			-- Outside the playable square (the boundary walls are at 500), inside the outer extent.
+			expect.truthy(math.max(math.abs(at.x), math.abs(at.z)) > 500, row.id)
+			expect.truthy(
+				math.abs(at.x) + row.size.x / 2 <= 620.01
+					and math.abs(at.z) + row.size.z / 2 <= 620.01,
+				row.id
+			)
+			expect.falsy(placementIds[row.id], row.id)
+			expect.equal(objectById[row.id], nil)
+		end
+	end
+)
+
+test("ParkCity: no runtime code reads a placement's solid, only an object def's (D4)", function()
+	local function scan(dir: string)
+		for _, name in fs.readDir(dir) do
+			local path = `{dir}/{name}`
+			if fs.isDir(path) then
+				if name ~= "Content" then
+					scan(path)
+				end
+			elseif string.match(name, "%.luau$") then
+				for reader in string.gmatch(fs.readFile(path), "([%w_]+)%.solid") do
+					expect.equal(reader, "def", `{path} reads {reader}.solid`)
+				end
+			end
+		end
+	end
+	scan("src")
+end)
+
 test("ParkCity: spiral blocks carry turns and width, ramps rise to a side", function()
 	local spirals = 0
 	for _, block in ParkCity.environment.blocks do
@@ -313,7 +478,7 @@ test("ParkCity: spiral blocks carry turns and width, ramps rise to a side", func
 			expect.truthy(block.cframe.yaw % 90 == 0, block.id)
 		end
 	end
-	expect.equal(spirals, 2)
+	expect.equal(spirals, 1)
 end)
 
 return {}

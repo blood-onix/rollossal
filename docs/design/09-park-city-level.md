@@ -257,7 +257,8 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 | **Neighbourhoods** | 150 – 260 | Market Street and the Roof Run (NE), Car Park and Building Site (SE), Terraces and Cottages (SW), Station and Rail Yard (NW) | 4 – 5 |
 | **Downtown** | 0 – 150 | Plaza, four tower blocks, the Sky Rail at y 30, the Glass Tower | 5 – 6 |
 
-- **Park edge**: a 1-stud kerb (a D 1 ball hops it) with gaps at the 8 gates. It marks the edge; it is not a size gate.
+- **Park edge**: a low kerb lip (0.25 high, 1 wide, right against the Ring Road) with gaps at the 8 gates. A D 1 ball rolls
+  over it anywhere. It marks the edge; it is not a size gate.
 - **Four Spokes**: 40-wide avenues on the x and z axes, from the Plaza to the park edge. In the park they are gravel
   paths, and every spawn sees one.
 - **Why 1,000 studs:** the park ring gives each of 12 small balls about 57,000 square studs for the first 1.5 minutes.
@@ -356,8 +357,8 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
   - **Gaps**: 7, 9, 7, 10, 9, 10 studs (each within 70 % of a D 8 tap). Gap 7 is the **brave gap**, 20 studs, with a
     boost pad before it.
   - **Rooftop food**: *rooftop garden* and *rooftop plant* scenes, about 70 pieces at the top of Tiers 3 and 4.
-  - **Down**: the last roof (y 20) ends in a billboard ramp that launches you over the hoardings onto the Plaza. This
-    is the early way into Downtown. There is a golden spot on the last roof.
+  - **Down**: the last roof (y 20) ends in a billboard ramp that launches you onto the Plaza. This
+    is the fast way into Downtown. There is a golden spot on the last roof.
 - **SE, Car Park and Building Site.**
   - The **car park** at (197, 203) has three decks (y 8, 16, 24) with *parking row* scenes and a golden spot on the
     top deck. Decks are 8 apart, so only balls under about D 7 fit inside; the open top deck is for big balls. The
@@ -377,9 +378,9 @@ to −760. `m = max(|x|, |z|)` is the ring measure, x is east and z is south.
 
 ### 7.8 Downtown (Tiers 5 – 6)
 
-- **Hoardings** round the `m` 150 square: 100 hoarding pieces (12 × 4 × 12, bulk 8.3), across the Spokes too, with
-  delivery trucks (bulk 9.8) parked in front of them: **Downtown opens at about D 17.** Before that you get in over the Roof Run, the crane, a catapult or
-  the Sky Rail.
+- **Open on every side.** The four Spokes run straight into the core, with a delivery truck (bulk 9.8) parked along
+  each kerb. There is no wall or size gate round Downtown (the 012 hoarding ring was removed on the owner's call,
+  2026-11-08); the towers themselves are what a small ball cannot eat yet.
 - **The Plaza** (r 50): a *fountain plaza* scene and the theme landmark on a pedestal (the Giant Duck in `city`, the
   Mega Tree in `winter`).
 - **Four tower blocks**, 80 × 80, each a 2 × 2 grid of plots at 80 and 120 studs from the axes:
@@ -482,7 +483,7 @@ Each is a pure, data-driven rule (Constitution III and VII), behind its own flag
 | Hedge maze (480 pieces of 3 × 3 × 3) | 3.0 | 6 | the maze becomes food |
 | Court fences | 2.4 | 4.8 | the fences become food |
 | Pond depth | 5 deep | 10 | wading |
-| Downtown hoardings | 8.3 | 17 | Downtown |
+| Building Site hoardings | 8.3 | 17 | Car Park and Building Site |
 | Delivery trucks on the Spokes | 9.8 | 20 | the Spokes to the Plaza |
 
 ### 9.7 What changes with size (summary)
@@ -496,6 +497,26 @@ Each is a pure, data-driven rule (Constitution III and VII), behind its own flag
 | Thin ice (winter) | holds you | breaks |
 | Tunnels, drains, alleys | shortcut | too small to enter |
 | Rails | ridable in their window | rolled over or eaten |
+
+### 9.8 The food chain and the crazy layer (2026-11-08, owner: "think like a kid, a bit crazy")
+
+Written by `food_chain()` in `scripts/park_city_layout.py`. All numbers are tuning.
+
+- **Stream to catapult.** A wavy trail of snacks from every spawn ends at a catapult (F1 to F12), which throws the ball
+  to the outer edge of a food pile.
+- **Piles.** 12 park piles and 4 Ring Road corner piles. Each is a true spiral: smallest food on the outer edge, on the
+  side the ball arrives from, biggest in the middle, with a lane to roll in. Park piles start at 0.7 of what a perfect
+  stream gives, because a kid misses snacks. Piles stay clear of anything raised and solid.
+- **Giants.** `mega_*` beside each pile, `colossal_*` further out. Over the giants worth going for, a badge shows the
+  size needed: green and pulsing for the two nearest that can be eaten now, gold for the next two. A number and a
+  colour only (`src/client/GiantBadges.luau`).
+- **City.** Traffic jams nose to tail on the four Spokes, bigger towards the Plaza, and a ring of buses round the
+  Plaza. The slingshots S1 and S2 land at the outer end of a jam, where the small cars are.
+- **Silly fields.** A rubber-duck flood on the pond, four gnome armies, two bouncy fields.
+- **Tier jump.** Moving up a tier sucks in food nearby for 1.2 s (radius 3 x D, from 8 to 30 studs) with a shockwave.
+- **Small balls are safe.** Below size 4 a bump costs nothing; above it a bump costs at most 10 % of the run's peak.
+- **Rails.** A ball is caught at either end unless rolling away, or along the rail when rolling with it. A rail more
+  than 6 studs above the bottom of the ball is out of reach. After a ride, no rail catches until the cooldown ends.
 
 ## 10. Random events (owner: random, not on a fixed clock)
 

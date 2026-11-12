@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -26,6 +27,10 @@ OUT = ROOT / "docs" / "design" / "maps"
 # Objects: id -> (L, W, H). Bulk and tier are derived. Heights matter for the "too tall" rule (longest <= 1.5 D).
 # --------------------------------------------------------------------------------------------------------------
 OBJECTS: dict[str, tuple[float, float, float]] = {
+    # Silly giants: everyday things, absurdly big, standing where you can see them coming (2026-11-08).
+    "mega_cupcake": (6.5, 6.5, 7.5), "mega_duck": (9.0, 7.0, 8.0), "mega_gnome": (5.5, 5.5, 14.0), "mega_present": (9.0, 9.0, 8.0),
+    "mega_football": (13.0, 13.0, 13.0), "mega_flamingo": (20.0, 9.0, 16.0), "mega_cone": (10.0, 10.0, 26.0), "mega_trainer": (26.0, 11.0, 14.0),
+    "colossal_gnome": (18.0, 18.0, 46.0), "colossal_duck": (44.0, 32.0, 38.0), "colossal_cupcake": (38.0, 38.0, 44.0), "colossal_present": (40.0, 40.0, 36.0),
     # Tier 1 Crumb (bulk <= 1.25)
     "acorn": (0.3, 0.25, 0.3), "conker": (0.4, 0.4, 0.35), "pine_cone": (0.5, 0.4, 0.4), "leaf": (0.6, 0.4, 0.05),
     "daisy": (0.3, 0.3, 0.5), "ladybird": (0.3, 0.25, 0.15), "snail_shell": (0.5, 0.35, 0.4),
@@ -91,7 +96,7 @@ OBJECTS: dict[str, tuple[float, float, float]] = {
     "cottage": (22.0, 18.0, 20.0), "terrace_house": (30.0, 16.0, 24.0), "corner_shop": (26.0, 18.0, 16.0),
     "apartment_block": (40.0, 20.0, 30.0), "cinema": (36.0, 26.0, 18.0), "hotel": (30.0, 26.0, 40.0),
     "windmill": (15.0, 15.0, 36.0), "giant_duck": (30.0, 20.0, 25.0), "ferris_wheel": (50.0, 10.0, 50.0),
-    "giant_oak": (30.0, 30.0, 40.0), "library": (34.0, 26.0, 20.0), "crane_mast": (8.0, 8.0, 70.0),
+    "giant_oak": (48.0, 48.0, 64.0), "library": (34.0, 26.0, 20.0), "crane_mast": (8.0, 8.0, 70.0),
     # Tier 6 Skyline (bulk 40 - 75)
     "office_tower": (36.0, 36.0, 70.0), "town_hall": (50.0, 34.0, 45.0), "station_hall": (60.0, 40.0, 30.0),
     "car_park": (75.0, 85.0, 26.0), "glass_tower": (35.0, 35.0, 90.0),
@@ -150,7 +155,7 @@ SCENE_KINDS: dict[str, dict] = {
     "building_site": {"fp": (60, 70), "items": [("brick_pile", 6, "f"), ("pallet_bricks", 6, "m"), ("pipe_bundle", 3, "m"), ("cement_mixer", 2, "m"), ("skip", 2, "b"), ("portable_cabin", 2, "b"), ("digger", 1, "b"), ("container", 3, "b")]},
     "rooftop_garden": {"fp": (14, 16), "items": [("potted_plant", 5, "f"), ("garden_gnome", 2, "f"), ("deckchair", 3, "m"), ("barbecue_small", 1, "m"), ("rooftop_hot_tub", 1, "b"), ("water_tank", 1, "b")]},
     "rooftop_plant": {"fp": (14, 16), "items": [("vent", 4, "f"), ("satellite_dish", 2, "m"), ("chimney_stack", 2, "m"), ("ac_unit", 3, "b"), ("solar_panel", 2, "b"), ("pigeon_coop", 1, "b")]},
-    "parking_row": {"fp": (60, 8), "items": [("hatchback", 3, "b"), ("taxi", 1, "b"), ("van", 1, "b")]},
+    "parking_row": {"fp": (64, 8), "items": [("hatchback", 2, "b"), ("taxi", 1, "b"), ("van", 1, "b")]},
     "school_run": {"fp": (24, 10), "items": [("lunchbox", 4, "f"), ("football", 1, "f"), ("kick_scooter", 3, "m"), ("bicycle", 2, "m"), ("minibus", 1, "b")]},
     "station_platform": {"fp": (60, 10), "items": [("ticket", 8, "f"), ("coffee_cup", 4, "f"), ("suitcase", 4, "m"), ("luggage_trolley", 3, "m"), ("bench", 3, "b"), ("vending_machine", 2, "b"), ("ticket_machine", 2, "b")]},
     "gate_corner": {"fp": (24, 12), "items": [("napkin", 4, "f"), ("coin", 4, "f"), ("mailbox", 1, "m"), ("newspaper_box", 1, "m"), ("wheelie_bin", 1, "m"), ("hot_dog_trolley", 1, "b"), ("phone_booth", 1, "b")]},
@@ -223,8 +228,12 @@ def _hash(*vals) -> float:
     return (h % 100000) / 100000.0
 
 
-def scene(sid, kind, x, z, yaw=0, zone_id="", y=0.0, label=None, fp=None, scale=1.0, items_override=None):
-    """Place a scene. yaw: direction the FRONT faces, degrees, 0 = north (-z), 90 = east (+x)."""
+BIG_TIER, BIG_GAP = 3, 1.0
+
+
+def scene(sid, kind, x, z, yaw=0, zone_id="", y=0.0, label=None, fp=None, scale=1.0, items_override=None, turn=0):
+    """Place a scene. yaw: direction the FRONT faces, degrees, 0 = north (-z), 90 = east (+x). turn: extra yaw for the
+    big things standing in a row (90 parks cars nose-in)."""
     k = SCENE_KINDS[kind]
     w, d = fp or k["fp"]
     items = []
@@ -234,23 +243,69 @@ def scene(sid, kind, x, z, yaw=0, zone_id="", y=0.0, label=None, fp=None, scale=
     rx, rz = math.cos(a), math.sin(a)  # right
     # City scenes skip their crumb layer: a ball in the city is past Tier 1 (keeps light objects in the park).
     min_tier = 1 if (zone_id.startswith("park") or zone_id == "") else 2
-    for obj, count, band in (items_override if items_override is not None else k["items"]):
-        if tier(obj) < min_tier:
+    rows = items_override if items_override is not None else k["items"]
+    counts = [(obj, max(1, round(count * scale)) if count > 1 else count, band) for obj, count, band in rows
+              if tier(obj) >= min_tier]
+    # Big things (Tier 3 and up) of one band are packed side by side by their real width, whatever their kind, so a
+    # taxi never lands inside a van or a bench inside a bush. What does not fit one row starts another in front.
+    placed = {}
+    for b_name, (lo, hi) in bands.items():
+        big = [(obj, i) for obj, n, band in counts if band == b_name and tier(obj) >= BIG_TIER for i in range(n)]
+        if len(big) < 2:
             continue
-        n = max(1, round(count * scale)) if count > 1 else count
+
+        def across(obj):
+            return OBJECTS[obj][1 if turn else 0]
+
+        def deep(obj):
+            return OBJECTS[obj][0 if turn else 1]
+
+        packed, row, used = [], [], 0.0
+        for entry in big:
+            need = across(entry[0])
+            if row and used + need + BIG_GAP * len(row) > w:
+                packed.append(row)
+                row, used = [], 0.0
+            row.append(entry)
+            used += need
+        packed.append(row)
+        depths = [max(deep(obj) for obj, _ in row) for row in packed]
+        # One row stands in the middle of its band; more rows stack forward from the back of the scene.
+        room = (hi - 0.1) * d
+        squeeze = min(1.0, room / sum(depths)) if len(packed) > 1 else 1.0
+        at = hi * d
+        for row, row_depth in zip(packed, depths):
+            centre = (lo + hi) / 2 * d if len(packed) == 1 else at - row_depth * squeeze / 2
+            at -= row_depth * squeeze
+            gap = max(0.0, (w - sum(across(obj) for obj, _ in row)) / len(row))
+            cursor = -w / 2
+            for obj, i in row:
+                size = across(obj)
+                side = cursor + gap / 2 + size / 2 + (_hash(sid, obj, i, "u") - 0.5) * gap * 0.3
+                cursor += gap + size
+                placed[(obj, i, b_name)] = (side, centre + (_hash(sid, obj, i, "v") - 0.5) * 0.6)
+    for obj, n, band in counts:
         lo, hi = bands[band]
         cols = max(1, math.ceil(math.sqrt(n * w / max(d * (hi - lo), 1))))
         for i in range(n):
-            u = ((i % cols) + 0.5) / cols - 0.5 + (_hash(sid, obj, i, "u") - 0.5) * 0.6 / cols
-            depth_frac = lo + (hi - lo) * ((i // cols + 0.5) / max(1, math.ceil(n / cols)))
-            depth_frac += (_hash(sid, obj, i, "v") - 0.5) * (hi - lo) * 0.4
-            back = (depth_frac - 0.5) * d  # + towards the back
-            ox = u * w * rx - back * fx
-            oz = u * w * rz - back * fz
+            spot = placed.get((obj, i, band))
+            if spot:
+                side, depth = spot
+                back = depth - d / 2
+                swing, turned = 10, turn
+            else:
+                u = ((i % cols) + 0.5) / cols - 0.5 + (_hash(sid, obj, i, "u") - 0.5) * 0.6 / cols
+                depth_frac = lo + (hi - lo) * ((i // cols + 0.5) / max(1, math.ceil(n / cols)))
+                depth_frac += (_hash(sid, obj, i, "v") - 0.5) * (hi - lo) * 0.4
+                side = u * w
+                back = (depth_frac - 0.5) * d  # + towards the back
+                swing, turned = 30, 0
+            ox = side * rx - back * fx
+            oz = side * rz - back * fz
             items.append({
                 "object": obj, "tier": tier(obj), "bulk": round(bulk(obj), 2),
                 "x": round(x + ox, 2), "z": round(z + oz, 2), "y": y,
-                "yaw": round((yaw + (_hash(sid, obj, i, "y") - 0.5) * 30) % 360, 1),
+                "yaw": round((yaw + turned + (_hash(sid, obj, i, "y") - 0.5) * swing) % 360, 1),
             })
     layout["scenes"].append({
         "id": sid, "kind": kind, "zone": zone_id, "x": x, "z": z, "y": y, "yaw": yaw, "footprint": [w, d],
@@ -345,21 +400,21 @@ for sid, (x0, z0, x1, z1) in {
     "loop_w": (-405, -405, -395, 405), "loop_e": (395, -405, 405, 405),
 }.items():
     block(sid, "gravel", x0, z0, x1, z1, 0, 0.05)
-# Park edge: a 1-stud kerb with gaps at the 8 gates (Spokes at 0, diagonal gates near the corners; the SW one at x -250).
-for side, (horiz, fixed) in {"n": (True, -302), "s": (True, 302), "w": (False, -302), "e": (False, 302)}.items():
-    gaps = [(-14, 14), (-302, -288), (288, 302)]
+# Park edge: a low lip right against the Ring Road, with gaps at the 8 gates (Spokes at 0, diagonal gates near the
+# corners; the SW one at x -250). It marks the edge only: a D 1 ball rolls over it anywhere without a jump.
+KERB_INNER, KERB_OUTER, KERB_HEIGHT = 300, 301, 0.25
+for side, (horiz, sign) in {"n": (True, -1), "s": (True, 1), "w": (False, -1), "e": (False, 1)}.items():
+    gaps = [(-14, 14), (-KERB_OUTER, -288), (288, KERB_OUTER)]
     if side == "s":
-        gaps = [(-14, 14), (-262, -238), (288, 302)]
-    if side == "w":
-        gaps = [(-14, 14), (-302, -288), (288, 302)]
-    cuts = sorted(gaps)
-    pos = -302
-    for k, (lo, hi) in enumerate(cuts + [(302, 302)]):
+        gaps = [(-14, 14), (-262, -238), (288, KERB_OUTER)]
+    across_lo, across_hi = sorted((sign * KERB_INNER, sign * KERB_OUTER))
+    pos = -KERB_OUTER
+    for k, (lo, hi) in enumerate(sorted(gaps) + [(KERB_OUTER, KERB_OUTER)]):
         if lo > pos:
             if horiz:
-                block(f"park_kerb_{side}{k}", "kerb", pos, fixed - 1, lo, fixed + 1, 0, 1, None)
+                block(f"park_kerb_{side}{k}", "kerb", pos, across_lo, lo, across_hi, 0, KERB_HEIGHT, None)
             else:
-                block(f"park_kerb_{side}{k}", "kerb", fixed - 1, pos, fixed + 1, lo, 0, 1, None)
+                block(f"park_kerb_{side}{k}", "kerb", across_lo, pos, across_hi, lo, 0, KERB_HEIGHT, None)
         pos = max(pos, hi)
 for side, r in {"n": (-500, -501, 500, -500), "s": (-500, 500, 500, 501), "w": (-501, -500, -500, 500), "e": (500, -500, 501, 500)}.items():
     block(f"boundary_{side}", "wall", *r, 0, 200, "invisible boundary")
@@ -411,14 +466,8 @@ for k, (bx, bz) in enumerate(((-455, -300), (-430, -325), (-405, -300), (-430, -
     pad(f"bouncecap_{k + 1}", "bounce", bx, bz, 0, 3, 3, 2.0, up=5, forward=0, dMax=6, object="mushroom_bouncecap")
 block("glade_log", "log_platform", -420, -318, -400, -310, 0, 5, "log platform y 5")
 scene("glade_log_stash", "squirrel_stash", -410, -314, 180, Z, y=5, label="log stash (bounce up)")
-block("oak_trunk", "tree_trunk", -382, -382, -358, -358, 0, 40, "Giant Oak trunk")
-# The root ramp climbs counter-clockwise and ends at (-348, -370) heading south at y 22. The tree house deck is a landing
-# that carries on from that end, outside the trunk and the oak's footprint (T048: the old deck sat inside the trunk).
-block("oak_deck", "deck", -354, -372, -334, -344, 21, 22, "tree house landing y 22, flush with the top of the root ramp")
-block("oak_ramp", "spiral", -396, -396, -344, -344, 0, 22, "root ramp: 2 turns round the trunk, 8 wide, 12 deg", turns=2, width=8)
-scene("oak_deck_picnic", "picnic", -340, -352, 90, Z, y=22, label="tree house picnic + Magnet", scale=0.8, fp=(10, 10))
-scene("oak_fall_1", "acorn_fall", -342, -380, 135, Z, label="acorn fall")
-scene("oak_fall_2", "acorn_fall", -380, -342, 315, Z, label="acorn fall")
+scene("oak_fall_1", "acorn_fall", -356, -334, 135, Z, label="acorn fall")
+scene("oak_fall_2", "acorn_fall", -384, -332, 315, Z, label="acorn fall")
 # Root tunnels: two covered passages (3 wide, 3 high inside) from the gate side to a root hollow beside the oak, clear
 # of the spiral ramp. Walls 0.6 thick, roof 3 - 3.6. Small balls (D < 3) fit; bigger ones are stopped at the mouth.
 HX, HZ = -342.0, -342.0  # root hollow, inner 9.5 x 9.5 from (HX, HZ)
@@ -452,8 +501,6 @@ wall("root_tunnel_b_n", hx1 + T, HZ + 3 - T, -326, HZ + 3)
 wall("root_tunnel_b_s", hx1 + T, HZ + 6, -326, HZ + 6 + T)
 scene("root_stash", "squirrel_stash", HX + 4.75, HZ + 4.75, 135, Z, label="root hollow stash", fp=(8, 8))
 golden("gold_roots", HX + 4.75, HZ + 4.75, 0, "root hollow stash")
-golden("gold_treehouse", -370, -370, 23, "tree house deck")
-rail("R4", "Tree House Zipline", [[-370, 24, -370], [-305, 2, -305]], 2, 8, 34)
 layout["water"].append({"id": "stream", "kind": "wading", "rect": [-325, -500, -315, -300], "depth": 1.5})
 block("footbridge", "bridge", -330, -474, -310, -466, 0, 1.5, "footbridge")
 for k in range(4):
@@ -466,6 +513,8 @@ scene("nw_kit_1", "park_kit", -360, -416, 0, Z, label="benches by the loop")
 scene("nw_kit_2", "park_kit", -416, -120, 90, Z, label="benches by the loop")
 scene("nw_ice", "ice_cream_stop", -420, -40, 90, Z, label="ice-cream stop")
 scene("nw_school", "school_run", -230, -330, 180, Z, label="school run")
+# The Giant Oak is one whole tree on the ground: no ramp, no deck. It shakes food down for whoever is near (Config.Shake)
+# and only a very late ball eats it.
 landmark("giant_oak", "giant_oak", -370, -370)
 
 # ---------------- NE: Pond and Boathouse ----------------
@@ -672,7 +721,7 @@ for k, (cx, h) in enumerate(ROOFS, 1):
 gaps = [round((ROOFS[k][0] - 9) - (ROOFS[k + 1][0] + 9), 1) for k in range(len(ROOFS) - 1)]
 layout["roofRun"] = {"roofs": [{"id": f"roof_{k}", "x": cx, "width": 18, "depth": 26, "y": h} for k, (cx, h) in enumerate(ROOFS, 1)],
                      "gaps": gaps, "braveGap": 7, "up": ["delivery ramp at the east end", "jump pad at (165, -205)"],
-                     "down": "billboard ramp on roof 8, launching south over the hoardings to the Plaza"}
+                     "down": "billboard ramp on roof 8, launching south to the Plaza"}
 block("delivery_ramp", "ramp", 254, -245, 275, -219, 0, 10, "delivery ramp up to roof 1", up="west")
 pad("roof_jump_pad", "spring", 165, -205, 0, 6, 6, 0.35, up=16, dMin=6, dMax=20)
 pad("boost_brave_gap", "boost", 76, -232, 270, 8, 12, 18)
@@ -691,8 +740,10 @@ scene("market_cafe_2", "cafe_terrace", 90, -172, 0, Z, label="café terrace")
 Z = "nbh_se"
 for k, y in enumerate((8, 16, 24), 1):
     block(f"carpark_deck_{k}", "deck", 160, 160, 235, 245, y - 1, y, f"car park deck {k}, y {y}")
-    scene(f"carpark_row_{k}a", "parking_row", 205, 175, 0, Z, y=y, label=None, fp=(48, 8))
-    scene(f"carpark_row_{k}b", "parking_row", 205, 230, 180, Z, y=y, label=None, fp=(48, 8))
+    scene(f"carpark_row_{k}a", "parking_row", 205, 175, 0, Z, y=y, label=None, fp=(48, 8), turn=90,
+          items_override=[("hatchback", 3, "b"), ("taxi", 1, "b"), ("van", 1, "b")])
+    scene(f"carpark_row_{k}b", "parking_row", 205, 230, 180, Z, y=y, label=None, fp=(48, 8), turn=90,
+          items_override=[("hatchback", 3, "b"), ("taxi", 1, "b"), ("van", 1, "b")])
 # Decks are 8 apart, so inside the car park only balls under about D 7 fit; the open top deck is for the big ones.
 block("carpark_ramp_1", "ramp", 236, 160, 256, 245, 0, 24, "open ramp to the top deck (16 deg)", up="south")
 block("carpark_ramp_2", "ramp", 140, 160, 160, 245, 0, 8, "ramp to deck 1 (5 deg)", up="north")
@@ -768,12 +819,8 @@ for k, (x, z, y, own) in enumerate(((125, -170, 16, False), (160, -170, 16, Fals
 
 # ---------------- Downtown ----------------
 Z = "downtown"
-# Downtown hoardings: pieces all round (across the Spokes too), eaten from D 17. Trucks stand in front at the Spokes.
-hoarding_line("hoarding_n", -150, -152, 150, -152)
-hoarding_line("hoarding_s", -150, 152, 150, 152)
-hoarding_line("hoarding_w", -152, -150, -152, 150)
-hoarding_line("hoarding_e", 152, -150, 152, 150)
-for k, (x, z, yaw) in enumerate(((0, -162, 0), (0, 162, 0), (-162, 0, 90), (162, 0, 90))):
+# Downtown is open on every side: the four Spokes run straight in, with a delivery truck parked along each kerb.
+for k, (x, z, yaw) in enumerate(((16.5, -162, 90), (-16.5, 162, 90), (-162, -16.5, 0), (162, 16.5, 0))):
     layout["landmarks"].append({"id": f"spoke_truck_{k + 1}", "object": "delivery_truck", "tier": tier("delivery_truck"),
                                 "bulk": round(bulk("delivery_truck"), 1), "needsD": round(needs_d("delivery_truck"), 1),
                                 "x": x, "z": z, "y": 0.4, "yaw": yaw})
@@ -861,6 +908,348 @@ for k, (obj, x, z) in enumerate(DT_MORE, 1):
                                 "needsD": round(needs_d(obj), 1), "x": x, "z": z, "y": 0.4, "yaw": 0})
 
 
+# ---------------- Map edge (014 R-10): scenery in the band from the boundary (500) to outerHalfExtent (620) ----------
+# Not objects: never eaten, never collided with or queried, and outside the invisible boundary walls. A ground apron,
+# a low hedge just outside the wall, a tree line and a row of low building silhouettes, so the edge reads as a town
+# going on rather than a plate ending in sky. Its look (meshes, roles) is in scripts/park_city_dress.py EDGE_DRESS.
+EDGE_BAND = (500, 620)
+EDGE_LIMITS = {"parts": 120, "triangles": 40000}
+EDGE_TREE_M, EDGE_TREE_STEP = 527, 70
+EDGE_BUILDING_M, EDGE_BUILDING_STEP = 588, 120
+
+
+def edge_rows() -> list:
+    lo, hi = EDGE_BAND
+    rows = []
+
+    def add(rid, kind, x, z, size, yaw=0, y=0.0):
+        rows.append({"id": rid, "kind": kind, "x": round(x, 2), "y": y, "z": round(z, 2), "yaw": yaw,
+                     "size": [round(s, 2) for s in size]})
+
+    mid, depth = (lo + hi) / 2, hi - lo
+    # Ground apron (the park's ground ends at 500): north and south strips run the full width, west and east between.
+    add("edge_apron_n", "apron", 0, -mid, (2 * hi, 1, depth), y=-1)
+    add("edge_apron_s", "apron", 0, mid, (2 * hi, 1, depth), y=-1)
+    add("edge_apron_w", "apron", -mid, 0, (depth, 1, 2 * lo), y=-1)
+    add("edge_apron_e", "apron", mid, 0, (depth, 1, 2 * lo), y=-1)
+    # A low hedge just outside the boundary wall, all the way round.
+    hedge_m, hedge_len = lo + 4.5, 2 * (lo + 6)
+    add("edge_hedge_n", "hedge", 0, -hedge_m, (hedge_len, 2.5, 3))
+    add("edge_hedge_s", "hedge", 0, hedge_m, (hedge_len, 2.5, 3))
+    add("edge_hedge_w", "hedge", -hedge_m, 0, (3, 2.5, hedge_len))
+    add("edge_hedge_e", "hedge", hedge_m, 0, (3, 2.5, hedge_len))
+    # Tree line and building silhouettes, side by side round the square (clockwise from the north-west corner).
+    for side, (sx, sz, along_x) in {"n": (0, -1, True), "e": (1, 0, False), "s": (0, 1, True), "w": (-1, 0, False)}.items():
+        for k, t in enumerate(range(-hi + 25, hi - 24, EDGE_TREE_STEP)):
+            jitter = (_hash("edge_tree", side, k) - 0.5) * 16
+            m = EDGE_TREE_M + (_hash("edge_tree_m", side, k) - 0.5) * 10
+            x, z = (t + jitter, sz * m) if along_x else (sx * m, t + jitter)
+            grow = 0.85 + _hash("edge_tree_h", side, k) * 0.45
+            add(f"edge_tree_{side}{k + 1:02d}", "tree", x, z, (8 * grow, 14 * grow, 8 * grow))
+        for k, t in enumerate(range(-hi + 80, hi - 79, EDGE_BUILDING_STEP)):
+            height = 22 + round(_hash("edge_bld_h", side, k) * 38)
+            width = 34 + round(_hash("edge_bld_w", side, k) * 26)
+            look = ("building", "building_a", "building_b")[int(_hash("edge_bld_k", side, k) * 3) % 3]
+            x, z = (t, sz * EDGE_BUILDING_M) if along_x else (sx * EDGE_BUILDING_M, t)
+            size = (width, height, 28) if along_x else (28, height, width)
+            add(f"edge_bld_{side}{k + 1:02d}", look, x, z, size)
+    return rows
+
+
+layout["edge"] = {"band": list(EDGE_BAND), "rows": edge_rows(), "limits": EDGE_LIMITS}
+
+
+# ---------------- Memes (014 Stage 3): the CityKit meme objects in the Downtown core -------------------------------
+# A slot spot holds whatever the active theme binds to the slot (park_city_dress.py SLOT_BINDINGS); a plain spot holds
+# the named meme in every theme. Each goes to the free ground nearest its wanted point, off the core streets (|x| or
+# |z| under MEME_STREET) and clear of scenes, buildings and items. Dims come from src/shared/Content/CityKit.luau.
+MEME_SPOTS = [
+    ("slot.meme.t3", None, -35, 40),
+    ("slot.meme.t4", None, 50, -100),
+    ("slot.meme.t5", None, -85, -48),
+    (None, "meme_phone_1pc", 45, 60),
+    (None, "meme_buffering_billboard", 100, -35),
+    (None, "meme_banana_scale", -60, -110),
+]
+MEME_SLOT_OBJECTS = {"slot.meme.t3": "meme_pond_cart", "slot.meme.t4": "meme_cone_statue",
+                     "slot.meme.t5": "meme_vacant_lot"}
+MEME_STREET, MEME_MARGIN, MEME_CORE = 24, 3, 140
+
+
+def meme_dims() -> dict:
+    text = (ROOT / "src/shared/Content/CityKit.luau").read_text()
+    out = {}
+    for oid in {*MEME_SLOT_OBJECTS.values(), *(o for _, o, _, _ in MEME_SPOTS if o)}:
+        m = re.search(r'id = "' + oid + r'",.*?dims = \{ ([\d.]+), ([\d.]+), ([\d.]+) \}', text, re.S)
+        if not m:
+            raise SystemExit(f"meme {oid} has no dims in CityKit.luau")
+        out[oid] = tuple(float(v) for v in m.groups())
+    return out
+
+
+def place_memes() -> None:
+    dims = meme_dims()
+    taken = [box for _, box in _thing_boxes()] + [box for _, box in _forbidden_boxes()]
+    for it in (i for group in ("scenes", "trails") for s in layout[group] for i in s["items"]):
+        if "x" in it:
+            taken.append((it["x"] - 1, it["z"] - 1, it["x"] + 1, it["z"] + 1))
+    spots = []
+    for slot, obj, wx, wz in MEME_SPOTS:
+        w, d, _ = dims[MEME_SLOT_OBJECTS[slot] if slot else obj]
+        best = None
+        for r in range(0, 90):
+            for k in range(max(1, 8 * r)):
+                a = 2 * math.pi * k / max(1, 8 * r)
+                x, z = round(wx + r * math.cos(a)), round(wz + r * math.sin(a))
+                box = footprint_box(x, z, w + 2 * MEME_MARGIN, d + 2 * MEME_MARGIN, 0)
+                on_street = box[0] < MEME_STREET and box[2] > -MEME_STREET or box[1] < MEME_STREET and box[3] > -MEME_STREET
+                if on_street or max(abs(v) for v in box) > MEME_CORE:
+                    continue
+                if any(overlap(box, t, 0) for t in taken):
+                    continue
+                best = (x, z, box)
+                break
+            if best:
+                break
+        if not best:
+            raise SystemExit(f"no free core spot for {slot or obj} near ({wx}, {wz})")
+        x, z, box = best
+        taken.append(box)
+        spot = {"id": f"meme_{len(spots) + 1}", "x": x, "z": z, "y": 0.4, "yaw": 0,
+                "footprint": [w, d]}
+        spot.update({"slot": slot} if slot else {"object": obj})
+        spots.append(spot)
+    layout["memes"] = spots
+
+
+
+# ---------------- The food chain (2026-11-08): the route a kid follows from the park to the Plaza -----------------------
+# A snack stream runs from every spawn to a catapult; the catapult flings the ball into a spiral jackpot; bigger jackpots
+# wait on the Ring Road, in the neighbourhoods and round the Plaza. Each pile is a ladder sized by the eating rule, so a
+# ball that arrives small keeps being able to eat the next thing.
+LADDER = ["button", "bottle_cap", "acorn", "pine_cone", "tennis_ball", "cup_small", "bike_bottle", "lunchbox", "toy_car", "coffee_cup", "trainer", "skateboard",
+          "water_bottle", "frisbee", "rubber_duck", "cupcake", "traffic_cone", "watering_can", "garden_gnome", "lantern",
+          "fruit_crate", "suitcase", "present", "picnic_basket", "cool_box", "football", "kick_scooter",
+          "inflatable_flamingo", "wheelie_bin", "e_scooter", "mailbox", "bicycle", "office_chair", "paddling_pool",
+          "lawnmower", "cardboard_boxes", "trampoline", "bench", "arcade_cabinet", "vending_machine", "cafe_table_set",
+          "hot_dog_trolley", "swing_set", "skip", "bus_shelter", "hatchback", "taxi", "market_stall", "garden_shed",
+          "kiosk", "van", "donut_truck", "container", "city_bus"]
+GROWTH_K = 1.6
+CHAIN_LIGHT_ONLY_ABOVE = 2.9
+FLINGS = [  # spawn index (1-based) -> where its jackpot lands
+    (1, -345, -345), (2, -270, -345), (3, -345, -270), (4, 270, -345), (5, 345, -345), (6, 345, -270),
+    (7, 345, 345), (8, 270, 345), (9, 345, 270), (10, -270, 345), (11, -345, 345), (12, -345, 270),
+]
+STREAM_LENGTH, STREAM_SPACING, STREAM_START = 40, 2.2, 15
+
+
+def _item(obj, x, z, y=0.0, yaw=0):
+    return {"object": obj, "tier": tier(obj), "bulk": round(bulk(obj), 2), "x": round(x, 2), "z": round(z, 2), "y": y, "yaw": yaw}
+
+
+def ladder_sequence(start_d, count, top=3):
+    """What a ball starting at start_d eats one after another, each time among the biggest things it can manage."""
+    out, d = [], start_d
+    for i in range(count):
+        edible = [k for k in LADDER if needs_d(k) <= d * 0.97]
+        if not edible:
+            edible = LADDER[:1]
+        pool = edible[-top:]
+        obj = pool[i % len(pool)]
+        out.append(obj)
+        d = (d ** 3 + GROWTH_K * bulk(obj) ** 3) ** (1 / 3)
+    return out, d
+
+
+def _chain_taken():
+    roads = ("market_street", "terrace_street")
+    boxes = [box for fid, box in _forbidden_boxes()
+             if not (fid in roads or fid.startswith(("spoke_", "track_", "ring_", "path_", "loop_", "allotment_", "city_ground", "downtown_ground", "ground_")))]
+    # Anything raised and solid too: the oak's root tunnels and ramp cut a pile in two and trap a small ball.
+    raised = [tuple(b["rect"]) for b in layout["blocks"] if b["y"][1] > 1]
+    return boxes + raised + [box for _, box in _thing_boxes()]
+
+
+def free_spot(wx, wz, radius, taken, what):
+    for r in range(0, 130, 3):
+        n = max(1, int(2 * math.pi * r / 6))
+        for k in range(n):
+            a = 2 * math.pi * k / n
+            x, z = round(wx + r * math.cos(a)), round(wz + r * math.sin(a))
+            box = (x - radius, z - radius, x + radius, z + radius)
+            if not any(overlap(box, t, 0) for t in taken):
+                taken.append(box)
+                return x, z
+    raise SystemExit(f"no free spot for {what} near ({wx}, {wz})")
+
+
+def pile_radius(sequence, gap):
+    room = sum((max(OBJECTS[o][:2]) + gap) * ((max(OBJECTS[o][:2]) + gap) * PILE_PITCH + PILE_LANE) for o in sequence)
+    return max(6.0, math.sqrt(room / math.pi) * 1.05)
+
+
+def jackpot(jid, x, z, start_d, count, zone_id, y=0.0, gap=1.2, face=None):
+    """A true spiral: the smallest thing on the outer edge facing `face` (where the ball arrives from), the biggest in the
+    middle. Every item takes up its own arc, so nothing overlaps and a ball can eat its way in."""
+    sequence, end_d = ladder_sequence(start_d, count)
+    items = []
+    outer = pile_radius(sequence, gap)
+    r = outer
+    angle = math.atan2(face[1] - z, face[0] - x) if face else _hash(jid, "start") * 2 * math.pi
+    previous = 0.0
+    for placed, obj in enumerate(sequence):
+        size = max(OBJECTS[obj][:2]) + gap
+        step = (previous + size) / 2 / max(r, size)
+        angle += step
+        r = max(0.0, r - (size * PILE_PITCH + PILE_LANE) * step / (2 * math.pi))
+        items.append(_item(obj, x + r * math.cos(angle), z + r * math.sin(angle), y, round(_hash(jid, placed) * 360)))
+        previous = size
+    layout["trails"].append({"id": jid, "cause": "jackpot pile", "zone": zone_id, "points": [[x, z]], "items": items})
+    return {"id": jid, "x": x, "z": z, "radius": round(outer, 1), "endD": round(end_d, 1)}
+
+
+def pile_edge(pile, from_x, from_z):
+    """Where a thrown ball should come down: just outside the pile's smallest food, on the side it flew in from."""
+    a = math.atan2(from_z - pile["z"], from_x - pile["x"])
+    reach = pile["radius"] + 2
+    return round(pile["x"] + reach * math.cos(a), 1), round(pile["z"] + reach * math.sin(a), 1)
+
+
+def food_chain():
+    taken = _chain_taken()
+    chain = {"jackpots": [], "flings": []}
+    by_id = {i: sp for i, sp in enumerate(layout["spawns"], 1)}
+    for index, wx, wz in FLINGS:
+        sp = by_id[index]
+        length = math.hypot(sp["x"], sp["z"])
+        dx, dz = -sp["x"] / length, -sp["z"] / length
+        nx, nz = -dz, dx
+        # The stream: a wavy line of snacks, growing as it goes, ending at the catapult.
+        count = int(STREAM_LENGTH / STREAM_SPACING)
+        sequence, stream_end = ladder_sequence(1.0, count)
+        items = []
+        for k, obj in enumerate(sequence):
+            s = STREAM_START + k * STREAM_SPACING
+            wave = math.sin(s / 7) * 4
+            items.append(_item(obj, sp["x"] + dx * s + nx * wave, sp["z"] + dz * s + nz * wave, 0.0, round(_hash("st", index, k) * 360)))
+        layout["trails"].append({"id": f"stream_{index:02d}", "cause": "snack stream to the catapult", "zone": f"park_{sp['quarter']}",
+                                 "points": [[sp["x"] + dx * STREAM_START, sp["z"] + dz * STREAM_START], [sp["x"] + dx * (STREAM_START + STREAM_LENGTH), sp["z"] + dz * (STREAM_START + STREAM_LENGTH)]], "items": items})
+        reach = STREAM_START + STREAM_LENGTH + 5
+        cx, cz = free_spot(sp["x"] + dx * reach, sp["z"] + dz * reach, 4, taken, f"catapult {index}")
+        # A kid misses snacks, so the pile starts below what a perfect run of the stream would reach.
+        pile_d = max(1.0, stream_end * PILE_SLACK)
+        jx, jz = free_spot(wx, wz, pile_radius(ladder_sequence(pile_d, PARK_PILE)[0], 1.2), taken, f"jackpot {index}")
+        pile = jackpot(f"jackpot_park_{index:02d}", jx, jz, pile_d, PARK_PILE, f"park_{sp['quarter']}", face=(cx, cz))
+        chain["jackpots"].append(pile)
+        yaw = math.degrees(math.atan2(jx - cx, -(jz - cz))) % 360
+        lx, lz = pile_edge(pile, cx, cz)
+        layout["catapults"].append({"id": f"F{index}", "kind": "catapult", "x": cx, "z": cz, "restYaw": round(yaw, 1), "aimArc": 30,
+                                    "dMin": 1, "dMax": 40, "range": [80, 260], "apex": 45, "landing": {"x": lx, "y": 0, "z": lz}})
+        chain["flings"].append({"id": f"F{index}", "from": [cx, cz], "to": [jx, jz], "studs": round(math.hypot(jx - cx, jz - cz))})
+    # The Ring Road: a lane of snacks all the way round and a big pile at each corner.
+    lane = []
+    ring_items = ["garden_gnome", "fruit_crate", "present", "cool_box", "football", "kick_scooter", "wheelie_bin", "mailbox", "bicycle"]
+    for side, (ax, az, bx, bz) in {"n": (-280, -280, 280, -280), "e": (280, -280, 280, 280), "s": (280, 280, -280, 280), "w": (-280, 280, -280, -280)}.items():
+        length = math.hypot(bx - ax, bz - az)
+        steps = int(length / RING_LANE_SPACING)
+        for k in range(steps):
+            f = (k + 0.5) / steps
+            lane.append(_item(ring_items[k % len(ring_items)], ax + (bx - ax) * f, az + (bz - az) * f, 0.1, round(_hash("lane", side, k) * 360)))
+    layout["trails"].append({"id": "ring_snack_lane", "cause": "snack lane round the Ring Road", "zone": "ring_road", "points": [[-280, -280], [280, -280], [280, 280], [-280, 280], [-280, -280]], "items": lane})
+    ring_piles = {"nw": (-280, -280), "ne": (280, -280), "se": (280, 280), "sw": (-280, 280)}
+    landing = {}
+    for name, (wx, wz) in ring_piles.items():
+        x, z = free_spot(wx, wz, pile_radius(ladder_sequence(RING_PILE_D, RING_PILE)[0], 1.2), taken, f"ring jackpot {name}")
+        thrower = next(cp for cp in layout["catapults"] if cp["id"] == RING_THROWERS[name])
+        pile = jackpot(f"jackpot_ring_{name}", x, z, RING_PILE_D, RING_PILE, "ring_road", y=0.1, face=(thrower["x"], thrower["z"]))
+        chain["jackpots"].append(pile)
+        landing[name] = pile_edge(pile, thrower["x"], thrower["z"])
+    for name, catapult in RING_THROWERS.items():
+        c = next(cp for cp in layout["catapults"] if cp["id"] == catapult)
+        x, z = landing[name]
+        c["landing"] = {"x": x, "y": 0.1, "z": z}
+        c["restYaw"] = round(math.degrees(math.atan2(x - c["x"], -(z - c["z"]))) % 360, 1)
+    # The Spokes: a traffic jam nose to tail on both sides of the centre line, bigger towards the Plaza. Eat your way in.
+    for name, (ax, az, ux, uz) in {"n": (0, -292, 0, 1), "s": (0, 292, 0, -1), "w": (-292, 0, 1, 0), "e": (292, 0, -1, 0)}.items():
+        items = []
+        d = JAM_START_D
+        # Nose to tail by each vehicle's real length, so a bus never stands inside the van in front of it.
+        lane_end = {-1: JAM_FIRST, 1: JAM_FIRST}
+        for k in range(JAM_PER_LANE * 2):
+            lane = -1 if k % 2 == 0 else 1
+            obj = JAM[min(int(k / (JAM_PER_LANE * 2) * len(JAM)), len(JAM) - 1)]
+            length = OBJECTS[obj][0]
+            s_along = lane_end[lane] + length / 2
+            lane_end[lane] += length + JAM_GAP
+            yaw = 90 if uz != 0 else 0
+            items.append(_item(obj, ax + ux * s_along + (-uz) * lane * JAM_OFFSET, az + uz * s_along + ux * lane * JAM_OFFSET, 0.35, yaw))
+        layout["trails"].append({"id": f"traffic_jam_{name}", "cause": "traffic jam down the Spoke", "zone": "downtown", "points": [[ax, az], [ax + ux * 140, az + uz * 140]], "items": items})
+    # The Plaza: a ring of buses, with the four streets left open.
+    items = []
+    for k in range(8):
+        a = math.radians(22.5 + 45 * k)
+        x, z = BUS_RING * math.sin(a), -BUS_RING * math.cos(a)
+        items.append(_item("city_bus", x, z, 0.4, round((math.degrees(a) + 90) % 360, 1)))
+    layout["trails"].append({"id": "plaza_bus_ring", "cause": "ring of buses round the Plaza", "zone": "downtown", "points": [[0, 0]], "items": items})
+    # The slingshots land at the outer end of a jam, where the small cars are: mid-jam a ball wedges between vans it cannot eat.
+    for sling, (x, z) in (("S1", (290, 0)), ("S2", (-290, 0))):
+        c = next(cp for cp in layout["catapults"] if cp["id"] == sling)
+        c["landing"] = {"x": x, "y": 0.35, "z": z}
+        c["restYaw"] = round(math.degrees(math.atan2(x - c["x"], -(z - c["z"]))) % 360, 1)
+    # Silly giants: one beside every park pile, so the ball that just ate the pile can eat the thing next to it.
+    for k, pile in enumerate(j for j in chain["jackpots"] if j["id"].startswith("jackpot_park")):
+        obj = MEGA_PARK[k % len(MEGA_PARK)]
+        length = math.hypot(pile["x"], pile["z"]) or 1
+        reach = pile["radius"] + 6
+        x, z = free_spot(pile["x"] - pile["x"] / length * reach, pile["z"] - pile["z"] / length * reach, 7, taken, obj)
+        landmark(f"giant_park_{k + 1:02d}", obj, x, z, round(_hash("giant", k) * 360))
+    for k, pile in enumerate(j for j in chain["jackpots"] if j["id"].startswith("jackpot_ring")):
+        obj = MEGA_RING[k % len(MEGA_RING)]
+        length = math.hypot(pile["x"], pile["z"]) or 1
+        reach = pile["radius"] + 12
+        x, z = free_spot(pile["x"] - pile["x"] / length * reach, pile["z"] - pile["z"] / length * reach, 14, taken, obj)
+        landmark(f"giant_ring_{k + 1:02d}", obj, x, z, round(_hash("giant_ring", k) * 360), y=0.3)
+    for obj, wx, wz, y in COLOSSAL:
+        x, z = (wx, wz) if y else free_spot(wx, wz, 34, taken, obj)
+        landmark(f"colossal_{obj.split('_', 1)[1]}", obj, x, z, round(_hash(obj) * 360), y=y)
+    # A rubber-duck flood on the pond and four gnome armies marching on the city.
+    px, pz, prx, prz = 180, -350, 70, 42
+    ducks = []
+    for k in range(DUCK_FLOOD):
+        a, r = 2 * math.pi * _hash("duck_a", k), math.sqrt(_hash("duck_r", k)) * 0.92
+        ducks.append(_item("rubber_duck", px + prx * r * math.cos(a), pz + prz * r * math.sin(a), 0.6, round(_hash("duck_y", k) * 360)))
+    layout["trails"].append({"id": "duck_flood", "cause": "rubber-duck flood on the pond", "zone": "park_ne", "points": [[px, pz]], "items": ducks})
+    for name, (wx, wz) in {"nw": (-420, -250), "ne": (250, -430), "se": (420, 250), "sw": (-250, 430)}.items():
+        x, z = free_spot(wx, wz, 18, taken, f"gnome army {name}")
+        length = math.hypot(x, z)
+        yaw = round(math.degrees(math.atan2(-x, z)) % 360)
+        ux, uz = -x / length, -z / length
+        army = []
+        for rank in range(ARMY_RANKS):
+            for file in range(ARMY_FILES):
+                along = (rank - (ARMY_RANKS - 1) / 2) * 3.4
+                side = (file - (ARMY_FILES - 1) / 2) * 3.4
+                army.append(_item("garden_gnome", x + ux * along - uz * side, z + uz * along + ux * side, 0.0, yaw))
+        layout["trails"].append({"id": f"gnome_army_{name}", "cause": "gnome army", "zone": f"park_{name}", "points": [[x, z]], "items": army})
+    # Bouncy fields: walk onto one and it hands you along from pad to pad.
+    for name, (wx, wz) in {"west": (-425, 40), "east": (425, -40)}.items():
+        x, z = free_spot(wx, wz, 20, taken, f"bouncy field {name}")
+        for row in range(4):
+            for col in range(5):
+                pad(f"bouncy_{name}_{row}{col}", "bounce", x + (col - 2) * 7.5, z + (row - 1.5) * 7.5, 0, 6, 6, 0.05, up=7, forward=0)
+    layout["foodChain"] = chain
+
+
+RING_LANE_SPACING, PARK_PILE, RING_PILE, RING_PILE_D = 9, 62, 30, 4.5
+PILE_SLACK, PILE_PITCH, PILE_LANE = 0.7, 1.25, 2.5
+RING_THROWERS = {"nw": "C1", "ne": "C2", "se": "C3", "sw": "C4"}
+MEGA_PARK = ["mega_cupcake", "mega_duck", "mega_gnome", "mega_present"]
+MEGA_RING = ["mega_football", "mega_flamingo", "mega_cone", "mega_trainer"]
+COLOSSAL = [("colossal_gnome", -440, -60, 0.0), ("colossal_duck", 180, -350, 0.3), ("colossal_cupcake", -430, 430, 0.0), ("colossal_present", 60, 430, 0.0)]
+DUCK_FLOOD, ARMY_RANKS, ARMY_FILES = 90, 6, 8
+JAM = ["hatchback", "taxi", "minibus", "camper_van", "van", "delivery_truck", "donut_truck", "removal_van", "city_bus"]
+JAM_START_D, JAM_PER_LANE, JAM_FIRST, JAM_GAP, JAM_OFFSET, BUS_RING = 12.0, 7, 0.0, 2.5, 7, 56
+
 
 # --------------------------------------------------------------------------------------------------------------
 # Summary and checks
@@ -903,10 +1292,12 @@ def _thing_boxes():
             continue
         things.append((sc["id"], footprint_box(sc["x"], sc["z"], *sc["footprint"], sc["yaw"])))
     for lm in layout["landmarks"]:
-        if lm.get("y", 0) > 0.5 or lm["id"].startswith(("spoke_truck", "roof_building", "hoarding_", "site_hoarding")):
+        if lm.get("y", 0) > 0.5 or lm["id"].startswith(("spoke_truck", "roof_building", "hoarding_", "site_hoarding", "giant_park", "giant_ring", "colossal_")):
             continue
         dims = OBJECTS[lm["object"]]
         things.append((lm["id"], footprint_box(lm["x"], lm["z"], dims[0], dims[1], lm.get("yaw", 0))))
+    for meme in layout.get("memes", []):
+        things.append((meme["id"], footprint_box(meme["x"], meme["z"], *meme["footprint"], meme["yaw"])))
     return things
 
 
@@ -992,6 +1383,7 @@ MID_MAX = 60
 MID_THEMES = {"nw": ["park_kit", "grove", "log_pile"], "ne": ["park_kit", "orchard", "lawn_games"],
               "se": ["park_kit", "lawn_games", "football_pitch"], "sw": ["park_kit", "orchard", "grove"]}
 SPAWN_CLEAR = 45  # nothing from the fill within this many studs of a spawn
+SPAWN_OBSTACLE_CLEAR = 16  # no Tier 3+ trail object this close to a spawn (FR-008: 15 studs, plus a margin)
 
 
 def _food_points(min_tier=1):
@@ -1192,6 +1584,10 @@ def prune_trails() -> int:
         for it in t["items"]:
             if it.get("y", 0) < 0.5 and any(b[0] - 1 <= it["x"] <= b[2] + 1 and b[1] - 1 <= it["z"] <= b[3] + 1 for b in boxes):
                 dropped += 1
+            elif it["tier"] >= 3 and any(math.hypot(it["x"] - sp["x"], it["z"] - sp["z"]) < SPAWN_OBSTACLE_CLEAR
+                                         for sp in layout["spawns"]):
+                # FR-008 (014): nothing taller than 1 stud within 15 studs of a spawn (a Park Loop bench was at 14.2).
+                dropped += 1
             else:
                 keep.append(it)
         t["items"] = keep
@@ -1214,7 +1610,104 @@ def coverage() -> dict:
     return out
 
 
-LIMITS = {"partObjects": 1200, "lightObjects": 3500, "farFromFoodPct": 5.0}
+LIMITS = {"partObjects": 1500, "lightObjects": 5200, "farFromFoodPct": 5.0}
+
+
+# ---------------- Settle: no big thing stands inside another ----------------
+# Scenes, trails, kerb lines and piles are each laid out on their own, so a bench of one can land in a bush of another.
+# This last pass looks at every Part-sized thing (Tier 3 and up) at its real, turned footprint. The bigger one keeps
+# its place; the other moves to the nearest free ground within SETTLE_REACH studs, or is dropped when there is none.
+SETTLE_REACH, SETTLE_STEP, SETTLE_GAP = 18, 2, 1.0
+SETTLE_PAIRS = {frozenset(("cafe_table_set", "parasol")), frozenset(("bus_shelter", "shelter_bench")),
+                frozenset(("hoarding",))}
+SETTLE_OPEN = ("car_park", "station_hall")
+
+
+def _corners(x, z, w, d, yaw, grow=0.0):
+    a = math.radians(yaw or 0)
+    c, s_ = math.cos(a), math.sin(a)
+    hw, hd = w / 2 + grow, d / 2 + grow
+    return [(x + c * sx * hw - s_ * sz * hd, z + s_ * sx * hw + c * sz * hd) for sx, sz in ((1, 1), (1, -1), (-1, -1), (-1, 1))]
+
+
+def _boxes_cross(a, b) -> bool:
+    for poly in (a, b):
+        for i in range(4):
+            (x1, z1), (x2, z2) = poly[i], poly[(i + 1) % 4]
+            nx, nz = z2 - z1, x1 - x2
+            pa = [nx * x + nz * z for x, z in a]
+            pb = [nx * x + nz * z for x, z in b]
+            if max(pa) <= min(pb) or max(pb) <= min(pa):
+                return False
+    return True
+
+
+def settle_big() -> dict:
+    cell = 24
+    grid: dict = {}
+
+    def cells(box):
+        xs, zs = [p[0] for p in box], [p[1] for p in box]
+        for cx in range(int(min(xs) // cell), int(max(xs) // cell) + 1):
+            for cz in range(int(min(zs) // cell), int(max(zs) // cell) + 1):
+                yield (cx, cz)
+
+    def add(obj, y, box):
+        for key in cells(box):
+            grid.setdefault(key, []).append((obj, y, box))
+
+    def clash(obj, y, box) -> bool:
+        for key in cells(box):
+            for other, oy, obox in grid.get(key, ()):
+                if abs(oy - y) < 3 and frozenset((obj, other)) not in SETTLE_PAIRS and _boxes_cross(box, obox):
+                    return True
+        return False
+
+    for lm in layout["landmarks"]:
+        w, d, _ = OBJECTS[lm["object"]]
+        if lm["object"] not in SETTLE_OPEN:  # a hall or a car park has things standing inside it
+            add(lm["object"], lm.get("y", 0), _corners(lm["x"], lm["z"], w, d, lm.get("yaw", 0)))
+    for meme in layout.get("memes", []):
+        add("meme", meme.get("y", 0), _corners(meme["x"], meme["z"], *meme["footprint"], meme["yaw"]))
+    forbidden = [box for _, box in _forbidden_boxes(include_solids=True)]
+
+    owners = [(group, it) for kind in ("scenes", "trails") for group in layout[kind] for it in group["items"]
+              if it["tier"] >= BIG_TIER]
+    order = sorted(range(len(owners)), key=lambda i: (-owners[i][1]["bulk"], i))
+    moved = dropped = 0
+    for index in order:
+        group, it = owners[index]
+        w, d, _ = OBJECTS[it["object"]]
+        y = it.get("y", 0)
+        here = _corners(it["x"], it["z"], w, d, it.get("yaw", 0), -0.05 * min(w, d))
+        if not clash(it["object"], y, here):
+            add(it["object"], y, here)
+            continue
+        spot = None
+        if y <= 0.5:  # only ground has room to shuffle; a roof or a deck does not
+            for ring in range(1, SETTLE_REACH // SETTLE_STEP + 1):
+                for turn in range(12):
+                    a = math.radians(turn * 30 + _hash(it["object"], it["x"], it["z"]) * 30)
+                    x = round(it["x"] + math.cos(a) * ring * SETTLE_STEP, 2)
+                    z = round(it["z"] + math.sin(a) * ring * SETTLE_STEP, 2)
+                    box = _corners(x, z, w, d, it.get("yaw", 0), SETTLE_GAP)
+                    flat = (min(p[0] for p in box), min(p[1] for p in box), max(p[0] for p in box), max(p[1] for p in box))
+                    if max(abs(v) for v in flat) > layout["world"]["halfExtent"] - 4:
+                        continue
+                    if any(overlap(flat, f, 0.0) for f in forbidden) or clash(it["object"], y, box):
+                        continue
+                    spot = (x, z)
+                    break
+                if spot:
+                    break
+        if spot:
+            it["x"], it["z"] = spot
+            add(it["object"], y, _corners(spot[0], spot[1], w, d, it.get("yaw", 0)))
+            moved += 1
+        else:
+            group["items"].remove(it)
+            dropped += 1
+    return {"moved": moved, "dropped": dropped}
 
 
 def main() -> None:
@@ -1226,6 +1719,7 @@ def main() -> None:
                          for k, v in sorted(OBJECTS.items())}
     layout["sceneKinds"] = {k: {"footprint": list(v["fp"]), "items": [{"object": o, "count": c, "band": b} for o, c, b in v["items"]]}
                             for k, v in SCENE_KINDS.items()}
+    food_chain()
     pruned = prune_trails()
     ladders = starter_ladders()
     before = coverage()
@@ -1233,7 +1727,10 @@ def main() -> None:
     # Second pass for the middle sizes (D 6 - 15): the first pass counts any crumb as food, so a wide field of crumbs can
     # still be empty for a big ball. Ask for something of Tier 3 or above within MID_RADIUS studs, within the budgets.
     mid = fill_park(radius=MID_RADIUS, min_tier=3, prefix="mid", themes=MID_THEMES, max_new=MID_MAX, variety=45, drop_light=True)
+    place_memes()
+    settled = settle_big()
     layout["summary"] = summary()
+    layout["summary"]["settled"] = settled
     layout["summary"]["trailItemsPruned"] = pruned
     layout["summary"]["starterRungs"] = ladders
     layout["summary"]["parkFill"] = {"placesAdded": filled, "midPlacesAdded": mid, "farFromFoodPctBefore": before, "farFromFoodPct": coverage(),
@@ -1253,6 +1750,16 @@ def main() -> None:
     for key in ("partObjects", "lightObjects"):
         if layout["summary"][key] > LIMITS[key]:
             failures.append(f"BUDGET: {key} {layout['summary'][key]} > {LIMITS[key]}")
+    edge = layout["edge"]
+    if len(edge["rows"]) > edge["limits"]["parts"]:
+        failures.append(f"BUDGET: edge scenery {len(edge['rows'])} Parts > {edge['limits']['parts']}")
+    for row in edge["rows"]:
+        # Across the band (the axis the row sits out on) it stays inside 500..620; along it, inside 620.
+        north_south = abs(row["z"]) >= abs(row["x"])
+        m, across = (abs(row["z"]), row["size"][2] / 2) if north_south else (abs(row["x"]), row["size"][0] / 2)
+        along = (abs(row["x"]) + row["size"][0] / 2) if north_south else (abs(row["z"]) + row["size"][2] / 2)
+        if m - across < edge["band"][0] - 0.01 or m + across > edge["band"][1] + 0.01 or along > edge["band"][1] + 0.01:
+            failures.append(f"EDGE: {row['id']} leaves the band {edge['band']}")
     if check_only:
         if not target.exists() or target.read_text() != text:
             failures.append("STALE: docs/design/maps/park-city-layout.json differs from a fresh run; run the script")

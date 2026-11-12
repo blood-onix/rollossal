@@ -3,43 +3,43 @@
  "theme": "winter",
  "totals": {
   "kinds": 231,
-  "exact": 80,
-  "substitute": 37,
-  "standin": 114
+  "exact": 81,
+  "substitute": 52,
+  "standin": 98
  },
  "placementsByStatus": {
-  "exact": 3187,
-  "substitute": 505,
-  "standin": 2400
+  "exact": 3146,
+  "substitute": 952,
+  "standin": 1924
  },
  "byTier": {
   "1": {
    "exact": 12,
-   "substitute": 10,
-   "standin": 44
+   "substitute": 15,
+   "standin": 39
   },
   "2": {
    "exact": 22,
-   "substitute": 7,
-   "standin": 30
+   "substitute": 12,
+   "standin": 25
   },
   "3": {
    "exact": 18,
-   "substitute": 6,
-   "standin": 20
+   "substitute": 9,
+   "standin": 17
   },
   "4": {
    "exact": 17,
-   "substitute": 9,
-   "standin": 9
+   "substitute": 11,
+   "standin": 7
   },
   "5": {
    "exact": 10,
    "substitute": 3,
-   "standin": 9
+   "standin": 8
   },
   "6": {
-   "exact": 1,
+   "exact": 2,
    "substitute": 2,
    "standin": 2
   }
@@ -60,7 +60,7 @@
   {
    "id": "acorn",
    "tier": 1,
-   "placements": 166,
+   "placements": 163,
    "status": "exact",
    "assetKey": "acorn",
    "scale": null,
@@ -84,7 +84,7 @@
   {
    "id": "apple",
    "tier": 1,
-   "placements": 37,
+   "placements": 30,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -109,13 +109,13 @@
    "id": "armchair",
    "tier": 2,
    "placements": 2,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "dt_spinning_office_chair",
+   "scale": 0.88,
+   "fitChecked": true,
    "stage": 2,
    "role": "w-accent-red",
-   "note": "armchair"
+   "note": "office chair for an armchair"
   },
   {
    "id": "bandstand",
@@ -156,7 +156,7 @@
   {
    "id": "bench",
    "tier": 3,
-   "placements": 267,
+   "placements": 265,
    "status": "exact",
    "assetKey": "dt_bench",
    "scale": 1.0,
@@ -168,7 +168,7 @@
   {
    "id": "berry",
    "tier": 1,
-   "placements": 26,
+   "placements": 22,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -192,7 +192,7 @@
   {
    "id": "big_tree",
    "tier": 4,
-   "placements": 12,
+   "placements": 9,
    "status": "substitute",
    "assetKey": "ck_tree_oak",
    "scale": 1.25,
@@ -228,7 +228,7 @@
   {
    "id": "bird_bath",
    "tier": 2,
-   "placements": 1,
+   "placements": 3,
    "status": "exact",
    "assetKey": "ck_bird_bath",
    "scale": 1.0,
@@ -252,7 +252,7 @@
   {
    "id": "birds_nest",
    "tier": 1,
-   "placements": 18,
+   "placements": 17,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -336,7 +336,7 @@
   {
    "id": "bottle_cap",
    "tier": 1,
-   "placements": 18,
+   "placements": 16,
    "status": "exact",
    "assetKey": "dt_bottle_cap",
    "scale": 1.0,
@@ -348,7 +348,7 @@
   {
    "id": "boules_set",
    "tier": 1,
-   "placements": 20,
+   "placements": 18,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -372,7 +372,7 @@
   {
    "id": "breadcrumb",
    "tier": 1,
-   "placements": 75,
+   "placements": 70,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -408,7 +408,7 @@
   {
    "id": "bush",
    "tier": 3,
-   "placements": 201,
+   "placements": 200,
    "status": "exact",
    "assetKey": "ck_bush",
    "scale": 1.54,
@@ -720,7 +720,7 @@
   {
    "id": "cool_box",
    "tier": 2,
-   "placements": 82,
+   "placements": 81,
    "status": "exact",
    "assetKey": "ck_cooler",
    "scale": 1.3,
@@ -769,13 +769,13 @@
    "id": "croissant",
    "tier": 1,
    "placements": 14,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "dt_donut",
+   "scale": 1.5,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-sand",
-   "note": "croissant"
+   "note": "donut for a croissant"
   },
   {
    "id": "cup_small",
@@ -792,7 +792,7 @@
   {
    "id": "cupcake",
    "tier": 1,
-   "placements": 50,
+   "placements": 48,
    "status": "exact",
    "assetKey": "ck_cupcake",
    "scale": 4.0,
@@ -816,7 +816,7 @@
   {
    "id": "daisy",
    "tier": 1,
-   "placements": 64,
+   "placements": 74,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -828,14 +828,14 @@
   {
    "id": "deckchair",
    "tier": 2,
-   "placements": 168,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "placements": 170,
+   "status": "substitute",
+   "assetKey": "ck_bistro_chair",
+   "scale": 0.96,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-accent-teal",
-   "note": "deckchair (no kit mesh; a chair would read wrong)"
+   "note": "bistro chair for a deckchair"
   },
   {
    "id": "delivery_truck",
@@ -853,13 +853,13 @@
    "id": "digger",
    "tier": 4,
    "placements": 2,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "dt_snowplough",
+   "scale": 0.73,
+   "fitChecked": true,
    "stage": 2,
    "role": "w-accent-yellow",
-   "note": "digger"
+   "note": "snowplough for a digger"
   },
   {
    "id": "donut_truck",
@@ -948,7 +948,7 @@
   {
    "id": "football",
    "tier": 2,
-   "placements": 74,
+   "placements": 72,
    "status": "exact",
    "assetKey": "ck_soccer_ball",
    "scale": 2.86,
@@ -973,18 +973,18 @@
    "id": "fridge",
    "tier": 3,
    "placements": 1,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "dt_vending_machine",
+   "scale": 0.86,
+   "fitChecked": true,
    "stage": 2,
    "role": "w-white",
-   "note": "fridge"
+   "note": "vending machine for a fridge"
   },
   {
    "id": "frisbee",
    "tier": 1,
-   "placements": 39,
+   "placements": 37,
    "status": "exact",
    "assetKey": "ck_flying_disc",
    "scale": 2.22,
@@ -1008,7 +1008,7 @@
   {
    "id": "fruit_tree",
    "tier": 4,
-   "placements": 20,
+   "placements": 10,
    "status": "substitute",
    "assetKey": "ck_tree_oak",
    "scale": 0.69,
@@ -1044,7 +1044,7 @@
   {
    "id": "giant_chess_piece",
    "tier": 2,
-   "placements": 60,
+   "placements": 54,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -1067,15 +1067,15 @@
   },
   {
    "id": "giant_oak",
-   "tier": 5,
+   "tier": 6,
    "placements": 1,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "exact",
+   "assetKey": "ck_tree_oak",
+   "scale": 4.0,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-leaf",
-   "note": "Giant Oak crown (kit oaks are less than half its size)"
+   "note": "the kit oak at giant size; scale 4.0 is outside 0.6 to 1.6: a stand-in candidate"
   },
   {
    "id": "glass_tower",
@@ -1116,7 +1116,7 @@
   {
    "id": "goal",
    "tier": 3,
-   "placements": 2,
+   "placements": 0,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -1176,7 +1176,7 @@
   {
    "id": "hatchback",
    "tier": 3,
-   "placements": 63,
+   "placements": 53,
    "status": "exact",
    "assetKey": "dt_hatchback",
    "scale": 1.0,
@@ -1332,7 +1332,7 @@
   {
    "id": "ladybird",
    "tier": 1,
-   "placements": 43,
+   "placements": 45,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -1368,7 +1368,7 @@
   {
    "id": "leaf",
    "tier": 1,
-   "placements": 33,
+   "placements": 29,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -1447,7 +1447,7 @@
    "fitChecked": false,
    "stage": 2,
    "role": "w-metal",
-   "note": "luggage trolley (the shopping cart is too small)"
+   "note": "luggage trolley"
   },
   {
    "id": "lunchbox",
@@ -1488,7 +1488,7 @@
   {
    "id": "market_crate_stack",
    "tier": 3,
-   "placements": 5,
+   "placements": 2,
    "status": "substitute",
    "assetKey": "ck_fruit_crates",
    "scale": 1.03,
@@ -1644,7 +1644,7 @@
   {
    "id": "mushroom_cluster",
    "tier": 2,
-   "placements": 29,
+   "placements": 27,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -1813,13 +1813,13 @@
    "id": "pedal_car",
    "tier": 2,
    "placements": 1,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "ck_kids_bike",
+   "scale": 1.1,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-accent-red",
-   "note": "pedal car"
+   "note": "kids bike for a pedal car"
   },
   {
    "id": "pedalo",
@@ -1849,18 +1849,18 @@
    "id": "phone_booth",
    "tier": 3,
    "placements": 4,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "ck_phone_repair_kiosk",
+   "scale": 0.82,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-accent-red",
-   "note": "phone booth"
+   "note": "repair kiosk for a phone booth"
   },
   {
    "id": "picnic_basket",
    "tier": 2,
-   "placements": 68,
+   "placements": 66,
    "status": "exact",
    "assetKey": "ck_picnic_basket",
    "scale": 1.47,
@@ -1872,7 +1872,7 @@
   {
    "id": "picnic_table",
    "tier": 3,
-   "placements": 31,
+   "placements": 28,
    "status": "exact",
    "assetKey": "dt_picnic_table",
    "scale": 1.0,
@@ -1908,7 +1908,7 @@
   {
    "id": "pine_cone",
    "tier": 1,
-   "placements": 191,
+   "placements": 189,
    "status": "exact",
    "assetKey": "pine_cone",
    "scale": null,
@@ -1933,13 +1933,13 @@
    "id": "portable_cabin",
    "tier": 4,
    "placements": 2,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "dt_shipping_container",
+   "scale": 0.7,
+   "fitChecked": true,
    "stage": 2,
    "role": "w-wall-c",
-   "note": "portable site cabin"
+   "note": "shipping container for a site cabin"
   },
   {
    "id": "potted_plant",
@@ -2136,14 +2136,14 @@
   {
    "id": "rose",
    "tier": 1,
-   "placements": 53,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "placements": 59,
+   "status": "substitute",
+   "assetKey": "ck_flower_pot",
+   "scale": 1.5,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-accent-red",
-   "note": "rose"
+   "note": "flower pot for a rose"
   },
   {
    "id": "roundabout",
@@ -2184,14 +2184,14 @@
   {
    "id": "sandwich",
    "tier": 1,
-   "placements": 27,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "placements": 25,
+   "status": "substitute",
+   "assetKey": "dt_takeout_box",
+   "scale": 1.17,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-sand",
-   "note": "sandwich"
+   "note": "takeout box for a sandwich"
   },
   {
    "id": "satellite_dish",
@@ -2341,13 +2341,13 @@
    "id": "sofa",
    "tier": 3,
    "placements": 1,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "dt_bench",
+   "scale": 1.0,
+   "fitChecked": true,
    "stage": 2,
    "role": "w-accent-teal",
-   "note": "sofa"
+   "note": "bench for a sofa"
   },
   {
    "id": "solar_panel",
@@ -2388,7 +2388,7 @@
   {
    "id": "strawberry",
    "tier": 1,
-   "placements": 72,
+   "placements": 66,
    "status": "standin",
    "assetKey": null,
    "scale": null,
@@ -2400,7 +2400,7 @@
   {
    "id": "street_tree",
    "tier": 4,
-   "placements": 72,
+   "placements": 70,
    "status": "exact",
    "assetKey": "dt_street_tree",
    "scale": 1.56,
@@ -2496,7 +2496,7 @@
   {
    "id": "tennis_ball",
    "tier": 1,
-   "placements": 233,
+   "placements": 231,
    "status": "exact",
    "assetKey": "dt_tennis_ball",
    "scale": 0.8,
@@ -2557,13 +2557,13 @@
    "id": "tomato_plant",
    "tier": 2,
    "placements": 32,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "ck_potted_shrub",
+   "scale": 0.86,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-leaf",
-   "note": "tomato plant"
+   "note": "potted shrub for a tomato plant"
   },
   {
    "id": "town_hall",
@@ -2581,13 +2581,13 @@
    "id": "toy_brick",
    "tier": 1,
    "placements": 28,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "status": "substitute",
+   "assetKey": "dt_puzzle_cube",
+   "scale": 1.0,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-accent-red",
-   "note": "toy brick"
+   "note": "puzzle cube for a toy brick"
   },
   {
    "id": "toy_bucket",
@@ -2616,7 +2616,7 @@
   {
    "id": "traffic_cone",
    "tier": 2,
-   "placements": 24,
+   "placements": 18,
    "status": "exact",
    "assetKey": "ck_traffic_cone",
    "scale": 0.87,
@@ -2664,14 +2664,14 @@
   {
    "id": "tulip",
    "tier": 1,
-   "placements": 97,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "placements": 107,
+   "status": "substitute",
+   "assetKey": "ck_flower_pot",
+   "scale": 1.33,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-accent-red",
-   "note": "tulip"
+   "note": "flower pot for a tulip"
   },
   {
    "id": "umpire_chair",
@@ -2736,7 +2736,7 @@
   {
    "id": "water_bottle",
    "tier": 1,
-   "placements": 89,
+   "placements": 87,
    "status": "exact",
    "assetKey": "dt_water_bottle",
    "scale": 2.0,
@@ -2784,14 +2784,14 @@
   {
    "id": "wheelbarrow",
    "tier": 2,
-   "placements": 16,
-   "status": "standin",
-   "assetKey": null,
-   "scale": null,
-   "fitChecked": false,
+   "placements": 15,
+   "status": "substitute",
+   "assetKey": "dt_shopping_cart",
+   "scale": 1.11,
+   "fitChecked": true,
    "stage": 1,
    "role": "w-accent-red",
-   "note": "wheelbarrow"
+   "note": "shopping cart for a wheelbarrow"
   },
   {
    "id": "wheelie_bin",
@@ -2820,50 +2820,42 @@
  ],
  "ownerBuildList": [
   "hedge_piece",
-  "deckchair",
   "napkin",
-  "tulip",
   "petal",
+  "daisy",
   "breadcrumb",
   "strawberry",
-  "daisy",
   "pea",
-  "rose",
   "giant_chess_piece",
   "ladybird",
   "marble",
   "small_mushroom",
   "cabbage",
-  "apple",
   "seed_packet",
   "conker",
   "log",
-  "leaf",
   "helmet",
-  "toy_brick",
-  "sandwich",
+  "apple",
+  "leaf",
   "toadstool",
-  "tomato_plant",
-  "berry",
   "feather",
-  "mushroom_cluster",
   "ice_cream_cone",
   "snail_shell",
+  "mushroom_cluster",
+  "berry",
   "pebble",
-  "boules_set",
   "pumpkin",
   "bird_seed_bag",
-  "birds_nest",
+  "boules_set",
   "sweet",
   "vent",
+  "birds_nest",
   "gnome_hat",
   "confetti",
   "grape_bunch",
   "cheese_wheel",
-  "croissant",
   "hoarding",
   "watermelon",
-  "wheelbarrow",
   "coin",
   "hammock",
   "party_hat",
@@ -2874,7 +2866,6 @@
   "oar",
   "table_lamp",
   "racket",
-  "phone_booth",
   "solar_panel",
   "canoe",
   "lifebuoy",
@@ -2883,25 +2874,17 @@
   "cement_mixer",
   "pedalo",
   "pipe_bundle",
-  "armchair",
   "birthday_cake",
   "net_post",
   "chimney_stack",
-  "goal",
   "rowing_boat",
   "bouncy_castle",
-  "digger",
-  "portable_cabin",
   "fire_ring",
-  "pedal_car",
-  "fridge",
   "pigeon_coop",
   "roundabout",
-  "sofa",
   "umpire_chair",
   "boathouse",
   "roof_building_1",
-  "giant_oak",
   "roof_building_2",
   "roof_building_3",
   "roof_building_4",
@@ -2932,7 +2915,6 @@
   "ck_crossing_zebra",
   "ck_flower_bed",
   "ck_flower_buckets",
-  "ck_flower_pot",
   "ck_food_truck",
   "ck_garden_fence",
   "ck_grocery_bag",
@@ -2942,7 +2924,6 @@
   "ck_house_semi_garage",
   "ck_house_split_level",
   "ck_kerb_corner",
-  "ck_kids_bike",
   "ck_landmark_arch",
   "ck_landmark_obelisk",
   "ck_leaf_pile",
@@ -2958,7 +2939,6 @@
   "ck_padlock",
   "ck_path_curve",
   "ck_path_straight",
-  "ck_phone_repair_kiosk",
   "ck_picnic_blanket",
   "ck_pond_edge",
   "ck_post_box",
@@ -2999,7 +2979,6 @@
   "dt_cocoa_truck",
   "dt_corner_bakery",
   "dt_corner_shop_row",
-  "dt_donut",
   "dt_drum_kit",
   "dt_earbud_case",
   "dt_ev_charging_station",
@@ -3027,16 +3006,13 @@
   "dt_pizza_slice",
   "dt_poinsettia_pot",
   "dt_potted_palm",
-  "dt_puzzle_cube",
   "dt_recycling_bank",
   "dt_rocket_water_tower",
   "dt_rubber_duck_sunglasses",
-  "dt_shopping_cart",
   "dt_sleigh",
   "dt_smartphone",
   "dt_snow_pile",
   "dt_snowman",
-  "dt_snowplough",
   "dt_soda_can",
   "dt_street_lamp",
   "dt_taxi",

@@ -26,6 +26,8 @@ end
 StuckVisuals.start()
 WorldCuller.start()
 BallController.start()
+require(script.Parent.ToyRides).start()
+require(script.Parent.GiantBadges).start()
 RunClient.start()
 Hud.start()
 ResultsUi.start()
@@ -36,6 +38,9 @@ Feedback.start()
 WeatherController.start()
 FpsReadout.start()
 HazardClient.start()
+-- Fun slice: rival name tags, the leaderboard, the mode banner and the asteroid shower.
+require(script.Parent.RivalUi).start()
+require(script.Parent.MeteorClient).start()
 -- 007: ambient pigeons, client-only decoration read from the active world (Downtown). A world with no
 -- ambient list, and the Downtown flag being off, start nothing.
 if Config.Flags.Downtown then

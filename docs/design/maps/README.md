@@ -16,6 +16,11 @@ coordinates, so they cannot drift apart.
   more than 40 studs from food, or on server objects over 1,200 or light objects over 3,500.
   `python3 scripts/park_city_layout.py --check` also fails when the committed JSON is stale.
 - Growth numbers come from `scripts/growth-sim.py` (design doc section 5).
+- **The look** (feature 014) is not in the layout. `scripts/park_city_dress.py` maps every object kind to an uploaded
+  mesh (`exact` or `substitute`) or a stand-in colour role, and holds the build stage (`CURRENT_STAGE`) and the active
+  theme (`ACTIVE_THEME`, `winter` or `city`; one line). `python3 scripts/park_city_world.py` writes the game's world
+  modules and the coverage report (`specs/014-park-city-art/coverage.md`). A dress change needs no map approval; a
+  layout change (this folder) does.
 
 ## How to read the maps
 
@@ -31,13 +36,16 @@ coordinates, so they cannot drift apart.
 - **Pink lines** are rails and ziplines (the arrow is the exit). **Dashed blue lines** are drain pipes (small-only pipe rides), and **brown blocks** are the covered root tunnels. **Orange pads** are boost pads (the line points the way
   they push). **Green circles** are bounce pads and lily pads, **blue circles** are spring pads, and **red rings** are
   catapult bullseyes. **Brown triangles** are catapults, with their aiming arc. **Gold dots** are golden-object spots.
-  **Purple dashed lines** are hazards.
+  **Purple dashed lines** are hazards. **Pink rectangles** in Downtown are meme spots (a `slot.meme.*` spot holds the
+  active theme's meme). The band outside the boundary (500 to 620) is the **map edge**: ground, a low hedge, a tree line
+  and building silhouettes, scenery only (no collision, never food).
 
 ## The maps
 
 | File | What it shows |
 | --- | --- |
 | [park-city.svg](park-city.svg) | The whole map: 1,000 × 1,000 studs, rings, zones, spawns, every object. |
+| [big-city.svg](big-city.svg) | Concept only: the districts of the 2,400 × 2,400 Big City (`scripts/big_city_layout.py`, `big-city-layout.json`). No objects yet. |
 | [zone-park-nw.svg](zone-park-nw.svg) | Park NW, **Woods and Campsite**: Mushroom Glade, Giant Oak, stream, campsite, catapult C1, spawns 1 – 3. |
 | [zone-park-ne.svg](zone-park-ne.svg) | Park NE, **Pond and Boathouse**: the pond in the band between the park edge and the Park Loop, picnic lawn, catapult C2, spawns 4 – 6. |
 | [zone-park-se.svg](zone-park-se.svg) | Park SE, **Playground, Skate Park and Courts**: Ferris wheel, catapult C3, spawns 7 – 9. |
@@ -48,7 +56,7 @@ coordinates, so they cannot drift apart.
 | [zone-nbh-se.svg](zone-nbh-se.svg) | **Car Park and Building Site**: three decks, the crane jib rail, the big slingshot S1. |
 | [zone-nbh-sw.svg](zone-nbh-sw.svg) | **Terraces and Cottages**: two house rows with front gardens, washing-line rails, the removal van. |
 | [zone-nbh-nw.svg](zone-nbh-nw.svg) | **Station and Rail Yard**: platforms, the parked train, four track rails, the Sky Rail ramp, slingshot S2. |
-| [zone-downtown.svg](zone-downtown.svg) | **Downtown**: hoardings, Plaza, four tower blocks of four plots, the Sky Rail, spring pads. |
+| [zone-downtown.svg](zone-downtown.svg) | **Downtown**: open on every side, Plaza, four tower blocks of four plots, the Sky Rail, spring pads. |
 | [detail-doorstep.svg](detail-doorstep.svg) | Spawn 1's doorstep at 12 px per stud, with the real D 1 starting ball for scale. |
 | [detail-glade-oak.svg](detail-glade-oak.svg) | Mushroom Glade, bounce caps, Giant Oak and its spiral ramp, root tunnels, the stream crossings. |
 | [detail-duck-island.svg](detail-duck-island.svg) | Duck Island and its three routes (8 lily pads, the jetty and diving board, the drain pipe). |
@@ -59,17 +67,18 @@ coordinates, so they cannot drift apart.
 
 | | Count |
 | --- | --- |
-| Tier 1 Crumb | 1,672 |
-| Tier 2 Pocket | 1,786 (including the maze's 476 hedge pieces) |
-| Tier 3 Picnic | 685 |
-| Tier 4 Street | 191, plus 13 cars in traffic |
-| Tier 5 House | 52 |
+| Tier 1 Crumb | 1,818 |
+| Tier 2 Pocket | 1,657 (including the maze's 480 hedge pieces) |
+| Tier 3 Picnic | 776 |
+| Tier 4 Street | 304 |
+| Tier 5 House | 50 |
 | Tier 6 Skyline | 8 |
-| Light objects (Tiers 1 – 2, client-side data) | 3,458 |
-| Part objects (Tiers 3 – 6) | 936 |
-| Scenes, trails and kerb lines | 233 scenes (66 of them park fill), 44 lines |
+| Light objects (Tiers 1 – 2, client-side data) | 3,475 |
+| Part objects (Tiers 3 – 6) | 1,138, plus 6 meme spots |
+| Scenes and trails | 355 scenes (116 of them park fill), 58 trails |
+| Map-edge scenery | 120 Parts (limit 120) |
 | Overlaps | 0 |
-| Park more than 40 studs from food, by quarter | before fill NW 26.2 %, NE 24.8 %, SE 24.8 %, SW 25.6 %; after NW 0.9 %, NE 2.8 %, SE 1.8 %, SW 3.2 % |
+| Park more than 40 studs from food, by quarter | before fill NW 17.1 %, NE 20.0 %, SE 17.1 %, SW 17.4 %; after NW 0.1 %, NE 0.1 %, SE 0.6 %, SW 2.2 % |
 
 **Park fill.** Hand-placed set pieces come first. The layout script then fills any part of the park that is more than
 40 studs from food (about 3 s of rolling for a small ball) with the quarter's own kind of place:
@@ -82,5 +91,5 @@ coordinates, so they cannot drift apart.
 Fill places stay 45 studs clear of spawns. Two places of the same kind are never within 70 studs of each other. Fill
 places carry few crumbs: they fill space and add trees and furniture, and do not feed small balls more.
 
-These counts are a first pass. The growth model assumed about 130 Tier 5 – 6 objects, and the layout has 60, so the
+These counts are a first pass. The growth model assumed about 130 Tier 5 – 6 objects, and the layout has 58, so the
 top players' ceiling will be lower until feature 012's pace report and tuning settle it.

@@ -126,6 +126,9 @@ function ObjectVisual.buildMesh(
 	return mesh
 end
 
+-- The stand-in alone: never yields. LightField (014) shows it while a kind's mesh is still loading.
+ObjectVisual.standIn = standIn
+
 -- A fresh, unparented template. May yield when a mesh id is set; callers cache the result per object id.
 function ObjectVisual.build(def: ObjectDef): BasePart
 	return ObjectVisual.buildMesh(def.assetKey, def.id, def.size, def.tier, def.atlas)

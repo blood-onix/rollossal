@@ -44,6 +44,9 @@
     },
     "StarterPlayer": {
       "$className": "StarterPlayer",
+      "$properties": {
+        "DevCameraOcclusionMode": "Invisicam"
+      },
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
         "$path": "src/client"

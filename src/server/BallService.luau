@@ -72,11 +72,27 @@ export type Session = {
 	boostGraceUntil: number,
 	springUntil: number,
 	springVy: number,
+	-- A toy has thrown or is carrying this ball (ToyService): the guard's speed ceiling is the flight cap until then.
+	flightUntil: number,
+	rideUntil: number,
+	-- A tier jump's vacuum (ToyService): AbsorbService reaches further until then.
+	vacuumUntil: number,
+	-- The biggest this ball has been this run: a knock-off can only cost a small share of it.
+	peakDiameter: number,
 	-- Shield (a Sticky coat) end time, and the end of the 3 s immunity after a ball-to-ball knock-off.
 	shieldUntil: number,
 	immuneUntil: number,
 	-- Counts the Launch facts published on this ball.
 	launchSeq: number,
+	-- Fun slice: where this ball stands around its spawn point (bots share the slice's few spawns), and whether a
+	-- hunter is close enough in Feast for the flee speed (FeastService).
+	spawnOffset: Vector3,
+	fleeing: boolean,
+	-- Feast: an eaten ball cannot be eaten again until then. Kept apart from immuneUntil, which a plain
+	-- ball-to-ball bump sets: a hunter that bumps its prey on the way in must still be able to eat it.
+	feastShieldUntil: number,
+	-- A bot's own start point. Bots never use the players' spawns, so they do not eat a player's first food.
+	spawnOverride: Vector3?,
 }
 
 local BallService = {}
@@ -111,8 +127,19 @@ local function healthiestSlot(except: Session?): number
 		available[slot] = WorldSpawner.availableInCluster(slot)
 	end
 	local inUse: { [number]: boolean } = {}
+	-- Fun slice: only the section's own spawns take balls. The others count as used and empty, so they lose even
+	-- when every slice spawn is taken.
+	local slice = Config.Slice
+	if slice.enabled and #Worlds.active.spawnPoints >= 12 then
+		for slot = 1, #Worlds.active.spawnPoints do
+			if not table.find(slice.spawnSlots, slot) then
+				available[slot] = -1
+				inUse[slot] = true
+			end
+		end
+	end
 	for _, session in sessions do
-		if session ~= except then
+		if session ~= except and session.spawnOverride == nil then
 			inUse[session.slot] = true
 		end
 	end
@@ -133,6 +160,7 @@ end
 
 function BallService.setDiameter(session: Session, newDiameter: number)
 	session.authoritativeDiameter = newDiameter
+	session.peakDiameter = math.max(session.peakDiameter, newDiameter)
 	session.part:SetAttribute("Diameter", newDiameter)
 end
 
@@ -171,7 +199,7 @@ function BallService.peakSpeed(session: Session, now: number): number
 	return peak
 end
 
-function BallService.newSession(userId: number, player: Player?): Session
+function BallService.newSession(userId: number, player: Player?, displayName: string?): Session
 	local part = Instance.new("Part")
 	part.Name = `Ball_{userId}`
 	part.Shape = Enum.PartType.Ball
@@ -179,6 +207,13 @@ function BallService.newSession(userId: number, player: Player?): Session
 	part.CustomPhysicalProperties = PhysicalProperties.new(1, 0.8, 0, 1, 1)
 	part:SetAttribute("Diameter", Worlds.rules.startDiameter)
 	part:SetAttribute("Stuck", "")
+	part:SetAttribute(
+		"DisplayName",
+		displayName or (if player then player.DisplayName else part.Name)
+	)
+	part:SetAttribute("IsBot", player == nil)
+	part:SetAttribute("ShieldUntil", 0)
+	part:SetAttribute("Flee", false)
 
 	local attachment = Instance.new("Attachment")
 	attachment.Parent = part
@@ -219,9 +254,17 @@ function BallService.newSession(userId: number, player: Player?): Session
 		boostGraceUntil = -math.huge,
 		springUntil = -math.huge,
 		springVy = 0,
+		flightUntil = -math.huge,
+		rideUntil = -math.huge,
+		vacuumUntil = -math.huge,
+		peakDiameter = 0,
 		shieldUntil = -math.huge,
 		immuneUntil = -math.huge,
 		launchSeq = 0,
+		spawnOffset = Vector3.zero,
+		fleeing = false,
+		feastShieldUntil = -math.huge,
+		spawnOverride = nil,
 	}
 	part:SetAttribute("Launch", "")
 	part:SetAttribute("BoostDash", 0)
@@ -232,6 +275,9 @@ function BallService.newSession(userId: number, player: Player?): Session
 		part:SetNetworkOwner(player)
 		-- No character, so streaming needs the ball as its focus or the client never receives it.
 		player.ReplicationFocus = part
+	else
+		-- A bot's ball stays with the server; left alone, the engine would hand it to the nearest player.
+		part:SetNetworkOwner(nil)
 	end
 	sessions[userId] = session
 	return session
@@ -249,12 +295,19 @@ function BallService.clearEffects(session: Session)
 	session.boostGraceUntil = -math.huge
 	session.springUntil = -math.huge
 	session.springVy = 0
+	session.flightUntil = -math.huge
+	session.rideUntil = -math.huge
+	session.vacuumUntil = -math.huge
 	session.shieldUntil = -math.huge
 	session.immuneUntil = -math.huge
+	session.feastShieldUntil = -math.huge
+	session.fleeing = false
 	session.part:SetAttribute("BoostDash", 0)
 	session.part:SetAttribute("BoostMagnet", 0)
 	session.part:SetAttribute("BoostShield", 0)
 	session.part:SetAttribute("BoostTrail", 0)
+	session.part:SetAttribute("ShieldUntil", 0)
+	session.part:SetAttribute("Flee", false)
 	for _, hook in clearHooks do
 		hook(session)
 	end
@@ -287,9 +340,8 @@ local function applyAnchor(session: Session)
 	local held = session.frozen or session.streamHold
 	part.Anchored = held
 	if not held then
-		if session.player then
-			part:SetNetworkOwner(session.player)
-		end
+		-- nil keeps a bot's ball with the server.
+		part:SetNetworkOwner(session.player)
 		session.lastValidPosition = part.Position
 		session.lastValidVelocity = Vector3.zero
 	end
@@ -320,7 +372,10 @@ local function placeAtSpawn(session: Session)
 	BallService.clearEffects(session)
 	local spawn = if session.zone == "Hub"
 		then WorldSpawner.getHubSpawn()
-		else WorldSpawner.getSpawnSlot(session.slot)
+		else (
+			session.spawnOverride
+			or WorldSpawner.getSpawnSlot(session.slot) + session.spawnOffset
+		)
 	session.part.AssemblyLinearVelocity = Vector3.zero
 	session.part.AssemblyAngularVelocity = Vector3.zero
 	session.part.Position = spawn
@@ -343,6 +398,7 @@ function BallService.respawn(session: Session, now: number)
 		WorldSpawner.scatter(cube, spots[index], now)
 	end
 	session.stuckStack = {}
+	session.peakDiameter = 0
 	BallService.setDiameter(session, Worlds.rules.startDiameter)
 	placeAtSpawn(session)
 	WorldSpawner.refreshCluster(session.slot, now)
@@ -352,6 +408,22 @@ end
 -- Position and velocity only: size, stuck stack and anything the run owns stay as they are.
 function BallService.returnToSpawn(session: Session)
 	placeAtSpawn(session)
+end
+
+-- Feast: an eaten ball comes back at the emptiest spawn, with whatever size the caller has left it.
+function BallService.relocate(session: Session)
+	if session.zone == "Room" then
+		session.slot = healthiestSlot(session)
+	end
+	placeAtSpawn(session)
+end
+
+-- Feast: the hunted ball's flee speed, as a fact for its client and a higher ceiling for the guard.
+function BallService.setFleeing(session: Session, fleeing: boolean)
+	if session.fleeing ~= fleeing then
+		session.fleeing = fleeing
+		session.part:SetAttribute("Flee", fleeing)
+	end
 end
 
 -- Holds the ball still (anchored, no velocity) or hands it back to its player.
@@ -374,6 +446,7 @@ function BallService.resetBall(session: Session)
 	session.stuckStack = {}
 	session.physicalDiameter = Worlds.rules.startDiameter
 	session.part.Size = Vector3.one * Worlds.rules.startDiameter
+	session.peakDiameter = 0
 	BallService.setDiameter(session, Worlds.rules.startDiameter)
 	local room = session.zone == "Room"
 	if room then
@@ -441,6 +514,9 @@ end
 
 -- Horizontal speed ceiling for this session now: raised by a Dash or Spring window and its short grace.
 local function ceilingFor(session: Session, now: number): number
+	if now < session.flightUntil then
+		return Config.toyFlightSpeedCap
+	end
 	local boosted = now < session.boostUntil or now < session.springUntil
 	local inGrace = now < session.boostGraceUntil
 	-- Park City raises the roll cap with size (012 FR-013); 10 % slack on top, never below today's ceiling.
@@ -448,6 +524,9 @@ local function ceilingFor(session: Session, now: number): number
 		Config.maxServerBallSpeed,
 		Movement.speedCap(session.authoritativeDiameter, Worlds.rules.speedCap) * 1.1
 	)
+	if session.fleeing then
+		base *= Config.feastFleeMultiplier
+	end
 	return BallGuard.speedCeiling(base, Config.boostSpeedCap, boosted, inGrace)
 end
 
@@ -492,8 +571,14 @@ function BallService.step(now: number, dt: number)
 		local part = session.part
 
 		local alpha = math.min(1, dt / Config.growTime)
-		session.physicalDiameter += (session.authoritativeDiameter - session.physicalDiameter) * alpha
+		local grown = (session.authoritativeDiameter - session.physicalDiameter) * alpha
+		session.physicalDiameter += grown
 		part.Size = Vector3.one * session.physicalDiameter
+		if session.player == nil and grown > 0 then
+			-- A server-owned ball that grows where it stands would sink into the ground and be thrown up by the
+			-- physics; lift it by the added radius instead.
+			part.CFrame += Vector3.new(0, grown / 2, 0)
+		end
 
 		if session.frozen or session.streamHold then
 			continue
@@ -529,7 +614,8 @@ function BallService.step(now: number, dt: number)
 			part.Position = session.lastValidPosition
 			recordViolation(session, "Displacement", stepSpeed, displacementLimit, now)
 		else
-			if Config.Flags.ScaledJump then
+			-- A bot's ball is moved by the server itself, so there is no jump to police.
+			if Config.Flags.ScaledJump and session.player ~= nil then
 				guardVertical(session, now, dt, ceiling)
 			end
 			session.lastValidPosition = part.Position

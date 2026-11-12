@@ -145,6 +145,20 @@ none can take a `<theme>-<view>.jpg` name. They were left in place, unrenamed. T
 as T041 asks and the session's Bash policy refused them again (`not-on-allowlist`), so nothing was copied. The two
 commands above, run by the owner from the repo root, are still what is left.
 
+Sixth pass, 2026-11-10 (T034, T041, T042 done). With the owner's go-ahead the two copy commands ran and all 30 JPGs are in
+`shots/` as `<theme>-<view>.jpg`: 15 views per theme (`plaza`, `spawn_nw`, `spawn_ne`, `spawn_se`, `spawn_sw`,
+`duck_island`, `hedge_maze`, `roof_run`, `car_park`, `giant_oak`, `edge`, `edge_ground`, `overview_300`, `overview`,
+`overview_high`). Four were opened to check the names (`winter-plaza`, `city-plaza`, `winter-overview_high`,
+`city-edge_ground`) and match. The 19 `mcp-Roblox_Studio-blob-*.jpg` files are extras and stay until the owner removes them.
+
+Seventh pass, 2026-11-10: the whole set re-captured from the current build, because the sixth pass's JPGs were taken
+before the world modules were last generated. Play, sync probe clean, HUD hidden by a client loop for the session, depth
+of field off, `QualityLevel` `Level21` (set back to `Automatic` afterwards), Studio in front. 15 views in `winter`, then
+`ACTIVE_THEME = "city"`, regenerate (only the `activeThemeId` line of `ParkCity.luau` changed), 15 views in `city`, then
+`winter` restored and regenerated: all 61 changed or new files match their checksums from before the switch, and world
+`--check` exits 0. The 30 files in `shots/` were replaced with these. New since the old set: buses in the Plaza and on
+the car park roof.
+
 What the shots show, for the owner's review:
 
 - Plaza landmark: `mega_tree` in `winter`, `giant_duck` in `city`. Fronts mid-rises, the Glass Tower, memes and street
@@ -154,6 +168,8 @@ What the shots show, for the owner's review:
 - `edge` shows trees and a hedge line in front of plain coloured boxes. The boxes are the most likely part to fail
   "reads as a place" (FR-009). `edge` is at camera height 20. `edge_ground` (height 3) shows the same thing more
   plainly: the silhouette boxes have no windows or roofs and stand on flat ground, next to the mesh trees.
+- `hedge_maze` shows lawn, paths, the giant cupcake and the Park Loop, but no maze walls at the maze position
+  (-349, 349) in either theme. Owner to confirm whether the maze should be there at this stage.
 - Pink lines are the inert rail and post placeholders from 012, kept by this feature.
 - Crumbs appear only near the ball (the light window), so far views have none. Same in play.
 - Console of the `city` capture session: the same three kinds of Studio line as Gate 2, nothing from game scripts.
@@ -188,14 +204,35 @@ Run 2026-11-08 after the second shot pass, `winter` restored (the five generated
 | 4 Spawns | `ParkPace` floors and doorstep test pass |
 | 5 Map edge | **Open (owner)**: SVG approval pending; `edge` and `edge_ground` captured |
 | 6 Late game | Pass (rerun below): Lune passes; D 35, 60, 100 reached 26 of 26 waypoints, 0 stuck, Glass Tower eaten |
-| 7 Budgets | **Open (owner, T032)**: totals print and the benchmark passed, ceilings not set |
-| 8 Gates | Gate 2 passes. **Open (owner)**: shots not in `shots/` (the copy above), no pull request, no owner approval |
+| 7 Budgets | Pass: ceilings pinned and enforced (1,110,000 and 420,000); 12-ball benchmark 60 of 60 unthrottled seconds at 59.3 to 60.4 rendered fps (2026-11-10 second rerun) |
+| 8 Gates | Gate 2 passes. 30 shots of the current build in `shots/` (seventh pass). **Open (owner)**: no pull request, no owner approval |
 
 The T032 ladder could not run this pass: 10 of 10 seconds sampled in Play were throttled (14.7 to 15.8 fps).
 
 Rerun 2026-11-09: `scripts/check.sh` exit 0. T032 again: 10 of 10 seconds in Play had `RenderStepped` at 15 to 16 with
 Heartbeat at 60 to 61 (viewport 1008 × 812), so no unthrottled seconds and no ladder. Sync probe clean on the 27 scripts
 this branch changes (a shortened list, not the full probe). Scenarios 5, 7 and 8 stay open as in the table.
+
+Note 2026-11-10 (T032, not run: the throttled ladder has already failed twice). `scripts/check.sh` exit 0.
+`ParkCityBudget` (winter) now prints unculled 1,107,221 (worst at `roof_run`), Tier 5 culled 416,921 (worst at
+`spawn_01`), scenery 33,408, `spawn_01` 1,075,977. These replace the 892,157, 363,693 and 876,493 in the budget section,
+so a 900,000 / 370,000 pin would fail the test. The 12-ball benchmark's 60 of 60 seconds also do not settle the frame
+rate: it measured the 876,493 scene, and `ParkHeavySampler` counts Heartbeat, which stays at 60 when Studio is not
+drawing. A valid run needs `RenderStepped` sampling with Studio in front.
+
+Benchmark rerun 2026-11-10 (T032), sync probe clean on the 30 scripts this feature touches, `ParkHeavySampler` now
+records `RenderStepped` as `fps` and Heartbeat separately, viewport 1008 × 812, player at spawn 1 (spawn scene 1,075,977
+triangles). **60 of 60 seconds throttled** (`RenderStepped` 14.7 to 15.8, Heartbeat 59.7 to 60.3), so no unthrottled
+seconds and no frame rate from this run. Server: 12 balls, 1,895 parts every second, under 2,000; client light pool 122,
+64 mesh slots. The owner chose to pin the current scene: `parkCityTrianglesUnculled = 1110000`,
+`parkCityTrianglesCulled = 420000`, enforced by `ParkCityBudget`.
+
+Second rerun 2026-11-10 (T032 done), Studio in front, same setup: **60 of 60 seconds unthrottled, `RenderStepped` 59.3 to
+60.4 fps (mean 60.0)**. Server: 12 balls, 1,895 parts every second; client light pool 122, 64 mesh slots. This is the
+first valid frame-rate reading for this scene. Limits: one view (spawn 1, ground-level camera, 1,075,977 triangles, not
+the worst probe `roof_run`), Studio on the development laptop, and 60 fps is the frame cap, so headroom above it is not
+measured. The pin is the owner's decision in place of R-07's 0.8 × step, which would fall below the scene. Phone frame
+rate stays on the release-candidate list.
 
 Rerun of scenarios 3 and 6 (T043), 2026-11-08, `winter`, sync probe clean, `DebugSize` on for scenario 6 only and back
 off afterwards.

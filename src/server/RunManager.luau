@@ -11,6 +11,7 @@ local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Config = require(Shared.Config)
 local Worlds = require(Shared.Worlds)
 local Coins = require(Shared.Rules.Coins)
+local Feast = require(Shared.Rules.Feast)
 local RunClock = require(Shared.Rules.RunClock)
 local Stars = require(Shared.Rules.Stars)
 local Tiers = require(Shared.Rules.Tiers)
@@ -61,6 +62,60 @@ local bestSelfSize: { [number]: number } = {}
 local seenBookIds: { [number]: { [string]: boolean } } = {}
 local runSeq = 0
 local shuttingDown = false
+
+-- One shared round: every run that starts while it is on ends at the same bell, so sizes can be compared. A run
+-- that starts with no round on begins the next one. Times are os.clock seconds, like every `now` here.
+export type Round = {
+	seq: number,
+	mode: Feast.Mode,
+	startedAt: number,
+	endsAt: number,
+}
+
+local round: Round = { seq = 0, mode = "Classic", startedAt = -math.huge, endsAt = -math.huge }
+local roundHooks: { (Round) -> () } = {}
+
+function RunManager.round(): Round
+	return round
+end
+
+function RunManager.roundActive(now: number): boolean
+	return now < round.endsAt
+end
+
+-- Eating between balls is allowed right now.
+function RunManager.feastOpen(now: number): boolean
+	return round.mode == "Feast"
+		and now < round.endsAt
+		and Feast.open(now, round.startedAt, Config.feastGraceSeconds)
+end
+
+-- Called with the new round every time one begins (bots reset here).
+function RunManager.onRoundStart(hook: (Round) -> ())
+	table.insert(roundHooks, hook)
+end
+
+local function beginRound(now: number)
+	local seq = round.seq + 1
+	round = {
+		seq = seq,
+		mode = Feast.modeFor(Config.gameMode, seq),
+		startedAt = now,
+		endsAt = now + Config.runDurationSeconds,
+	}
+	local serverNow = Workspace:GetServerTimeNow()
+	Workspace:SetAttribute("RoundSeq", seq)
+	Workspace:SetAttribute("RoundStartedAt", serverNow)
+	Workspace:SetAttribute("RoundEndsAt", serverNow + Config.runDurationSeconds)
+	Workspace:SetAttribute(
+		"FeastOpensAt",
+		if round.mode == "Feast" then serverNow + Config.feastGraceSeconds else 0
+	)
+	Workspace:SetAttribute("RoundMode", round.mode)
+	for _, hook in roundHooks do
+		hook(round)
+	end
+end
 
 local function defaultPublisher(userId: number, result: RunResult)
 	local run = runs[userId]
@@ -125,6 +180,9 @@ end
 
 function RunManager.startRun(userId: number, player: Player?, now: number): RunSession
 	runSeq += 1
+	if not RunManager.roundActive(now) then
+		beginRound(now)
+	end
 	local run: RunSession = {
 		runId = `{userId}-{runSeq}`,
 		userId = userId,
@@ -132,7 +190,7 @@ function RunManager.startRun(userId: number, player: Player?, now: number): RunS
 		worldId = Worlds.active.worldId,
 		state = "Active",
 		startedAt = now,
-		endsAt = now + Config.runDurationSeconds,
+		endsAt = round.endsAt,
 		absorbedCoinValues = {},
 		absorbedBookIds = {},
 		unlockedTiers = { [1] = true },

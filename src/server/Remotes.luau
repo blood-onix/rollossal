@@ -56,6 +56,12 @@ local Remotes = {
 	-- Park City (012): LightDelta is server to client (indices only); DebugSize is the Studio-only size tool.
 	LightDelta = whenOn(Config.Flags.ParkCity, "LightDelta"),
 	DebugSize = whenOn(Config.Flags.DebugSize, "DebugSize"),
+	-- Fun slice: facts for every client. FeastEvent(eaterUserId, victimUserId, eaterName, victimName);
+	-- MeteorEvent("shower", endsAtServerTime) and MeteorEvent("rock", x, y, z, radius, impactAtServerTime);
+	-- MeteorHit goes to the player whose ball was hit, with no arguments.
+	FeastEvent = getOrCreateEvent(folder, "FeastEvent"),
+	MeteorEvent = getOrCreateEvent(folder, "MeteorEvent"),
+	MeteorHit = getOrCreateEvent(folder, "MeteorHit"),
 }
 
 return Remotes

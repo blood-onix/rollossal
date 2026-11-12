@@ -285,3 +285,52 @@ Neither does Gate 2's Studio playtest and console read, which must run before th
   and 12 are still slow in the model. `growthK` and the star thresholds are the first tuning knobs.
 - Bump range: `Config.bumpContactTolerance` (2.5 studs) is the server's lag allowance for a bump; tune by feel with the
   bump thud.
+
+## 014 Park City art (owner checks)
+
+Source: `specs/014-park-city-art/playtest.md`. Gate 6 (shots and a played build, both themes) holds the merge; the rest
+does not hold the feature.
+
+- [ ] Gate 6 shots: the 30 Studio captures (15 views, both themes) are in `specs/014-park-city-art/shots/` as
+  `<theme>-<view>.jpg`, re-captured from the current build on 2026-11-10. Review them with a played build. The
+  `hedge_maze` view shows no maze walls (see `playtest.md`). The 19 `mcp-Roblox_Studio-blob-*.jpg` files
+  there are gameplay and debug frames, all `winter`: delete them or keep them as extras.
+- [ ] Map approval of the layout changes shown in the SVGs: the map-edge band (500 to 620), the trail items pruned
+  within 16 studs of a spawn (10, among them the Park Loop bench next to spawn 2), and the six Downtown meme spots.
+- Triangle ceilings: the owner pinned the current scene on 2026-11-10 (`Config.Budgets.parkCityTrianglesUnculled`
+  1,110,000, `parkCityTrianglesCulled` 420,000; the scene is 1,107,221 and 416,921, so there is little headroom). The
+  12-ball benchmark then held 59.3 to 60.4 rendered fps on 60 of 60 unthrottled seconds, in Studio at spawn 1. If the
+  phone check below fails, the R-07 levers are stand-ins or lighter meshes for bush, bench, hatchback, fruit trees and taxi.
+- [ ] Owner build list (end of `specs/014-park-city-art/coverage.md`): 114 stand-in kinds, among them the eight roof
+  buildings of the Roof Run, the giant oak, hedge pieces, hoardings, the car park and the station hall. There are also
+  13 exact meshes outside the 0.6 to 1.6 scale window (cupcake 4.0, football 2.86, water tank 0.34, ...).
+- [ ] Phone frame rate for the dressed city on a real device (Studio: 60 fps with 12 balls at 1008 × 812).
+- [ ] `mega_tree` Spanish name ("Árbol gigante", first pass) and the other generated Spanish names.
+- [ ] City roof colour: block roofs use `w-snowcap` in both themes, which is grey in `city` (plan D3). Owner look.
+- [ ] Vertical-guard lines seen during the debug-size traversal (`playtest.md`): play a real ball up to D 60 to 100 and
+  read the console. If `Vertical violation` shows up without DebugSize resizing, it is a game defect: fix it.
+- [ ] Pace: spawn 1's median-profile final size fell from 77.3 to 46.0 after the spawn-clearance prune (report only).
+- Jest suites that already failed before 014 (Downtown fixtures and 013 expectations: BoosterService, HazardService,
+  Remotes, AbsorbService, RunManager, WorldSpawner, ThemeSwitch) need their fixtures moved to Park City.
+
+## 014 Park City: fun rounds of 2026-11-08 (owner checks)
+
+Agent-run: a route bot played the real build in Studio. With 12 balls and 1,895 server parts the simulation held 55 to
+60 Heartbeats a second over 75 s, but the Studio viewport was not drawing (RenderStepped 0 a second), so that is not a
+frame rate. No bot judges fun. Gate 6 still needs the owner's images and play approval before this merges.
+
+- [ ] Frame rate with 12 balls on the larger map, with Studio visible so it draws (`ParkHeavyScene`, `ParkHeavySampler`).
+- [ ] Spawn view faces the city at every spawn (`SPAWN_VIEW_SECONDS` in `CameraController`); seen once, before the last
+  change to it, and not since, because the viewport was not drawing.
+
+- [ ] Owner plays a full run: is the stream, catapult, pile, giant, Ring pile, jam, Plaza chain fun?
+- [ ] Growth pace. The bot was at size 12 by 25 s and 18 by 40 s on the route. Too fast? Tune `PILE_SLACK`, pile
+  sizes, the star thresholds (20, 50, 90) or the vacuum in `Config`.
+- [ ] Bumps above size 4: the bot took about 20 knock-offs a run (`bumpCooldown`, `knockOffCount`, `knockMinDiameter`).
+- [ ] Size badges: do four at a time help or clutter?
+- [ ] Touch and phone: catapults, rails and badges on a real phone, and frame rate with the larger map.
+- [ ] The 114 object kinds still drawn as stand-ins, including the blank Roof Run buildings: choose which to build.
+
+- [ ] Roll Again leaves nothing on the ball. The client now clears every stuck object at once on a reset
+  (`StuckVisuals.sync`). The agent's check (grow, wait out the round, fire Roll Again, count `Stuck_*` parts) was cut
+  short twice on 2026-11-12 because Play was stopped mid-run, so it has not been seen working.

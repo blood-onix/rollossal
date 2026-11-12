@@ -27,6 +27,12 @@ local random = Random.new()
 -- below startDiameter) and the objects land on the floor for anyone to collect after scatterGrace. A shield is
 -- spent by any qualifying hit. The attacker, if any, is never touched.
 function KnockOff.apply(session: Session, source: Source, now: number): Knock.Decision
+	if
+		Worlds.rules.absorb.mode == "bulk"
+		and session.authoritativeDiameter < Config.knockMinDiameter
+	then
+		return "NothingStuck"
+	end
 	local decision = Knock.decide({
 		now = now,
 		stuckCount = #session.stuckStack,
@@ -57,7 +63,7 @@ function KnockOff.apply(session: Session, source: Source, now: number): Knock.De
 			session.authoritativeDiameter,
 			sizes,
 			Worlds.growthK,
-			Worlds.rules.startDiameter
+			math.max(Worlds.rules.startDiameter, session.peakDiameter * Config.knockFloorRatio)
 		)
 	)
 

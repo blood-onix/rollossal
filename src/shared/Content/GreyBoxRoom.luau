@@ -117,10 +117,20 @@ export type MarkerDef = {
 	yaw: number,
 	waypoints: { { x: number, z: number } }?,
 }
+-- Map-edge scenery (014 R-10): anchored, never collided with, queried or eaten. A mesh scaled so its longest side
+-- is the longest side of `size`, or a stand-in block of `size` coloured by the palette at `role`.
+export type SceneryDef = {
+	id: string,
+	assetKey: string?,
+	role: string,
+	cframe: { x: number, y: number, z: number, yaw: number },
+	size: { x: number, y: number, z: number },
+}
 export type EnvironmentDef = {
 	palette: { [string]: { number } },
 	blocks: { BlockDef },
 	markers: { MarkerDef },
+	scenery: { SceneryDef }?,
 }
 -- Colour grading (one ColorCorrectionEffect in Lighting). tint is RGB 0..255.
 export type GradingDef = {
@@ -232,6 +242,10 @@ export type WorldDef = {
 	shots: { any }?,
 	golden: { any }?,
 	hazards: { any }?,
+	-- Park City (014): generated rows that Worlds turns into theme slots (placement id -> slot id), and the slot
+	-- placements it adds to the fixed placements (the memes).
+	slotRows: { [string]: string }?,
+	slotPlacements: { PlacementSeed }?,
 }
 -- The room's own fields plus every WorldDef field (spelled out: an intersection would stop the data table
 -- below from being checked against its type while it is written).

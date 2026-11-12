@@ -178,7 +178,23 @@ local function sync(record: BallRecord)
 		end
 	end
 
+	if next(wanted) == nil then
+		-- A reset (Roll Again, a new round, a swallow): everything goes at once. Nothing sinks slowly into a ball
+		-- that has just dropped back to its start size.
+		for key, visual in record.visuals do
+			visual.part:Destroy()
+			record.visuals[key] = nil
+		end
+		record.newestKey = nil
+		return
+	end
 	for key, visual in record.visuals do
+		-- A key used again while its old item is still sinking: the old one goes now.
+		if wanted[key] and visual.buryAt ~= nil then
+			visual.part:Destroy()
+			record.visuals[key] = nil
+			continue
+		end
 		if not wanted[key] then
 			if heapFix and visual.weld and visual.buryAt == nil and record.ball.Parent ~= nil then
 				-- Older items sink into the ball instead of popping out (stepped in the render loop).

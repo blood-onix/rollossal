@@ -123,7 +123,7 @@
 
 - [X] T030 [US4] Create 12-ball benchmark script `tests/studio/ParkHeavyScene.luau` and sampler `tests/studio/ParkHeavySampler.luau` to simulate 12 rolling balls in dressed Park City for 60 seconds while logging active server parts and per-second FPS
 - [X] T031 [US4] 🔒 Run the 12-ball Studio benchmark in Park City via Studio MCP, record per-second FPS and part counts, confirm active server parts < 2,000, and verify at least 30 fps on 100% of unthrottled seconds (reporting any 15 fps background-throttled seconds separately)
-- [ ] T032 [US4] Set `Budgets.parkCityTrianglesUnculled` and `Budgets.parkCityTrianglesCulled` in `src/shared/Config.luau` based on benchmark results (highest step holding 30 fps * 0.8, floored to 10,000) and verify `tests/unit/ParkCityBudget.test.luau` enforces the ceilings
+- [X] T032 [US4] Set `Budgets.parkCityTrianglesUnculled` and `Budgets.parkCityTrianglesCulled` in `src/shared/Config.luau` based on benchmark results (highest step holding 30 fps * 0.8, floored to 10,000) and verify `tests/unit/ParkCityBudget.test.luau` enforces the ceilings
 - [X] T033 [US4] Rerun `tests/unit/ParkPace.test.luau` in Lune, verify all 3 playability floors pass (first pickup <= 3 s on all 12 spawns, no food ladder gap > 1.25x, park coverage <= 5% far from food), and rewrite `specs/012-park-city-map/pace-report.md`
 
 **Checkpoint**: Performance and budgets measured and pinned.
@@ -138,7 +138,7 @@
 
 ### Implementation for User Story 5
 
-- [ ] T034 [US5] 🔒 Capture fixed camera shots of Park City in Studio for both `"winter"` and `"city"` themes (11 pinned camera positions plus `roof_run`, `giant_oak`, `edge`, and `overview_high`) using `screen_capture` into `specs/014-park-city-art/shots/` (falling back to Blender render script `art/scripts/park_capture_render.py` if Studio captures fail twice)
+- [X] T034 [US5] 🔒 Capture fixed camera shots of Park City in Studio for both `"winter"` and `"city"` themes (11 pinned camera positions plus `roof_run`, `giant_oak`, `edge`, and `overview_high`) using `screen_capture` into `specs/014-park-city-art/shots/` (falling back to Blender render script `art/scripts/park_capture_render.py` if Studio captures fail twice)
 - [X] T035 [US5] 🔒 Run Gate 2 Studio playtest and read console output using `get_console_output` to verify zero new warnings or errors in both `winter` and `city` themes
 - [X] T036 [US5] Document benchmark measurements, traversal results, Gate 2 console output, and fixed shot links in `specs/014-park-city-art/playtest.md`
 - [ ] T037 [US5] Record owner review and approval checkpoint for Gate 6 in `specs/014-park-city-art/playtest.md`, and add human-taste/tuning items to `docs/release-candidate.md` (missing mesh build list, phone FPS check, `mega_tree` Spanish name, city-theme roof color)
@@ -240,6 +240,6 @@ Task T013: "Update scripts/park_city_render.py to draw edge scenery band"
 
 **Purpose**: Remaining work found by `/speckit-converge` round 1. Open tasks T032 (ceilings: owner decision) and T037 (owner approval) stay as they are and are not repeated here.
 
-- [ ] T041 [US5] 🔒 Copy the 24 captured Studio shots (12 views per theme) from the agent session folder into `specs/014-park-city-art/shots/` as `<theme>-<view>.jpg`, using the command in `specs/014-park-city-art/playtest.md`; if the copy is refused again, re-capture them with `screen_capture` straight into the repo path or render them another way, and check the files are listed in `playtest.md` per FR-017, SC-006 (partial)
-- [ ] T042 [US5] 🔒 Capture the missing Gate 6 views in both `winter` and `city` into `specs/014-park-city-art/shots/`: a ground-level `edge` shot (camera height about 3 studs, looking along the 500-620 band) and a whole-map overview (`overview` / `overview_high`, or a working substitute) that shows the full square, then update the shot list in `specs/014-park-city-art/playtest.md` per FR-009, FR-017 (partial)
+- [X] T041 [US5] 🔒 Copy the 24 captured Studio shots (12 views per theme) from the agent session folder into `specs/014-park-city-art/shots/` as `<theme>-<view>.jpg`, using the command in `specs/014-park-city-art/playtest.md`; if the copy is refused again, re-capture them with `screen_capture` straight into the repo path or render them another way, and check the files are listed in `playtest.md` per FR-017, SC-006 (partial)
+- [X] T042 [US5] 🔒 Capture the missing Gate 6 views in both `winter` and `city` into `specs/014-park-city-art/shots/`: a ground-level `edge` shot (camera height about 3 studs, looking along the 500-620 band) and a whole-map overview (`overview` / `overview_high`, or a working substitute) that shows the full square, then update the shot list in `specs/014-park-city-art/playtest.md` per FR-009, FR-017 (partial)
 - [X] T043 Rerun quickstart scenarios 3 (light objects in Play) and 6 (late-game traversal) in Studio, then update the T040 validation table in `specs/014-park-city-art/playtest.md` so only owner-dependent rows (5 map approval, 8 owner approval and pull request) stay open per FR-016, SC-004 (partial)

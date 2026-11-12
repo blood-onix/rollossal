@@ -140,7 +140,29 @@ class View:
         return "".join(parts)
 
 
+EDGE_STYLE = {"apron": ("#cfe3bd", None), "hedge": ("#3f7d3a", "#25501f"), "building": ("#b9bec6", "#6b7280"),
+              "building_a": ("#d8cfc0", "#7d7464"), "building_b": ("#c79a8c", "#7a4a3c")}
+
+
+def draw_edge(v: View):
+    """Map-edge scenery (014): the band from the boundary (500) to 620. No collision, never eaten."""
+    for row in L.get("edge", {}).get("rows", []):
+        w, _, d = row["size"]
+        x0, z0, x1, z1 = row["x"] - w / 2, row["z"] - d / 2, row["x"] + w / 2, row["z"] + d / 2
+        if x1 < v.x0 or x0 > v.x1 or z1 < v.z0 or z0 > v.z1:
+            continue
+        if row["kind"] == "tree":
+            v.circle(row["x"], row["z"], w / 2 * v.s, "#4f8a45", "#2d5a27", 0.8, op=0.9)
+        else:
+            fill, stroke = EDGE_STYLE[row["kind"]]
+            v.rect(x0, z0, x1, z1, fill, stroke, 0.8, op=0.95)
+    band = L.get("edge", {}).get("band")
+    if band and v.labels and v.inside(0, -(band[0] + band[1]) / 2):
+        v.text(0, -(band[0] + band[1]) / 2 + 4, "map edge: scenery only (no collision, not food)", 12, "#1d2433")
+
+
 def draw(v: View):
+    draw_edge(v)
     # Grid
     g = v.grid()
     for x in range(int(math.floor(v.x0 / g) * g), int(v.x1) + 1, g):
@@ -214,6 +236,14 @@ def draw(v: View):
             if name.startswith("roof building"):
                 name = "roof building"
             v.text(lm["x"], lm["z"] + 3, f"{name} (D {lm['needsD']:.0f})", 9 if v.s < 4 else 11, "#1d2433")
+    # Memes (014): a slot spot holds the active theme's meme, a plain spot the named one
+    for meme in L.get("memes", []):
+        if not v.inside(meme["x"], meme["z"], 40):
+            continue
+        v.rot_rect(meme["x"], meme["z"], *meme["footprint"], meme["yaw"], fill="#e86fb0", stroke="#7a1f52", sw=1, op=0.45)
+        if v.labels and v.s >= 2:
+            name = meme.get("slot") or meme["object"].replace("meme_", "meme ").replace("_", " ")
+            v.text(meme["x"], meme["z"] + 3, name, 9 if v.s < 4 else 11, "#7a1f52")
     # Hazards
     for h in L["hazards"]:
         if "path" in h:
@@ -356,14 +386,14 @@ def elevation_roof_run():
     out.append(f'<rect x="{X(85 - 9 - 0) - 12}" y="{Y(18) - 4}" width="10" height="4" fill="#ffb020" stroke="#7a5200"/>')
     out.append(f'<polygon points="{X(56)},{Y(20)} {X(38)},{Y(26)} {X(38)},{Y(20)}" fill="#cbb89a" stroke="#7a6a4a"/>')
     out.append(f'<path d="M {X(38)} {Y(26)} Q {X(26)} {Y(40)} {X(20)} {Y(10)}" fill="none" stroke="#d6246e" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arr)"/>'
-               f'<text x="{X(40)}" y="{Y(33)}" font-size="10" font-family="Arial" fill="#d6246e">billboard ramp: over the hoardings to the Plaza</text>')
+               f'<text x="{X(40)}" y="{Y(33)}" font-size="10" font-family="Arial" fill="#d6246e">billboard ramp: down to the Plaza</text>')
     out.append(f'<text x="{pad}" y="{H - 20}" font-size="11" fill="#55606e" font-family="Arial">Gap widths in studs under each gap. Up: the delivery ramp, or the spring pad in Market Street at x 165. A fall lands in Market Street (y 0.3) with nothing lost.</text>')
     out.append("</svg>")
     (MAPS / "zone-nbh-ne-roofrun-side.svg").write_text("".join(out))
 
 
 VIEWS = [
-    View("park-city", "Park City overview: 1,000 x 1,000 studs, 12 spawns, eat inwards", -510, -510, 510, 510, 1.0, detail=False),
+    View("park-city", "Park City overview: 1,000 x 1,000 studs, 12 spawns, eat inwards; the map edge out to 620", -630, -630, 630, 630, 1.0, detail=False),
     View("zone-park-nw", "Park NW: Woods and Campsite (Tiers 1-3)", -505, -505, -255, -15, 2.2),
     View("zone-park-ne", "Park NE: Pond and Boathouse (Tiers 1-3)", 15, -505, 505, -15, 2.0),
     View("zone-park-se", "Park SE: Playground, Skate Park and Courts (Tiers 1-3)", 15, 15, 505, 505, 2.0),

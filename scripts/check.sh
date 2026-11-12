@@ -50,6 +50,9 @@ lune run tests/unit/run
 step "Park City layout in sync"
 python3 scripts/park_city_layout.py --check >/dev/null
 
+step "Big City concept layout in sync"
+python3 scripts/big_city_layout.py --check
+
 step "Park City world data in sync"
 python3 scripts/park_city_world.py --check
 

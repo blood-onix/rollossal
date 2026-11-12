@@ -1,0 +1,451 @@
+{
+ "version": 0,
+ "stage": "concept",
+ "units": "studs",
+ "world": {
+  "halfExtent": 1200,
+  "sceneryHalfExtent": 1320
+ },
+ "roads": [
+  {
+   "id": "inner_ring",
+   "name": "Inner Ring",
+   "ring": [
+    300,
+    340
+   ]
+  },
+  {
+   "id": "boulevard",
+   "name": "Boulevard",
+   "ring": [
+    760,
+    800
+   ]
+  },
+  {
+   "id": "avenue_ns",
+   "name": "North and South Avenue",
+   "rect": [
+    -20,
+    -1200,
+    20,
+    1200
+   ]
+  },
+  {
+   "id": "avenue_ew",
+   "name": "East and West Avenue",
+   "rect": [
+    -1200,
+    -20,
+    1200,
+    20
+   ]
+  }
+ ],
+ "districts": [
+  {
+   "id": "park_nw",
+   "name": "Woodland Park",
+   "ring": "outer",
+   "rects": [
+    [
+     -1200,
+     -1200,
+     -400,
+     -800
+    ],
+    [
+     -1200,
+     -800,
+     -800,
+     -400
+    ]
+   ],
+   "area": 480000,
+   "ballSizes": [
+    2,
+    14
+   ],
+   "colour": "#8fc77a",
+   "special": "Start. The Giant Oak shakes food down for every size; a stream carries any ball towards the Boulevard."
+  },
+  {
+   "id": "park_ne",
+   "name": "Lake Park",
+   "ring": "outer",
+   "rects": [
+    [
+     400,
+     -1200,
+     1200,
+     -800
+    ],
+    [
+     800,
+     -800,
+     1200,
+     -400
+    ]
+   ],
+   "area": 480000,
+   "ballSizes": [
+    2,
+    14
+   ],
+   "colour": "#7fc4a0",
+   "special": "Start. Lily pads for small balls, wading for big ones; the island fountain throws a ball to the Boulevard."
+  },
+  {
+   "id": "park_se",
+   "name": "Play Park",
+   "ring": "outer",
+   "rects": [
+    [
+     400,
+     800,
+     1200,
+     1200
+    ],
+    [
+     800,
+     400,
+     1200,
+     800
+    ]
+   ],
+   "area": 480000,
+   "ballSizes": [
+    2,
+    14
+   ],
+   "colour": "#a5d16f",
+   "special": "Start. Skate bowl and half-pipes: launches that scale with the ball, courts full of balls and kit."
+  },
+  {
+   "id": "park_sw",
+   "name": "Gardens",
+   "ring": "outer",
+   "rects": [
+    [
+     -1200,
+     800,
+     -400,
+     1200
+    ],
+    [
+     -1200,
+     400,
+     -800,
+     800
+    ]
+   ],
+   "area": 480000,
+   "ballSizes": [
+    2,
+    14
+   ],
+   "colour": "#9ccf8e",
+   "special": "Start. Low hedge maze a growing ball eats its way through; flower beds; the gnome army jackpot."
+  },
+  {
+   "id": "side_n",
+   "name": "Suburb",
+   "ring": "outer",
+   "rects": [
+    [
+     -400,
+     -1200,
+     400,
+     -800
+    ]
+   ],
+   "area": 320000,
+   "ballSizes": [
+    8,
+    35
+   ],
+   "colour": "#e6c58f",
+   "special": "Streets of houses. Each garden is a food ladder that ends with the house itself."
+  },
+  {
+   "id": "side_e",
+   "name": "Beach and Pier",
+   "ring": "outer",
+   "rects": [
+    [
+     800,
+     -400,
+     1200,
+     400
+    ]
+   ],
+   "area": 320000,
+   "ballSizes": [
+    8,
+    35
+   ],
+   "colour": "#f0dfa0",
+   "special": "Sandcastles, deckchairs, beach huts; the pier ends in a ramp over the water."
+  },
+  {
+   "id": "side_s",
+   "name": "Farm",
+   "ring": "outer",
+   "rects": [
+    [
+     -400,
+     800,
+     400,
+     1200
+    ]
+   ],
+   "area": 320000,
+   "ballSizes": [
+    8,
+    35
+   ],
+   "colour": "#d9cf7a",
+   "special": "Crop fields (dense light food), hay bales, tractors; the windmill sails fling a ball on a marked spot."
+  },
+  {
+   "id": "side_w",
+   "name": "Campsite Hill",
+   "ring": "outer",
+   "rects": [
+    [
+     -1200,
+     -400,
+     -800,
+     400
+    ]
+   ],
+   "area": 320000,
+   "ballSizes": [
+    8,
+    35
+   ],
+   "colour": "#b7c98a",
+   "special": "The only hill: tents and caravans on the slope, and a downhill run that is the fastest road on the map."
+  },
+  {
+   "id": "mid_nw",
+   "name": "Station and Rail Yard",
+   "ring": "mid",
+   "rects": [
+    [
+     -760,
+     -760,
+     -20,
+     -340
+    ],
+    [
+     -760,
+     -340,
+     -340,
+     -20
+    ]
+   ],
+   "area": 445200,
+   "ballSizes": [
+    20,
+    80
+   ],
+   "colour": "#c9b8a8",
+   "special": "A train runs a loop through the yard: food on wheels for a big ball, a hazard for a small one."
+  },
+  {
+   "id": "mid_ne",
+   "name": "Market and Old Town",
+   "ring": "mid",
+   "rects": [
+    [
+     20,
+     -760,
+     760,
+     -340
+    ],
+    [
+     340,
+     -340,
+     760,
+     -20
+    ]
+   ],
+   "area": 445200,
+   "ballSizes": [
+    20,
+    80
+   ],
+   "colour": "#e3b59a",
+   "special": "Narrow streets with the densest food on the map; stalls, vans, then the shops themselves."
+  },
+  {
+   "id": "mid_se",
+   "name": "Harbour",
+   "ring": "mid",
+   "rects": [
+    [
+     20,
+     340,
+     760,
+     760
+    ],
+    [
+     340,
+     20,
+     760,
+     340
+    ]
+   ],
+   "area": 445200,
+   "ballSizes": [
+    20,
+    80
+   ],
+   "colour": "#a9c3d6",
+   "special": "Container stacks, cranes that lift a ball from a marked pad, boats, and a ship as late food."
+  },
+  {
+   "id": "mid_sw",
+   "name": "Funfair and Stadium",
+   "ring": "mid",
+   "rects": [
+    [
+     -760,
+     340,
+     -20,
+     760
+    ],
+    [
+     -760,
+     20,
+     -340,
+     340
+    ]
+   ],
+   "area": 445200,
+   "ballSizes": [
+    20,
+    80
+   ],
+   "colour": "#e7a9c4",
+   "special": "Ferris wheel, bouncy castle, one roller-coaster rail, and the stadium bowl as a Feast arena."
+  },
+  {
+   "id": "downtown",
+   "name": "Downtown",
+   "ring": "centre",
+   "rects": [
+    [
+     -300,
+     -300,
+     300,
+     300
+    ]
+   ],
+   "area": 360000,
+   "ballSizes": [
+    50,
+    200
+   ],
+   "colour": "#b9bfd0",
+   "special": "Towers, the Plaza and the Glass Tower finale. Everyone ends up here in the last minute."
+  }
+ ],
+ "spawns": [
+  {
+   "slot": 1,
+   "x": -1000,
+   "z": -1000
+  },
+  {
+   "slot": 2,
+   "x": -1000,
+   "z": -560
+  },
+  {
+   "slot": 3,
+   "x": -560,
+   "z": -1000
+  },
+  {
+   "slot": 4,
+   "x": 1000,
+   "z": -1000
+  },
+  {
+   "slot": 5,
+   "x": 1000,
+   "z": -560
+  },
+  {
+   "slot": 6,
+   "x": 560,
+   "z": -1000
+  },
+  {
+   "slot": 7,
+   "x": 1000,
+   "z": 1000
+  },
+  {
+   "slot": 8,
+   "x": 1000,
+   "z": 560
+  },
+  {
+   "slot": 9,
+   "x": 560,
+   "z": 1000
+  },
+  {
+   "slot": 10,
+   "x": -1000,
+   "z": 1000
+  },
+  {
+   "slot": 11,
+   "x": -1000,
+   "z": 560
+  },
+  {
+   "slot": 12,
+   "x": -560,
+   "z": 1000
+  }
+ ],
+ "summary": {
+  "playable": [
+   2400,
+   2400
+  ],
+  "areaTimesParkCity": 5.76,
+  "studsSquaredPerBall": 480000,
+  "crossingSeconds": {
+   "atStart": 133,
+   "atSpeedCap": 75
+  },
+  "spawnToDowntownSeconds": 22,
+  "objectsAtParkCityDensity": {
+   "light": 27481,
+   "part": 7206
+  },
+  "districtArea": {
+   "park_nw": 480000,
+   "park_ne": 480000,
+   "park_se": 480000,
+   "park_sw": 480000,
+   "side_n": 320000,
+   "side_e": 320000,
+   "side_s": 320000,
+   "side_w": 320000,
+   "mid_nw": 445200,
+   "mid_ne": 445200,
+   "mid_se": 445200,
+   "mid_sw": 445200,
+   "downtown": 360000
+  }
+ }
+}

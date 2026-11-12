@@ -226,6 +226,16 @@ function BoosterService.activeFor(
 	}
 end
 
+-- A boost pad's dash: the same effect as the Dash booster, for as long as the pad gives.
+function BoosterService.grantDash(session: Session, now: number, seconds: number)
+	local state = stateFor(session)
+	state.dashUntil = math.max(state.dashUntil, now + seconds)
+	session.boostUntil = math.max(session.boostUntil, state.dashUntil)
+	session.boostGraceUntil =
+		math.max(session.boostGraceUntil, state.dashUntil + Config.boostDecayGrace)
+	publish(session, state, now)
+end
+
 -- Ids of the objects this ball's Magnet is drawing in now.
 function BoosterService.pulledIds(session: Session): { string }
 	local ids: { string } = {}

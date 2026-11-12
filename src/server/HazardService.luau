@@ -236,7 +236,8 @@ function HazardService.step(now: number, _dt: number)
 			end
 		end
 	end
-	if Config.Flags.BallToBallBumps and #playing > 1 then
+	-- While Feast eating is open a bigger ball eats the smaller one; the knock-off bump would only get in the way.
+	if Config.Flags.BallToBallBumps and #playing > 1 and not RunManager.feastOpen(now) then
 		stepBumps(playing, now)
 	end
 end

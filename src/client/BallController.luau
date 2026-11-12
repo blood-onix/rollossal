@@ -321,6 +321,18 @@ function BallController.start()
 		)
 	end
 
+	-- A tier jump's vacuum: the server allows this extra reach until the Vacuum time it published.
+	local function vacuumReach(diameter: number): number
+		local ends = ball:GetAttribute("Vacuum")
+		if typeof(ends) ~= "number" or ends <= Workspace:GetServerTimeNow() then
+			return 0
+		end
+		return math.min(
+			Config.vacuumRadiusCeiling,
+			math.max(Config.vacuumRadiusFloor, Config.vacuumRadiusFactor * diameter)
+		)
+	end
+
 	local function contactScan(now: number, radius: number, diameter: number)
 		for part in objectParts do
 			local size = part:GetAttribute("Size")
@@ -334,7 +346,7 @@ function BallController.start()
 			end
 			if
 				(ball.Position - part.Position).Magnitude
-				> radius + size / 2 + Config.clientContactMargin
+				> radius + size / 2 + Config.clientContactMargin + vacuumReach(diameter)
 			then
 				continue
 			end
@@ -394,6 +406,10 @@ function BallController.start()
 			Config.speedExponent,
 			Movement.speedCap(diameter, Worlds.rules.speedCap)
 		)
+		-- Feast: a hunter is close (server fact Flee), so this ball rolls faster and can get away.
+		if ball:GetAttribute("Flee") == true then
+			speed *= Config.feastFleeMultiplier
+		end
 		-- Dash (server fact BoostDash = the server time it ends): a higher target speed, under the boosted cap.
 		local serverNow = Workspace:GetServerTimeNow()
 		local dashEnds = ball:GetAttribute("BoostDash")

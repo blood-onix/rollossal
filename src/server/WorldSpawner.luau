@@ -181,6 +181,62 @@ function WorldSpawner.takenLightIndices(): { number }
 	return list
 end
 
+-- Food flow: brings back up to `limit` taken light objects within `radius` of a point, when they were taken at
+-- least `minAge` seconds ago and no ball in `balls` is within `keepAway` studs (so nothing pops in under a ball).
+function WorldSpawner.regrowLightNear(
+	position: Vector3,
+	radius: number,
+	keepAway: number,
+	balls: { Vector3 },
+	minAge: number,
+	limit: number,
+	now: number
+): number
+	if lightData == nil then
+		return 0
+	end
+	local restored = 0
+	local reach, clear = radius * radius, keepAway * keepAway
+	for index in pendingLight do
+		local takenAt = lightTakenAt[index]
+		if takenAt == nil or now - takenAt < minAge then
+			continue
+		end
+		local at = (index - 1) * lightData.stride
+		local x, z = lightData.data[at + 2], lightData.data[at + 4]
+		if (x - position.X) ^ 2 + (z - position.Z) ^ 2 > reach then
+			continue
+		end
+		local blocked = false
+		for _, ball in balls do
+			if (x - ball.X) ^ 2 + (z - ball.Z) ^ 2 < clear then
+				blocked = true
+				break
+			end
+		end
+		if not blocked then
+			restoreLight(index)
+			restored += 1
+			if restored >= limit then
+				break
+			end
+		end
+	end
+	return restored
+end
+
+-- Every pooled object, for the food flow's own index. Read-only.
+function WorldSpawner.allObjects(): { PooledWorldObject }
+	return objectList
+end
+
+-- Ground height under a point (the world's Geometry only), or nil over a hole.
+function WorldSpawner.groundAt(position: Vector3): number?
+	local origin = Vector3.new(position.X, position.Y + RAY_HEIGHT, position.Z)
+	local hit = Workspace:Raycast(origin, Vector3.new(0, -RAY_LENGTH, 0), groundParams)
+	return if hit then hit.Position.Y else nil
+end
+
 -- The doorstep rows of spawn slot `slot` (first, last), or nil.
 local function doorstepRange(slot: number): { number }?
 	if lightData == nil then

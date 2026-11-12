@@ -115,6 +115,18 @@ test("Config: theme budgets, flag and emitter geometry (005)", function()
 	expect.equal(Config.weatherEmitterSize, 60)
 end)
 
+test("Config: Park City art flag and triangle ceilings (014)", function()
+	expect.equal(Config.Flags.LightMeshes, true)
+	-- Each ceiling is unset (report only) or a positive multiple of 10,000 taken from the benchmark (R-07).
+	for _, key in { "parkCityTrianglesUnculled", "parkCityTrianglesCulled" } do
+		local value = (Config.Budgets :: any)[key]
+		if value ~= nil then
+			expect.equal(type(value), "number")
+			expect.truthy(value > 0 and value % 10000 == 0, key)
+		end
+	end
+end)
+
 test("Config: data store name, key prefix and run-start lock are the approved values", function()
 	expect.equal(Config.dataStoreName, "PlayerProfiles_v1")
 	expect.equal(Config.playerKeyPrefix, "Player_")
